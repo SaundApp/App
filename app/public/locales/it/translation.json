@@ -1,0 +1,32 @@
+{
+  "general": {
+    "follow": "Segui"
+  },
+  "index": {
+    "popular": "Popolari",
+    "new": "Nuovi"
+  },
+  "post": {
+    "likes-person": "{{person}} e altri hanno messo mi piace",
+    "actions": {
+      "title": "Azioni",
+      "share": "Condividi",
+      "not_interested": "Non interessato",
+      "hide": "Nascondi",
+      "report": "Segnala"
+    },
+    "likes": {
+      "title": "Mi piace",
+      "search": "Cerca"
+    },
+    "comments": {
+      "title": "Commenti",
+      "count_one": "Vedi {{count}} commento",
+      "count_other": "Vedi {{count}} commenti",
+      "reply": "Rispondi",
+      "see_replies_one": "Vedi {{count}} risposta",
+      "see_replies_other": "Vedi altre {{count}} risposte",
+      "placeholder": "Scrivi un commento..."
+    }
+  }
+}

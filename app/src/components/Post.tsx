@@ -1,7 +1,11 @@
-import { User } from "@/types";
-import moment from "moment";
-import { BsBookmarkFill, BsThreeDots } from "react-icons/bs";
+import { Comment, User } from "@/types";
+import moment from "moment/min/moment-with-locales";
+import { useTranslation } from "react-i18next";
+import { BsBookmarkFill } from "react-icons/bs";
 import { FaRegHeart, FaRegPaperPlane } from "react-icons/fa";
+import Comments from "./drawers/Comments";
+import Likes from "./drawers/Likes";
+import PostActions from "./drawers/PostActions";
 import { Button } from "./ui/button";
 
 export default function Post({
@@ -9,18 +13,18 @@ export default function Post({
   createdAt,
   comments,
   url,
-  description,
   likes,
   name,
 }: {
   user: User;
   createdAt: number;
-  comments: number;
+  comments: Comment[];
   url: string;
-  description: string;
   name: string;
   likes: User[];
 }) {
+  const { t } = useTranslation();
+
   return (
     <div className="flex flex-col gap-3">
       <div className="flex justify-between">
@@ -39,8 +43,8 @@ export default function Post({
         </div>
 
         <div className="flex items-center gap-3">
-          <Button>Segui</Button>
-          <BsThreeDots fontSize={25} />
+          <Button>{t("general.follow")}</Button>
+          <PostActions />
         </div>
       </div>
 
@@ -83,23 +87,9 @@ export default function Post({
         <BsBookmarkFill fontSize={25} />
       </div>
 
-      <div className="flex gap-1">
-        <img
-          src={likes[0].avatar}
-          alt={likes[0].username}
-          draggable={false}
-          className="w-6 h-6 rounded-full"
-        />
-        <p>Piace a {likes[0].name} e altri</p>
-      </div>
+      <Likes likes={likes} />
 
-      <div>
-        <div className="flex gap-1">
-          <p className="font-semibold">{user.name}:</p> <p>{description}</p>
-        </div>
-
-        <p className="muted mt-1">Visualizza tutti e {comments} commenti</p>
-      </div>
+      <Comments comments={comments} />
     </div>
   );
 }

@@ -1,0 +1,32 @@
+{
+  "general": {
+    "follow": "Follow"
+  },
+  "index": {
+    "popular": "Popular",
+    "new": "New"
+  },
+  "post": {
+    "likes-person": "{{person}} and others likes this",
+    "actions": {
+      "title": "Actions",
+      "share": "Share",
+      "not_interested": "Not interested",
+      "hide": "Hide",
+      "report": "Report"
+    },
+    "likes": {
+      "title": "Likes",
+      "search": "Search"
+    },
+    "comments": {
+      "title": "Comments",
+      "count_one": "See {{count}} comment",
+      "count_other": "See {{count}} comments",
+      "reply": "Reply",
+      "see_replies_one": "See {{count}} reply",
+      "see_replies_other": "See other {{count}} replies",
+      "placeholder": "Write a comment..."
+    }
+  }
+}

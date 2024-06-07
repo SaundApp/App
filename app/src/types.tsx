@@ -3,3 +3,10 @@ export type User = {
   username: string;
   avatar: string;
 };
+
+export type Comment = {
+  user: User;
+  createdAt: number;
+  content: string;
+  replies: Comment[];
+};
