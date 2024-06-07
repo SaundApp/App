@@ -1,17 +1,16 @@
-import { createRootRoute, Link, Outlet } from "@tanstack/react-router";
-import { TanStackRouterDevtools } from "@tanstack/router-devtools";
+import Navbar from "@/components/Navbar";
+import { ThemeProvider } from "@/components/ThemeProvider";
+import { createRootRoute, Outlet } from "@tanstack/react-router";
 
 export const Route = createRootRoute({
   component: () => (
-    <main>
-      <div className="p-2 flex gap-2">
-        <Link to="/" className="[&.active]:font-bold">
-          Home
-        </Link>
-      </div>
-      <hr />
-      <Outlet />
-      <TanStackRouterDevtools />
-    </main>
+    <ThemeProvider defaultTheme="system" storageKey="vite-ui-theme">
+      <main
+        className={`bg-background text-foreground font-geist py-3 px-3 min-h-screen flex flex-col`}
+      >
+        <Outlet />
+        <Navbar />
+      </main>
+    </ThemeProvider>
   ),
 });
