@@ -7,6 +7,7 @@ import Comments from "./drawers/Comments";
 import Likes from "./drawers/Likes";
 import PostActions from "./drawers/PostActions";
 import { Button } from "./ui/button";
+import { useEffect } from "react";
 
 export default function Post({
   user,
@@ -23,7 +24,11 @@ export default function Post({
   name: string;
   likes: User[];
 }) {
-  const { t } = useTranslation();
+  const { t, i18n } = useTranslation();
+
+  useEffect(() => {
+    moment.locale(i18n.language);
+  }, [i18n.language]);
 
   return (
     <div className="flex flex-col gap-3">

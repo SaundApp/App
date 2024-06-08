@@ -1,13 +1,18 @@
 import { Comment } from "@/types";
 import { Link } from "@tanstack/react-router";
 import moment from "moment/min/moment-with-locales";
+import { useEffect } from "react";
 import { useTranslation } from "react-i18next";
 import { FaRegHeart } from "react-icons/fa";
 import { Drawer, DrawerContent, DrawerTrigger } from "../ui/drawer";
 import { Input } from "../ui/input";
 
 export default function Comments({ comments }: { comments: Comment[] }) {
-  const { t } = useTranslation();
+  const { t, i18n } = useTranslation();
+
+  useEffect(() => {
+    moment.locale(i18n.language);
+  }, [i18n.language]);
 
   return (
     <Drawer>
