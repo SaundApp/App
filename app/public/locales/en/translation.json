@@ -1,23 +1,24 @@
 {
   "general": {
-    "follow": "Follow"
+    "follow": "Follow",
+    "search": "Search",
+    "notifications": "Notifications",
+    "today": "Today"
   },
   "index": {
     "popular": "Popular",
     "new": "New"
   },
   "post": {
-    "likes-person": "{{person}} and others likes this",
+    "type": "Album",
     "actions": {
       "title": "Actions",
       "share": "Share",
       "not_interested": "Not interested",
-      "hide": "Hide",
-      "report": "Report"
+      "hide": "Hide"
     },
     "likes": {
-      "title": "Likes",
-      "search": "Search"
+      "title": "Likes"
     },
     "comments": {
       "title": "Comments",
@@ -28,5 +29,10 @@
       "see_replies_other": "See other {{count}} replies",
       "placeholder": "Write a comment..."
     }
+  },
+  "leaderboard": {
+    "artists": "Artists",
+    "songs": "Songs",
+    "top": "Top"
   }
 }

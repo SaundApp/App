@@ -1,14 +1,27 @@
-import { FaHome, FaHeart } from "react-icons/fa";
-import { TbBrandGoogleAnalytics } from "react-icons/tb";
-import { IoSearchSharp } from "react-icons/io5";
+import { Link } from "@tanstack/react-router";
+import { FaHeart, FaHome, FaSearch } from "react-icons/fa";
+import { SiGoogleanalytics } from "react-icons/si";
 
 export default function Navbar() {
   return (
-    <nav className="flex sticky bottom-0 items-center justify-between mt-auto bg-background p-3">
-      <FaHome fontSize={25} />
-      <TbBrandGoogleAnalytics fontSize={25} />
-      <IoSearchSharp fontSize={25} />
-      <FaHeart fontSize={25} />
+    <nav
+      className="flex fixed bottom-0 items-center justify-between mt-auto bg-background p-3"
+      style={{
+        width: "calc(100vw - 1.5rem)",
+      }}
+    >
+      <Link to="/">
+        <FaHome fontSize={25} />
+      </Link>
+      <Link to="/leaderboard/artists">
+        <SiGoogleanalytics fontSize={25} />
+      </Link>
+      <Link to="/search">
+        <FaSearch fontSize={25} />
+      </Link>
+      <Link to="/notifications">
+        <FaHeart fontSize={25} />
+      </Link>
       <img
         src="https://michelemanna.me/img/logo.png"
         alt="Michele Manna"

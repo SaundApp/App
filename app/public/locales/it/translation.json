@@ -1,23 +1,24 @@
 {
   "general": {
-    "follow": "Segui"
+    "follow": "Segui",
+    "search": "Cerca",
+    "notifications": "Notifiche",
+    "today": "Oggi"
   },
   "index": {
     "popular": "Popolari",
     "new": "Nuovi"
   },
   "post": {
-    "likes-person": "{{person}} e altri hanno messo mi piace",
+    "type": "Album",
     "actions": {
       "title": "Azioni",
       "share": "Condividi",
       "not_interested": "Non interessato",
-      "hide": "Nascondi",
-      "report": "Segnala"
+      "hide": "Nascondi"
     },
     "likes": {
-      "title": "Mi piace",
-      "search": "Cerca"
+      "title": "Mi piace"
     },
     "comments": {
       "title": "Commenti",
@@ -28,5 +29,10 @@
       "see_replies_other": "Vedi altre {{count}} risposte",
       "placeholder": "Scrivi un commento..."
     }
+  },
+  "leaderboard": {
+    "artists": "Artisti",
+    "songs": "Canzoni",
+    "top": "Top"
   }
 }

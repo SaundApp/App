@@ -16,14 +16,42 @@ import { Route as rootRoute } from './routes/__root'
 
 // Create Virtual Routes
 
+const SearchLazyImport = createFileRoute('/search')()
+const NotificationsLazyImport = createFileRoute('/notifications')()
 const IndexLazyImport = createFileRoute('/')()
+const LeaderboardSongsLazyImport = createFileRoute('/leaderboard/songs')()
+const LeaderboardArtistsLazyImport = createFileRoute('/leaderboard/artists')()
 
 // Create/Update Routes
+
+const SearchLazyRoute = SearchLazyImport.update({
+  path: '/search',
+  getParentRoute: () => rootRoute,
+} as any).lazy(() => import('./routes/search.lazy').then((d) => d.Route))
+
+const NotificationsLazyRoute = NotificationsLazyImport.update({
+  path: '/notifications',
+  getParentRoute: () => rootRoute,
+} as any).lazy(() => import('./routes/notifications.lazy').then((d) => d.Route))
 
 const IndexLazyRoute = IndexLazyImport.update({
   path: '/',
   getParentRoute: () => rootRoute,
 } as any).lazy(() => import('./routes/index.lazy').then((d) => d.Route))
+
+const LeaderboardSongsLazyRoute = LeaderboardSongsLazyImport.update({
+  path: '/leaderboard/songs',
+  getParentRoute: () => rootRoute,
+} as any).lazy(() =>
+  import('./routes/leaderboard/songs.lazy').then((d) => d.Route),
+)
+
+const LeaderboardArtistsLazyRoute = LeaderboardArtistsLazyImport.update({
+  path: '/leaderboard/artists',
+  getParentRoute: () => rootRoute,
+} as any).lazy(() =>
+  import('./routes/leaderboard/artists.lazy').then((d) => d.Route),
+)
 
 // Populate the FileRoutesByPath interface
 
@@ -36,12 +64,46 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof IndexLazyImport
       parentRoute: typeof rootRoute
     }
+    '/notifications': {
+      id: '/notifications'
+      path: '/notifications'
+      fullPath: '/notifications'
+      preLoaderRoute: typeof NotificationsLazyImport
+      parentRoute: typeof rootRoute
+    }
+    '/search': {
+      id: '/search'
+      path: '/search'
+      fullPath: '/search'
+      preLoaderRoute: typeof SearchLazyImport
+      parentRoute: typeof rootRoute
+    }
+    '/leaderboard/artists': {
+      id: '/leaderboard/artists'
+      path: '/leaderboard/artists'
+      fullPath: '/leaderboard/artists'
+      preLoaderRoute: typeof LeaderboardArtistsLazyImport
+      parentRoute: typeof rootRoute
+    }
+    '/leaderboard/songs': {
+      id: '/leaderboard/songs'
+      path: '/leaderboard/songs'
+      fullPath: '/leaderboard/songs'
+      preLoaderRoute: typeof LeaderboardSongsLazyImport
+      parentRoute: typeof rootRoute
+    }
   }
 }
 
 // Create and export the route tree
 
-export const routeTree = rootRoute.addChildren({ IndexLazyRoute })
+export const routeTree = rootRoute.addChildren({
+  IndexLazyRoute,
+  NotificationsLazyRoute,
+  SearchLazyRoute,
+  LeaderboardArtistsLazyRoute,
+  LeaderboardSongsLazyRoute,
+})
 
 /* prettier-ignore-end */
 
@@ -51,11 +113,27 @@ export const routeTree = rootRoute.addChildren({ IndexLazyRoute })
     "__root__": {
       "filePath": "__root.tsx",
       "children": [
-        "/"
+        "/",
+        "/notifications",
+        "/search",
+        "/leaderboard/artists",
+        "/leaderboard/songs"
       ]
     },
     "/": {
       "filePath": "index.lazy.tsx"
+    },
+    "/notifications": {
+      "filePath": "notifications.lazy.tsx"
+    },
+    "/search": {
+      "filePath": "search.lazy.tsx"
+    },
+    "/leaderboard/artists": {
+      "filePath": "leaderboard/artists.lazy.tsx"
+    },
+    "/leaderboard/songs": {
+      "filePath": "leaderboard/songs.lazy.tsx"
     }
   }
 }

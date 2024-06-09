@@ -10,3 +10,9 @@ export type Comment = {
   content: string;
   replies: Comment[];
 };
+
+export type LeaderboardArtist = {
+  user: User;
+  position?: string;
+  streams: string;
+};

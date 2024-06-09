@@ -3,7 +3,7 @@ import { Link } from "@tanstack/react-router";
 import moment from "moment/min/moment-with-locales";
 import { useEffect } from "react";
 import { useTranslation } from "react-i18next";
-import { FaRegHeart } from "react-icons/fa";
+import { FaComment, FaRegHeart } from "react-icons/fa";
 import { Drawer, DrawerContent, DrawerTrigger } from "../ui/drawer";
 import { Input } from "../ui/input";
 
@@ -17,9 +17,7 @@ export default function Comments({ comments }: { comments: Comment[] }) {
   return (
     <Drawer>
       <DrawerTrigger className="text-left">
-        <p className="muted">
-          {t("post.comments.count", { count: comments.length })}
-        </p>
+        <FaComment fontSize={25} />
       </DrawerTrigger>
       <DrawerContent className="p-3 flex flex-col gap-3">
         <h4 className="font-semibold text-center">
