@@ -5,19 +5,21 @@ export default function LeaderboardNavbar() {
   const { t } = useTranslation();
 
   return (
-    <div className="flex justify-center gap-3 bg-background p-3">
+    <div className="flex justify-between gap-3 bg-background text-center">
       <Link
         to="/leaderboard/artists"
+        className="w-full"
         activeProps={{
-          className: "underline underline-offset-8 decoration-2 font-semibold",
+          className: "border-b-2 border-b-white font-semibold",
         }}
       >
         {t("leaderboard.artists")}
       </Link>
       <Link
         to="/leaderboard/songs"
+        className="w-full"
         activeProps={{
-          className: "underline underline-offset-8 decoration-2 font-semibold",
+          className: "border-b-2 border-b-white font-semibold",
         }}
       >
         {t("leaderboard.songs")}

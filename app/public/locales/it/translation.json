@@ -34,5 +34,13 @@
     "artists": "Artisti",
     "songs": "Canzoni",
     "top": "Top"
+  },
+  "account": {
+    "follower": "Follower",
+    "following": "Seguiti",
+    "edit_profile": "Modifica",
+    "share": "Condividi profilo",
+    "edit_subscription": "Modifica abbonamento",
+    "listeners": "Ascoltatori"
   }
 }

@@ -25,6 +25,11 @@ function Search() {
                 username: "tonyboy",
                 avatar:
                   "https://i.scdn.co/image/ab6761610000101f27fcfd9ff73fd86aabf11b54",
+                followers: 0,
+                following: 0,
+                posts: 0,
+                bio: "",
+                public: true,
               }}
               position={""}
               streams="10B"

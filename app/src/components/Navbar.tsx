@@ -22,11 +22,13 @@ export default function Navbar() {
       <Link to="/notifications">
         <FaHeart fontSize={25} />
       </Link>
-      <img
-        src="https://michelemanna.me/img/logo.png"
-        alt="Michele Manna"
-        className="w-8 h-8 rounded-full"
-      />
+      <Link to="/account/me">
+        <img
+          src="https://michelemanna.me/img/logo.png"
+          alt="Michele Manna"
+          className="w-8 h-8 rounded-full"
+        />
+      </Link>
     </nav>
   );
 }

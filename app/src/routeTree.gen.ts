@@ -21,6 +21,7 @@ const NotificationsLazyImport = createFileRoute('/notifications')()
 const IndexLazyImport = createFileRoute('/')()
 const LeaderboardSongsLazyImport = createFileRoute('/leaderboard/songs')()
 const LeaderboardArtistsLazyImport = createFileRoute('/leaderboard/artists')()
+const AccountMeLazyImport = createFileRoute('/account/me')()
 
 // Create/Update Routes
 
@@ -53,6 +54,11 @@ const LeaderboardArtistsLazyRoute = LeaderboardArtistsLazyImport.update({
   import('./routes/leaderboard/artists.lazy').then((d) => d.Route),
 )
 
+const AccountMeLazyRoute = AccountMeLazyImport.update({
+  path: '/account/me',
+  getParentRoute: () => rootRoute,
+} as any).lazy(() => import('./routes/account/me.lazy').then((d) => d.Route))
+
 // Populate the FileRoutesByPath interface
 
 declare module '@tanstack/react-router' {
@@ -78,6 +84,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof SearchLazyImport
       parentRoute: typeof rootRoute
     }
+    '/account/me': {
+      id: '/account/me'
+      path: '/account/me'
+      fullPath: '/account/me'
+      preLoaderRoute: typeof AccountMeLazyImport
+      parentRoute: typeof rootRoute
+    }
     '/leaderboard/artists': {
       id: '/leaderboard/artists'
       path: '/leaderboard/artists'
@@ -101,6 +114,7 @@ export const routeTree = rootRoute.addChildren({
   IndexLazyRoute,
   NotificationsLazyRoute,
   SearchLazyRoute,
+  AccountMeLazyRoute,
   LeaderboardArtistsLazyRoute,
   LeaderboardSongsLazyRoute,
 })
@@ -116,6 +130,7 @@ export const routeTree = rootRoute.addChildren({
         "/",
         "/notifications",
         "/search",
+        "/account/me",
         "/leaderboard/artists",
         "/leaderboard/songs"
       ]
@@ -128,6 +143,9 @@ export const routeTree = rootRoute.addChildren({
     },
     "/search": {
       "filePath": "search.lazy.tsx"
+    },
+    "/account/me": {
+      "filePath": "account/me.lazy.tsx"
     },
     "/leaderboard/artists": {
       "filePath": "leaderboard/artists.lazy.tsx"

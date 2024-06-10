@@ -1,5 +1,6 @@
 import Post from "@/components/Post";
 import { createLazyFileRoute } from "@tanstack/react-router";
+import { FaPaperPlane } from "react-icons/fa";
 
 export const Route = createLazyFileRoute("/")({
   component: Index,
@@ -8,49 +9,58 @@ export const Route = createLazyFileRoute("/")({
 function Index() {
   return (
     <div className="flex flex-col gap-3 h-full max-h-[93vh] overflow-y-auto">
-      <h1>Saund</h1>
+      <div className="flex justify-between items-center">
+        <h1>Saund</h1>
+        <FaPaperPlane fontSize={25} />
+      </div>
 
       {Array.from({ length: 3 }).map((_, index) => (
         <Post
           key={index}
-          user={{
-            name: "Michele",
-            username: "Michele11",
-            avatar: "https://michelemanna.me/img/logo.png",
-          }}
-          likes={[
-            {
-              name: "Michele",
-              username: "Michele11",
+          post={{
+            user: {
+              name: "Michele Manna",
+              username: "michelemanna",
               avatar: "https://michelemanna.me/img/logo.png",
+              followers: 0,
+              following: 0,
+              posts: 0,
+              bio: "",
+              public: true,
             },
-          ]}
-          comments={[
-            {
-              user: {
-                name: "Michele",
-                username: "Michele11",
+            likes: [
+              {
+                name: "Michele Manna",
+                username: "michelemanna",
                 avatar: "https://michelemanna.me/img/logo.png",
+                followers: 0,
+                following: 0,
+                posts: 0,
+                bio: "",
+                public: true,
               },
-              content: "Che bello!",
-              createdAt: Date.now() - 1000 * 60 * 60 * 24 * 2,
-              replies: [
-                {
-                  user: {
-                    name: "Michele",
-                    username: "Michele11",
-                    avatar: "https://michelemanna.me/img/logo.png",
-                  },
-                  content: "Thanks!",
-                  createdAt: Date.now() - 1000 * 60 * 60 * 24 * 2,
-                  replies: [],
+            ],
+            comments: [
+              {
+                user: {
+                  name: "Michele Manna",
+                  username: "michelemanna",
+                  avatar: "https://michelemanna.me/img/logo.png",
+                  followers: 0,
+                  following: 0,
+                  posts: 0,
+                  bio: "",
+                  public: true,
                 },
-              ],
-            },
-          ]}
-          url="https://i.scdn.co/image/ab67616d00001e0223f14c95a49443cb70e79f18"
-          song="Da soli"
-          album="Going Hard 2"
+                createdAt: Date.now(),
+                content: "This is a comment",
+                replies: [],
+              },
+            ],
+            url: "https://i.scdn.co/image/ab67616d00001e023c0eada9fb45ba9d43116f1d",
+            name: "Going Hard 2",
+            song: "Da soli",
+          }}
         />
       ))}
     </div>

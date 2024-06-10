@@ -30,6 +30,7 @@ export default function Comments({ comments }: { comments: Comment[] }) {
               <img
                 src={comment.user.avatar}
                 alt={comment.user.username}
+                draggable={false}
                 className="w-8 h-8 rounded-full"
               />
 
@@ -63,6 +64,7 @@ export default function Comments({ comments }: { comments: Comment[] }) {
           <img
             src="https://michelemanna.me/img/logo.png"
             alt="Michele11"
+            draggable={false}
             className="w-8 h-8 rounded-full"
           />
           <Input

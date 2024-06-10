@@ -26,6 +26,11 @@ function Artists() {
             username: "tonyboy",
             avatar:
               "https://i.scdn.co/image/ab6761610000101f27fcfd9ff73fd86aabf11b54",
+            followers: 0,
+            following: 0,
+            posts: 0,
+            bio: "",
+            public: true,
           }}
           position="🥈"
           streams="10B"
@@ -36,6 +41,11 @@ function Artists() {
             username: "tonyboy",
             avatar:
               "https://i.scdn.co/image/ab6761610000101f27fcfd9ff73fd86aabf11b54",
+            followers: 0,
+            following: 0,
+            posts: 0,
+            bio: "",
+            public: true,
           }}
           position="🥇"
           streams="10B"
@@ -46,13 +56,18 @@ function Artists() {
             username: "tonyboy",
             avatar:
               "https://i.scdn.co/image/ab6761610000101f27fcfd9ff73fd86aabf11b54",
+            followers: 0,
+            following: 0,
+            posts: 0,
+            bio: "",
+            public: true,
           }}
           position="🥉"
           streams="10B"
         />
       </div>
 
-      <div className="flex flex-col gap-3 h-full max-h-[58vh] overflow-y-auto">
+      <div className="flex flex-col gap-3 h-full max-h-[60vh] overflow-y-auto">
         {Array.from({ length: 15 }).map((_, i) => (
           <Artist
             key={i}
@@ -61,6 +76,11 @@ function Artists() {
               username: "tonyboy",
               avatar:
                 "https://i.scdn.co/image/ab6761610000101f27fcfd9ff73fd86aabf11b54",
+              followers: 0,
+              following: 0,
+              posts: 0,
+              bio: "",
+              public: true,
             }}
             position={(i + 4).toString()}
             streams="10B"
