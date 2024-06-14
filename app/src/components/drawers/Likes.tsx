@@ -1,6 +1,10 @@
 import { Drawer, DrawerContent } from "@/components/ui/drawer";
-import { User } from "@/types";
+import { axiosClient } from "@/lib/axios";
+import { User } from "@/types/prisma/models";
+import { useMutation, useQueryClient } from "@tanstack/react-query";
+import { useState } from "react";
 import { useTranslation } from "react-i18next";
+import { useSession } from "../SessionContext";
 import { Button } from "../ui/button";
 import { Input } from "../ui/input";
 
@@ -14,33 +18,92 @@ export default function Likes({
   onOpenChange: (open: boolean) => void;
 }) {
   const { t } = useTranslation();
+  const queryClient = useQueryClient();
+  const [search, setSearch] = useState("");
+  const session = useSession();
+  const follow = useMutation({
+    mutationFn: (user: string) => axiosClient.post(`/users/${user}/follow`),
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ["me"] });
+    },
+  });
+  const unfollow = useMutation({
+    mutationFn: (user: string) => axiosClient.delete(`/users/${user}/unfollow`),
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ["me"] });
+    },
+  });
 
   return (
     <Drawer open={open} onOpenChange={onOpenChange}>
       <DrawerContent className="p-3 flex flex-col gap-3">
         <h4 className="font-semibold text-center">{t("post.likes.title")}</h4>
 
-        <Input placeholder={t("general.search")} className="bg-secondary" />
+        <Input
+          placeholder={t("general.search")}
+          className="bg-secondary"
+          value={search}
+          onChange={(event) => setSearch(event.target.value)}
+        />
 
-        <div className="flex flex-col gap-3">
-          {likes.map((like) => (
-            <div key={like.username} className="flex justify-between">
-              <div className="flex gap-3 items-center">
-                <img
-                  src={like.avatar}
-                  alt={like.username}
-                  draggable={false}
-                  className="w-10 h-10 rounded-full"
-                />
-                <div className="flex flex-col">
-                  <p className="font-semibold">{like.name}</p>
-                  <p className="muted">{like.username}</p>
+        <div className="flex flex-col gap-3 h-[33vh] max-h-[33vh] overflow-y-auto">
+          {likes.length === 0 && (
+            <p className="muted">{t("post.likes.empty")}</p>
+          )}
+
+          {likes
+            .filter(
+              (user) =>
+                user.name.toLowerCase().includes(search.toLowerCase()) ||
+                user.username.toLowerCase().includes(search.toLowerCase())
+            )
+            .map((like) => (
+              <div key={like.username} className="flex justify-between">
+                <div className="flex gap-3 items-center">
+                  <img
+                    src={like.avatarId}
+                    alt={like.username}
+                    draggable={false}
+                    className="w-10 h-10 rounded-full"
+                  />
+                  <div className="flex flex-col">
+                    <p className="font-semibold max-w-[14rem] text-ellipsis whitespace-nowrap overflow-hidden">
+                      {like.name}
+                    </p>
+                    <p className="muted max-w-[14rem] text-ellipsis whitespace-nowrap overflow-hidden">
+                      {like.username}
+                    </p>
+                  </div>
                 </div>
-              </div>
 
-              <Button>{t("general.follow")}</Button>
-            </div>
-          ))}
+                {session?.username !== like.username && (
+                  <Button
+                    onClick={() => {
+                      if (
+                        !session?.following.find(
+                          (user) => user.followingId === like.id
+                        )
+                      )
+                        follow.mutate(like.id);
+                      else unfollow.mutate(like.id);
+                    }}
+                    className={
+                      !session?.following.find(
+                        (user) => user.followingId === like.id
+                      )
+                        ? ""
+                        : "bg-secondary"
+                    }
+                  >
+                    {!session?.following.find(
+                      (user) => user.followingId === like.id
+                    )
+                      ? t("general.follow")
+                      : t("general.unfollow")}
+                  </Button>
+                )}
+              </div>
+            ))}
         </div>
       </DrawerContent>
     </Drawer>

@@ -1,0 +1,114 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+generator class_validator {
+  provider = "prisma-class-validator-generator"
+}
+
+datasource db {
+  provider = "mongodb"
+  url      = env("DATABASE_URL")
+}
+
+model User {
+  id        String  @id @default(auto()) @map("_id") @db.ObjectId
+  username  String  @unique
+  bio       String?
+  name      String
+  email     String  @unique
+  avatarId  String? @db.ObjectId
+  password  String?
+  private   Boolean @default(false)
+  spotifyId String?
+
+  followers        Follows[]    @relation("following")
+  following        Follows[]    @relation("follower")
+  posts            Post[]
+  comments         Comment[]
+  messagesSent     Message[]    @relation("sender")
+  messagesReceived Message[]    @relation("receiver")
+  attachments      Attachment[]
+}
+
+model Follows {
+  id          String @id @default(auto()) @map("_id") @db.ObjectId
+  follower    User   @relation("follower", fields: [followerId], references: [id], onDelete: Cascade)
+  followerId  String @db.ObjectId
+  following   User   @relation("following", fields: [followingId], references: [id], onDelete: Cascade)
+  followingId String @db.ObjectId
+}
+
+model Post {
+  id        String   @id @default(auto()) @map("_id") @db.ObjectId
+  name      String
+  createdAt DateTime @default(now())
+  image     String
+  likes     String[]
+  userId    String   @db.ObjectId
+  urlId     String   @unique @db.ObjectId
+  type      PostType
+
+  user User      @relation(fields: [userId], references: [id], onDelete: Cascade)
+  urls SocialUrl @relation(fields: [urlId], references: [id], onDelete: Cascade)
+
+  comments Comment[]
+
+  @@unique([name, userId])
+}
+
+model Comment {
+  id        String   @id @default(auto()) @map("_id") @db.ObjectId
+  text      String
+  createdAt DateTime @default(now())
+  likes     String[]
+  userId    String   @db.ObjectId
+  postId    String   @db.ObjectId
+
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+  post Post @relation(fields: [postId], references: [id], onDelete: Cascade)
+}
+
+model SocialUrl {
+  id      String @id @default(auto()) @map("_id") @db.ObjectId
+  spotify String
+  amazon  String
+  apple   String
+
+  posts Post[]
+}
+
+enum PostType {
+  ALBUM
+  SONG
+}
+
+model Message {
+  id        String   @id @default(auto()) @map("_id") @db.ObjectId
+  text      String
+  read      Boolean  @default(false)
+  createdAt DateTime @default(now())
+
+  sender     User   @relation("sender", fields: [senderId], references: [id], onDelete: Cascade)
+  senderId   String @db.ObjectId
+  receiver   User   @relation("receiver", fields: [receiverId], references: [id], onDelete: Cascade)
+  receiverId String @db.ObjectId
+  replyId   String? @db.ObjectId
+}
+
+model Attachment {
+  id        String         @id @default(auto()) @map("_id") @db.ObjectId
+  data      Bytes
+  name      String
+  userId    String         @db.ObjectId
+  createdAt DateTime       @default(now())
+  type      AttachmentType
+
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+}
+
+enum AttachmentType {
+  IMAGE
+  AUDIO
+  VIDEO
+}

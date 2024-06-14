@@ -1,14 +1,44 @@
-import { serve } from '@hono/node-server'
-import { Hono } from 'hono'
+import "dotenv/config";
+import { readdirSync } from "fs";
+import { Hono } from "hono";
+import { createBunWebSocket } from "hono/bun";
+import { cors } from "hono/cors";
+import { logger } from "hono/logger";
+import { prettyJSON } from "hono/pretty-json";
+import path from "path";
 
-const app = new Hono()
+const { upgradeWebSocket, websocket } = createBunWebSocket();
 
-// Add your routes here
+export const app = new Hono();
+export { upgradeWebSocket };
 
-const port = 8000
-console.log(`Server is running on port ${port}`)
+app.use(logger());
+app.use(prettyJSON());
+app.use(
+  cors({
+    origin: "*",
+    allowHeaders: ["Authorization", "Content-Type"],
+    allowMethods: ["POST", "GET", "OPTIONS", "PUT", "DELETE"],
+    exposeHeaders: ["Content-Length", "Content-Type"],
+    maxAge: 600,
+    credentials: true,
+  })
+);
 
-serve({
+readdirSync(path.join(__dirname, "routes")).forEach((file) => {
+  if (file.endsWith(".ts") || file.endsWith(".js")) {
+    import(`./routes/${file}`).then((module) => {
+      app.route(`/${file.split(".")[0]}`, module.default);
+      console.log(`[Route] /${file.split(".")[0]} loaded`);
+    });
+  }
+});
+
+const port = 8000;
+console.log(`[Server] Running on port ${port}`);
+
+Bun.serve({
   fetch: app.fetch,
-  port
-})
+  port,
+  websocket,
+});

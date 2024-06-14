@@ -28,7 +28,7 @@ export default function Notification({
     <div className="flex flex-row gap-3 w-full items-center">
       <img
         src={image}
-        alt="Michele"
+        alt={text.toString()}
         draggable={false}
         className="w-10 h-10 rounded-full"
       />
@@ -40,7 +40,7 @@ export default function Notification({
 
       {button && (
         <Button className="ml-auto" asChild>
-          <Link href={button.href}>{button.text}</Link>
+          <Link to={button.href}>{button.text}</Link>
         </Button>
       )}
     </div>

@@ -10,7 +10,8 @@
     "new": "Nuovi"
   },
   "post": {
-    "type": "Album",
+    "song": "Canzone",
+    "album": "Album",
     "actions": {
       "title": "Azioni",
       "share": "Condividi",
@@ -18,10 +19,12 @@
       "hide": "Nascondi"
     },
     "likes": {
-      "title": "Mi piace"
+      "title": "Mi piace",
+      "empty": "Nessuno ha messo mi piace a questo post"
     },
     "comments": {
       "title": "Commenti",
+      "empty": "Nessuno ha commentato questo post",
       "count_one": "Vedi {{count}} commento",
       "count_other": "Vedi {{count}} commenti",
       "reply": "Rispondi",

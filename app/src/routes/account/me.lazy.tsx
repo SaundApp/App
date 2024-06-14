@@ -57,7 +57,7 @@ function Me() {
         <div className="flex items-center justify-between">
           <img
             src={user.avatar}
-            alt="Avatar"
+            alt={user.name}
             draggable={false}
             className="w-20 h-20 rounded-full"
           />
@@ -82,12 +82,7 @@ function Me() {
         <p className="muted">{user.bio}</p>
       </div>
 
-      <div className="flex items-center gap-3 w-full">
-        <Button className="w-full">{t("account.edit_profile")}</Button>
-        <Button className="w-full" variant="secondary">
-          {t("account.share")}
-        </Button>
-      </div>
+      <Button className="w-full">{t("account.edit_profile")}</Button>
 
       <Button className="w-full" variant="secondary">
         {t("account.edit_subscription")}

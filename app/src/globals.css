@@ -88,3 +88,19 @@ h4 {
 .muted {
   @apply text-sm text-muted-foreground;
 }
+
+.rstra-content-container {
+  background: transparent !important;
+}
+
+.black-to-white {
+  @apply brightness-0 saturate-[100%] invert sepia-[0%] hue-rotate-[255deg] contrast-[100%];
+}
+
+.w-semifull {
+  width: calc(100vw - 1.5rem) !important;
+}
+
+textarea:focus-visible {
+  box-shadow: none !important;
+}

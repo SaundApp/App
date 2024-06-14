@@ -1,11 +1,11 @@
-import type { LeaderboardArtist } from "@/types";
 import { Link } from "@tanstack/react-router";
 
+// TODO: Leaderboard
 export default function TopArtist({
   user,
   position,
   streams,
-}: LeaderboardArtist) {
+}: any) {
   return (
     <Link
       className={
@@ -15,7 +15,7 @@ export default function TopArtist({
       <div className="relative mb-3">
         <img
           src={user.avatar}
-          alt="Michele"
+          alt={user.name}
           draggable={false}
           className="w-20 h-20 rounded-full"
         />

@@ -1,6 +1,7 @@
 {
   "general": {
     "follow": "Follow",
+    "unfollow": "Unfollow",
     "search": "Search",
     "notifications": "Notifications",
     "today": "Today"
@@ -10,24 +11,26 @@
     "new": "New"
   },
   "post": {
-    "type": "Album",
+    "song": "Song",
+    "album": "Album",
     "actions": {
       "title": "Actions",
-      "share": "Share",
       "not_interested": "Not interested",
       "hide": "Hide"
     },
     "likes": {
-      "title": "Likes"
+      "title": "Likes",
+      "empty": "No likes yet"
     },
     "comments": {
       "title": "Comments",
+      "empty": "No comments yet",
       "count_one": "See {{count}} comment",
       "count_other": "See {{count}} comments",
-      "reply": "Reply",
-      "see_replies_one": "See {{count}} reply",
-      "see_replies_other": "See other {{count}} replies",
       "placeholder": "Write a comment..."
+    },
+    "share": {
+      "search": "Search"
     }
   },
   "leaderboard": {
@@ -39,8 +42,21 @@
     "follower": "Follower",
     "following": "Following",
     "edit_profile": "Edit",
-    "share": "Share profile",
     "edit_subscription": "Edit subscription",
     "listners": "Listeners"
+  },
+  "messages": {
+    "messages": "Messages",
+    "send": "Send a message",
+    "delete": "Delete",
+    "mute": "Mute",
+    "no-messages": "No messages yet",
+    "search": "Search",
+    "post": "Post"
+  },
+  "dm": {
+    "reply": "Reply",
+    "edit": "Edit",
+    "copy": "Copy"
   }
 }

@@ -1,8 +1,10 @@
 import { Link } from "@tanstack/react-router";
 import { FaHeart, FaHome, FaSearch } from "react-icons/fa";
 import { SiGoogleanalytics } from "react-icons/si";
+import { useSession } from "./SessionContext";
 
 export default function Navbar() {
+  const session = useSession();
   return (
     <nav
       className="flex fixed bottom-0 items-center justify-between mt-auto bg-background p-3"
@@ -24,8 +26,8 @@ export default function Navbar() {
       </Link>
       <Link to="/account/me">
         <img
-          src="https://michelemanna.me/img/logo.png"
-          alt="Michele Manna"
+          src={session?.avatarId}
+          alt={session?.username}
           className="w-8 h-8 rounded-full"
         />
       </Link>

@@ -1,68 +1,35 @@
 import Post from "@/components/Post";
-import { createLazyFileRoute } from "@tanstack/react-router";
+import { axiosClient } from "@/lib/axios";
+import { useQuery } from "@tanstack/react-query";
+import { Link, createLazyFileRoute } from "@tanstack/react-router";
+import { useState } from "react";
 import { FaPaperPlane } from "react-icons/fa";
+import { Post as PostType } from "../types/prisma/models";
 
 export const Route = createLazyFileRoute("/")({
   component: Index,
 });
 
 function Index() {
+  // TODO: Pagination
+  const [page] = useState(0);
+  const { data } = useQuery<PostType[]>({
+    queryKey: ["posts", page],
+    queryFn: () => axiosClient.get("/posts").then((res) => res.data),
+  });
+
   return (
     <div className="flex flex-col gap-3 h-full max-h-[93vh] overflow-y-auto">
       <div className="flex justify-between items-center">
         <h1>Saund</h1>
-        <FaPaperPlane fontSize={25} />
+        <Link to="/dm">
+          <FaPaperPlane fontSize={25} />
+        </Link>
       </div>
 
-      {Array.from({ length: 3 }).map((_, index) => (
-        <Post
-          key={index}
-          post={{
-            user: {
-              name: "Michele Manna",
-              username: "michelemanna",
-              avatar: "https://michelemanna.me/img/logo.png",
-              followers: 0,
-              following: 0,
-              posts: 0,
-              bio: "",
-              public: true,
-            },
-            likes: [
-              {
-                name: "Michele Manna",
-                username: "michelemanna",
-                avatar: "https://michelemanna.me/img/logo.png",
-                followers: 0,
-                following: 0,
-                posts: 0,
-                bio: "",
-                public: true,
-              },
-            ],
-            comments: [
-              {
-                user: {
-                  name: "Michele Manna",
-                  username: "michelemanna",
-                  avatar: "https://michelemanna.me/img/logo.png",
-                  followers: 0,
-                  following: 0,
-                  posts: 0,
-                  bio: "",
-                  public: true,
-                },
-                createdAt: Date.now(),
-                content: "This is a comment",
-                replies: [],
-              },
-            ],
-            url: "https://i.scdn.co/image/ab67616d00001e023c0eada9fb45ba9d43116f1d",
-            name: "Going Hard 2",
-            song: "Da soli",
-          }}
-        />
-      ))}
+      <div className="flex flex-col gap-6">
+        {data?.map((post) => <Post key={post.id} post={post} />)}
+      </div>
     </div>
   );
 }

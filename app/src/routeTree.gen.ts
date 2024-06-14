@@ -19,8 +19,11 @@ import { Route as rootRoute } from './routes/__root'
 const SearchLazyImport = createFileRoute('/search')()
 const NotificationsLazyImport = createFileRoute('/notifications')()
 const IndexLazyImport = createFileRoute('/')()
+const DmIndexLazyImport = createFileRoute('/dm/')()
 const LeaderboardSongsLazyImport = createFileRoute('/leaderboard/songs')()
 const LeaderboardArtistsLazyImport = createFileRoute('/leaderboard/artists')()
+const EditProfileLazyImport = createFileRoute('/edit/profile')()
+const DmUsernameLazyImport = createFileRoute('/dm/$username')()
 const AccountMeLazyImport = createFileRoute('/account/me')()
 
 // Create/Update Routes
@@ -40,6 +43,11 @@ const IndexLazyRoute = IndexLazyImport.update({
   getParentRoute: () => rootRoute,
 } as any).lazy(() => import('./routes/index.lazy').then((d) => d.Route))
 
+const DmIndexLazyRoute = DmIndexLazyImport.update({
+  path: '/dm/',
+  getParentRoute: () => rootRoute,
+} as any).lazy(() => import('./routes/dm/index.lazy').then((d) => d.Route))
+
 const LeaderboardSongsLazyRoute = LeaderboardSongsLazyImport.update({
   path: '/leaderboard/songs',
   getParentRoute: () => rootRoute,
@@ -53,6 +61,16 @@ const LeaderboardArtistsLazyRoute = LeaderboardArtistsLazyImport.update({
 } as any).lazy(() =>
   import('./routes/leaderboard/artists.lazy').then((d) => d.Route),
 )
+
+const EditProfileLazyRoute = EditProfileLazyImport.update({
+  path: '/edit/profile',
+  getParentRoute: () => rootRoute,
+} as any).lazy(() => import('./routes/edit/profile.lazy').then((d) => d.Route))
+
+const DmUsernameLazyRoute = DmUsernameLazyImport.update({
+  path: '/dm/$username',
+  getParentRoute: () => rootRoute,
+} as any).lazy(() => import('./routes/dm/$username.lazy').then((d) => d.Route))
 
 const AccountMeLazyRoute = AccountMeLazyImport.update({
   path: '/account/me',
@@ -91,6 +109,20 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AccountMeLazyImport
       parentRoute: typeof rootRoute
     }
+    '/dm/$username': {
+      id: '/dm/$username'
+      path: '/dm/$username'
+      fullPath: '/dm/$username'
+      preLoaderRoute: typeof DmUsernameLazyImport
+      parentRoute: typeof rootRoute
+    }
+    '/edit/profile': {
+      id: '/edit/profile'
+      path: '/edit/profile'
+      fullPath: '/edit/profile'
+      preLoaderRoute: typeof EditProfileLazyImport
+      parentRoute: typeof rootRoute
+    }
     '/leaderboard/artists': {
       id: '/leaderboard/artists'
       path: '/leaderboard/artists'
@@ -105,6 +137,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof LeaderboardSongsLazyImport
       parentRoute: typeof rootRoute
     }
+    '/dm/': {
+      id: '/dm/'
+      path: '/dm'
+      fullPath: '/dm'
+      preLoaderRoute: typeof DmIndexLazyImport
+      parentRoute: typeof rootRoute
+    }
   }
 }
 
@@ -115,8 +154,11 @@ export const routeTree = rootRoute.addChildren({
   NotificationsLazyRoute,
   SearchLazyRoute,
   AccountMeLazyRoute,
+  DmUsernameLazyRoute,
+  EditProfileLazyRoute,
   LeaderboardArtistsLazyRoute,
   LeaderboardSongsLazyRoute,
+  DmIndexLazyRoute,
 })
 
 /* prettier-ignore-end */
@@ -131,8 +173,11 @@ export const routeTree = rootRoute.addChildren({
         "/notifications",
         "/search",
         "/account/me",
+        "/dm/$username",
+        "/edit/profile",
         "/leaderboard/artists",
-        "/leaderboard/songs"
+        "/leaderboard/songs",
+        "/dm/"
       ]
     },
     "/": {
@@ -147,11 +192,20 @@ export const routeTree = rootRoute.addChildren({
     "/account/me": {
       "filePath": "account/me.lazy.tsx"
     },
+    "/dm/$username": {
+      "filePath": "dm/$username.lazy.tsx"
+    },
+    "/edit/profile": {
+      "filePath": "edit/profile.lazy.tsx"
+    },
     "/leaderboard/artists": {
       "filePath": "leaderboard/artists.lazy.tsx"
     },
     "/leaderboard/songs": {
       "filePath": "leaderboard/songs.lazy.tsx"
+    },
+    "/dm/": {
+      "filePath": "dm/index.lazy.tsx"
     }
   }
 }
