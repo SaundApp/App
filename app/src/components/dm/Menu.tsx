@@ -19,11 +19,11 @@ export default function Menu({
 
   return (
     <ContextMenuContent>
+      <ContextMenuItem onClick={() => setReplying(message.id)}>
+        {t("dm.reply")}
+      </ContextMenuItem>
       {!song && (
         <>
-          <ContextMenuItem onClick={() => setReplying(message.id)}>
-            {t("dm.reply")}
-          </ContextMenuItem>
           <ContextMenuItem
             onClick={() => {
               setEditing(message.id);

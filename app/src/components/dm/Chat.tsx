@@ -76,7 +76,7 @@ export default function Chat({
           <div className="flex gap-1 items-center">
             <p className="max-w-[14rem] text-ellipsis whitespace-nowrap overflow-hidden">
               {message.startsWith(`${import.meta.env.VITE_APP_URL}/`)
-                ? t("messages.post")
+                ? t("messages.attachment")
                 : message}
             </p>
             <p className="muted"> • </p>

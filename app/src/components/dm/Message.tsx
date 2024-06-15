@@ -1,5 +1,7 @@
 import { Message } from "@/types/prisma/models";
 import moment from "moment";
+import { useTranslation } from "react-i18next";
+import { FaReplyAll } from "react-icons/fa";
 import { ContextMenu, ContextMenuTrigger } from "../ui/context-menu";
 import Attachment from "./Attachment";
 import Menu from "./Menu";
@@ -11,13 +13,17 @@ export default function MessageComponent({
   websocket,
   setEditing,
   setReplying,
+  reply,
 }: {
   message: Message;
   self: boolean;
   websocket: WebSocket | null;
   setEditing: (messageId: string) => void;
   setReplying: (messageId: string) => void;
+  reply: Message | undefined;
 }) {
+  const { t } = useTranslation();
+
   if (message.text.startsWith(`${import.meta.env.VITE_APP_URL}/?attachment=`))
     return (
       <Attachment
@@ -43,17 +49,33 @@ export default function MessageComponent({
 
   return (
     <ContextMenu>
-      <ContextMenuTrigger
-        disabled={!self}
-        className={
-          "relative flex justify-between items-center rounded-lg p-3 pb-4 w-fit min-w-36 max-w-72 text-pretty break-all " +
-          (self ? "bg-primary ml-auto" : "bg-secondary")
-        }
-      >
-        <p>{message.text}</p>
-        <span className="absolute muted bottom-1 right-3">
-          {moment(message.createdAt).format("hh:mm")}
-        </span>
+      <ContextMenuTrigger disabled={!self}>
+        {reply && (
+          <div className={"flex gap-1 w-fit " + (self ? "ml-auto" : "")}>
+            <div className="flex items-center gap-1">
+              <FaReplyAll className="muted" />
+              <span className="muted">{t("dm.message.reply")}</span>
+            </div>
+
+            <span className="max-w-[3rem] text-ellipsis whitespace-nowrap overflow-hidden">
+              {reply.text.startsWith(`${import.meta.env.VITE_APP_URL}/`)
+                ? t("dm.message.attachment")
+                : reply.text}
+            </span>
+          </div>
+        )}
+
+        <div
+          className={
+            "relative flex justify-between items-center rounded-lg p-3 pb-4 w-fit min-w-36 max-w-72 text-pretty break-all " +
+            (self ? "bg-primary ml-auto" : "bg-secondary")
+          }
+        >
+          <p>{message.text}</p>
+          <span className="absolute muted bottom-1 right-3">
+            {moment(message.createdAt).format("hh:mm")}
+          </span>
+        </div>
       </ContextMenuTrigger>
 
       <Menu

@@ -8,6 +8,7 @@
     "@spotify/web-api-ts-sdk": "^1.2.0",
     "class-validator": "^0.14.1",
     "dotenv": "^16.4.5",
+    "form-types": "link:..\\form-types",
     "hono": "^4.4.4",
     "prisma-class-validator-generator": "^5.0.0",
     "spotify-web-api-node": "^5.0.2",

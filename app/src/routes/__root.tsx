@@ -1,6 +1,7 @@
 import Navbar from "@/components/Navbar";
 import { SessionContext } from "@/components/SessionContext";
 import { ThemeProvider } from "@/components/ThemeProvider";
+import { Toaster } from "@/components/ui/toaster";
 import { axiosClient } from "@/lib/axios";
 import { User } from "@/types/prisma/models";
 import { useQuery, useQueryClient } from "@tanstack/react-query";
@@ -18,9 +19,12 @@ export const Route = createRootRoute({
 function App() {
   const router = useRouterState();
   const queryClient = useQueryClient();
-  const { data } = useQuery<User>({
+  const { data } = useQuery<User | null>({
     queryKey: ["me"],
-    queryFn: () => axiosClient.get("/auth/me").then((res) => res.data),
+    queryFn: () =>
+      localStorage.getItem("token")
+        ? axiosClient.get("/auth/me").then((res) => res.data)
+        : null,
   });
   const [session, setSession] = useState<User | null>(null);
 
@@ -33,6 +37,11 @@ function App() {
   useEffect(() => {
     if (localStorage.getItem("token")) {
       queryClient.invalidateQueries({ queryKey: ["me"] });
+    } else if (
+      router.location.pathname !== "/auth/login" &&
+      router.location.pathname !== "/auth/register"
+    ) {
+      location.href = "/auth/login";
     }
   }, [localStorage.getItem("token")]);
 
@@ -44,6 +53,7 @@ function App() {
         >
           <Outlet />
           {router.location.pathname.match(/^(?!\/dm\/\w+).*/g) && <Navbar />}
+          <Toaster />
         </main>
       </SessionContext.Provider>
     </ThemeProvider>

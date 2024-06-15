@@ -104,3 +104,7 @@ h4 {
 textarea:focus-visible {
   box-shadow: none !important;
 }
+
+input:focus-visible {
+  box-shadow: none !important;
+}

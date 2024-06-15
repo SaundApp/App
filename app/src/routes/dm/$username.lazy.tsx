@@ -7,8 +7,10 @@ import { createLazyFileRoute, Link } from "@tanstack/react-router";
 import { useEffect, useRef, useState } from "react";
 import { useAudioRecorder } from "react-audio-voice-recorder";
 import { useTranslation } from "react-i18next";
-import { FaCamera, FaChevronLeft } from "react-icons/fa";
+import { FaCamera, FaChevronLeft, FaReplyAll } from "react-icons/fa";
+import { FaXmark } from "react-icons/fa6";
 import VoiceRecorder from "../../components/dm/VoiceRecorder";
+import { useToast } from "@/components/ui/use-toast";
 
 export const Route = createLazyFileRoute("/dm/$username")({
   component: Chat,
@@ -29,6 +31,7 @@ function Chat() {
   const [editing, setEditing] = useState<string | null>(null);
   const [replying, setReplying] = useState<string | null>(null);
   const { username } = Route.useParams();
+  const { toast } = useToast();
   const image = useRef<HTMLInputElement>(null);
   const { data } = useQuery<MessageType[]>({
     queryKey: ["dm", username],
@@ -118,7 +121,7 @@ function Chat() {
     <div
       className="flex flex-col gap-3 justify-between"
       style={{
-        height: "calc(100vh - 4.75rem)",
+        height: "calc(100vh - 3.75rem)",
       }}
     >
       <div className="flex gap-3 items-center">
@@ -142,7 +145,12 @@ function Chat() {
           </p>
         </div>
       </div>
-      <div className="flex gap-3 h-full max-h-[83vh] overflow-y-auto flex-col-reverse">
+      <div
+        className="flex gap-3 h-full overflow-y-auto flex-col-reverse"
+        style={{
+          maxHeight: !replying ? "83vh" : "80vh",
+        }}
+      >
         {messages.map((message) => (
           <Message
             key={message.id}
@@ -151,73 +159,113 @@ function Chat() {
             websocket={webSocket}
             setEditing={setEditing}
             setReplying={setReplying}
+            reply={
+              message.replyId
+                ? messages.find((msg) => msg.id === message.replyId)
+                : undefined
+            }
           />
         ))}
       </div>
 
       <form
-        className="absolute bottom-4 left-2 flex justify-center items-center gap-3"
-        style={{
-          width: "calc(100% - 1rem)",
-        }}
         onSubmit={(e) => {
           e.preventDefault();
           handleSubmit();
         }}
       >
-        <input
-          type="file"
-          id="file"
-          hidden
-          accept="image/png,video/mp4"
-          ref={image}
-          onChange={(e) => {
-            const formData = new FormData();
-            formData.append("file", e.target.files![0]);
-            formData.append("type", e.target.files![0].type.split("/")[0]);
-
-            axiosClient
-              .post("/attachments/upload", formData)
-              .then((res) => res.data)
-              .then((data) => {
-                webSocket?.send(
-                  "+" + `${import.meta.env.VITE_APP_URL}/?attachment=${data.id}`
-                );
-              });
-
-            e.target.value = "";
+        <div
+          className="absolute bottom-4 left-2 flex justify-center items-end gap-3"
+          style={{
+            width: "calc(100% - 1rem)",
           }}
-        />
-        {!recorderControls.isRecording && !recorderControls.isPaused && (
-          <>
-            <button
-              className="w-10 h-10 flex items-center justify-center my-auto"
-              onClick={() => {
-                image.current?.click();
-              }}
-            >
-              <FaCamera size={20} />
-            </button>
+        >
+          <input
+            type="file"
+            id="file"
+            hidden
+            accept="image/png,video/mp4"
+            ref={image}
+            onChange={(e) => {
+              const formData = new FormData();
+              formData.append("file", e.target.files![0]);
+              formData.append("type", e.target.files![0].type.split("/")[0]);
 
-            <Textarea
-              placeholder={t("messages.send")}
-              className="bg-secondary w-4/5 h-10 items-center min-h-0 resize-none"
-              rows={1}
-              value={message}
-              onChange={(event) => setMessage(event.target.value)}
-              onKeyDown={(event) => {
-                if (event.key === "Enter" && !event.shiftKey) {
-                  event.preventDefault();
+              axiosClient
+                .post("/attachments/upload", formData)
+                .then((res) => res.data)
+                .then((data) => {
+                  webSocket?.send(
+                    "+" +
+                      `${import.meta.env.VITE_APP_URL}/?attachment=${data.id}`
+                  );
+                })
+                .catch(() => {
+                  toast({
+                    variant: "destructive",
+                    description: t("dm.message.attachment_error"),
+                  });
+                });
 
-                  handleSubmit();
-                }
-              }}
-            />
-          </>
-        )}
-        <button className="flex items-center justify-center h-full">
-          <VoiceRecorder controls={recorderControls} websocket={webSocket} />
-        </button>
+              e.target.value = "";
+            }}
+          />
+          {!recorderControls.isRecording && !recorderControls.isPaused && (
+            <>
+              <button
+                className="w-10 h-10 flex items-center justify-center mt-auto"
+                onClick={() => {
+                  image.current?.click();
+                }}
+              >
+                <FaCamera size={20} />
+              </button>
+
+              <div className="w-4/5">
+                {replying && (
+                  <div className="flex justify-between">
+                    <div className="flex gap-1 w-fit">
+                      <div className="flex items-center gap-1">
+                        <FaReplyAll className="muted" />
+                        <span className="muted">{t("dm.message.reply")}</span>
+                      </div>
+
+                      <span className="max-w-[3rem] text-ellipsis whitespace-nowrap overflow-hidden">
+                        {messages
+                          .find((msg) => msg.id === replying)
+                          ?.text.startsWith(`${import.meta.env.VITE_APP_URL}/`)
+                          ? t("dm.message.attachment")
+                          : messages.find((msg) => msg.id === replying)?.text}
+                      </span>
+                    </div>
+
+                    <button onClick={() => setReplying(null)}>
+                      <FaXmark className="muted" />
+                    </button>
+                  </div>
+                )}
+
+                <Textarea
+                  placeholder={t("messages.send")}
+                  className="bg-secondary w-full h-10 items-center min-h-0 resize-none"
+                  rows={1}
+                  value={message}
+                  onChange={(event) => setMessage(event.target.value)}
+                  onKeyDown={(event) => {
+                    if (event.key === "Enter" && !event.shiftKey) {
+                      event.preventDefault();
+
+                      handleSubmit();
+                    }
+                  }}
+                />
+              </div>
+            </>
+          )}
+          <button className="flex items-center justify-center h-full">
+            <VoiceRecorder controls={recorderControls} websocket={webSocket} />
+          </button>
+        </div>
       </form>
     </div>
   );

@@ -1,5 +1,7 @@
 import { axiosClient } from "@/lib/axios";
 import { AudioRecorder } from "react-audio-voice-recorder";
+import { useTranslation } from "react-i18next";
+import { useToast } from "../ui/use-toast";
 
 export default function VoiceRecorder({
   controls,
@@ -8,15 +10,24 @@ export default function VoiceRecorder({
   controls: any;
   websocket: WebSocket | null;
 }) {
+  const { t } = useTranslation();
+  const { toast } = useToast();
   const sendAudio = async (blob: Blob) => {
     const formData = new FormData();
     formData.append("file", blob, "audio.wav");
     formData.append("type", "audio");
 
-    const { data } = await axiosClient.post("/attachments/upload", formData);
-    websocket?.send(
-      "+" + `${import.meta.env.VITE_APP_URL}/?attachment=${data.id}`
-    );
+    try {
+      const { data } = await axiosClient.post("/attachments/upload", formData);
+      websocket?.send(
+        "+" + `${import.meta.env.VITE_APP_URL}/?attachment=${data.id}`
+      );
+    } catch (_) {
+      toast({
+        variant: "destructive",
+        description: t("dm.message.attachment_error"),
+      });
+    }
   };
 
   return (

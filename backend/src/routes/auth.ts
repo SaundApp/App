@@ -1,4 +1,5 @@
 import { zValidator } from "@hono/zod-validator";
+import { loginSchema, registerSchema } from "form-types";
 import { Hono } from "hono";
 import { jwt, JwtVariables, sign, verify } from "hono/jwt";
 import SpotifyWebApi from "spotify-web-api-node";
@@ -13,131 +14,102 @@ const credentials = {
   redirectUri: process.env.APP_URL + "/auth/callback/spotify",
 };
 
-hono.post(
-  "/register",
-  zValidator(
-    "form",
-    z
-      .object({
-        username: z
-          .string()
-          .min(3)
-          .max(20)
-          .regex(/^[a-zA-Z0-9_]+$/),
-        name: z.string(),
-        email: z.string().email(),
-        password: z.string(),
-        confirmPassword: z.string(),
-      })
-      .superRefine(({ confirmPassword, password }, ctx) => {
-        if (confirmPassword !== password) {
-          ctx.addIssue({
-            code: "custom",
-            message: "The passwords did not match",
-            path: ["confirmPassword"],
-          });
-        }
-      })
-  ),
-  async (ctx) => {
-    const body = ctx.req.valid("form");
-    const existing = await prisma.user.findFirst({
-      where: {
-        OR: [
-          {
-            username: {
-              equals: body.username,
-              mode: "insensitive",
-            },
+hono.post("/register", zValidator("json", registerSchema), async (ctx) => {
+  const body = ctx.req.valid("json");
+  const existing = await prisma.user.findFirst({
+    where: {
+      OR: [
+        {
+          username: {
+            equals: body.username,
+            mode: "insensitive",
           },
-          {
-            email: {
-              equals: body.email,
-              mode: "insensitive",
-            },
+        },
+        {
+          email: {
+            equals: body.email,
+            mode: "insensitive",
           },
-        ],
-      },
-    });
-
-    if (existing) {
-      return ctx.json(
-        {
-          error: "User already exists",
         },
-        400
-      );
-    }
+      ],
+    },
+  });
 
-    const hashedPassword = await Bun.password.hash(body.password);
-    const user = await prisma.user.create({
-      data: {
-        username: body.username,
-        name: body.name,
-        email: body.email,
-        password: hashedPassword,
-      },
-    });
-
-    return ctx.json({
-      ...user,
-      password: undefined,
-    });
-  }
-);
-
-hono.post(
-  "/login",
-  zValidator(
-    "form",
-    z.object({
-      username: z.string(),
-      password: z.string(),
-    })
-  ),
-  async (ctx) => {
-    const body = ctx.req.valid("form");
-    const user = await prisma.user.findUnique({
-      where: {
-        username: body.username,
-      },
-    });
-
-    if (!user || !user.password) {
-      return ctx.json(
-        {
-          error: "User not found",
-        },
-        404
-      );
-    }
-
-    const passwordMatch = await Bun.password.verify(body.password, user.password);
-
-    if (!passwordMatch) {
-      return ctx.json(
-        {
-          error: "Password is incorrect",
-        },
-        400
-      );
-    }
-
-    const token = await sign(
+  if (existing) {
+    return ctx.json(
       {
-        user: user.id,
-        exp: Math.floor(Date.now() / 1000) + 60 * 60 * 24 * 7,
+        error: "User already exists",
       },
-      process.env.JWT_SECRET!
+      400
     );
-
-    return ctx.json({
-      ...user,
-      token,
-      password: undefined,
-    });
   }
-);
+
+  const hashedPassword = await Bun.password.hash(body.password);
+  const user = await prisma.user.create({
+    data: {
+      username: body.username,
+      name: body.name,
+      email: body.email,
+      password: hashedPassword,
+    },
+  });
+  const token = await sign(
+    {
+      user: user.id,
+      exp: Math.floor(Date.now() / 1000) + 60 * 60 * 24 * 7,
+    },
+    process.env.JWT_SECRET!
+  );
+
+  return ctx.json({
+    ...user,
+    token,
+    password: undefined,
+  });
+});
+
+hono.post("/login", zValidator("json", loginSchema), async (ctx) => {
+  const body = ctx.req.valid("json");
+  const user = await prisma.user.findUnique({
+    where: {
+      username: body.username,
+    },
+  });
+
+  if (!user || !user.password) {
+    return ctx.json(
+      {
+        error: "User not found",
+      },
+      404
+    );
+  }
+
+  const passwordMatch = await Bun.password.verify(body.password, user.password);
+
+  if (!passwordMatch) {
+    return ctx.json(
+      {
+        error: "Password is incorrect",
+      },
+      400
+    );
+  }
+
+  const token = await sign(
+    {
+      user: user.id,
+      exp: Math.floor(Date.now() / 1000) + 60 * 60 * 24 * 7,
+    },
+    process.env.JWT_SECRET!
+  );
+
+  return ctx.json({
+    ...user,
+    token,
+    password: undefined,
+  });
+});
 
 hono.get("/me", jwt({ secret: process.env.JWT_SECRET! }), async (ctx) => {
   const payload = ctx.get("jwtPayload");
@@ -248,11 +220,9 @@ hono.get("/callback/spotify", async (ctx) => {
       process.env.JWT_SECRET!
     );
 
-    return ctx.json({
-      ...user,
-      password: undefined,
-      token,
-    });
+    return ctx.redirect(
+      process.env.FRONTEND_URL + "/auth/login?token=" + token
+    );
   } catch (error) {
     return ctx.json(
       {

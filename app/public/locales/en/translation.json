@@ -52,11 +52,26 @@
     "mute": "Mute",
     "no-messages": "No messages yet",
     "search": "Search",
-    "post": "Post"
+    "attachment": "Attachment"
   },
   "dm": {
     "reply": "Reply",
     "edit": "Edit",
-    "copy": "Copy"
+    "copy": "Copy",
+    "message": {
+      "reply": "Replying to:",
+      "attachment": "Attachment",
+      "attachment_error": "The file is too large. The maximum file size is 10MB"
+    }
+  },
+  "auth": {
+    "register": "Register",
+    "forgot_password": "Forgot password?",
+    "login_error": "Invalid email or password",
+    "register_error": "The username is already taken",
+    "min_username": "Username must be at least 3 characters",
+    "max_username": "Username must be at most 20 characters",
+    "invalid_username": "Username must be alphanumeric",
+    "invalid_password": "Password must contain at least one uppercase letter, one lowercase letter, one number, and one special character"
   }
 }
