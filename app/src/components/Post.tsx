@@ -3,6 +3,7 @@ import { getDominantColor } from "@/lib/utils";
 import { Post as PostType, User } from "@/types/prisma/models";
 import type { Album } from "@spotify/web-api-ts-sdk";
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
+import { Link } from "@tanstack/react-router";
 import moment from "moment/min/moment-with-locales";
 import { useEffect, useRef, useState } from "react";
 import { useTranslation } from "react-i18next";
@@ -14,11 +15,12 @@ import {
   FaCirclePlay,
 } from "react-icons/fa6";
 import { useLongPress } from "use-long-press";
+import Avatar from "./account/Avatar";
 import Comments from "./drawers/Comments";
 import Likes from "./drawers/Likes";
 import PostActions from "./drawers/PostActions";
-import { useSession } from "./SessionContext";
 import Share from "./drawers/Share";
+import { useSession } from "./SessionContext";
 
 export default function Post({ post }: { post: PostType }) {
   const { t, i18n } = useTranslation();
@@ -71,7 +73,7 @@ export default function Post({ post }: { post: PostType }) {
     queryKey: ["songs", post.id],
     queryFn: () =>
       axiosClient
-        .get(`/songs/${post.urls.spotify.split("/")[4]}?type=album`)
+        .get(`/songs/${post.url.split("/")[4]}?type=album`)
         .then((res) => res.data),
   });
   const like = useMutation({
@@ -85,17 +87,16 @@ export default function Post({ post }: { post: PostType }) {
     <div className="flex flex-col gap-3">
       <div className="flex justify-between items-center">
         <div className="flex items-center gap-3">
-          <img
-            src={post.user.avatarId}
-            alt={post.user.username}
-            draggable={false}
-            className="w-10 h-10 rounded-full"
-          />
+          <Link to={`/account/@${post.user.username}`}>
+            <Avatar user={post.user} width={40} height={40} />
+          </Link>
 
           <div>
-            <h4 className="max-w-[14rem] text-ellipsis whitespace-nowrap overflow-hidden">
-              {post.user.name}
-            </h4>
+            <Link to={`/account/@${post.user.username}`}>
+              <h5 className="max-w-[14rem] text-ellipsis whitespace-nowrap overflow-hidden">
+                {post.user.name}
+              </h5>
+            </Link>
             <p className="muted">
               {t(`post.${post.type.toLowerCase()}`) +
                 (post.type === "ALBUM" ? " • " + post.name : "")}
@@ -103,7 +104,7 @@ export default function Post({ post }: { post: PostType }) {
           </div>
         </div>
 
-        <PostActions color={color} urls={post.urls} />
+        <PostActions color={color} url={post.url} />
       </div>
 
       <div className="flex flex-col gap-3 relative">
@@ -175,9 +176,9 @@ export default function Post({ post }: { post: PostType }) {
                   <FaCirclePause fontSize={25} />
                 )}
               </button>
-              <h4 className="max-w-[5rem] text-ellipsis whitespace-nowrap overflow-hidden z-10">
+              <h5 className="max-w-[5rem] text-ellipsis whitespace-nowrap overflow-hidden z-10">
                 {song?.tracks.items[currentTrack].name || ".."}
-              </h4>
+              </h5>
             </div>
           </div>
         </div>

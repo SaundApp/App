@@ -1,9 +1,7 @@
-import { IsString, IsDefined, IsDate, IsInt, IsIn } from "class-validator";
+import { IsString, IsDefined, IsDate, IsOptional } from "class-validator";
 import { User, Comment } from "./";
-import { getEnumValues } from "../helpers";
-import { PostType } from "../enums";
 
-export class Post {
+export class Playlist {
   @IsDefined()
   @IsString()
   id!: string;
@@ -26,19 +24,15 @@ export class Post {
 
   @IsDefined()
   @IsString()
-  userId!: string;
-
-  @IsDefined()
-  @IsString()
   url!: string;
 
   @IsDefined()
-  @IsInt()
-  streams!: number;
+  @IsString()
+  userId!: string;
 
-  @IsDefined()
-  @IsIn(getEnumValues(PostType))
-  type!: PostType;
+  @IsOptional()
+  @IsString()
+  spotifyId?: string;
 
   @IsDefined()
   user!: User;

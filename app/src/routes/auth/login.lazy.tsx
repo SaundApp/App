@@ -122,16 +122,7 @@ function Login() {
       </Form>
 
       <Divider />
-
-      <div className="flex gap-3">
-        <Button variant="secondary" className="w-full" asChild>
-          <Link>Amazon Music</Link>
-        </Button>
-        <Button variant="secondary" className="w-full" asChild>
-          <Link>Apple Music</Link>
-        </Button>
-      </div>
-
+      
       <Button variant="secondary" asChild>
         <Link to={`${import.meta.env.VITE_API_URL}/auth/login/spotify`}>
           Spotify

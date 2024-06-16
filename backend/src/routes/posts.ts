@@ -63,13 +63,7 @@ hono.post("/create", async (ctx) => {
                 id: user.id,
               },
             },
-            urls: {
-              create: {
-                spotify: album.external_urls.spotify,
-                amazon: "",
-                apple: "",
-              },
-            },
+            url: album.external_urls.spotify,
             type: album.album_type === "album" ? "ALBUM" : "SONG",
           },
         });
@@ -91,12 +85,12 @@ hono.get("/", async (ctx) => {
     include: {
       user: {
         select: {
+          id: true,
           name: true,
           username: true,
           avatarId: true,
         },
       },
-      urls: true,
       comments: true,
     },
     orderBy: {
@@ -311,7 +305,6 @@ hono.get("/:id", async (ctx) => {
           avatarId: true,
         },
       },
-      urls: true,
       comments: true,
     },
   });

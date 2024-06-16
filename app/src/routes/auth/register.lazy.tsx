@@ -169,15 +169,6 @@ function Register() {
 
       <Divider />
 
-      <div className="flex gap-3">
-        <Button variant="secondary" className="w-full">
-          Amazon Music
-        </Button>
-        <Button variant="secondary" className="w-full">
-          Apple Music
-        </Button>
-      </div>
-
       <Button variant="secondary">Spotify</Button>
     </div>
   );

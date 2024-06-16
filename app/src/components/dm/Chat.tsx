@@ -6,6 +6,7 @@ import moment from "moment/min/moment-with-locales";
 import { useEffect } from "react";
 import { useTranslation } from "react-i18next";
 import SwipeToRevealActions from "react-swipe-to-reveal-actions";
+import Avatar from "../account/Avatar";
 
 export default function Chat({
   user,
@@ -63,16 +64,11 @@ export default function Chat({
         to={`/dm/${user.username}`}
         className="flex flex-row gap-3 w-full items-center"
       >
-        <img
-          src={user.avatarId}
-          alt={user.name}
-          draggable={false}
-          className="w-10 h-10 rounded-full"
-        />
+        <Avatar user={user} width={40} height={40} />
         <div>
-          <h4 className="max-w-[14rem] text-ellipsis whitespace-nowrap overflow-hidden">
+          <h5 className="max-w-[14rem] text-ellipsis whitespace-nowrap overflow-hidden">
             {user.name}
-          </h4>
+          </h5>
           <div className="flex gap-1 items-center">
             <p className="max-w-[14rem] text-ellipsis whitespace-nowrap overflow-hidden">
               {message.startsWith(`${import.meta.env.VITE_APP_URL}/`)

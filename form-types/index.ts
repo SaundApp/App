@@ -21,7 +21,7 @@ export const registerSchema = z
     if (confirmPassword !== password) {
       ctx.addIssue({
         code: "custom",
-        message: "The passwords did not match",
+        message: "match_passwords",
         path: ["confirmPassword"],
       });
     }

@@ -16,13 +16,13 @@ export default function LeaderboardNavbar() {
         {t("leaderboard.artists")}
       </Link>
       <Link
-        to="/leaderboard/songs"
+        to="/leaderboard/posts"
         className="w-full"
         activeProps={{
           className: "border-b-2 border-b-white font-semibold",
         }}
       >
-        {t("leaderboard.songs")}
+        Posts
       </Link>
     </div>
   );

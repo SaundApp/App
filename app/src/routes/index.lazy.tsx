@@ -19,7 +19,7 @@ function Index() {
   });
 
   return (
-    <div className="flex flex-col gap-3 h-full max-h-[93vh] overflow-y-auto">
+    <div className="flex flex-col gap-3 h-full max-h-[92vh] overflow-y-auto">
       <div className="flex justify-between items-center">
         <h1>Saund</h1>
         <Link to="/dm">

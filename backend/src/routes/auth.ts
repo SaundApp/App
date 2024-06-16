@@ -1,9 +1,10 @@
 import { zValidator } from "@hono/zod-validator";
+import { AttachmentType } from "@prisma/client";
 import { loginSchema, registerSchema } from "form-types";
 import { Hono } from "hono";
 import { jwt, JwtVariables, sign, verify } from "hono/jwt";
 import SpotifyWebApi from "spotify-web-api-node";
-import { z } from "zod";
+import { createAvatar } from "../lib/avatar";
 import prisma from "../lib/prisma";
 
 const hono = new Hono<{ Variables: JwtVariables }>();
@@ -13,6 +14,26 @@ const credentials = {
   clientSecret: process.env.SPOTIFY_CLIENT_SECRET,
   redirectUri: process.env.APP_URL + "/auth/callback/spotify",
 };
+
+async function generateAvatar(id: string, username: string) {
+  const attachment = await prisma.attachment.create({
+    data: {
+      userId: id,
+      type: AttachmentType.IMAGE,
+      data: createAvatar(username),
+      name: "avatar",
+    },
+  });
+
+  await prisma.user.update({
+    where: {
+      id: id,
+    },
+    data: {
+      avatarId: attachment.id,
+    },
+  });
+}
 
 hono.post("/register", zValidator("json", registerSchema), async (ctx) => {
   const body = ctx.req.valid("json");
@@ -53,6 +74,9 @@ hono.post("/register", zValidator("json", registerSchema), async (ctx) => {
       password: hashedPassword,
     },
   });
+
+  await generateAvatar(user.id, user.username);
+
   const token = await sign(
     {
       user: user.id,
@@ -184,6 +208,7 @@ hono.get("/callback/spotify", async (ctx) => {
     spotify.setAccessToken(res.body.access_token);
 
     const me = await spotify.getMe();
+    const playlists = await spotify.getUserPlaylists();
 
     if (!user) {
       user = await prisma.user.findFirst({
@@ -200,6 +225,8 @@ hono.get("/callback/spotify", async (ctx) => {
             username: me.body.id,
           },
         });
+
+        await generateAvatar(user.id, user.name);
       }
     }
 
@@ -209,8 +236,31 @@ hono.get("/callback/spotify", async (ctx) => {
       },
       data: {
         spotifyId: me.body.id,
+        nationality: me.body.country,
       },
     });
+
+    for (const playlist of playlists.body.items) {
+      if (playlist.owner.id !== me.body.id) continue;
+
+      const exists = await prisma.playlist.findFirst({
+        where: {
+          spotifyId: playlist.id,
+        },
+      });
+
+      if (exists) continue;
+
+      await prisma.playlist.create({
+        data: {
+          name: playlist.name,
+          spotifyId: playlist.id,
+          userId: user.id,
+          image: playlist.images[0]?.url,
+          url: playlist.external_urls.spotify,
+        },
+      });
+    }
 
     const token = await sign(
       {

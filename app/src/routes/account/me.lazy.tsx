@@ -45,7 +45,7 @@ function Me() {
           <p className="muted">{user.public ? "Public" : "Private"}</p>
 
           <div className="flex items-center gap-1">
-            <h4>{user.name}</h4>
+            <h5>{user.name}</h5>
             <FaChevronDown />
           </div>
         </div>
@@ -63,17 +63,17 @@ function Me() {
           />
 
           <div className="flex flex-col items-center">
-            <h4>{user.posts}</h4>
+            <h5>{user.posts}</h5>
             <p className="muted">post</p>
           </div>
 
           <div className="flex flex-col items-center">
-            <h4>{user.followers}</h4>
+            <h5>{user.followers}</h5>
             <p className="muted">{t("account.follower")}</p>
           </div>
 
           <div className="flex flex-col items-center">
-            <h4>{user.following}</h4>
+            <h5>{user.following}</h5>
             <p className="muted">{t("account.following")}</p>
           </div>
         </div>

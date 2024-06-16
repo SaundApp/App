@@ -1,11 +1,16 @@
 {
   "scripts": {
-    "dev": "bun --watch src/index.ts"
+    "dev": "bun --watch src/index.ts",
+    "db:studio": "prisma studio",
+    "db:generate": "prisma generate",
+    "db:push": "prisma db push"
   },
   "dependencies": {
     "@hono/zod-validator": "^0.2.2",
+    "@napi-rs/canvas": "^0.1.53",
     "@prisma/client": "5.15.0",
     "@spotify/web-api-ts-sdk": "^1.2.0",
+    "axios": "^1.7.2",
     "class-validator": "^0.14.1",
     "dotenv": "^16.4.5",
     "form-types": "link:..\\form-types",
@@ -22,6 +27,6 @@
     "tsx": "^4.7.1"
   },
   "name": "backend",
-  "version": "1.0.0",
+  "version": "0.0.0",
   "main": "src/index.ts"
 }

@@ -1,5 +1,11 @@
-import { IsString, IsDefined, IsOptional, IsBoolean } from "class-validator";
-import { Follows, Post, Comment, Message, Attachment } from "./";
+import {
+  IsString,
+  IsDefined,
+  IsOptional,
+  IsBoolean,
+  IsInt,
+} from "class-validator";
+import { Follows, Post, Comment, Message, Attachment, Playlist } from ".";
 
 export class User {
   @IsDefined()
@@ -35,6 +41,14 @@ export class User {
   private!: boolean;
 
   @IsOptional()
+  @IsInt()
+  streams?: number;
+
+  @IsOptional()
+  @IsString()
+  nationality?: string;
+
+  @IsOptional()
   @IsString()
   spotifyId?: string;
 
@@ -58,4 +72,7 @@ export class User {
 
   @IsDefined()
   attachments!: Attachment[];
+
+  @IsDefined()
+  playlists!: Playlist[];
 }

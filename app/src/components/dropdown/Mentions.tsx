@@ -2,6 +2,7 @@ import { axiosClient } from "@/lib/axios";
 import { User } from "@/types/prisma/models";
 import { useQuery } from "@tanstack/react-query";
 import { useEffect, useState } from "react";
+import Avatar from "../account/Avatar";
 
 export default function Mentions({
   message,
@@ -69,13 +70,7 @@ export default function Mentions({
           }}
           className="flex items-center gap-3 w-full text-left"
         >
-          <img
-            src={user.avatarId}
-            alt={user.username}
-            draggable={false}
-            className="w-10 h-10 rounded-full"
-          />
-
+          <Avatar user={user} width={40} height={40} />
           {user.username}
         </button>
       ))}

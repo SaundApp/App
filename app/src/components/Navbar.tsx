@@ -2,6 +2,7 @@ import { Link } from "@tanstack/react-router";
 import { FaHeart, FaHome, FaSearch } from "react-icons/fa";
 import { SiGoogleanalytics } from "react-icons/si";
 import { useSession } from "./SessionContext";
+import Avatar from "./account/Avatar";
 
 export default function Navbar() {
   const session = useSession();
@@ -24,13 +25,11 @@ export default function Navbar() {
       <Link to="/notifications">
         <FaHeart fontSize={25} />
       </Link>
-      <Link to="/account/me">
-        <img
-          src={session?.avatarId}
-          alt={session?.username}
-          className="w-8 h-8 rounded-full"
-        />
-      </Link>
+      {session && (
+        <Link to="/account/me">
+          <Avatar user={session} width={32} height={32} />
+        </Link>
+      )}
     </nav>
   );
 }

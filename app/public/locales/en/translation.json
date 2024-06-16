@@ -35,8 +35,8 @@
   },
   "leaderboard": {
     "artists": "Artists",
-    "songs": "Songs",
-    "top": "Top"
+    "top": "Top",
+    "no_data": "No data yet"
   },
   "account": {
     "follower": "Follower",
@@ -72,6 +72,7 @@
     "min_username": "Username must be at least 3 characters",
     "max_username": "Username must be at most 20 characters",
     "invalid_username": "Username must be alphanumeric",
-    "invalid_password": "Password must contain at least one uppercase letter, one lowercase letter, one number, and one special character"
+    "invalid_password": "Password must contain at least one uppercase letter, one lowercase letter, one number, and one special character",
+    "match_passwords": "The passwords did not match"
   }
 }

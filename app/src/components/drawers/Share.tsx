@@ -6,6 +6,7 @@ import { Link } from "@tanstack/react-router";
 import { useState } from "react";
 import { useTranslation } from "react-i18next";
 import { FaPaperPlane } from "react-icons/fa";
+import Avatar from "../account/Avatar";
 import { Input } from "../ui/input";
 
 export default function Share({ postId }: { postId: string }) {
@@ -51,12 +52,16 @@ export default function Share({ postId }: { postId: string }) {
                 className="flex items-center justify-between"
               >
                 <div className="flex items-center gap-3">
-                  <img
-                    src={user.avatarId}
-                    alt={user.username}
-                    className="w-10 h-10 rounded-full"
-                  />
-                  <p className="max-w-[14rem] text-ellipsis whitespace-nowrap overflow-hidden">{user.username}</p>
+                  <Avatar user={user} width={40} height={40} />
+
+                  <div>
+                    <h5 className="max-w-[14rem] text-ellipsis whitespace-nowrap overflow-hidden">
+                      {user.name}
+                    </h5>
+                    <p className="muted max-w-[14rem] text-ellipsis whitespace-nowrap overflow-hidden">
+                      @{user.username}
+                    </p>
+                  </div>
                 </div>
               </Link>
             ))}

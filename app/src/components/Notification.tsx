@@ -34,7 +34,7 @@ export default function Notification({
       />
 
       <div>
-        <h4>{text}</h4>
+        <h5>{text}</h5>
         <p className="muted">{moment(timestamp).fromNow()}</p>
       </div>
 

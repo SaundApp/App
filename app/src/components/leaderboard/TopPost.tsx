@@ -1,17 +1,17 @@
-import { User } from "@/types/prisma/models";
+import { Post } from "@/types/prisma/models";
 import { Link } from "@tanstack/react-router";
 import Avatar from "../account/Avatar";
 
-export default function TopArtist({
-  user,
+export default function TopPost({
+  post,
   position,
   streams,
 }: {
-  user: User | undefined;
+  post: Post | undefined;
   position: string;
   streams: number;
 }) {
-  if (!user) return null;
+  if (!post) return null;
 
   return (
     <Link
@@ -20,12 +20,12 @@ export default function TopArtist({
       }
     >
       <div className="relative mb-3">
-        <Avatar user={user} width={80} height={80} />
+        <Avatar imageId={post.image} width={80} height={80} />
         <p className="absolute bottom-0 w-full text-center text-xl">
           {position}
         </p>
       </div>
-      <h5>{user.name}</h5>
+      <h5>{post.name}</h5>
       <p className="muted">
         {Intl.NumberFormat("en", { notation: "compact" }).format(streams)}{" "}
         streams

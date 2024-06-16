@@ -3,7 +3,7 @@ import { Message, Post } from "@/types/prisma/models";
 import { Album } from "@spotify/web-api-ts-sdk";
 import { useQuery } from "@tanstack/react-query";
 import { Link } from "@tanstack/react-router";
-import { SiAmazonmusic, SiApplemusic, SiSpotify } from "react-icons/si";
+import { SiSpotify } from "react-icons/si";
 import { ContextMenu, ContextMenuTrigger } from "../ui/context-menu";
 import Menu from "./Menu";
 
@@ -31,7 +31,7 @@ export default function Song({
     queryFn: () =>
       post
         ? axiosClient
-            .get(`/songs/${post.urls.spotify.split("/")[4]}?type=album`)
+            .get(`/songs/${post.url.split("/")[4]}?type=album`)
             .then((res) => res.data)
         : null,
   });
@@ -48,27 +48,17 @@ export default function Song({
           draggable={false}
         />
         <div className="bg-secondary rounded-b-md p-3">
-          <h4 className="max-w-[14rem] text-ellipsis whitespace-nowrap overflow-hidden">
+          <h5 className="max-w-[14rem] text-ellipsis whitespace-nowrap overflow-hidden">
             {song?.name}
-          </h4>
+          </h5>
           <p className="muted max-w-[14rem] text-ellipsis whitespace-nowrap overflow-hidden">
             {post.user.name}
           </p>
 
           <div className="flex gap-3 justify-end">
-            {post.urls?.spotify && (
-              <Link to={post.urls.spotify} target="_blank">
+            {post.url && (
+              <Link to={post.url} target="_blank">
                 <SiSpotify fontSize={25} />
-              </Link>
-            )}
-            {post.urls?.amazon && (
-              <Link to={post.urls.amazon} target="_blank">
-                <SiAmazonmusic fontSize={25} />
-              </Link>
-            )}
-            {post.urls?.apple && (
-              <Link to={post.urls.apple} target="_blank">
-                <SiApplemusic fontSize={25} />
               </Link>
             )}
           </div>

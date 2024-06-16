@@ -11,6 +11,7 @@ import { FaCamera, FaChevronLeft, FaReplyAll } from "react-icons/fa";
 import { FaXmark } from "react-icons/fa6";
 import VoiceRecorder from "../../components/dm/VoiceRecorder";
 import { useToast } from "@/components/ui/use-toast";
+import Avatar from "@/components/account/Avatar";
 
 export const Route = createLazyFileRoute("/dm/$username")({
   component: Chat,
@@ -124,27 +125,26 @@ function Chat() {
         height: "calc(100vh - 3.75rem)",
       }}
     >
-      <div className="flex gap-3 items-center">
+      <Link
+        to={`/account/@${user?.username}`}
+        className="flex gap-3 items-center"
+      >
         <Link to="/dm">
           <FaChevronLeft fontSize={25} />
         </Link>
 
-        <img
-          src={user?.avatarId}
-          alt={user?.name}
-          draggable={false}
-          className="w-10 h-10 rounded-full"
-        />
+        {user && <Avatar user={user} width={40} height={40}/>}
 
         <div>
-          <h4 className="max-w-[14rem] text-ellipsis whitespace-nowrap overflow-hidden">
+          <h5 className="max-w-[14rem] text-ellipsis whitespace-nowrap overflow-hidden">
             {user?.name}
-          </h4>
+          </h5>
           <p className="muted max-w-[14rem] text-ellipsis whitespace-nowrap overflow-hidden">
             @{user?.username}
           </p>
         </div>
-      </div>
+      </Link>
+
       <div
         className="flex gap-3 h-full overflow-y-auto flex-col-reverse"
         style={{

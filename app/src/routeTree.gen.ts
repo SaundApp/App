@@ -20,7 +20,7 @@ const SearchLazyImport = createFileRoute('/search')()
 const NotificationsLazyImport = createFileRoute('/notifications')()
 const IndexLazyImport = createFileRoute('/')()
 const DmIndexLazyImport = createFileRoute('/dm/')()
-const LeaderboardSongsLazyImport = createFileRoute('/leaderboard/songs')()
+const LeaderboardPostsLazyImport = createFileRoute('/leaderboard/posts')()
 const LeaderboardArtistsLazyImport = createFileRoute('/leaderboard/artists')()
 const EditProfileLazyImport = createFileRoute('/edit/profile')()
 const DmUsernameLazyImport = createFileRoute('/dm/$username')()
@@ -50,11 +50,11 @@ const DmIndexLazyRoute = DmIndexLazyImport.update({
   getParentRoute: () => rootRoute,
 } as any).lazy(() => import('./routes/dm/index.lazy').then((d) => d.Route))
 
-const LeaderboardSongsLazyRoute = LeaderboardSongsLazyImport.update({
-  path: '/leaderboard/songs',
+const LeaderboardPostsLazyRoute = LeaderboardPostsLazyImport.update({
+  path: '/leaderboard/posts',
   getParentRoute: () => rootRoute,
 } as any).lazy(() =>
-  import('./routes/leaderboard/songs.lazy').then((d) => d.Route),
+  import('./routes/leaderboard/posts.lazy').then((d) => d.Route),
 )
 
 const LeaderboardArtistsLazyRoute = LeaderboardArtistsLazyImport.update({
@@ -156,11 +156,11 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof LeaderboardArtistsLazyImport
       parentRoute: typeof rootRoute
     }
-    '/leaderboard/songs': {
-      id: '/leaderboard/songs'
-      path: '/leaderboard/songs'
-      fullPath: '/leaderboard/songs'
-      preLoaderRoute: typeof LeaderboardSongsLazyImport
+    '/leaderboard/posts': {
+      id: '/leaderboard/posts'
+      path: '/leaderboard/posts'
+      fullPath: '/leaderboard/posts'
+      preLoaderRoute: typeof LeaderboardPostsLazyImport
       parentRoute: typeof rootRoute
     }
     '/dm/': {
@@ -185,7 +185,7 @@ export const routeTree = rootRoute.addChildren({
   DmUsernameLazyRoute,
   EditProfileLazyRoute,
   LeaderboardArtistsLazyRoute,
-  LeaderboardSongsLazyRoute,
+  LeaderboardPostsLazyRoute,
   DmIndexLazyRoute,
 })
 
@@ -206,7 +206,7 @@ export const routeTree = rootRoute.addChildren({
         "/dm/$username",
         "/edit/profile",
         "/leaderboard/artists",
-        "/leaderboard/songs",
+        "/leaderboard/posts",
         "/dm/"
       ]
     },
@@ -237,8 +237,8 @@ export const routeTree = rootRoute.addChildren({
     "/leaderboard/artists": {
       "filePath": "leaderboard/artists.lazy.tsx"
     },
-    "/leaderboard/songs": {
-      "filePath": "leaderboard/songs.lazy.tsx"
+    "/leaderboard/posts": {
+      "filePath": "leaderboard/posts.lazy.tsx"
     },
     "/dm/": {
       "filePath": "dm/index.lazy.tsx"

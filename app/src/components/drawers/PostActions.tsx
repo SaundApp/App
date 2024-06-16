@@ -1,5 +1,4 @@
 import { Drawer, DrawerContent, DrawerTrigger } from "@/components/ui/drawer";
-import { SocialUrl } from "@/types/prisma/models";
 import { useTranslation } from "react-i18next";
 import { FaEllipsisH } from "react-icons/fa";
 import { Button } from "../ui/button";
@@ -7,10 +6,10 @@ import { Link } from "@tanstack/react-router";
 
 export default function PostActions({
   color,
-  urls,
+  url,
 }: {
   color: "white" | "black";
-  urls: SocialUrl;
+  url: string;
 }) {
   const { t } = useTranslation();
 
@@ -20,22 +19,12 @@ export default function PostActions({
         <FaEllipsisH fontSize={25} style={{ color }} />
       </DrawerTrigger>
       <DrawerContent className="p-3 flex flex-col gap-3">
-        <h4 className="font-semibold text-center">{t("post.actions.title")}</h4>
+        <h5 className="font-semibold text-center">{t("post.actions.title")}</h5>
 
         <div className="flex gap-3">
-          {urls?.spotify && (
+          {url && (
             <Button className="w-full flex gap-3" variant="secondary" asChild>
-              <Link to={urls.spotify}>Spotify</Link>
-            </Button>
-          )}
-          {urls?.amazon && (
-            <Button className="w-full flex gap-3" variant="secondary" asChild>
-              <Link to={urls.amazon}>Amazon Music</Link>
-            </Button>
-          )}
-          {urls?.apple && (
-            <Button className="w-full flex gap-3" variant="secondary" asChild>
-              <Link to={urls.apple}>Apple Music</Link>
+              <Link to={url}>Spotify</Link>
             </Button>
           )}
         </div>

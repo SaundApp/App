@@ -12,15 +12,17 @@ datasource db {
 }
 
 model User {
-  id        String  @id @default(auto()) @map("_id") @db.ObjectId
-  username  String  @unique
-  bio       String?
-  name      String
-  email     String  @unique
-  avatarId  String? @db.ObjectId
-  password  String?
-  private   Boolean @default(false)
-  spotifyId String?
+  id          String  @id @default(auto()) @map("_id") @db.ObjectId
+  username    String  @unique
+  bio         String?
+  name        String
+  email       String  @unique
+  avatarId    String? @db.ObjectId
+  password    String?
+  private     Boolean @default(false)
+  streams     Int?
+  nationality String?
+  spotifyId   String?
 
   followers        Follows[]    @relation("following")
   following        Follows[]    @relation("follower")
@@ -29,6 +31,7 @@ model User {
   messagesSent     Message[]    @relation("sender")
   messagesReceived Message[]    @relation("receiver")
   attachments      Attachment[]
+  playlists        Playlist[]
 }
 
 model Follows {
@@ -46,11 +49,28 @@ model Post {
   image     String
   likes     String[]
   userId    String   @db.ObjectId
-  urlId     String   @unique @db.ObjectId
+  url       String
+  streams   Int      @default(0)
   type      PostType
 
-  user User      @relation(fields: [userId], references: [id], onDelete: Cascade)
-  urls SocialUrl @relation(fields: [urlId], references: [id], onDelete: Cascade)
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  comments Comment[]
+
+  @@unique([name, userId])
+}
+
+model Playlist {
+  id          String   @id @default(auto()) @map("_id") @db.ObjectId
+  name        String
+  createdAt   DateTime @default(now())
+  image       String
+  likes       String[]
+  url         String
+  userId      String   @db.ObjectId
+  spotifyId   String?
+
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
 
   comments Comment[]
 
@@ -65,17 +85,10 @@ model Comment {
   userId    String   @db.ObjectId
   postId    String   @db.ObjectId
 
-  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
-  post Post @relation(fields: [postId], references: [id], onDelete: Cascade)
-}
-
-model SocialUrl {
-  id      String @id @default(auto()) @map("_id") @db.ObjectId
-  spotify String
-  amazon  String
-  apple   String
-
-  posts Post[]
+  user       User      @relation(fields: [userId], references: [id], onDelete: Cascade)
+  post       Post      @relation(fields: [postId], references: [id], onDelete: Cascade)
+  playlist   Playlist? @relation(fields: [playlistId], references: [id])
+  playlistId String?   @db.ObjectId
 }
 
 enum PostType {
@@ -89,11 +102,11 @@ model Message {
   read      Boolean  @default(false)
   createdAt DateTime @default(now())
 
-  sender     User   @relation("sender", fields: [senderId], references: [id], onDelete: Cascade)
-  senderId   String @db.ObjectId
-  receiver   User   @relation("receiver", fields: [receiverId], references: [id], onDelete: Cascade)
-  receiverId String @db.ObjectId
-  replyId   String? @db.ObjectId
+  sender     User    @relation("sender", fields: [senderId], references: [id], onDelete: Cascade)
+  senderId   String  @db.ObjectId
+  receiver   User    @relation("receiver", fields: [receiverId], references: [id], onDelete: Cascade)
+  receiverId String  @db.ObjectId
+  replyId    String? @db.ObjectId
 }
 
 model Attachment {

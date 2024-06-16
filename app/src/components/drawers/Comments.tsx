@@ -1,15 +1,16 @@
 import { axiosClient } from "@/lib/axios";
 import { Comment, Post } from "@/types/prisma/models";
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
+import { Link } from "@tanstack/react-router";
 import moment from "moment/min/moment-with-locales";
 import { useEffect, useRef, useState } from "react";
 import { useTranslation } from "react-i18next";
 import { FaComment } from "react-icons/fa";
+import Avatar from "../account/Avatar";
+import Mentions from "../dropdown/Mentions";
 import { useSession } from "../SessionContext";
 import { Drawer, DrawerContent, DrawerTrigger } from "../ui/drawer";
 import { Input } from "../ui/input";
-import Mentions from "../dropdown/Mentions";
-import { Link } from "@tanstack/react-router";
 
 export default function Comments({ post }: { post: Post }) {
   const { t, i18n } = useTranslation();
@@ -44,9 +45,9 @@ export default function Comments({ post }: { post: Post }) {
         <FaComment fontSize={25} />
       </DrawerTrigger>
       <DrawerContent className="p-3 flex flex-col gap-3">
-        <h4 className="font-semibold text-center">
+        <h5 className="font-semibold text-center">
           {t("post.comments.title")}
-        </h4>
+        </h5>
 
         <div className="flex flex-col gap-3 h-[33vh] max-h-[33vh] overflow-y-auto">
           {data?.length === 0 && (
@@ -54,19 +55,18 @@ export default function Comments({ post }: { post: Post }) {
           )}
 
           {data?.map((comment, index) => (
-            <div key={index} className="flex gap-3 items-start">
-              <img
-                src={comment.user.avatarId}
-                alt={comment.user.username}
-                draggable={false}
-                className="w-10 h-10 rounded-full"
-              />
+            <div key={index} className="flex gap-3 items-center">
+              <Link to={`/account/@${comment.user.username}`}>
+                <Avatar user={comment.user} width={40} height={40} />
+              </Link>
 
               <div>
                 <div className="flex items-center gap-1">
-                  <h5 className="font-semibold max-w-[14rem] text-ellipsis whitespace-nowrap overflow-hidden">
-                    {comment.user.name}
-                  </h5>
+                  <Link to={`/account/@${comment.user.username}`}>
+                    <h5 className="max-w-[14rem] text-ellipsis whitespace-nowrap overflow-hidden">
+                      {comment.user.name}
+                    </h5>
+                  </Link>
                   <p className="muted">{moment(comment.createdAt).fromNow()}</p>
                 </div>
 
@@ -92,12 +92,11 @@ export default function Comments({ post }: { post: Post }) {
         </div>
 
         <div className="flex gap-3 mt-auto">
-          <img
-            src={session?.avatarId}
-            alt={session?.username}
-            draggable={false}
-            className="w-10 h-10 rounded-full"
-          />
+          {session && (
+            <Link to={`/account/@${session?.username}`}>
+              <Avatar user={session} width={40} height={40} />
+            </Link>
+          )}
 
           <form
             onSubmit={(e) => {
