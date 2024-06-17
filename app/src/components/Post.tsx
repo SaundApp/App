@@ -1,7 +1,13 @@
 import { axiosClient } from "@/lib/axios";
 import { getDominantColor } from "@/lib/utils";
 import { Post as PostType, User } from "@/types/prisma/models";
-import type { Album } from "@spotify/web-api-ts-sdk";
+import type {
+  Album,
+  Playlist,
+  PlaylistedTrack,
+  SimplifiedTrack,
+  TrackItem,
+} from "@spotify/web-api-ts-sdk";
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { Link } from "@tanstack/react-router";
 import moment from "moment/min/moment-with-locales";
@@ -22,6 +28,16 @@ import PostActions from "./drawers/PostActions";
 import Share from "./drawers/Share";
 import { useSession } from "./SessionContext";
 
+function getTrack(
+  track: SimplifiedTrack | PlaylistedTrack<TrackItem> | undefined
+) {
+  if (!track) return null;
+  if ("track" in track && !(track.track instanceof Boolean))
+    return track.track as SimplifiedTrack;
+
+  return track as SimplifiedTrack;
+}
+
 export default function Post({ post }: { post: PostType }) {
   const { t, i18n } = useTranslation();
   const [open, setOpen] = useState(false);
@@ -37,21 +53,19 @@ export default function Post({ post }: { post: PostType }) {
   useEffect(() => {
     moment.locale(i18n.language);
   }, [i18n.language]);
-
   useEffect(() => {
     if (imageRef.current)
       getDominantColor(imageRef.current).then((color) => {
         const luminance =
           (0.299 * color[0] + 0.587 * color[1] + 0.114 * color[2]) / 255;
 
-        if (luminance > 0.5) {
+        if (luminance > 0.6) {
           setColor("black");
         } else {
           setColor("white");
         }
       });
   }, [imageRef, post.image]);
-
   useEffect(() => {
     if (isPlaying && player.current?.paused) {
       document
@@ -69,12 +83,26 @@ export default function Post({ post }: { post: PostType }) {
     queryFn: () =>
       axiosClient.get(`/posts/${post.id}/likes`).then((res) => res.data),
   });
-  const { data: song } = useQuery<Album>({
+  const { data: song } = useQuery<Album | Playlist>({
     queryKey: ["songs", post.id],
     queryFn: () =>
       axiosClient
-        .get(`/songs/${post.url.split("/")[4]}?type=album`)
-        .then((res) => res.data),
+        .get(
+          `/songs/${post.url.split("/")[4]}?type=${post.type === "PLAYLIST" ? "playlist" : "album"}`
+        )
+        .then((res) => res.data)
+        .then((data) => {
+          if (post.type !== "PLAYLIST") return data;
+
+          return {
+            ...data,
+            tracks: {
+              items: data.tracks.items.filter(
+                (track: any) => track.track.preview_url
+              ),
+            },
+          };
+        }),
   });
   const like = useMutation({
     mutationFn: () => axiosClient.post(`/posts/${post.id}/like`),
@@ -87,19 +115,19 @@ export default function Post({ post }: { post: PostType }) {
     <div className="flex flex-col gap-3">
       <div className="flex justify-between items-center">
         <div className="flex items-center gap-3">
-          <Link to={`/account/@${post.user.username}`}>
+          <Link to={`/account/${post.user.username}`}>
             <Avatar user={post.user} width={40} height={40} />
           </Link>
 
           <div>
-            <Link to={`/account/@${post.user.username}`}>
+            <Link to={`/account/${post.user.username}`}>
               <h5 className="max-w-[14rem] text-ellipsis whitespace-nowrap overflow-hidden">
                 {post.user.name}
               </h5>
             </Link>
             <p className="muted">
               {t(`post.${post.type.toLowerCase()}`) +
-                (post.type === "ALBUM" ? " • " + post.name : "")}
+                (post.type !== "SONG" ? " • " + post.name : "")}
             </p>
           </div>
         </div>
@@ -118,7 +146,7 @@ export default function Post({ post }: { post: PostType }) {
         />
 
         <div className="w-full h-1/2 flex flex-col justify-between absolute p-3 top-1/2">
-          {post.type === "ALBUM" && (
+          {post.type !== "SONG" && (
             <div className="flex justify-between" style={{ color }}>
               <button
                 onClick={() => {
@@ -163,7 +191,13 @@ export default function Post({ post }: { post: PostType }) {
               <Share postId={post.id} />
             </div>
 
-            <div className="w-fit bg-black py-3 px-6 rounded-3xl flex items-center gap-3">
+            <div
+              className="w-fit py-3 px-6 rounded-3xl flex items-center gap-3"
+              style={{
+                backgroundColor: color,
+                color: color === "black" ? "white" : "black",
+              }}
+            >
               <button
                 onClick={() => {
                   setPlaying((playing) => !playing);
@@ -177,7 +211,7 @@ export default function Post({ post }: { post: PostType }) {
                 )}
               </button>
               <h5 className="max-w-[5rem] text-ellipsis whitespace-nowrap overflow-hidden z-10">
-                {song?.tracks.items[currentTrack].name || ".."}
+                {getTrack(song?.tracks.items[currentTrack])?.name || "..."}
               </h5>
             </div>
           </div>
@@ -190,9 +224,12 @@ export default function Post({ post }: { post: PostType }) {
             setPlaying(false);
           }}
         >
-          {song?.tracks.items[currentTrack]?.preview_url && (
+          {getTrack(song?.tracks.items[currentTrack])?.preview_url && (
             <source
-              src={song?.tracks.items[currentTrack]?.preview_url || undefined}
+              src={
+                getTrack(song?.tracks.items[currentTrack])?.preview_url ||
+                undefined
+              }
             />
           )}
         </audio>

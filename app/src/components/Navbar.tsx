@@ -26,7 +26,7 @@ export default function Navbar() {
         <FaHeart fontSize={25} />
       </Link>
       {session && (
-        <Link to="/account/me">
+        <Link to={`/account/${session.username}`}>
           <Avatar user={session} width={32} height={32} />
         </Link>
       )}

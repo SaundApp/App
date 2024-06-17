@@ -121,13 +121,38 @@ hono.get(
       });
     }
 
-    if (user.private && user.id !== payload.user) {
-      return ctx.json({
-        error: "User is private",
-      });
-    }
+    const followers = await prisma.user.count({
+      where: {
+        following: {
+          some: {
+            followingId: user.id,
+          },
+        },
+      },
+    });
 
-    return ctx.json(user);
+    const following = await prisma.user.count({
+      where: {
+        followers: {
+          some: {
+            followerId: user.id,
+          },
+        },
+      },
+    });
+
+    const posts = await prisma.post.count({
+      where: {
+        userId: user.id,
+      },
+    });
+
+    return ctx.json({
+      ...user,
+      posts,
+      followers,
+      following,
+    });
   }
 );
 
@@ -294,5 +319,33 @@ hono.delete(
     });
   }
 );
+
+hono.get("/:id/posts", async (ctx) => {
+  const id = ctx.req.param("id");
+
+  const user = await prisma.user.findUnique({
+    where: {
+      id,
+    },
+    select: {
+      private: true,
+    },
+  });
+
+  if (!user || user.private) {
+    return ctx.json([]);
+  }
+
+  const posts = await prisma.post.findMany({
+    where: {
+      userId: id,
+    },
+    orderBy: {
+      createdAt: "desc",
+    },
+  });
+
+  return ctx.json(posts);
+});
 
 export default hono;

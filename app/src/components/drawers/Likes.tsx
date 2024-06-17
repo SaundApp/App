@@ -61,7 +61,7 @@ export default function Likes({
             )
             .map((like) => (
               <Link
-                to={`/account/@${like.username}`}
+                to={`/account/${like.username}`}
                 key={like.username}
                 className="flex justify-between"
               >

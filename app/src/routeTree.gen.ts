@@ -20,13 +20,12 @@ const SearchLazyImport = createFileRoute('/search')()
 const NotificationsLazyImport = createFileRoute('/notifications')()
 const IndexLazyImport = createFileRoute('/')()
 const DmIndexLazyImport = createFileRoute('/dm/')()
-const LeaderboardPostsLazyImport = createFileRoute('/leaderboard/posts')()
 const LeaderboardArtistsLazyImport = createFileRoute('/leaderboard/artists')()
 const EditProfileLazyImport = createFileRoute('/edit/profile')()
 const DmUsernameLazyImport = createFileRoute('/dm/$username')()
 const AuthRegisterLazyImport = createFileRoute('/auth/register')()
 const AuthLoginLazyImport = createFileRoute('/auth/login')()
-const AccountMeLazyImport = createFileRoute('/account/me')()
+const AccountUsernameLazyImport = createFileRoute('/account/$username')()
 
 // Create/Update Routes
 
@@ -49,13 +48,6 @@ const DmIndexLazyRoute = DmIndexLazyImport.update({
   path: '/dm/',
   getParentRoute: () => rootRoute,
 } as any).lazy(() => import('./routes/dm/index.lazy').then((d) => d.Route))
-
-const LeaderboardPostsLazyRoute = LeaderboardPostsLazyImport.update({
-  path: '/leaderboard/posts',
-  getParentRoute: () => rootRoute,
-} as any).lazy(() =>
-  import('./routes/leaderboard/posts.lazy').then((d) => d.Route),
-)
 
 const LeaderboardArtistsLazyRoute = LeaderboardArtistsLazyImport.update({
   path: '/leaderboard/artists',
@@ -84,10 +76,12 @@ const AuthLoginLazyRoute = AuthLoginLazyImport.update({
   getParentRoute: () => rootRoute,
 } as any).lazy(() => import('./routes/auth/login.lazy').then((d) => d.Route))
 
-const AccountMeLazyRoute = AccountMeLazyImport.update({
-  path: '/account/me',
+const AccountUsernameLazyRoute = AccountUsernameLazyImport.update({
+  path: '/account/$username',
   getParentRoute: () => rootRoute,
-} as any).lazy(() => import('./routes/account/me.lazy').then((d) => d.Route))
+} as any).lazy(() =>
+  import('./routes/account/$username.lazy').then((d) => d.Route),
+)
 
 // Populate the FileRoutesByPath interface
 
@@ -114,11 +108,11 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof SearchLazyImport
       parentRoute: typeof rootRoute
     }
-    '/account/me': {
-      id: '/account/me'
-      path: '/account/me'
-      fullPath: '/account/me'
-      preLoaderRoute: typeof AccountMeLazyImport
+    '/account/$username': {
+      id: '/account/$username'
+      path: '/account/$username'
+      fullPath: '/account/$username'
+      preLoaderRoute: typeof AccountUsernameLazyImport
       parentRoute: typeof rootRoute
     }
     '/auth/login': {
@@ -156,13 +150,6 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof LeaderboardArtistsLazyImport
       parentRoute: typeof rootRoute
     }
-    '/leaderboard/posts': {
-      id: '/leaderboard/posts'
-      path: '/leaderboard/posts'
-      fullPath: '/leaderboard/posts'
-      preLoaderRoute: typeof LeaderboardPostsLazyImport
-      parentRoute: typeof rootRoute
-    }
     '/dm/': {
       id: '/dm/'
       path: '/dm'
@@ -179,13 +166,12 @@ export const routeTree = rootRoute.addChildren({
   IndexLazyRoute,
   NotificationsLazyRoute,
   SearchLazyRoute,
-  AccountMeLazyRoute,
+  AccountUsernameLazyRoute,
   AuthLoginLazyRoute,
   AuthRegisterLazyRoute,
   DmUsernameLazyRoute,
   EditProfileLazyRoute,
   LeaderboardArtistsLazyRoute,
-  LeaderboardPostsLazyRoute,
   DmIndexLazyRoute,
 })
 
@@ -200,13 +186,12 @@ export const routeTree = rootRoute.addChildren({
         "/",
         "/notifications",
         "/search",
-        "/account/me",
+        "/account/$username",
         "/auth/login",
         "/auth/register",
         "/dm/$username",
         "/edit/profile",
         "/leaderboard/artists",
-        "/leaderboard/posts",
         "/dm/"
       ]
     },
@@ -219,8 +204,8 @@ export const routeTree = rootRoute.addChildren({
     "/search": {
       "filePath": "search.lazy.tsx"
     },
-    "/account/me": {
-      "filePath": "account/me.lazy.tsx"
+    "/account/$username": {
+      "filePath": "account/$username.lazy.tsx"
     },
     "/auth/login": {
       "filePath": "auth/login.lazy.tsx"
@@ -236,9 +221,6 @@ export const routeTree = rootRoute.addChildren({
     },
     "/leaderboard/artists": {
       "filePath": "leaderboard/artists.lazy.tsx"
-    },
-    "/leaderboard/posts": {
-      "filePath": "leaderboard/posts.lazy.tsx"
     },
     "/dm/": {
       "filePath": "dm/index.lazy.tsx"

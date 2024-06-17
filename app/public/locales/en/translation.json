@@ -13,6 +13,7 @@
   "post": {
     "song": "Song",
     "album": "Album",
+    "playlist": "Playlist",
     "actions": {
       "title": "Actions",
       "not_interested": "Not interested",
@@ -43,7 +44,8 @@
     "following": "Following",
     "edit_profile": "Edit",
     "edit_subscription": "Edit subscription",
-    "listners": "Listeners"
+    "listners": "Listeners",
+    "no_posts": "No posts yet"
   },
   "messages": {
     "messages": "Messages",

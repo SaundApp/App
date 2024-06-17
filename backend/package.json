@@ -7,7 +7,6 @@
   },
   "dependencies": {
     "@hono/zod-validator": "^0.2.2",
-    "@napi-rs/canvas": "^0.1.53",
     "@prisma/client": "5.15.0",
     "@spotify/web-api-ts-sdk": "^1.2.0",
     "axios": "^1.7.2",
@@ -15,6 +14,7 @@
     "dotenv": "^16.4.5",
     "form-types": "link:..\\form-types",
     "hono": "^4.4.4",
+    "jimp": "^0.22.12",
     "prisma-class-validator-generator": "^5.0.0",
     "spotify-web-api-node": "^5.0.2",
     "zod": "^3.23.8"

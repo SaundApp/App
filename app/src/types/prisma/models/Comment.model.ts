@@ -1,5 +1,5 @@
 import { IsString, IsDefined, IsDate, IsOptional } from "class-validator";
-import { User, Post, Playlist } from "./";
+import { User, Post } from ".";
 
 export class Comment {
   @IsDefined()
@@ -31,9 +31,6 @@ export class Comment {
 
   @IsDefined()
   post!: Post;
-
-  @IsOptional()
-  playlist?: Playlist;
 
   @IsOptional()
   @IsString()

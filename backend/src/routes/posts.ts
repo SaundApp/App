@@ -1,7 +1,7 @@
-import { SpotifyApi } from "@spotify/web-api-ts-sdk";
 import { Hono } from "hono";
 import { jwt } from "hono/jwt";
 import prisma from "../lib/prisma";
+import { spotify } from "../lib/spotify";
 
 const hono = new Hono();
 
@@ -24,62 +24,64 @@ hono.post("/create", async (ctx) => {
       },
     },
   });
-
-  const spotify = SpotifyApi.withClientCredentials(
-    process.env.SPOTIFY_CLIENT_ID!,
-    process.env.SPOTIFY_CLIENT_SECRET!
-  );
   let cont = 0;
 
   for (const user of users) {
-    const albums = await spotify.artists.albums(
-      user.spotifyId!,
-      undefined,
-      undefined,
-      50
-    );
-
-    const recent = albums.items
-      .filter(
-        (album) =>
-          album.album_group === "album" || album.album_group === "single"
-      )
-      .sort((a, b) => {
-        return (
-          new Date(b.release_date).getTime() -
-          new Date(a.release_date).getTime()
-        );
-      })
-      .slice(0, 5);
-
-    for (const album of recent) {
-      try {
-        await prisma.post.create({
-          data: {
-            name: album.name,
-            image: album.images[0].url,
-            user: {
-              connect: {
-                id: user.id,
-              },
-            },
-            url: album.external_urls.spotify,
-            type: album.album_type === "album" ? "ALBUM" : "SONG",
-          },
-        });
-
-        cont++;
-      } catch (err) {}
+    if (cont % 10 == 0) {
+      await new Promise((resolve) => setTimeout(resolve, 5000));
     }
+
+    try {
+      const albums = await spotify.artists.albums(
+        user.spotifyId!,
+        undefined,
+        undefined,
+        50
+      );
+
+      const recent = albums.items
+        .filter(
+          (album) =>
+            album.album_group === "album" || album.album_group === "single"
+        )
+        .sort((a, b) => {
+          return (
+            new Date(b.release_date).getTime() -
+            new Date(a.release_date).getTime()
+          );
+        })
+        .slice(0, 5);
+
+      for (const album of recent) {
+        try {
+          await prisma.post.create({
+            data: {
+              name: album.name,
+              image: album.images[0].url,
+              user: {
+                connect: {
+                  id: user.id,
+                },
+              },
+              url: album.external_urls.spotify,
+              type: album.album_type === "album" ? "ALBUM" : "SONG",
+              spotifyId: album.id,
+            },
+          });
+
+          cont++;
+        } catch (err) {}
+      }
+    } catch (err) {}
   }
 
   return ctx.json({ cont });
 });
 
 hono.get("/", async (ctx) => {
-  let offset = ctx.req.query("offset") || 0;
+  let offset = Number(ctx.req.query("offset") || 0);
 
-  if (typeof offset != "number" || offset < 0) offset = 0;
+  if (isNaN(offset) || offset < 0) offset = 0;
 
   const posts = await prisma.post.findMany({
     include: {

@@ -1,21 +1,33 @@
 import { type ClassValue, clsx } from "clsx";
 import { twMerge } from "tailwind-merge";
-import ColorThief from "colorthief";
 
 export function cn(...inputs: ClassValue[]) {
   return twMerge(clsx(inputs));
 }
 
 export async function getDominantColor(image: HTMLImageElement) {
-  const color = new ColorThief();
+  await new Promise((resolve) => {
+    if (image.complete) {
+      return resolve(null);
+    }
 
-  if (image.complete) {
-    return color.getColor(image);
-  } else {
-    return new Promise((resolve) => {
-      image.addEventListener("load", function () {
-        resolve(color.getColor(image));
-      });
+    image.addEventListener("load", function () {
+      resolve(null);
     });
+  });
+
+  const canvas = document.createElement("canvas");
+  const context = canvas.getContext("2d");
+
+  if (!context) {
+    return [255, 255, 255];
   }
+
+  canvas.width = image.width;
+  canvas.height = image.height;
+  context.drawImage(image, 0, 0);
+
+  const data = context.getImageData(0, 0, 1, 1).data;
+  
+  return [data[0], data[1], data[2]];
 }

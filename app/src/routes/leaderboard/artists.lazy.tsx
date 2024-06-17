@@ -1,6 +1,6 @@
 import Artist from "@/components/leaderboard/Artist";
-import LeaderboardNavbar from "@/components/leaderboard/LeaderboardNavbar";
 import TopArtist from "@/components/leaderboard/TopArtist";
+import { Spinner } from "@/components/ui/spinner";
 import { axiosClient } from "@/lib/axios";
 import { User } from "@/types/prisma/models";
 import { useQuery } from "@tanstack/react-query";
@@ -13,7 +13,7 @@ export const Route = createLazyFileRoute("/leaderboard/artists")({
 
 function Artists() {
   const { t, i18n } = useTranslation();
-  const { data } = useQuery<User[]>({
+  const { data, isLoading } = useQuery<User[]>({
     queryKey: ["leaderboards", i18n.language],
     queryFn: async () =>
       await axiosClient
@@ -21,12 +21,11 @@ function Artists() {
         .then((res) => res.data),
   });
 
+  if (isLoading) return <Spinner className="m-auto" />;
   if (!data) return;
 
   return (
     <div className="flex flex-col gap-3">
-      <LeaderboardNavbar />
-
       <h1>
         {t("leaderboard.top")} {t("leaderboard.artists")}
       </h1>

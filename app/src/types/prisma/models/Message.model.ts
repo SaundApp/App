@@ -5,7 +5,7 @@ import {
   IsDate,
   IsOptional,
 } from "class-validator";
-import { User } from "./";
+import { User } from ".";
 
 export class Message {
   @IsDefined()

@@ -96,11 +96,9 @@ function Chat() {
       setWebSocket(null);
     };
   }, [username]);
-
   useEffect(() => {
     setMessages(data || []);
   }, [data]);
-
   useEffect(() => {
     if (editing) {
       setMessage(messages.find((msg) => msg.id === editing)?.text || "");
@@ -125,25 +123,27 @@ function Chat() {
         height: "calc(100vh - 3.75rem)",
       }}
     >
-      <Link
-        to={`/account/@${user?.username}`}
-        className="flex gap-3 items-center"
-      >
+      <div className="flex gap-3 items-center">
         <Link to="/dm">
           <FaChevronLeft fontSize={25} />
         </Link>
 
-        {user && <Avatar user={user} width={40} height={40}/>}
+        <Link
+          className="flex gap-3 items-center"
+          to={`/account/${user?.username}`}
+        >
+          {user && <Avatar user={user} width={40} height={40} />}
 
-        <div>
-          <h5 className="max-w-[14rem] text-ellipsis whitespace-nowrap overflow-hidden">
-            {user?.name}
-          </h5>
-          <p className="muted max-w-[14rem] text-ellipsis whitespace-nowrap overflow-hidden">
-            @{user?.username}
-          </p>
-        </div>
-      </Link>
+          <div>
+            <h5 className="max-w-[14rem] text-ellipsis whitespace-nowrap overflow-hidden">
+              {user?.name}
+            </h5>
+            <p className="muted max-w-[14rem] text-ellipsis whitespace-nowrap overflow-hidden">
+              @{user?.username}
+            </p>
+          </div>
+        </Link>
+      </div>
 
       <div
         className="flex gap-3 h-full overflow-y-auto flex-col-reverse"

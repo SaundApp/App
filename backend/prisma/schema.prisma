@@ -31,7 +31,6 @@ model User {
   messagesSent     Message[]    @relation("sender")
   messagesReceived Message[]    @relation("receiver")
   attachments      Attachment[]
-  playlists        Playlist[]
 }
 
 model Follows {
@@ -50,25 +49,8 @@ model Post {
   likes     String[]
   userId    String   @db.ObjectId
   url       String
-  streams   Int      @default(0)
   type      PostType
-
-  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
-
-  comments Comment[]
-
-  @@unique([name, userId])
-}
-
-model Playlist {
-  id          String   @id @default(auto()) @map("_id") @db.ObjectId
-  name        String
-  createdAt   DateTime @default(now())
-  image       String
-  likes       String[]
-  url         String
-  userId      String   @db.ObjectId
-  spotifyId   String?
+  spotifyId String
 
   user User @relation(fields: [userId], references: [id], onDelete: Cascade)
 
@@ -87,13 +69,7 @@ model Comment {
 
   user       User      @relation(fields: [userId], references: [id], onDelete: Cascade)
   post       Post      @relation(fields: [postId], references: [id], onDelete: Cascade)
-  playlist   Playlist? @relation(fields: [playlistId], references: [id])
   playlistId String?   @db.ObjectId
-}
-
-enum PostType {
-  ALBUM
-  SONG
 }
 
 model Message {
@@ -118,6 +94,12 @@ model Attachment {
   type      AttachmentType
 
   user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+}
+
+enum PostType {
+  ALBUM
+  SONG
+  PLAYLIST
 }
 
 enum AttachmentType {

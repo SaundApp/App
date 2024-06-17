@@ -56,13 +56,13 @@ export default function Comments({ post }: { post: Post }) {
 
           {data?.map((comment, index) => (
             <div key={index} className="flex gap-3 items-center">
-              <Link to={`/account/@${comment.user.username}`}>
+              <Link to={`/account/${comment.user.username}`}>
                 <Avatar user={comment.user} width={40} height={40} />
               </Link>
 
               <div>
                 <div className="flex items-center gap-1">
-                  <Link to={`/account/@${comment.user.username}`}>
+                  <Link to={`/account/${comment.user.username}`}>
                     <h5 className="max-w-[14rem] text-ellipsis whitespace-nowrap overflow-hidden">
                       {comment.user.name}
                     </h5>
@@ -93,7 +93,7 @@ export default function Comments({ post }: { post: Post }) {
 
         <div className="flex gap-3 mt-auto">
           {session && (
-            <Link to={`/account/@${session?.username}`}>
+            <Link to={`/account/${session?.username}`}>
               <Avatar user={session} width={40} height={40} />
             </Link>
           )}

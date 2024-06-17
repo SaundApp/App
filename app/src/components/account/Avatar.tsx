@@ -21,7 +21,7 @@ export default function Avatar({
       alt={user?.username}
       width={width}
       height={height}
-      className="rounded-full"
+      className="rounded-full"      
     />
   );
 }

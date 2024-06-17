@@ -12,7 +12,7 @@ const axiosClient = axios.create({
 });
 
 export async function fetchStreams(
-  type: "song" | "artist",
+  type: "artist",
   song: string
 ): Promise<number> {
   const { data } = await axiosClient.get(

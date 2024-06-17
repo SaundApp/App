@@ -5,7 +5,7 @@ import {
   IsBoolean,
   IsInt,
 } from "class-validator";
-import { Follows, Post, Comment, Message, Attachment, Playlist } from ".";
+import { Follows, Post, Comment, Message, Attachment } from ".";
 
 export class User {
   @IsDefined()
@@ -72,7 +72,4 @@ export class User {
 
   @IsDefined()
   attachments!: Attachment[];
-
-  @IsDefined()
-  playlists!: Playlist[];
 }

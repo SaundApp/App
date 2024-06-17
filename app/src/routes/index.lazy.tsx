@@ -1,9 +1,11 @@
 import Post from "@/components/Post";
+import { Spinner } from "@/components/ui/spinner";
 import { axiosClient } from "@/lib/axios";
-import { useQuery } from "@tanstack/react-query";
+import { useInfiniteQuery } from "@tanstack/react-query";
 import { Link, createLazyFileRoute } from "@tanstack/react-router";
-import { useState } from "react";
+import { useEffect } from "react";
 import { FaPaperPlane } from "react-icons/fa";
+import { useInView } from "react-intersection-observer";
 import { Post as PostType } from "../types/prisma/models";
 
 export const Route = createLazyFileRoute("/")({
@@ -11,12 +13,25 @@ export const Route = createLazyFileRoute("/")({
 });
 
 function Index() {
-  // TODO: Pagination
-  const [page] = useState(0);
-  const { data } = useQuery<PostType[]>({
-    queryKey: ["posts", page],
-    queryFn: () => axiosClient.get("/posts").then((res) => res.data),
+  const { ref, inView } = useInView();
+  const { data, fetchNextPage, hasNextPage, isLoading } = useInfiniteQuery<
+    PostType[]
+  >({
+    queryKey: ["posts"],
+    queryFn: ({ pageParam }) =>
+      axiosClient.get("/posts?offset=" + pageParam).then((res) => res.data),
+    initialPageParam: 0,
+    getNextPageParam: (lastResult, _, lastOffset) => {
+      if (lastResult.length < 10) return undefined;
+      return (lastOffset as number) + 10;
+    },
   });
+
+  useEffect(() => {
+    if (inView && hasNextPage && !isLoading) {
+      fetchNextPage();
+    }
+  }, [fetchNextPage, inView, hasNextPage, isLoading]);
 
   return (
     <div className="flex flex-col gap-3 h-full max-h-[92vh] overflow-y-auto">
@@ -27,9 +42,15 @@ function Index() {
         </Link>
       </div>
 
+      {isLoading && <Spinner className="m-auto" />}
+
       <div className="flex flex-col gap-6">
-        {data?.map((post) => <Post key={post.id} post={post} />)}
+        {data?.pages.map((group) =>
+          group.map((post) => <Post key={post.id} post={post} />)
+        )}
       </div>
+
+      <div ref={ref}></div>
     </div>
   );
 }

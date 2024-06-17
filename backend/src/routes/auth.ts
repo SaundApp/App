@@ -6,6 +6,7 @@ import { jwt, JwtVariables, sign, verify } from "hono/jwt";
 import SpotifyWebApi from "spotify-web-api-node";
 import { createAvatar } from "../lib/avatar";
 import prisma from "../lib/prisma";
+import { spotify } from "../lib/spotify";
 
 const hono = new Hono<{ Variables: JwtVariables }>();
 
@@ -20,7 +21,7 @@ async function generateAvatar(id: string, username: string) {
     data: {
       userId: id,
       type: AttachmentType.IMAGE,
-      data: createAvatar(username),
+      data: await createAvatar(username),
       name: "avatar",
     },
   });
@@ -75,7 +76,7 @@ hono.post("/register", zValidator("json", registerSchema), async (ctx) => {
     },
   });
 
-  await generateAvatar(user.id, user.username);
+  await generateAvatar(user.id, user.name);
 
   const token = await sign(
     {
@@ -202,13 +203,13 @@ hono.get("/callback/spotify", async (ctx) => {
   }
 
   try {
-    const spotify = new SpotifyWebApi(credentials);
-    const res = await spotify.authorizationCodeGrant(code);
+    const spotifyClient = new SpotifyWebApi(credentials);
+    const res = await spotifyClient.authorizationCodeGrant(code);
 
-    spotify.setAccessToken(res.body.access_token);
+    spotifyClient.setAccessToken(res.body.access_token);
 
-    const me = await spotify.getMe();
-    const playlists = await spotify.getUserPlaylists();
+    const me = await spotifyClient.getMe();
+    const playlists = await spotifyClient.getUserPlaylists();
 
     if (!user) {
       user = await prisma.user.findFirst({
@@ -242,8 +243,15 @@ hono.get("/callback/spotify", async (ctx) => {
 
     for (const playlist of playlists.body.items) {
       if (playlist.owner.id !== me.body.id) continue;
+      if (!playlist.public) continue;
 
-      const exists = await prisma.playlist.findFirst({
+      try {
+        await spotify.playlists.getPlaylist(playlist.id);
+      } catch (error) {
+        continue;
+      }
+
+      const exists = await prisma.post.findFirst({
         where: {
           spotifyId: playlist.id,
         },
@@ -251,13 +259,14 @@ hono.get("/callback/spotify", async (ctx) => {
 
       if (exists) continue;
 
-      await prisma.playlist.create({
+      await prisma.post.create({
         data: {
           name: playlist.name,
           spotifyId: playlist.id,
           userId: user.id,
           image: playlist.images[0]?.url,
           url: playlist.external_urls.spotify,
+          type: "PLAYLIST",
         },
       });
     }

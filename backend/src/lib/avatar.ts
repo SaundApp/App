@@ -1,4 +1,4 @@
-import { createCanvas } from "@napi-rs/canvas";
+import Jimp from "jimp";
 
 function randomColor() {
   const letters = "0123456789ABCDEF";
@@ -11,19 +11,26 @@ function randomColor() {
   return color;
 }
 
-export function createAvatar(name: string) {
-  const canvas = createCanvas(200, 200);
-  const ctx = canvas.getContext("2d");
+export async function createAvatar(name: string) {
+  const width = 200;
+  const height = 200;
+  const font = await Jimp.loadFont(Jimp.FONT_SANS_128_BLACK);
+  const avatar = new Jimp(width, height, randomColor());
 
-  ctx.fillStyle = randomColor();
-  ctx.fillRect(0, 0, 200, 200);
-  ctx.font = "bold 100px Arial";
-  ctx.textAlign = "center";
-  ctx.textBaseline = "middle";
-  ctx.fillStyle = "#000000";
-  ctx.fillText(name[0].toUpperCase(), 100, 100);
+  avatar.print(
+    font,
+    0,
+    0,
+    {
+      text: name[0].toUpperCase(),
+      alignmentX: Jimp.HORIZONTAL_ALIGN_CENTER,
+      alignmentY: Jimp.VERTICAL_ALIGN_MIDDLE,
+    },
+    width,
+    height
+  );
 
-  const buffer = canvas.toBuffer("image/png");
+  const buffer = await avatar.getBufferAsync(Jimp.MIME_PNG);
 
   return buffer;
 }

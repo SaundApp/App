@@ -1,5 +1,5 @@
 import { IsString, IsDefined } from "class-validator";
-import { User } from "./";
+import { User } from ".";
 
 export class Follows {
   @IsDefined()

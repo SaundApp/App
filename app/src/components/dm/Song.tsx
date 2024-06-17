@@ -1,6 +1,5 @@
 import { axiosClient } from "@/lib/axios";
 import { Message, Post } from "@/types/prisma/models";
-import { Album } from "@spotify/web-api-ts-sdk";
 import { useQuery } from "@tanstack/react-query";
 import { Link } from "@tanstack/react-router";
 import { SiSpotify } from "react-icons/si";
@@ -26,15 +25,6 @@ export default function Song({
     queryKey: ["posts", postId],
     queryFn: () => axiosClient.get(`/posts/${postId}`).then((res) => res.data),
   });
-  const { data: song } = useQuery<Album | null>({
-    queryKey: ["songs", post?.id],
-    queryFn: () =>
-      post
-        ? axiosClient
-            .get(`/songs/${post.url.split("/")[4]}?type=album`)
-            .then((res) => res.data)
-        : null,
-  });
 
   if (!post) return null;
 
@@ -49,7 +39,7 @@ export default function Song({
         />
         <div className="bg-secondary rounded-b-md p-3">
           <h5 className="max-w-[14rem] text-ellipsis whitespace-nowrap overflow-hidden">
-            {song?.name}
+            {post.name}
           </h5>
           <p className="muted max-w-[14rem] text-ellipsis whitespace-nowrap overflow-hidden">
             {post.user.name}

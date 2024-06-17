@@ -1,5 +1,5 @@
 import { IsString, IsDefined, IsDate, IsIn } from "class-validator";
-import { User } from "./";
+import { User } from ".";
 import { getEnumValues } from "../helpers";
 import { AttachmentType } from "../enums";
 
