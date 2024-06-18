@@ -31,3 +31,11 @@ export const loginSchema = z.object({
   username: z.string(),
   password: z.string(),
 });
+
+export const updateSchema = z.object({
+  avatar: z.string().optional(),
+  name: z.string().optional(),
+  username: z.string().min(3, "username_length").optional(),
+  bio: z.string().optional(),
+  email: z.string().email("invalid_email").optional(),
+});

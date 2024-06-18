@@ -25,6 +25,7 @@ const EditProfileLazyImport = createFileRoute('/edit/profile')()
 const DmUsernameLazyImport = createFileRoute('/dm/$username')()
 const AuthRegisterLazyImport = createFileRoute('/auth/register')()
 const AuthLoginLazyImport = createFileRoute('/auth/login')()
+const AccountEditLazyImport = createFileRoute('/account/edit')()
 const AccountUsernameLazyImport = createFileRoute('/account/$username')()
 
 // Create/Update Routes
@@ -76,6 +77,11 @@ const AuthLoginLazyRoute = AuthLoginLazyImport.update({
   getParentRoute: () => rootRoute,
 } as any).lazy(() => import('./routes/auth/login.lazy').then((d) => d.Route))
 
+const AccountEditLazyRoute = AccountEditLazyImport.update({
+  path: '/account/edit',
+  getParentRoute: () => rootRoute,
+} as any).lazy(() => import('./routes/account/edit.lazy').then((d) => d.Route))
+
 const AccountUsernameLazyRoute = AccountUsernameLazyImport.update({
   path: '/account/$username',
   getParentRoute: () => rootRoute,
@@ -113,6 +119,13 @@ declare module '@tanstack/react-router' {
       path: '/account/$username'
       fullPath: '/account/$username'
       preLoaderRoute: typeof AccountUsernameLazyImport
+      parentRoute: typeof rootRoute
+    }
+    '/account/edit': {
+      id: '/account/edit'
+      path: '/account/edit'
+      fullPath: '/account/edit'
+      preLoaderRoute: typeof AccountEditLazyImport
       parentRoute: typeof rootRoute
     }
     '/auth/login': {
@@ -167,6 +180,7 @@ export const routeTree = rootRoute.addChildren({
   NotificationsLazyRoute,
   SearchLazyRoute,
   AccountUsernameLazyRoute,
+  AccountEditLazyRoute,
   AuthLoginLazyRoute,
   AuthRegisterLazyRoute,
   DmUsernameLazyRoute,
@@ -187,6 +201,7 @@ export const routeTree = rootRoute.addChildren({
         "/notifications",
         "/search",
         "/account/$username",
+        "/account/edit",
         "/auth/login",
         "/auth/register",
         "/dm/$username",
@@ -206,6 +221,9 @@ export const routeTree = rootRoute.addChildren({
     },
     "/account/$username": {
       "filePath": "account/$username.lazy.tsx"
+    },
+    "/account/edit": {
+      "filePath": "account/edit.lazy.tsx"
     },
     "/auth/login": {
       "filePath": "auth/login.lazy.tsx"

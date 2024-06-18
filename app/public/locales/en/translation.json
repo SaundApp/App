@@ -42,10 +42,19 @@
   "account": {
     "follower": "Follower",
     "following": "Following",
-    "edit_profile": "Edit",
+    "edit_profile": "Edit Profile",
     "edit_subscription": "Edit subscription",
     "listners": "Listeners",
-    "no_posts": "No posts yet"
+    "no_posts": "No posts yet",
+    "edit_image": "Click to edit",
+    "edit_image_success": "Profile image updated successfully",
+    "save": "Save",
+    "edit_success": "Profile updated successfully",
+    "username_exists": "The username is already taken",
+    "email_exists": "The email is already taken",
+    "username_length": "Username must be at least 3 characters",
+    "invalid_email": "Invalid email",
+    "base_error": "An error occurred"
   },
   "messages": {
     "messages": "Messages",

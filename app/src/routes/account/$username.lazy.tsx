@@ -8,7 +8,7 @@ import { Spinner } from "@/components/ui/spinner";
 import { axiosClient } from "@/lib/axios";
 import { Post, User } from "@/types/prisma/models";
 import { useQuery } from "@tanstack/react-query";
-import { createLazyFileRoute } from "@tanstack/react-router";
+import { createLazyFileRoute, Link } from "@tanstack/react-router";
 import { useState } from "react";
 import { useTranslation } from "react-i18next";
 import { FaChevronDown } from "react-icons/fa";
@@ -102,7 +102,9 @@ function Account() {
 
       {session?.username === data.username && (
         <>
-          <Button className="w-full">{t("account.edit_profile")}</Button>
+          <Button className="w-full" asChild>
+            <Link to={`/account/edit`}>{t("account.edit_profile")}</Link>
+          </Button>
 
           <Button className="w-full" variant="secondary">
             {t("account.edit_subscription")}

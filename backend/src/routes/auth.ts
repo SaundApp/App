@@ -1,6 +1,6 @@
 import { zValidator } from "@hono/zod-validator";
 import { AttachmentType } from "@prisma/client";
-import { loginSchema, registerSchema } from "form-types";
+import { loginSchema, registerSchema, updateSchema } from "form-types";
 import { Hono } from "hono";
 import { jwt, JwtVariables, sign, verify } from "hono/jwt";
 import SpotifyWebApi from "spotify-web-api-node";
@@ -152,6 +152,108 @@ hono.get("/me", jwt({ secret: process.env.JWT_SECRET! }), async (ctx) => {
     password: undefined,
   });
 });
+
+hono.patch(
+  "/me/update",
+  jwt({ secret: process.env.JWT_SECRET! }),
+  zValidator("json", updateSchema),
+  async (ctx) => {
+    const payload = ctx.get("jwtPayload");
+    const body = ctx.req.valid("json");
+
+    if (body.avatar) {
+      const attachment = await prisma.attachment.findFirst({
+        where: {
+          userId: payload.user,
+          id: body.avatar,
+        },
+      });
+
+      if (!attachment) {
+        return ctx.json({
+          error: "Attachment not found",
+        });
+      }
+
+      await prisma.user.update({
+        where: {
+          id: payload.user,
+        },
+        data: {
+          avatarId: attachment.id,
+        },
+      });
+    }
+
+    if (body.name) {
+      await prisma.user.update({
+        where: {
+          id: payload.user,
+        },
+        data: {
+          name: body.name,
+        },
+      });
+    }
+
+    if (body.username) {
+      try {
+        await prisma.user.update({
+          where: {
+            id: payload.user,
+          },
+          data: {
+            username: body.username,
+          },
+        });
+      } catch (error) {
+        return ctx.json(
+          {
+            error: "Username already exists",
+            t: "account.username_exists",
+          },
+          400
+        );
+      }
+    }
+
+    if (body.bio) {
+      await prisma.user.update({
+        where: {
+          id: payload.user,
+        },
+        data: {
+          bio: body.bio,
+        },
+      });
+    }
+
+    if (body.email) {
+      try {
+        await prisma.user.update({
+          where: {
+            id: payload.user,
+          },
+          data: {
+            email: body.email,
+          },
+        });
+      } catch (error) {
+        return ctx.json(
+          {
+            error: "Email already exists",
+            t: "account.email_exists",
+          },
+          400
+        );
+      }
+    }
+
+    return ctx.json({
+      success: true,
+    });
+  }
+);
 
 hono.get("/login/spotify", async (ctx) => {
   const state = Math.random().toString(36).substring(2, 18);

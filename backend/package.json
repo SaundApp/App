@@ -3,7 +3,8 @@
     "dev": "bun --watch src/index.ts",
     "db:studio": "prisma studio",
     "db:generate": "prisma generate",
-    "db:push": "prisma db push"
+    "db:push": "prisma db push",
+    "postinstall": "prisma generate"
   },
   "dependencies": {
     "@hono/zod-validator": "^0.2.2",

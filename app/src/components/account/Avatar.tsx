@@ -5,14 +5,17 @@ export default function Avatar({
   imageId,
   width,
   height,
+  onClick,
 }: {
   user?: User;
   imageId?: string;
   width: number;
   height: number;
+  onClick?: () => void;
 }) {
   return (
     <img
+      onClick={onClick}
       src={
         import.meta.env.VITE_API_URL +
         "/attachments/" +
@@ -21,7 +24,12 @@ export default function Avatar({
       alt={user?.username}
       width={width}
       height={height}
-      className="rounded-full"      
+      style={{
+        objectFit: "cover",
+        width: width,
+        height: height,
+      }}
+      className="rounded-full"
     />
   );
 }
