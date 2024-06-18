@@ -7,7 +7,7 @@
   },
   "dependencies": {
     "@hono/zod-validator": "^0.2.2",
-    "@prisma/client": "5.15.0",
+    "@prisma/client": "5.15.1",
     "@spotify/web-api-ts-sdk": "^1.2.0",
     "axios": "^1.7.2",
     "class-validator": "^0.14.1",

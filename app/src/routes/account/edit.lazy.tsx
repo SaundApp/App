@@ -9,7 +9,7 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { useQueryClient } from "@tanstack/react-query";
 import { Link, createLazyFileRoute } from "@tanstack/react-router";
 import { updateSchema } from "form-types";
-import { useRef } from "react";
+import { useEffect, useRef } from "react";
 import { useForm } from "react-hook-form";
 import { useTranslation } from "react-i18next";
 import { FaChevronLeft } from "react-icons/fa";
@@ -28,12 +28,23 @@ function EditProfile() {
   const form = useForm<z.infer<typeof updateSchema>>({
     resolver: zodResolver(updateSchema),
     defaultValues: {
-      name: session?.name,
-      username: session?.username,
-      bio: session?.bio,
-      email: session?.email,
+      name: session?.name || "",
+      username: session?.username || "",
+      bio: session?.bio || "",
+      email: session?.email || "",
     },
   });
+
+  useEffect(() => {
+    if (!session) return;
+
+    form.reset({
+      name: session.name,
+      username: session.username,
+      bio: session.bio,
+      email: session.email,
+    });
+  }, [form, session]);
 
   if (!session) return null;
 
@@ -135,7 +146,6 @@ function EditProfile() {
                     <FormControl>
                       <Input
                         {...field}
-                        defaultValue={session?.name}
                         placeholder="Name"
                         className="bg-secondary"
                       />
@@ -151,7 +161,6 @@ function EditProfile() {
                     <FormControl>
                       <Input
                         {...field}
-                        defaultValue={session?.username}
                         placeholder="Username"
                         className="bg-secondary"
                       />
@@ -169,7 +178,6 @@ function EditProfile() {
                   <FormControl>
                     <Input
                       {...field}
-                      defaultValue={session?.bio}
                       placeholder="Bio"
                       className="bg-secondary"
                     />
@@ -185,7 +193,6 @@ function EditProfile() {
                   <FormControl>
                     <Input
                       {...field}
-                      defaultValue={session?.email}
                       placeholder="Email"
                       className="bg-secondary"
                       type="email"
