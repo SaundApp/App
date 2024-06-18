@@ -37,7 +37,7 @@ export default function Attachment({
     if (data.type === "VIDEO")
       return (
         <video
-          className="rounded-md max-w-64 max-h-64"
+          className="rounded-2xl max-w-64 max-h-64"
           draggable={false}
           controls
         >
@@ -50,7 +50,7 @@ export default function Attachment({
     if (data.type === "IMAGE")
       return (
         <img
-          className="rounded-md max-w-64 max-h-64"
+          className="rounded-2xl max-w-64 max-h-64"
           src={`${import.meta.env.VITE_API_URL}/attachments/` + postId}
           alt={"Attachment"}
           draggable={false}
@@ -60,6 +60,7 @@ export default function Attachment({
     return (
       <AudioPlayer
         src={`${import.meta.env.VITE_API_URL}/attachments/` + postId}
+        message={message}
       />
     );
   };
@@ -71,6 +72,7 @@ export default function Attachment({
           onClick={() => {
             setZoom(true);
           }}
+          data-message={message.id}
         >
           {renderItem()}
         </div>

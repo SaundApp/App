@@ -12,6 +12,7 @@ import { FaXmark } from "react-icons/fa6";
 import VoiceRecorder from "../../components/dm/VoiceRecorder";
 import { useToast } from "@/components/ui/use-toast";
 import Avatar from "@/components/account/Avatar";
+import { Spinner } from "@/components/ui/spinner";
 
 export const Route = createLazyFileRoute("/dm/$username")({
   component: Chat,
@@ -39,7 +40,7 @@ function Chat() {
     queryFn: async () =>
       axiosClient.get(`/dm/${username}`).then((res) => res.data),
   });
-  const { data: user } = useQuery<User>({
+  const { data: user, isLoading } = useQuery<User>({
     queryKey: ["user", username],
     queryFn: async () =>
       axiosClient.get(`/users/${username}`).then((res) => res.data),
@@ -71,6 +72,13 @@ function Chat() {
         switch (action) {
           case "+":
             setMessages((prev) => [JSON.parse(message), ...prev]);
+            setTimeout(() => {
+              const chat = document.getElementById("chat");
+              chat?.scrollTo({
+                top: chat.scrollHeight,
+                behavior: "smooth",
+              });
+            }, 100);
             break;
           case "-":
             setMessages((prev) => prev.filter((msg) => msg.id !== message));
@@ -108,13 +116,15 @@ function Chat() {
   const handleSubmit = () => {
     if (!message || !message.length) return;
     if (editing) webSocket?.send(`!${editing}${message}`);
-    if (replying) webSocket?.send("@" + replying + message);
+    else if (replying) webSocket?.send("@" + replying + message);
     else webSocket?.send("+" + message);
 
     setMessage("");
     setEditing(null);
     setReplying(null);
   };
+
+  if (isLoading) return <Spinner className="m-auto" />;
 
   return (
     <div
@@ -147,8 +157,9 @@ function Chat() {
 
       <div
         className="flex gap-3 h-full overflow-y-auto flex-col-reverse"
+        id="chat"
         style={{
-          maxHeight: !replying ? "83vh" : "80vh",
+          maxHeight: !replying ? "83vh" : "78vh",
         }}
       >
         {messages.map((message) => (
@@ -224,13 +235,20 @@ function Chat() {
               <div className="w-4/5">
                 {replying && (
                   <div className="flex justify-between">
-                    <div className="flex gap-1 w-fit">
+                    <div className="flex gap-1 w-fit py-2">
                       <div className="flex items-center gap-1">
                         <FaReplyAll className="muted" />
                         <span className="muted">{t("dm.message.reply")}</span>
                       </div>
 
-                      <span className="max-w-[3rem] text-ellipsis whitespace-nowrap overflow-hidden">
+                      <span
+                        className="muted !text-primary font-semibold max-w-[3rem] text-ellipsis whitespace-nowrap overflow-hidden"
+                        onClick={() => {
+                          document
+                            .querySelector(`[data-message="${replying}"]`)
+                            ?.scrollIntoView({ behavior: "smooth" });
+                        }}
+                      >
                         {messages
                           .find((msg) => msg.id === replying)
                           ?.text.startsWith(`${import.meta.env.VITE_APP_URL}/`)

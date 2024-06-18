@@ -3,7 +3,6 @@ import Avatar from "@/components/account/Avatar";
 import { Button } from "@/components/ui/button";
 import { Form, FormControl, FormField, FormItem } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
-import { Table, TableBody, TableCell, TableRow } from "@/components/ui/table";
 import { useToast } from "@/components/ui/use-toast";
 import { axiosClient } from "@/lib/axios";
 import { zodResolver } from "@hookform/resolvers/zod";
@@ -42,9 +41,9 @@ function EditProfile() {
     <div className="flex flex-col gap-3">
       <div className="p-4 flex items-center">
         <Link to={`/account/${session.username}`}>
-          <FaChevronLeft />
+          <FaChevronLeft fontSize={25} />
         </Link>
-        <p className="m-auto">{t("account.edit_profile")}</p>
+        <h5 className="m-auto">{t("account.edit_profile")}</h5>
       </div>
 
       <Form {...form}>
@@ -79,146 +78,133 @@ function EditProfile() {
             }
           )}
         >
-          <Table>
-            <TableBody>
-              <TableRow>
-                <TableCell colSpan={2}>
-                  <div className="w-full flex flex-col gap-3 pb-3 items-center">
-                    <input
-                      name="avatar"
-                      onChange={(e) => {
-                        const file = e.target.files?.[0];
-                        if (!file) return;
+          <div className="flex flex-col gap-3">
+            <div className="w-full flex flex-col gap-3 items-center">
+              <input
+                name="avatar"
+                onChange={(e) => {
+                  const file = e.target.files?.[0];
+                  if (!file) return;
 
-                        const formData = new FormData();
-                        formData.append("file", file);
-                        formData.append("type", "IMAGE");
+                  const formData = new FormData();
+                  formData.append("file", file);
+                  formData.append("type", "IMAGE");
 
-                        axiosClient
-                          .post("/attachments/upload", formData)
-                          .then((res) => res.data)
-                          .then((data) => {
-                            axiosClient
-                              .patch("/auth/me/update", {
-                                avatar: data.id,
-                              })
-                              .then(() => {
-                                toast({
-                                  description: t("account.edit_image_success"),
-                                });
-
-                                queryClient.invalidateQueries({
-                                  queryKey: ["me"],
-                                });
-                              });
+                  axiosClient
+                    .post("/attachments/upload", formData)
+                    .then((res) => res.data)
+                    .then((data) => {
+                      axiosClient
+                        .patch("/auth/me/update", {
+                          avatar: data.id,
+                        })
+                        .then(() => {
+                          toast({
+                            description: t("account.edit_image_success"),
                           });
-                      }}
-                      hidden
-                      ref={input}
-                      type="file"
-                      accept="image/png"
+
+                          queryClient.invalidateQueries({
+                            queryKey: ["me"],
+                          });
+                        });
+                    });
+                }}
+                hidden
+                ref={input}
+                type="file"
+                accept="image/png"
+              />
+              <Avatar user={session} width={80} height={80} />
+              <button
+                onClick={(e) => {
+                  e.preventDefault();
+                  input.current?.click();
+                }}
+                className="muted"
+              >
+                {t("account.edit_image")}
+              </button>
+            </div>
+
+            <div className="flex gap-3">
+              <FormField
+                name="name"
+                control={form.control}
+                render={({ field }) => (
+                  <FormItem>
+                    <FormControl>
+                      <Input
+                        {...field}
+                        defaultValue={session?.name}
+                        placeholder="Name"
+                        className="bg-secondary"
+                      />
+                    </FormControl>
+                  </FormItem>
+                )}
+              />
+              <FormField
+                name="username"
+                control={form.control}
+                render={({ field }) => (
+                  <FormItem>
+                    <FormControl>
+                      <Input
+                        {...field}
+                        defaultValue={session?.username}
+                        placeholder="Username"
+                        className="bg-secondary"
+                      />
+                    </FormControl>
+                  </FormItem>
+                )}
+              />
+            </div>
+
+            <FormField
+              name="bio"
+              control={form.control}
+              render={({ field }) => (
+                <FormItem>
+                  <FormControl>
+                    <Input
+                      {...field}
+                      defaultValue={session?.bio}
+                      placeholder="Bio"
+                      className="bg-secondary"
                     />
-                    <Avatar user={session} width={80} height={80} />
-                    <button
-                      onClick={(e) => {
-                        e.preventDefault();
-                        input.current?.click();
-                      }}
-                      className="font-bold"
-                    >
-                      {t("account.edit_image")}
-                    </button>
-                  </div>
-                </TableCell>
-              </TableRow>
+                  </FormControl>
+                </FormItem>
+              )}
+            />
+            <FormField
+              name="email"
+              control={form.control}
+              render={({ field }) => (
+                <FormItem>
+                  <FormControl>
+                    <Input
+                      {...field}
+                      defaultValue={session?.email}
+                      placeholder="Email"
+                      className="bg-secondary"
+                      type="email"
+                    />
+                  </FormControl>
+                </FormItem>
+              )}
+            />
+          </div>
 
-              <TableRow>
-                <TableCell className="font-medium">Name</TableCell>
-                <TableCell>
-                  <FormField
-                    name="name"
-                    control={form.control}
-                    render={({ field }) => (
-                      <FormItem>
-                        <FormControl>
-                          <Input
-                            {...field}
-                            defaultValue={session?.name}
-                            className="border-none p-0 h-fit"
-                          />
-                        </FormControl>
-                      </FormItem>
-                    )}
-                  />
-                </TableCell>
-              </TableRow>
-              <TableRow>
-                <TableCell className="font-medium">Username</TableCell>
-                <TableCell>
-                  <FormField
-                    name="username"
-                    control={form.control}
-                    render={({ field }) => (
-                      <FormItem>
-                        <FormControl>
-                          <Input
-                            {...field}
-                            defaultValue={session?.username}
-                            className="border-none p-0 h-fit"
-                          />
-                        </FormControl>
-                      </FormItem>
-                    )}
-                  />
-                </TableCell>
-              </TableRow>
-              <TableRow>
-                <TableCell className="font-medium">Bio</TableCell>
-                <TableCell>
-                  <FormField
-                    name="bio"
-                    control={form.control}
-                    render={({ field }) => (
-                      <FormItem>
-                        <FormControl>
-                          <Input
-                            {...field}
-                            defaultValue={session?.bio}
-                            className="border-none p-0 h-fit"
-                          />
-                        </FormControl>
-                      </FormItem>
-                    )}
-                  />
-                </TableCell>
-              </TableRow>
-              <TableRow>
-                <TableCell className="font-medium">Email</TableCell>
-                <TableCell>
-                  <FormField
-                    name="email"
-                    control={form.control}
-                    render={({ field }) => (
-                      <FormItem>
-                        <FormControl>
-                          <Input
-                            {...field}
-                            defaultValue={session?.email}
-                            className="border-none p-0 h-fit"
-                            type="email"
-                          />
-                        </FormControl>
-                      </FormItem>
-                    )}
-                  />
-                </TableCell>
-              </TableRow>
-            </TableBody>
-          </Table>
+          <div className="flex mt-3 gap-3">
+            <Button type="submit" className="w-full">
+              {t("account.save")}
+            </Button>
 
-          <Button type="submit" className="w-full">
-            {t("account.save")}
-          </Button>
+            <Link className="w-full text-center m-auto text-sm text-primary">
+              {t("account.password_change")}
+            </Link>
+          </div>
         </form>
       </Form>
     </div>

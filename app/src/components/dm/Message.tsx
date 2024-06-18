@@ -1,7 +1,6 @@
 import { Message } from "@/types/prisma/models";
 import moment from "moment";
 import { useTranslation } from "react-i18next";
-import { FaReplyAll } from "react-icons/fa";
 import { ContextMenu, ContextMenuTrigger } from "../ui/context-menu";
 import Attachment from "./Attachment";
 import Menu from "./Menu";
@@ -53,11 +52,17 @@ export default function MessageComponent({
         {reply && (
           <div className={"flex gap-1 w-fit " + (self ? "ml-auto" : "")}>
             <div className="flex items-center gap-1">
-              <FaReplyAll className="muted" />
               <span className="muted">{t("dm.message.reply")}</span>
             </div>
 
-            <span className="max-w-[3rem] text-ellipsis whitespace-nowrap overflow-hidden">
+            <span
+              className="muted !text-primary font-semibold max-w-[3rem] text-ellipsis whitespace-nowrap overflow-hidden"
+              onClick={() => {
+                document
+                  .querySelector(`[data-message="${reply.id}"]`)
+                  ?.scrollIntoView({ behavior: "smooth" });
+              }}
+            >
               {reply.text.startsWith(`${import.meta.env.VITE_APP_URL}/`)
                 ? t("dm.message.attachment")
                 : reply.text}
@@ -66,15 +71,20 @@ export default function MessageComponent({
         )}
 
         <div
-          className={
-            "relative flex justify-between items-center rounded-lg p-3 pb-4 w-fit min-w-36 max-w-72 text-pretty break-all " +
-            (self ? "bg-primary ml-auto" : "bg-secondary")
-          }
+          className={"chat " + (self ? "chat-end" : "chat-start")}
+          data-message={message.id}
         >
-          <p>{message.text}</p>
-          <span className="absolute muted bottom-1 right-3">
+          <div
+            className={
+              "chat-bubble text-white max-w-72 break-all " +
+              (self ? "bg-primary" : "bg-secondary")
+            }
+          >
+            {message.text}
+          </div>
+          <time className="chat-footer muted">
             {moment(message.createdAt).format("hh:mm")}
-          </span>
+          </time>
         </div>
       </ContextMenuTrigger>
 

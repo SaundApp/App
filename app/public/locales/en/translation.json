@@ -54,7 +54,8 @@
     "email_exists": "The email is already taken",
     "username_length": "Username must be at least 3 characters",
     "invalid_email": "Invalid email",
-    "base_error": "An error occurred"
+    "base_error": "An error occurred",
+    "password_change": "Change password"
   },
   "messages": {
     "messages": "Messages",
