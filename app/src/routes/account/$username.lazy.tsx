@@ -2,6 +2,7 @@ import AccountNavbar from "@/components/account/AccountNavbar";
 import Avatar from "@/components/account/Avatar";
 import Listeners from "@/components/account/Listeners";
 import Posts from "@/components/account/Posts";
+import Users from "@/components/drawers/Users";
 import { useSession } from "@/components/SessionContext";
 import { Button } from "@/components/ui/button";
 import { Spinner } from "@/components/ui/spinner";
@@ -24,6 +25,8 @@ function Account() {
   const [activeTab, setActiveTab] = useState<
     "posts" | "playlists" | "listeners"
   >("posts");
+  const [followersOpen, setFollowersOpen] = useState(false);
+  const [followingsOpen, setFollowingsOpen] = useState(false);
   const { data, isLoading } = useQuery<
     User & {
       posts: number;
@@ -34,6 +37,20 @@ function Account() {
     queryKey: ["user", username],
     queryFn: () =>
       axiosClient.get(`/users/${username}`).then((res) => res.data),
+  });
+  const { data: followers } = useQuery<User[]>({
+    queryKey: ["followers", data?.id],
+    queryFn: () =>
+      data
+        ? axiosClient.get(`/users/${data.id}/followers`).then((res) => res.data)
+        : [],
+  });
+  const { data: following } = useQuery<User[]>({
+    queryKey: ["following", data?.id],
+    queryFn: () =>
+      data
+        ? axiosClient.get(`/users/${data.id}/following`).then((res) => res.data)
+        : [],
   });
   const { data: posts } = useQuery<Post[]>({
     queryKey: ["posts", data?.id],
@@ -86,13 +103,31 @@ function Account() {
           </div>
 
           <div className="flex flex-col items-center">
-            <h5>{data.followers}</h5>
+            <h5 onClick={() => setFollowersOpen(true)}>{data.followers}</h5>
             <p className="muted">{t("account.follower")}</p>
+
+            {followers && (
+              <Users
+                title={t("account.follower")}
+                users={followers}
+                open={followersOpen}
+                onOpenChange={setFollowersOpen}
+              />
+            )}
           </div>
 
           <div className="flex flex-col items-center">
-            <h5>{data.following}</h5>
+            <h5 onClick={() => setFollowingsOpen(true)}>{data.following}</h5>
             <p className="muted">{t("account.following")}</p>
+
+            {following && (
+              <Users
+                title={t("account.following")}
+                users={following}
+                open={followingsOpen}
+                onOpenChange={setFollowingsOpen}
+              />
+            )}
           </div>
         </div>
 

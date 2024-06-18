@@ -5,19 +5,21 @@ import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { Link } from "@tanstack/react-router";
 import { useState } from "react";
 import { useTranslation } from "react-i18next";
-import Avatar from "../account/Avatar";
 import { useSession } from "../SessionContext";
+import Avatar from "../account/Avatar";
 import { Button } from "../ui/button";
 import { Input } from "../ui/input";
 
-export default function Likes({
-  likes,
+export default function Users({
+  users,
   open,
   onOpenChange,
+  title
 }: {
-  likes: User[];
+  users: User[];
   open: boolean;
   onOpenChange: (open: boolean) => void;
+  title: string;
 }) {
   const { t } = useTranslation();
   const queryClient = useQueryClient();
@@ -39,7 +41,7 @@ export default function Likes({
   return (
     <Drawer open={open} onOpenChange={onOpenChange}>
       <DrawerContent className="p-3 flex flex-col gap-3">
-        <h5 className="font-semibold text-center">{t("post.likes.title")}</h5>
+        <h5 className="font-semibold text-center">{title}</h5>
 
         <Input
           placeholder={t("general.search")}
@@ -49,55 +51,55 @@ export default function Likes({
         />
 
         <div className="flex flex-col gap-3 h-[33vh] max-h-[33vh] overflow-y-auto">
-          {likes.length === 0 && (
+          {users.length === 0 && (
             <p className="muted">{t("post.likes.empty")}</p>
           )}
 
-          {likes
+          {users
             .filter(
               (user) =>
                 user.name.toLowerCase().includes(search.toLowerCase()) ||
                 user.username.toLowerCase().includes(search.toLowerCase())
             )
-            .map((like) => (
+            .map((user) => (
               <Link
-                to={`/account/${like.username}`}
-                key={like.username}
+                to={`/account/${user.username}`}
+                key={user.username}
                 className="flex justify-between"
               >
                 <div className="flex gap-3 items-center">
-                  <Avatar user={like} width={40} height={40} />
+                  <Avatar user={user} width={40} height={40} />
                   <div className="flex flex-col">
                     <h5 className="font-semibold max-w-[14rem] text-ellipsis whitespace-nowrap overflow-hidden">
-                      {like.name}
+                      {user.name}
                     </h5>
                     <p className="muted max-w-[14rem] text-ellipsis whitespace-nowrap overflow-hidden">
-                      @{like.username}
+                      @{user.username}
                     </p>
                   </div>
                 </div>
 
-                {session?.username !== like.username && (
+                {session?.username !== user.username && (
                   <Button
                     onClick={() => {
                       if (
                         !session?.following.find(
-                          (user) => user.followingId === like.id
+                          (user) => user.followingId === user.id
                         )
                       )
-                        follow.mutate(like.id);
-                      else unfollow.mutate(like.id);
+                        follow.mutate(user.id);
+                      else unfollow.mutate(user.id);
                     }}
                     className={
                       !session?.following.find(
-                        (user) => user.followingId === like.id
+                        (user) => user.followingId === user.id
                       )
                         ? ""
                         : "bg-secondary"
                     }
                   >
                     {!session?.following.find(
-                      (user) => user.followingId === like.id
+                      (user) => user.followingId === user.id
                     )
                       ? t("general.follow")
                       : t("general.unfollow")}

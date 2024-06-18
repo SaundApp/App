@@ -3,8 +3,7 @@
     "dev": "bun --watch src/index.ts",
     "db:studio": "prisma studio",
     "db:generate": "prisma generate",
-    "db:push": "prisma db push",
-    "postinstall": "prisma generate"
+    "db:push": "prisma db push"
   },
   "dependencies": {
     "@hono/zod-validator": "^0.2.2",
@@ -14,7 +13,7 @@
     "class-validator": "^0.14.1",
     "dotenv": "^16.4.5",
     "form-types": "link:..\\form-types",
-    "hono": "^4.4.4",
+    "hono": "^4.4.6",
     "jimp": "^0.22.12",
     "prisma-class-validator-generator": "^5.0.0",
     "spotify-web-api-node": "^5.0.2",
@@ -22,10 +21,10 @@
   },
   "devDependencies": {
     "@types/bun": "^1.1.4",
-    "@types/node": "^20.11.17",
+    "@types/node": "^20.14.5",
     "@types/spotify-web-api-node": "^5.0.11",
-    "prisma": "^5.15.0",
-    "tsx": "^4.7.1"
+    "prisma": "^5.15.1",
+    "tsx": "^4.15.6"
   },
   "name": "backend",
   "version": "0.0.0",

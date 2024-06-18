@@ -21,12 +21,12 @@ import {
   FaCirclePlay,
 } from "react-icons/fa6";
 import { useLongPress } from "use-long-press";
+import { useSession } from "./SessionContext";
 import Avatar from "./account/Avatar";
 import Comments from "./drawers/Comments";
-import Likes from "./drawers/Likes";
+import Users from "./drawers/Users";
 import PostActions from "./drawers/PostActions";
 import Share from "./drawers/Share";
-import { useSession } from "./SessionContext";
 
 function getTrack(
   track: SimplifiedTrack | PlaylistedTrack<TrackItem> | undefined
@@ -217,7 +217,12 @@ export default function Post({ post }: { post: PostType }) {
           </div>
         </div>
 
-        <Likes likes={data || []} open={open} onOpenChange={setOpen} />
+        <Users
+          title={t("post.likes.title")}
+          users={data || []}
+          open={open}
+          onOpenChange={setOpen}
+        />
         <audio
           ref={player}
           onPause={() => {
