@@ -2,9 +2,10 @@ import { zValidator } from "@hono/zod-validator";
 import { AttachmentType } from "@prisma/client";
 import { loginSchema, registerSchema, updateSchema } from "form-types";
 import { Hono } from "hono";
-import { jwt, JwtVariables, sign, verify } from "hono/jwt";
+import { JwtVariables, jwt, verify } from "hono/jwt";
 import SpotifyWebApi from "spotify-web-api-node";
 import { createAvatar } from "../lib/avatar";
+import { signToken } from "../lib/jwt";
 import prisma from "../lib/prisma";
 import { spotify } from "../lib/spotify";
 
@@ -78,13 +79,7 @@ hono.post("/register", zValidator("json", registerSchema), async (ctx) => {
 
   await generateAvatar(user.id, user.name);
 
-  const token = await sign(
-    {
-      user: user.id,
-      exp: Math.floor(Date.now() / 1000) + 60 * 60 * 24 * 7,
-    },
-    process.env.JWT_SECRET!
-  );
+  const token = await signToken(user.id);
 
   return ctx.json({
     ...user,
@@ -121,13 +116,7 @@ hono.post("/login", zValidator("json", loginSchema), async (ctx) => {
     );
   }
 
-  const token = await sign(
-    {
-      user: user.id,
-      exp: Math.floor(Date.now() / 1000) + 60 * 60 * 24 * 7,
-    },
-    process.env.JWT_SECRET!
-  );
+  const token = await signToken(user.id);
 
   return ctx.json({
     ...user,
@@ -147,8 +136,15 @@ hono.get("/me", jwt({ secret: process.env.JWT_SECRET! }), async (ctx) => {
     },
   });
 
+  let token;
+
+  if (user && payload.exp - Math.floor(Date.now() / 1000) < 60 * 60 * 24 * 2) {
+    token = await signToken(user.id);
+  }
+
   return ctx.json({
     ...user,
+    token,
     password: undefined,
   });
 });
@@ -373,13 +369,7 @@ hono.get("/callback/spotify", async (ctx) => {
       });
     }
 
-    const token = await sign(
-      {
-        user: user.id,
-        exp: Math.floor(Date.now() / 1000) + 60 * 60 * 24 * 7,
-      },
-      process.env.JWT_SECRET!
-    );
+    const token = await signToken(user.id);
 
     return ctx.redirect(
       process.env.FRONTEND_URL + "/auth/login?token=" + token
@@ -393,5 +383,24 @@ hono.get("/callback/spotify", async (ctx) => {
     );
   }
 });
+
+hono.get(
+  "/spotify/unlink",
+  jwt({ secret: process.env.JWT_SECRET! }),
+  async (ctx) => {
+    const payload = ctx.get("jwtPayload");
+
+    await prisma.user.update({
+      where: {
+        id: payload.user,
+      },
+      data: {
+        spotifyId: null,
+      },
+    });
+
+    return ctx.redirect(process.env.FRONTEND_URL + "/account/settings");
+  }
+);
 
 export default hono;

@@ -13,6 +13,7 @@ import { createLazyFileRoute, Link } from "@tanstack/react-router";
 import { useState } from "react";
 import { useTranslation } from "react-i18next";
 import { FaChevronDown } from "react-icons/fa";
+import { FaGear } from "react-icons/fa6";
 
 export const Route = createLazyFileRoute("/account/$username")({
   component: Account,
@@ -90,7 +91,9 @@ function Account() {
           </div>
         </div>
 
-        {/* HAMBUGER FOR SETTINGS */}
+        <Link to="/account/settings">
+          <FaGear />
+        </Link>
       </div>
 
       <div className="flex flex-col gap-3">

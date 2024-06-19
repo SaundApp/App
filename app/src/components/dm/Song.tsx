@@ -33,12 +33,12 @@ export default function Song({
     <ContextMenu>
       <ContextMenuTrigger className={self ? "ml-auto" : ""} disabled={!self}>
         <div
-          className={"chat " + (self ? "chat-end" : "chat-start")}
+          className={"daisy-chat " + (self ? "daisy-chat-end" : "daisy-chat-start")}
           data-message={message.id}
         >
           <div
             className={
-              "chat-bubble !p-3 text-white max-w-72 break-all " +
+              "daisy-chat-bubble !p-3 text-white max-w-72 break-all " +
               (self ? "bg-primary" : "bg-secondary")
             }
           >
@@ -66,7 +66,7 @@ export default function Song({
               </div>
             </div>
           </div>
-          <time className="chat-footer muted">
+          <time className="daisy-chat-footer muted">
             {moment(message.createdAt).format("hh:mm")}
           </time>
         </div>

@@ -25,6 +25,7 @@ const EditProfileLazyImport = createFileRoute('/edit/profile')()
 const DmUsernameLazyImport = createFileRoute('/dm/$username')()
 const AuthRegisterLazyImport = createFileRoute('/auth/register')()
 const AuthLoginLazyImport = createFileRoute('/auth/login')()
+const AccountSettingsLazyImport = createFileRoute('/account/settings')()
 const AccountEditLazyImport = createFileRoute('/account/edit')()
 const AccountUsernameLazyImport = createFileRoute('/account/$username')()
 
@@ -77,6 +78,13 @@ const AuthLoginLazyRoute = AuthLoginLazyImport.update({
   getParentRoute: () => rootRoute,
 } as any).lazy(() => import('./routes/auth/login.lazy').then((d) => d.Route))
 
+const AccountSettingsLazyRoute = AccountSettingsLazyImport.update({
+  path: '/account/settings',
+  getParentRoute: () => rootRoute,
+} as any).lazy(() =>
+  import('./routes/account/settings.lazy').then((d) => d.Route),
+)
+
 const AccountEditLazyRoute = AccountEditLazyImport.update({
   path: '/account/edit',
   getParentRoute: () => rootRoute,
@@ -126,6 +134,13 @@ declare module '@tanstack/react-router' {
       path: '/account/edit'
       fullPath: '/account/edit'
       preLoaderRoute: typeof AccountEditLazyImport
+      parentRoute: typeof rootRoute
+    }
+    '/account/settings': {
+      id: '/account/settings'
+      path: '/account/settings'
+      fullPath: '/account/settings'
+      preLoaderRoute: typeof AccountSettingsLazyImport
       parentRoute: typeof rootRoute
     }
     '/auth/login': {
@@ -181,6 +196,7 @@ export const routeTree = rootRoute.addChildren({
   SearchLazyRoute,
   AccountUsernameLazyRoute,
   AccountEditLazyRoute,
+  AccountSettingsLazyRoute,
   AuthLoginLazyRoute,
   AuthRegisterLazyRoute,
   DmUsernameLazyRoute,
@@ -202,6 +218,7 @@ export const routeTree = rootRoute.addChildren({
         "/search",
         "/account/$username",
         "/account/edit",
+        "/account/settings",
         "/auth/login",
         "/auth/register",
         "/dm/$username",
@@ -224,6 +241,9 @@ export const routeTree = rootRoute.addChildren({
     },
     "/account/edit": {
       "filePath": "account/edit.lazy.tsx"
+    },
+    "/account/settings": {
+      "filePath": "account/settings.lazy.tsx"
     },
     "/auth/login": {
       "filePath": "auth/login.lazy.tsx"

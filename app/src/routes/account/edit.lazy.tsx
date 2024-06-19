@@ -50,11 +50,13 @@ function EditProfile() {
 
   return (
     <div className="flex flex-col gap-3">
-      <div className="p-4 flex items-center">
-        <Link to={`/account/${session.username}`}>
+      <div className="p-4 flex justify-center items-center relative">
+        <Link className="mr-auto" to={`/account/${session.username}`}>
           <FaChevronLeft fontSize={25} />
         </Link>
-        <h5 className="m-auto">{t("account.edit_profile")}</h5>
+        <div className="absolute left-0 top-4 w-full h-full text-center">
+          <h5 className="m-auto">{t("account.edit_profile")}</h5>
+        </div>
       </div>
 
       <Form {...form}>

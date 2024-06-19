@@ -71,18 +71,18 @@ export default function MessageComponent({
         )}
 
         <div
-          className={"chat " + (self ? "chat-end" : "chat-start")}
+          className={"daisy-chat " + (self ? "daisy-chat-end" : "daisy-chat-start")}
           data-message={message.id}
         >
           <div
             className={
-              "chat-bubble text-white max-w-72 break-all " +
+              "daisy-chat-bubble text-white max-w-72 break-all " +
               (self ? "bg-primary" : "bg-secondary")
             }
           >
             {message.text}
           </div>
-          <time className="chat-footer muted">
+          <time className="daisy-chat-footer muted">
             {moment(message.createdAt).format("hh:mm")}
           </time>
         </div>

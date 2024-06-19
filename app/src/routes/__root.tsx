@@ -19,7 +19,12 @@ export const Route = createRootRoute({
 function App() {
   const router = useRouterState();
   const queryClient = useQueryClient();
-  const { data } = useQuery<User | null>({
+  const { data } = useQuery<
+    | (User & {
+        token?: string;
+      })
+    | null
+  >({
     queryKey: ["me"],
     queryFn: () =>
       localStorage.getItem("token")
@@ -31,6 +36,10 @@ function App() {
   useEffect(() => {
     if (data) {
       setSession(data);
+
+      if (data.token) {
+        localStorage.setItem("token", data.token);
+      }
     }
   }, [data]);
 
@@ -43,7 +52,7 @@ function App() {
     ) {
       location.href = "/auth/login";
     }
-  }, [localStorage.getItem("token")]);
+  }, [localStorage.getItem("token"), router.location.pathname, queryClient]);
 
   return (
     <ThemeProvider defaultTheme="system" storageKey="vite-ui-theme">

@@ -55,7 +55,20 @@
     "username_length": "Username must be at least 3 characters",
     "invalid_email": "Invalid email",
     "base_error": "An error occurred",
-    "password_change": "Change password"
+    "password_change": "Change password",
+    "settings": "Settings",
+    "theme": {
+      "light": "Light",
+      "dark": "Dark",
+      "active": "Active theme"
+    },
+    "languages": "Change language",
+    "actions": "Actions",
+    "clear_cache": "Clear cache",
+    "link_spotify": "Link Spotify",
+    "unlink_spotify": "Unlink Spotify",
+    "link_stripe": "Link Stripe",
+    "unlink_stripe": "Unlink Stripe"
   },
   "messages": {
     "messages": "Messages",
