@@ -27,6 +27,7 @@ import Comments from "./drawers/Comments";
 import Users from "./drawers/Users";
 import PostActions from "./drawers/PostActions";
 import Share from "./drawers/Share";
+import { useInView } from "react-intersection-observer";
 
 function getTrack(
   track: SimplifiedTrack | PlaylistedTrack<TrackItem> | undefined
@@ -40,6 +41,7 @@ function getTrack(
 
 export default function Post({ post }: { post: PostType }) {
   const { t, i18n } = useTranslation();
+  const [saw, setSaw] = useState(false);
   const [open, setOpen] = useState(false);
   const [color, setColor] = useState<"black" | "white">("black");
   const [isPlaying, setPlaying] = useState(false);
@@ -49,6 +51,7 @@ export default function Post({ post }: { post: PostType }) {
   const player = useRef<HTMLAudioElement>(null);
   const queryClient = useQueryClient();
   const session = useSession();
+  const { ref, inView } = useInView();
 
   useEffect(() => {
     moment.locale(i18n.language);
@@ -77,6 +80,12 @@ export default function Post({ post }: { post: PostType }) {
       player.current?.pause();
     }
   }, [isPlaying]);
+  useEffect(() => {
+    if (inView && !saw) {
+      axiosClient.post("/posts/" + post.id + "/see");
+      setSaw(true);
+    }
+  }, [inView, saw]);
 
   const { data } = useQuery<User[]>({
     queryKey: ["posts", post.id, "likes"],
@@ -192,6 +201,7 @@ export default function Post({ post }: { post: PostType }) {
             </div>
 
             <div
+              ref={ref}
               className="w-fit py-3 px-6 rounded-3xl flex items-center gap-3"
               style={{
                 backgroundColor: color,

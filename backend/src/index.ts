@@ -12,7 +12,7 @@ const { upgradeWebSocket, websocket } = createBunWebSocket();
 export const app = new Hono();
 export { upgradeWebSocket };
 
-app.use(logger());
+// app.use(logger());
 app.use(prettyJSON());
 app.use(
   cors({

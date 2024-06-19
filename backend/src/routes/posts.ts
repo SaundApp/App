@@ -2,6 +2,7 @@ import { Hono } from "hono";
 import { jwt } from "hono/jwt";
 import prisma from "../lib/prisma";
 import { spotify } from "../lib/spotify";
+import type { Prisma } from "@prisma/client";
 
 const hono = new Hono();
 
@@ -32,6 +33,7 @@ hono.post("/create", async (ctx) => {
     }
 
     try {
+      const artist = await spotify.artists.get(user.spotifyId!);
       const albums = await spotify.artists.albums(
         user.spotifyId!,
         undefined,
@@ -66,6 +68,7 @@ hono.post("/create", async (ctx) => {
               url: album.external_urls.spotify,
               type: album.album_type === "album" ? "ALBUM" : "SONG",
               spotifyId: album.id,
+              genres: artist.genres,
             },
           });
 
@@ -78,32 +81,109 @@ hono.post("/create", async (ctx) => {
   return ctx.json({ cont });
 });
 
-hono.get("/", async (ctx) => {
-  let offset = Number(ctx.req.query("offset") || 0);
+hono.get(
+  "/",
+  jwt({
+    secret: process.env.JWT_SECRET!,
+  }),
+  async (ctx) => {
+    const payload = ctx.get("jwtPayload");
+    let offset = Number(ctx.req.query("offset") || 0);
 
-  if (isNaN(offset) || offset < 0) offset = 0;
+    if (isNaN(offset) || offset < 0) offset = 0;
 
-  const posts = await prisma.post.findMany({
-    include: {
-      user: {
-        select: {
-          id: true,
-          name: true,
-          username: true,
-          avatarId: true,
-        },
+    const user = await prisma.user.findUnique({
+      where: { id: payload.user },
+      include: {
+        following: { select: { followingId: true } },
       },
-      comments: true,
-    },
-    orderBy: {
-      createdAt: "desc",
-    },
-    skip: offset,
-    take: 10,
-  });
+    });
+    if (!user) return ctx.json({ error: "User not found" }, 404);
 
-  return ctx.json(posts);
-});
+    const prismaArgs: Prisma.PostFindManyArgs = {
+      include: {
+        user: {
+          select: {
+            id: true,
+            name: true,
+            username: true,
+            avatarId: true,
+          },
+        },
+        comments: true,
+      },
+      orderBy: {
+        createdAt: "desc",
+      },
+      skip: offset,
+      take: 20,
+    };
+
+    const posts = await prisma.post.findMany({
+      where: {
+        NOT: {
+          seen: {
+            has: user.id,
+          },
+        },
+        OR: [
+          {
+            user: {
+              id: {
+                in: user.following.map((user) => user.followingId),
+              },
+            },
+          },
+          {
+            genres: {
+              hasSome: user.genres,
+            },
+          },
+        ],
+      },
+
+      ...prismaArgs,
+    });
+
+    if (posts.length < 10) {
+      const newPosts = await prisma.post.findMany({
+        where: {
+          NOT: {
+            seen: {
+              has: user.id,
+            },
+          },
+          id: {
+            notIn: posts.map((post) => post.id),
+          },
+        },
+        ...prismaArgs,
+        take: 10 - posts.length,
+      });
+
+      posts.push(...newPosts);
+    }
+
+    posts.sort((a, b) => {
+      const aIsFollowed = user.following.some(
+        (u) => u.followingId === a.userId
+      );
+      const bIsFollowed = user.following.some(
+        (u) => u.followingId === b.userId
+      );
+      const aIsLiked = a.likes.includes(user.id);
+      const bIsLiked = b.likes.includes(user.id);
+
+      if (aIsFollowed && !bIsFollowed) return -1;
+      if (!aIsFollowed && bIsFollowed) return 1;
+      if (aIsLiked && !bIsLiked) return -1;
+      if (!aIsLiked && bIsLiked) return 1;
+      return 0;
+    });
+
+    return ctx.json(posts);
+  }
+);
 
 hono.post(
   "/:id/like",
@@ -321,6 +401,41 @@ hono.get("/:id", async (ctx) => {
   }
 
   return ctx.json(post);
+});
+
+hono.post("/:id/see", jwt({ secret: process.env.JWT_SECRET! }), async (ctx) => {
+  const id = ctx.req.param("id");
+  const post = await prisma.post.findUnique({
+    where: {
+      id,
+    },
+  });
+
+  if (!post) {
+    return ctx.json(
+      {
+        error: "Post not found",
+      },
+      404
+    );
+  }
+
+  const payload = ctx.get("jwtPayload");
+
+  await prisma.post.update({
+    where: {
+      id,
+    },
+    data: {
+      seen: {
+        push: payload.user,
+      },
+    },
+  });
+
+  return ctx.json({
+    message: "Post seen",
+  });
 });
 
 export default hono;

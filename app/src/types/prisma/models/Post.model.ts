@@ -26,6 +26,14 @@ export class Post {
 
   @IsDefined()
   @IsString()
+  seen!: string[];
+
+  @IsDefined()
+  @IsString()
+  genres!: string[];
+
+  @IsDefined()
+  @IsString()
   userId!: string;
 
   @IsDefined()

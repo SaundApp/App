@@ -22,6 +22,7 @@ model User {
   private     Boolean @default(false)
   streams     Int?
   nationality String?
+  genres      String[]
   spotifyId   String?
 
   followers        Follows[]    @relation("following")
@@ -46,7 +47,9 @@ model Post {
   name      String
   createdAt DateTime @default(now())
   image     String
-  likes     String[]
+  likes     String[] @default([])
+  seen      String[] @default([])
+  genres    String[]
   userId    String   @db.ObjectId
   url       String
   type      PostType
@@ -67,9 +70,9 @@ model Comment {
   userId    String   @db.ObjectId
   postId    String   @db.ObjectId
 
-  user       User      @relation(fields: [userId], references: [id], onDelete: Cascade)
-  post       Post      @relation(fields: [postId], references: [id], onDelete: Cascade)
-  playlistId String?   @db.ObjectId
+  user       User    @relation(fields: [userId], references: [id], onDelete: Cascade)
+  post       Post    @relation(fields: [postId], references: [id], onDelete: Cascade)
+  playlistId String? @db.ObjectId
 }
 
 model Message {

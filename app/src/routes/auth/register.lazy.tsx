@@ -169,7 +169,11 @@ function Register() {
 
       <Divider />
 
-      <Button variant="secondary">Spotify</Button>
+      <Button variant="secondary" asChild>
+        <Link to={`${import.meta.env.VITE_API_URL}/auth/login/spotify`}>
+          Spotify
+        </Link>
+      </Button>
     </div>
   );
 }

@@ -25,6 +25,11 @@ function Index() {
       if (lastResult.length < 10) return undefined;
       return (lastOffset as number) + 10;
     },
+    staleTime: 1000 * 60 * 5,
+    refetchOnMount: false,
+    refetchOnWindowFocus: false,
+    refetchOnReconnect: false,
+    refetchInterval: false,
   });
 
   useEffect(() => {

@@ -308,6 +308,7 @@ hono.get("/callback/spotify", async (ctx) => {
 
     const me = await spotifyClient.getMe();
     const playlists = await spotifyClient.getUserPlaylists();
+    const top = await spotifyClient.getMyTopArtists();
 
     if (!user) {
       user = await prisma.user.findFirst({
@@ -329,6 +330,8 @@ hono.get("/callback/spotify", async (ctx) => {
       }
     }
 
+    const genres = top.body.items.map((item) => item.genres).flat();
+
     user = await prisma.user.update({
       where: {
         id: user.id,
@@ -336,6 +339,7 @@ hono.get("/callback/spotify", async (ctx) => {
       data: {
         spotifyId: me.body.id,
         nationality: me.body.country,
+        genres,
       },
     });
 

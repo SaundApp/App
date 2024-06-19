@@ -8,7 +8,7 @@ import { Button } from "@/components/ui/button";
 import { Spinner } from "@/components/ui/spinner";
 import { axiosClient } from "@/lib/axios";
 import { Post, User } from "@/types/prisma/models";
-import { useQuery } from "@tanstack/react-query";
+import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { createLazyFileRoute, Link } from "@tanstack/react-router";
 import { useState } from "react";
 import { useTranslation } from "react-i18next";
@@ -21,6 +21,7 @@ export const Route = createLazyFileRoute("/account/$username")({
 
 function Account() {
   const { t } = useTranslation();
+  const queryClient = useQueryClient();
   const { username } = Route.useParams();
   const session = useSession();
   const [activeTab, setActiveTab] = useState<
@@ -59,6 +60,18 @@ function Account() {
       data
         ? axiosClient.get(`/users/${data.id}/posts`).then((res) => res.data)
         : [],
+  });
+  const follow = useMutation({
+    mutationFn: (user: string) => axiosClient.post(`/users/${user}/follow`),
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ["me"] });
+    },
+  });
+  const unfollow = useMutation({
+    mutationFn: (user: string) => axiosClient.delete(`/users/${user}/unfollow`),
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ["me"] });
+    },
   });
 
   const renderTab = () => {
@@ -135,8 +148,30 @@ function Account() {
         </div>
 
         <p className="font-semibold">{data.name}</p>
-        <p className="muted">{data.bio}</p>
+
+        {data.bio && <p className="muted">{data.bio}</p>}
       </div>
+
+      {session?.username !== data.username && (
+        <Button
+          onClick={() => {
+            if (
+              !session?.following.find((user) => user.followingId === data.id)
+            )
+              follow.mutate(data.id);
+            else unfollow.mutate(data.id);
+          }}
+          className={
+            !session?.following.find((user) => user.followingId === data.id)
+              ? ""
+              : "bg-secondary"
+          }
+        >
+          {!session?.following.find((user) => user.followingId === data.id)
+            ? t("general.follow")
+            : t("general.unfollow")}
+        </Button>
+      )}
 
       {session?.username === data.username && (
         <>

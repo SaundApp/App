@@ -48,6 +48,10 @@ export class User {
   @IsString()
   nationality?: string;
 
+  @IsDefined()
+  @IsString()
+  genres!: string[];
+
   @IsOptional()
   @IsString()
   spotifyId?: string;
