@@ -140,7 +140,7 @@ export default function Post({ post }: { post: PostType }) {
           src={post.image}
           alt={post.name}
           draggable={false}
-          className="w-full rounded-md"
+          className="w-full rounded-2xl"
           ref={imageRef}
           crossOrigin="anonymous"
         />

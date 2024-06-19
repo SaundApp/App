@@ -46,7 +46,7 @@ export default function VoiceRecorder({
       showVisualizer={true}
       classes={{
         AudioRecorderClass:
-          "!shadow-none !bg-primary !rounded-md" +
+          "!shadow-none !bg-primary !rounded-2xl" +
           (controls.isRecording || controls.isPaused ? " w-semifull" : ""),
         AudioRecorderStartSaveClass:
           "black-to-white" +

@@ -3,21 +3,16 @@ import { useTheme } from "@/components/ThemeProvider";
 import { Button } from "@/components/ui/button";
 import {
   Select,
-  SelectTrigger,
-  SelectItem,
   SelectContent,
+  SelectItem,
+  SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
 import { useQuery, useQueryClient } from "@tanstack/react-query";
 import { Link, createLazyFileRoute } from "@tanstack/react-router";
 import { Moon, Sun } from "lucide-react";
 import { useTranslation } from "react-i18next";
-import {
-  FaChevronLeft,
-  FaDumpsterFire,
-  FaSpotify,
-  FaStripeS,
-} from "react-icons/fa";
+import { FaChevronLeft } from "react-icons/fa";
 import Twemoji from "react-twemoji";
 
 export const Route = createLazyFileRoute("/account/settings")({
@@ -50,7 +45,7 @@ function EditProfile() {
   return (
     <div className="flex flex-col gap-3">
       <div className="p-4 flex justify-center items-center relative">
-        <Link className="mr-auto" to={`/account/${session.username}`}>
+        <Link className="mr-auto z-50" to={`/account/${session.username}`}>
           <FaChevronLeft fontSize={25} />
         </Link>
         <div className="absolute left-0 top-4 w-full h-full text-center">
@@ -98,7 +93,7 @@ function EditProfile() {
           <SelectContent className="z-20">
             {languages &&
               Object.keys(languages).map((lang) => (
-                <SelectItem key={lang} value={lang}>
+                <SelectItem key={lang} value={lang} className="!rounded-2xl">
                   <Twemoji options={{ className: "w-4" }}>
                     <p className="flex gap-2">
                       {getFlagEmoji(lang.replace("en", "us"))} {languages[lang]}
@@ -111,67 +106,19 @@ function EditProfile() {
       </div>
 
       <p>{t("account.actions")}</p>
-      <div className="flex flex-col gap-3">
-        <div className="flex gap-3">
-          <div className="w-full flex justify-between items-center gap-3">
-            <Button
-              className="w-full bg-[#1DB954] text-white gap-1"
-              variant="default"
-              asChild
-            >
-              <Link
-                to={
-                  import.meta.env.VITE_API_URL +
-                  (session.spotifyId
-                    ? "/auth/spotify/unlink"
-                    : "/auth/login/spotify")
-                }
-              >
-                <FaSpotify size={20} />
-                {session.spotifyId
-                  ? t("account.unlink_spotify")
-                  : t("account.link_spotify")}
-              </Link>
-            </Button>
-          </div>
+      <Button
+        onClick={() => {
+          const token = localStorage.getItem("token");
+          localStorage.clear();
+          if (token) localStorage.setItem("token", token);
 
-          <div className="w-full flex justify-between items-center gap-3">
-            <Button
-              className="w-full bg-[#635BFF] text-white gap-1"
-              variant="default"
-              asChild
-            >
-              <Link
-                to={
-                  import.meta.env.VITE_API_URL +
-                  (session.spotifyId
-                    ? "/auth/stripe/unlink"
-                    : "/auth/stripe/link")
-                }
-              >
-                <FaStripeS size={20} />
-                {session.spotifyId
-                  ? t("account.unlink_stripe")
-                  : t("account.link_stripe")}
-              </Link>
-            </Button>
-          </div>
-        </div>
-        <Button
-          onClick={() => {
-            const token = localStorage.getItem("token");
-            localStorage.clear();
-            if (token) localStorage.setItem("token", token);
-
-            queryClient.invalidateQueries();
-          }}
-          className="w-full gap-1"
-          variant="destructive"
-        >
-          <FaDumpsterFire size={20} />
-          {t("account.clear_cache")}
-        </Button>
-      </div>
+          queryClient.invalidateQueries();
+        }}
+        className="w-full gap-1"
+        variant="destructive"
+      >
+        {t("account.clear_cache")}
+      </Button>
     </div>
   );
 }

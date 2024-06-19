@@ -16,7 +16,7 @@ export default function Posts({ posts }: { posts?: Post[] }) {
             width={120}
             height={120}
             draggable={false}
-            className="rounded-md"
+            className="rounded-2xl"
           />
         </Link>
       ))}

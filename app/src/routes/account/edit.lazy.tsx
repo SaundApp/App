@@ -51,7 +51,7 @@ function EditProfile() {
   return (
     <div className="flex flex-col gap-3">
       <div className="p-4 flex justify-center items-center relative">
-        <Link className="mr-auto" to={`/account/${session.username}`}>
+        <Link className="mr-auto z-50" to={`/account/${session.username}`}>
           <FaChevronLeft fontSize={25} />
         </Link>
         <div className="absolute left-0 top-4 w-full h-full text-center">
@@ -210,12 +210,54 @@ function EditProfile() {
               {t("account.save")}
             </Button>
 
-            <Link className="w-full text-center m-auto text-sm text-primary">
-              {t("account.password_change")}
-            </Link>
+            <Button
+              asChild
+              className="w-full bg-transparent text-primary"
+            >
+              <Link>{t("account.password_change")}</Link>
+            </Button>
           </div>
         </form>
       </Form>
+
+      <p>{t("account.link")}</p>
+      <div className="w-full flex flex-col gap-3">
+        <Button
+          className="w-full bg-[#635BFF] text-white gap-1"
+          variant="default"
+          asChild
+        >
+          <Link
+            to={
+              import.meta.env.VITE_API_URL +
+              (session.spotifyId ? "/auth/stripe/unlink" : "/auth/stripe/link")
+            }
+          >
+            {session.spotifyId
+              ? t("account.unlink_stripe")
+              : t("account.link_stripe")}
+          </Link>
+        </Button>
+
+        <Button
+          className="w-full bg-[#1DB954] text-white gap-1"
+          variant="default"
+          asChild
+        >
+          <Link
+            to={
+              import.meta.env.VITE_API_URL +
+              (session.spotifyId
+                ? "/auth/spotify/unlink"
+                : "/auth/login/spotify")
+            }
+          >
+            {session.spotifyId
+              ? t("account.unlink_spotify")
+              : t("account.link_spotify")}
+          </Link>
+        </Button>
+      </div>
     </div>
   );
 }

@@ -87,12 +87,12 @@ function Account() {
 
           <div className="flex items-center gap-1">
             <h5>{data.username}</h5>
-            <FaChevronDown />
+            <FaChevronDown fontSize={20} />
           </div>
         </div>
 
         <Link to="/account/settings">
-          <FaGear />
+          <FaGear fontSize={20} />
         </Link>
       </div>
 

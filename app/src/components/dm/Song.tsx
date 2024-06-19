@@ -43,7 +43,7 @@ export default function Song({
             }
           >
             <img
-              className="rounded-md w-64 h-64"
+              className="rounded-2xl w-64 h-64"
               src={post.image}
               alt={post.name}
               draggable={false}

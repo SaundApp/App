@@ -44,7 +44,7 @@
     "following": "Following",
     "edit_profile": "Edit Profile",
     "edit_subscription": "Edit subscription",
-    "listners": "Listeners",
+    "listeners": "Listeners",
     "no_posts": "No posts yet",
     "edit_image": "Click to edit",
     "edit_image_success": "Profile image updated successfully",
@@ -68,7 +68,8 @@
     "link_spotify": "Link Spotify",
     "unlink_spotify": "Unlink Spotify",
     "link_stripe": "Link Stripe",
-    "unlink_stripe": "Unlink Stripe"
+    "unlink_stripe": "Unlink Stripe",
+    "link": "Link accounts"
   },
   "messages": {
     "messages": "Messages",

@@ -91,7 +91,7 @@ export default function Comments({ post }: { post: Post }) {
           ))}
         </div>
 
-        <div className="flex gap-3 mt-auto">
+        <div className="flex justify-between gap-3 mt-auto">
           {session && (
             <Link to={`/account/${session?.username}`}>
               <Avatar user={session} width={40} height={40} />
@@ -103,7 +103,7 @@ export default function Comments({ post }: { post: Post }) {
               e.preventDefault();
               comment.mutate();
             }}
-            className="w-full"
+            className="w-80"
           >
             <Input
               placeholder={t("post.comments.placeholder")}

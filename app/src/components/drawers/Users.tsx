@@ -14,7 +14,7 @@ export default function Users({
   users,
   open,
   onOpenChange,
-  title
+  title,
 }: {
   users: User[];
   open: boolean;
@@ -40,7 +40,7 @@ export default function Users({
 
   return (
     <Drawer open={open} onOpenChange={onOpenChange}>
-      <DrawerContent className="p-3 flex flex-col gap-3">
+      <DrawerContent className="p-3 flex flex-col gap-3 no-focus">
         <h5 className="font-semibold text-center">{title}</h5>
 
         <Input
