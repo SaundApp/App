@@ -210,10 +210,7 @@ function EditProfile() {
               {t("account.save")}
             </Button>
 
-            <Button
-              asChild
-              className="w-full bg-transparent text-primary"
-            >
+            <Button asChild className="w-full bg-transparent text-primary">
               <Link>{t("account.password_change")}</Link>
             </Button>
           </div>
@@ -223,8 +220,10 @@ function EditProfile() {
       <p>{t("account.link")}</p>
       <div className="w-full flex flex-col gap-3">
         <Button
-          className="w-full bg-[#635BFF] text-white gap-1"
-          variant="default"
+          className={
+            "w-full text-white " +
+            (session.spotifyId ? "bg-secondary" : "bg-primary")
+          }
           asChild
         >
           <Link
@@ -240,8 +239,10 @@ function EditProfile() {
         </Button>
 
         <Button
-          className="w-full bg-[#1DB954] text-white gap-1"
-          variant="default"
+          className={
+            "w-full text-white " +
+            (session.spotifyId ? "bg-secondary" : "bg-primary")
+          }
           asChild
         >
           <Link
