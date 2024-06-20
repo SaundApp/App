@@ -12,7 +12,7 @@ import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { createLazyFileRoute, Link } from "@tanstack/react-router";
 import { useState } from "react";
 import { useTranslation } from "react-i18next";
-import { FaChevronDown } from "react-icons/fa";
+import { FaChevronDown, FaLock } from "react-icons/fa";
 import { FaGear } from "react-icons/fa6";
 
 export const Route = createLazyFileRoute("/account/$username")({
@@ -92,21 +92,32 @@ function Account() {
   if (isLoading) return <Spinner className="m-auto" />;
   if (!data) return null;
 
+  const profileUnavailable =
+    data.private &&
+    session?.username !== data.username &&
+    !session?.following.find((user) => user.followingId === data.id);
+
   return (
-    <div className="flex flex-col gap-3">
+    <div className="flex flex-col gap-3 h-full">
       <div className="flex justify-between items-center">
         <div>
-          <p className="muted">{!data.private ? "Public" : "Private"}</p>
+          {session?.username === data.username && (
+            <p className="muted">{!data.private ? "Public" : "Private"}</p>
+          )}
 
           <div className="flex items-center gap-1">
             <h5>{data.username}</h5>
-            <FaChevronDown fontSize={20} />
+            {session?.username === data.username && (
+              <FaChevronDown fontSize={20} />
+            )}
           </div>
         </div>
 
-        <Link to="/account/settings">
-          <FaGear fontSize={20} />
-        </Link>
+        {session?.username === data.username && (
+          <Link to="/account/settings">
+            <FaGear fontSize={20} />
+          </Link>
+        )}
       </div>
 
       <div className="flex flex-col gap-3">
@@ -119,7 +130,9 @@ function Account() {
           </div>
 
           <div className="flex flex-col items-center">
-            <h5 onClick={() => setFollowersOpen(true)}>{data.followers}</h5>
+            <h5 onClick={() => !profileUnavailable && setFollowersOpen(true)}>
+              {data.followers}
+            </h5>
             <p className="muted">{t("account.follower")}</p>
 
             {followers && (
@@ -133,7 +146,9 @@ function Account() {
           </div>
 
           <div className="flex flex-col items-center">
-            <h5 onClick={() => setFollowingsOpen(true)}>{data.following}</h5>
+            <h5 onClick={() => !profileUnavailable && setFollowingsOpen(true)}>
+              {data.following}
+            </h5>
             <p className="muted">{t("account.following")}</p>
 
             {following && (
@@ -185,11 +200,21 @@ function Account() {
         </>
       )}
 
-      {!data.private && (
-        <AccountNavbar setActiveTab={setActiveTab} active={activeTab} />
+      {!profileUnavailable && (
+        <>
+          <AccountNavbar setActiveTab={setActiveTab} active={activeTab} />
+          {renderTab()}
+        </>
       )}
 
-      {renderTab()}
+      {profileUnavailable && (
+        <div className="w-full h-full flex flex-col gap-3 items-center justify-center">
+          <div className="border-4 border-black dark:border-white  rounded-full p-4">
+            <FaLock size={40} />
+          </div>
+          <p>{t("account.private")}</p>
+        </div>
+      )}
     </div>
   );
 }

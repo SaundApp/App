@@ -69,7 +69,8 @@
     "unlink_spotify": "Unlink Spotify",
     "link_stripe": "Link Stripe",
     "unlink_stripe": "Unlink Stripe",
-    "link": "Link accounts"
+    "link": "Link accounts",
+    "private": "This account is private!"
   },
   "messages": {
     "messages": "Messages",
