@@ -1,7 +1,7 @@
-import { IsString, IsDefined, IsDate, IsIn } from "class-validator";
-import { User, Comment } from ".";
-import { getEnumValues } from "../helpers";
+import { IsDate, IsDefined, IsIn, IsString } from "class-validator";
+import { Comment, User } from ".";
 import { PostType } from "../enums";
+import { getEnumValues } from "../helpers";
 
 export class Post {
   @IsDefined()

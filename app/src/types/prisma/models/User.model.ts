@@ -1,11 +1,11 @@
 import {
-  IsString,
-  IsDefined,
-  IsOptional,
   IsBoolean,
+  IsDefined,
   IsInt,
+  IsOptional,
+  IsString,
 } from "class-validator";
-import { Follows, Post, Comment, Message, Attachment, SpotifyToken } from ".";
+import { Attachment, Comment, Follows, Message, Post, SpotifyToken } from ".";
 
 export class User {
   @IsDefined()

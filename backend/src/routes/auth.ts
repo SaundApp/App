@@ -7,7 +7,7 @@ import SpotifyWebApi from "spotify-web-api-node";
 import { createAvatar } from "../lib/avatar";
 import { signToken } from "../lib/jwt";
 import prisma from "../lib/prisma";
-import { spotify, spotifyCredentials } from "../lib/spotify";
+import { spotifyCredentials, syncUser } from "../lib/spotify";
 
 const hono = new Hono<{ Variables: JwtVariables }>();
 
@@ -301,9 +301,6 @@ hono.get("/callback/spotify", async (ctx) => {
     spotifyClient.setAccessToken(res.body.access_token);
 
     const me = await spotifyClient.getMe();
-    const playlists = await spotifyClient.getUserPlaylists();
-    const top = await spotifyClient.getMyTopArtists();
-    const following = await spotifyClient.getFollowedArtists();
 
     if (!user) {
       user = await prisma.user.findFirst({
@@ -325,8 +322,6 @@ hono.get("/callback/spotify", async (ctx) => {
       }
     }
 
-    const genres = top.body.items.map((item) => item.genres).flat();
-
     user = await prisma.user.update({
       where: {
         id: user.id,
@@ -334,56 +329,8 @@ hono.get("/callback/spotify", async (ctx) => {
       data: {
         spotifyId: me.body.id,
         nationality: me.body.country,
-        genres,
       },
     });
-
-    for (const playlist of playlists.body.items) {
-      if (playlist.owner.id !== me.body.id) continue;
-      if (!playlist.public) continue;
-
-      try {
-        await spotify.playlists.getPlaylist(playlist.id);
-      } catch (error) {
-        continue;
-      }
-
-      const exists = await prisma.post.findFirst({
-        where: {
-          spotifyId: playlist.id,
-        },
-      });
-
-      if (exists) continue;
-
-      await prisma.post.create({
-        data: {
-          name: playlist.name,
-          spotifyId: playlist.id,
-          userId: user.id,
-          image: playlist.images[0]?.url,
-          url: playlist.external_urls.spotify,
-          type: "PLAYLIST",
-        },
-      });
-    }
-
-    for (const artist of following.body.artists.items) {
-      const artistUser = await prisma.user.findFirst({
-        where: {
-          spotifyId: artist.id,
-        },
-      });
-
-      if (artistUser) {
-        await prisma.follows.create({
-          data: {
-            followerId: user.id,
-            followingId: artistUser.id,
-          },
-        });
-      }
-    }
 
     await prisma.spotifyToken.upsert({
       where: {
@@ -402,6 +349,8 @@ hono.get("/callback/spotify", async (ctx) => {
       },
     });
 
+    await syncUser(user);
+
     const token = await signToken(user.id);
 
     return ctx.redirect(
@@ -416,6 +365,34 @@ hono.get("/callback/spotify", async (ctx) => {
     );
   }
 });
+
+hono.post(
+  "/sync/spotify",
+  jwt({ secret: process.env.JWT_SECRET! }),
+  async (ctx) => {
+    const payload = ctx.get("jwtPayload");
+    const user = await prisma.user.findUnique({
+      where: {
+        id: payload.user,
+      },
+    });
+
+    if (!user) {
+      return ctx.json(
+        {
+          error: "User not found",
+        },
+        404
+      );
+    }
+
+    await syncUser(user);
+
+    return ctx.json({
+      success: true,
+    });
+  }
+);
 
 hono.get(
   "/spotify/unlink",

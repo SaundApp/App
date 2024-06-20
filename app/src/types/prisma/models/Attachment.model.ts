@@ -1,7 +1,7 @@
-import { IsString, IsDefined, IsDate, IsIn } from "class-validator";
+import { IsDate, IsDefined, IsIn, IsString } from "class-validator";
 import { User } from ".";
-import { getEnumValues } from "../helpers";
 import { AttachmentType } from "../enums";
+import { getEnumValues } from "../helpers";
 
 export class Attachment {
   @IsDefined()

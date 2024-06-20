@@ -1,5 +1,5 @@
-import { IsString, IsDefined, IsDate } from "class-validator";
-import { User } from "./";
+import { IsDate, IsDefined, IsString } from "class-validator";
+import { User } from ".";
 
 export class SpotifyToken {
   @IsDefined()

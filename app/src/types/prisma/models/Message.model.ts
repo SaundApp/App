@@ -1,9 +1,9 @@
 import {
-  IsString,
-  IsDefined,
   IsBoolean,
   IsDate,
+  IsDefined,
   IsOptional,
+  IsString,
 } from "class-validator";
 import { User } from ".";
 

@@ -1,5 +1,5 @@
-import { IsString, IsDefined, IsDate, IsOptional } from "class-validator";
-import { User, Post } from ".";
+import { IsDate, IsDefined, IsOptional, IsString } from "class-validator";
+import { Post, User } from ".";
 
 export class Comment {
   @IsDefined()
