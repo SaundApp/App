@@ -46,7 +46,15 @@ function Register() {
                 .post("/auth/register", values)
                 .then((res) => {
                   if (res.data && res.data.token) {
+                    const tokens = JSON.parse(
+                      localStorage.getItem("tokens") || "[]"
+                    );
+
+                    tokens.push(res.data.token);
+
                     localStorage.setItem("token", res.data.token);
+                    localStorage.setItem("tokens", JSON.stringify(tokens));
+
                     location.href = "/";
                   }
                 })

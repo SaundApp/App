@@ -106,7 +106,13 @@ function Account() {
             <p className="muted">{!data.private ? "Public" : "Private"}</p>
           )}
 
-          <Accounts />
+          {session?.username === data.username && <Accounts />}
+
+          {session?.username !== data.username && (
+            <div className="flex items-center gap-1">
+              <h5>{data.username}</h5>
+            </div>
+          )}
         </div>
 
         {session?.username === data.username && (
