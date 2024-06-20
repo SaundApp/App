@@ -407,4 +407,41 @@ hono.get(
   }
 );
 
+hono.get("/accounts", async (ctx) => {
+  const tokens = ctx.req.query("tokens") || "";
+  const items = tokens.split(",");
+
+  const currentToken = ctx.req.header("Authorization")?.split(" ")[1];
+  if (currentToken && !items.includes(currentToken)) items.push(currentToken);
+
+  const users = [];
+  for (const item of items) {
+    try {
+      const payload = await verify(item, process.env.JWT_SECRET!);
+      if (payload?.user) {
+        const user = await prisma.user.findUnique({
+          where: {
+            id: payload.user as string,
+          },
+          select: {
+            id: true,
+            username: true,
+            avatarId: true,
+            name: true,
+          },
+        });
+
+        if (user) {
+          users.push({
+            ...user,
+            token: item,
+          });
+        }
+      }
+    } catch (err) {}
+  }
+
+  return ctx.json(users);
+});
+
 export default hono;

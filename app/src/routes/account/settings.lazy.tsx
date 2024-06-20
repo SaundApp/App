@@ -121,7 +121,10 @@ function EditProfile() {
         onClick={() => {
           const token = localStorage.getItem("token");
           localStorage.clear();
-          if (token) localStorage.setItem("token", token);
+          if (token) {
+            localStorage.setItem("token", token);
+            localStorage.setItem("tokens", JSON.stringify([token]));
+          }
 
           queryClient.invalidateQueries();
         }}

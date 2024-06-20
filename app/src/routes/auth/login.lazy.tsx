@@ -32,7 +32,12 @@ function Login() {
 
   useEffect(() => {
     if (token) {
+      const tokens = JSON.parse(localStorage.getItem("tokens") || "[]");
+      tokens.push(token);
+
       localStorage.setItem("token", token);
+      localStorage.setItem("tokens", JSON.stringify(tokens));
+
       location.href = "/";
     }
   }, [token]);
@@ -54,7 +59,15 @@ function Login() {
                 .post("/auth/login", values)
                 .then((res) => {
                   if (res.data && res.data.token) {
+                    const tokens = JSON.parse(
+                      localStorage.getItem("tokens") || "[]"
+                    );
+
+                    tokens.push(res.data.token);
+
                     localStorage.setItem("token", res.data.token);
+                    localStorage.setItem("tokens", JSON.stringify(tokens));
+
                     location.href = "/";
                   }
                 })
@@ -122,7 +135,7 @@ function Login() {
       </Form>
 
       <Divider />
-      
+
       <Button variant="secondary" asChild>
         <Link to={`${import.meta.env.VITE_API_URL}/auth/login/spotify`}>
           Spotify

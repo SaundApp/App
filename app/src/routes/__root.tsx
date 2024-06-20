@@ -39,7 +39,18 @@ function App() {
       setSession(data);
 
       if (data.token) {
+        const prev = localStorage.getItem("token");
+        let tokens = JSON.parse(localStorage.getItem("tokens") || "[]");
+
         localStorage.setItem("token", data.token);
+
+        if (prev) {
+          tokens = tokens.filter((token: string) => token !== prev);
+        }
+
+        tokens.push(data.token);
+
+        localStorage.setItem("tokens", JSON.stringify(tokens));
       }
     }
   }, [data]);

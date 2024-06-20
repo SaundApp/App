@@ -13,7 +13,7 @@ import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { createLazyFileRoute, Link } from "@tanstack/react-router";
 import { useState } from "react";
 import { useTranslation } from "react-i18next";
-import { FaChevronDown, FaLock } from "react-icons/fa";
+import { FaLock } from "react-icons/fa";
 import { FaGear } from "react-icons/fa6";
 
 export const Route = createLazyFileRoute("/account/$username")({
@@ -106,14 +106,13 @@ function Account() {
             <p className="muted">{!data.private ? "Public" : "Private"}</p>
           )}
 
-          <Accounts />
+          {session?.username === data.username && <Accounts />}
 
-          <div className="flex items-center gap-1">
-            <h5>{data.username}</h5>
-            {session?.username === data.username && (
-              <FaChevronDown fontSize={20} />
-            )}
-          </div>
+          {session?.username !== data.username && (
+            <div className="flex items-center gap-1">
+              <h5>{data.username}</h5>
+            </div>
+          )}
         </div>
 
         {session?.username === data.username && (
