@@ -210,10 +210,7 @@ function EditProfile() {
               {t("account.save")}
             </Button>
 
-            <Button
-              asChild
-              className="w-full bg-transparent text-primary"
-            >
+            <Button asChild className="w-full bg-transparent text-primary">
               <Link>{t("account.password_change")}</Link>
             </Button>
           </div>
@@ -225,18 +222,18 @@ function EditProfile() {
         <Button
           className="w-full bg-[#635BFF] text-white gap-1"
           variant="default"
-          asChild
+          onClick={() => {
+            axiosClient
+              .post("/stripe/create")
+              .then((res) => res.data)
+              .then((res) => {
+                window.open(res.url, "_blank");
+              });
+          }}
         >
-          <Link
-            to={
-              import.meta.env.VITE_API_URL +
-              (session.spotifyId ? "/auth/stripe/unlink" : "/auth/stripe/link")
-            }
-          >
-            {session.spotifyId
-              ? t("account.unlink_stripe")
-              : t("account.link_stripe")}
-          </Link>
+          {session.spotifyId
+            ? t("account.unlink_stripe")
+            : t("account.link_stripe")}
         </Button>
 
         <Button

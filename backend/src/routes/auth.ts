@@ -7,15 +7,9 @@ import SpotifyWebApi from "spotify-web-api-node";
 import { createAvatar } from "../lib/avatar";
 import { signToken } from "../lib/jwt";
 import prisma from "../lib/prisma";
-import { spotify } from "../lib/spotify";
+import { spotify, spotifyCredentials } from "../lib/spotify";
 
 const hono = new Hono<{ Variables: JwtVariables }>();
-
-const credentials = {
-  clientId: process.env.SPOTIFY_CLIENT_ID,
-  clientSecret: process.env.SPOTIFY_CLIENT_SECRET,
-  redirectUri: process.env.APP_URL + "/auth/callback/spotify",
-};
 
 async function generateAvatar(id: string, username: string) {
   const attachment = await prisma.attachment.create({
@@ -301,7 +295,7 @@ hono.get("/callback/spotify", async (ctx) => {
   }
 
   try {
-    const spotifyClient = new SpotifyWebApi(credentials);
+    const spotifyClient = new SpotifyWebApi(spotifyCredentials);
     const res = await spotifyClient.authorizationCodeGrant(code);
 
     spotifyClient.setAccessToken(res.body.access_token);
@@ -372,6 +366,23 @@ hono.get("/callback/spotify", async (ctx) => {
         },
       });
     }
+
+    await prisma.spotifyToken.upsert({
+      where: {
+        userId: user.id,
+      },
+      create: {
+        accessToken: res.body.access_token,
+        refreshToken: res.body.refresh_token,
+        expiration: new Date(Date.now() + res.body.expires_in * 1000),
+        userId: user.id,
+      },
+      update: {
+        accessToken: res.body.access_token,
+        refreshToken: res.body.refresh_token,
+        expiration: new Date(Date.now() + res.body.expires_in * 1000),
+      },
+    });
 
     const token = await signToken(user.id);
 

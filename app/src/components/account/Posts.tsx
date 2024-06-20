@@ -9,7 +9,7 @@ export default function Posts({ posts }: { posts?: Post[] }) {
     <div className="grid grid-cols-3 gap-3">
       {posts?.length === 0 && <p className="muted">{t("account.no_posts")}</p>}
       {posts?.map((post) => (
-        <Link key={post.id} to={post.url} target="__blank">
+        <Link key={post.id} to={post.url} target="_blank">
           <img
             src={post.image}
             alt={post.name}

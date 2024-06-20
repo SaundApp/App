@@ -5,7 +5,7 @@ import {
   IsBoolean,
   IsInt,
 } from "class-validator";
-import { Follows, Post, Comment, Message, Attachment } from ".";
+import { Follows, Post, Comment, Message, Attachment, SpotifyToken } from ".";
 
 export class User {
   @IsDefined()
@@ -76,4 +76,7 @@ export class User {
 
   @IsDefined()
   attachments!: Attachment[];
+
+  @IsOptional()
+  spotifyToken?: SpotifyToken;
 }

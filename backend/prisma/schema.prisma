@@ -25,13 +25,24 @@ model User {
   genres      String[]
   spotifyId   String?
 
-  followers        Follows[]    @relation("following")
-  following        Follows[]    @relation("follower")
+  followers        Follows[]     @relation("following")
+  following        Follows[]     @relation("follower")
   posts            Post[]
   comments         Comment[]
-  messagesSent     Message[]    @relation("sender")
-  messagesReceived Message[]    @relation("receiver")
+  messagesSent     Message[]     @relation("sender")
+  messagesReceived Message[]     @relation("receiver")
   attachments      Attachment[]
+  spotifyToken     SpotifyToken?
+}
+
+model SpotifyToken {
+  id           String   @id @default(auto()) @map("_id") @db.ObjectId
+  accessToken  String
+  refreshToken String
+  expiration   DateTime
+
+  user   User   @relation(fields: [userId], references: [id], onDelete: Cascade)
+  userId String @unique @db.ObjectId
 }
 
 model Follows {
@@ -43,17 +54,17 @@ model Follows {
 }
 
 model Post {
-  id            String   @id @default(auto()) @map("_id") @db.ObjectId
-  name          String
-  createdAt     DateTime @default(now())
-  image         String
-  likes         String[] @default([])
-  seen          String[] @default([])
-  genres        String[]
-  userId        String   @db.ObjectId
-  url           String
-  type          PostType
-  spotifyId     String
+  id        String   @id @default(auto()) @map("_id") @db.ObjectId
+  name      String
+  createdAt DateTime @default(now())
+  image     String
+  likes     String[] @default([])
+  seen      String[] @default([])
+  genres    String[]
+  userId    String   @db.ObjectId
+  url       String
+  type      PostType
+  spotifyId String
 
   user User @relation(fields: [userId], references: [id], onDelete: Cascade)
 
