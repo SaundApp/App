@@ -27,6 +27,7 @@ import Comments from "./drawers/Comments";
 import Users from "./drawers/Users";
 import Share from "./drawers/Share";
 import { useInView } from "react-intersection-observer";
+import { useToast } from "./ui/use-toast";
 
 function getTrack(
   track: SimplifiedTrack | PlaylistedTrack<TrackItem> | undefined
@@ -40,6 +41,7 @@ function getTrack(
 
 export default function Post({ post }: { post: PostType }) {
   const { t, i18n } = useTranslation();
+  const { toast } = useToast();
   const [saw, setSaw] = useState(false);
   const [open, setOpen] = useState(false);
   const [color, setColor] = useState<"black" | "white">("black");
@@ -74,7 +76,15 @@ export default function Post({ post }: { post: PostType }) {
         .querySelectorAll("audio")
         .forEach((audio) => audio !== player.current && audio.pause());
 
-      player.current?.play();
+      if (getTrack(song?.tracks.items[currentTrack])?.preview_url)
+        player.current?.play();
+      else {
+        setPlaying(false);
+        toast({
+          description: t("post.no-preview"),
+          variant: "destructive",
+        });
+      }
     } else {
       player.current?.pause();
     }

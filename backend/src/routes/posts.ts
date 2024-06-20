@@ -164,6 +164,20 @@ hono.get(
       posts.push(...newPosts);
     }
 
+    if (posts.length < 10) {
+      const newPosts = await prisma.post.findMany({
+        where: {
+          id: {
+            notIn: posts.map((post) => post.id),
+          },
+        },
+        ...prismaArgs,
+        take: 10 - posts.length,
+      });
+
+      posts.push(...newPosts);
+    }
+
     posts.sort((a, b) => {
       const aIsFollowed = user.following.some(
         (u) => u.followingId === a.userId
@@ -186,7 +200,12 @@ hono.get(
       return 0;
     });
 
-    return ctx.json(posts);
+    return ctx.json(
+      posts.map((post) => ({
+        ...post,
+        seen: undefined,
+      }))
+    );
   }
 );
 
@@ -414,6 +433,10 @@ hono.post("/:id/see", jwt({ secret: process.env.JWT_SECRET! }), async (ctx) => {
     where: {
       id,
     },
+    select: {
+      id: true,
+      seen: true,
+    },
   });
 
   if (!post) {
@@ -427,19 +450,21 @@ hono.post("/:id/see", jwt({ secret: process.env.JWT_SECRET! }), async (ctx) => {
 
   const payload = ctx.get("jwtPayload");
 
-  /* todo: enable await prisma.post.update({
-    where: {
-      id,
-    },
-    data: {
-      seen: {
-        push: payload.user,
+  if (!post.seen.includes(payload.user)) {
+    await prisma.post.update({
+      where: {
+        id,
       },
-    },
-  }); */
+      data: {
+        seen: {
+          push: payload.user,
+        },
+      },
+    });
+  }
 
   return ctx.json({
-    message: "Post seen",
+    success: true,
   });
 });
 
