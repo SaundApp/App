@@ -220,8 +220,10 @@ function EditProfile() {
       <p>{t("account.link")}</p>
       <div className="w-full flex flex-col gap-3">
         <Button
-          className="w-full bg-[#635BFF] text-white gap-1"
-          variant="default"
+          className={
+            "w-full text-white " +
+            (session.spotifyId ? "bg-secondary" : "bg-primary")
+          }
           onClick={() => {
             axiosClient
               .post("/stripe/create")
@@ -237,8 +239,10 @@ function EditProfile() {
         </Button>
 
         <Button
-          className="w-full bg-[#1DB954] text-white gap-1"
-          variant="default"
+          className={
+            "w-full text-white " +
+            (session.spotifyId ? "bg-secondary" : "bg-primary")
+          }
           asChild
         >
           <Link

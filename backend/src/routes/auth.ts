@@ -303,6 +303,7 @@ hono.get("/callback/spotify", async (ctx) => {
     const me = await spotifyClient.getMe();
     const playlists = await spotifyClient.getUserPlaylists();
     const top = await spotifyClient.getMyTopArtists();
+    const following = await spotifyClient.getFollowedArtists();
 
     if (!user) {
       user = await prisma.user.findFirst({
@@ -365,6 +366,23 @@ hono.get("/callback/spotify", async (ctx) => {
           type: "PLAYLIST",
         },
       });
+    }
+
+    for (const artist of following.body.artists.items) {
+      const artistUser = await prisma.user.findFirst({
+        where: {
+          spotifyId: artist.id,
+        },
+      });
+
+      if (artistUser) {
+        await prisma.follows.create({
+          data: {
+            followerId: user.id,
+            followingId: artistUser.id,
+          },
+        });
+      }
     }
 
     await prisma.spotifyToken.upsert({

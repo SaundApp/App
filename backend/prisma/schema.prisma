@@ -23,7 +23,7 @@ model User {
   streams     Int?
   nationality String?
   genres      String[]
-  spotifyId   String?
+  spotifyId   String?  @unique
 
   followers        Follows[]     @relation("following")
   following        Follows[]     @relation("follower")
@@ -64,7 +64,7 @@ model Post {
   userId    String   @db.ObjectId
   url       String
   type      PostType
-  spotifyId String
+  spotifyId String   @unique
 
   user User @relation(fields: [userId], references: [id], onDelete: Cascade)
 

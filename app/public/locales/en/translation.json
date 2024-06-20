@@ -22,7 +22,7 @@
     },
     "likes": {
       "title": "Likes",
-      "empty": "No likes yet"
+      "empty": "No one yet"
     },
     "comments": {
       "title": "Comments",
@@ -69,10 +69,13 @@
     "clear_cache": "Clear cache",
     "link_spotify": "Link Spotify",
     "unlink_spotify": "Unlink Spotify",
+    "sync_spotify": "Sync Spotify",
     "link_stripe": "Link Stripe",
     "unlink_stripe": "Unlink Stripe",
     "link": "Link accounts",
-    "private": "This account is private!"
+    "private": "This account is private!",
+    "remove": "Logout",
+    "new": "Add account"
   },
   "messages": {
     "messages": "Messages",

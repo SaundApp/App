@@ -63,10 +63,12 @@ function Login() {
                       localStorage.getItem("tokens") || "[]"
                     );
 
-                    tokens.push(res.data.token);
+                    if (!tokens.includes(res.data.token)) {
+                      tokens.push(res.data.token);
+                      localStorage.setItem("tokens", JSON.stringify(tokens));
+                    }
 
                     localStorage.setItem("token", res.data.token);
-                    localStorage.setItem("tokens", JSON.stringify(tokens));
 
                     location.href = "/";
                   }

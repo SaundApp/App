@@ -1,7 +1,7 @@
 export default function Listeners() {
   return (
     <div>
-      <p>Listeners</p>
+      <p className="muted">Listeners</p>
     </div>
   );
 }

@@ -66,6 +66,7 @@ export default function Users({
                 to={`/account/${user.username}`}
                 key={user.username}
                 className="flex justify-between"
+                onClick={() => onOpenChange(false)}
               >
                 <div className="flex gap-3 items-center">
                   <Avatar user={user} width={40} height={40} />
