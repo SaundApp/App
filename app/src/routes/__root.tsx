@@ -1,3 +1,4 @@
+import AppUrlListener from "@/components/AppUrlListener";
 import Navbar from "@/components/Navbar";
 import { SessionContext } from "@/components/SessionContext";
 import { ThemeProvider } from "@/components/ThemeProvider";
@@ -58,11 +59,14 @@ function App() {
     <ThemeProvider defaultTheme="system" storageKey="vite-ui-theme">
       <SessionContext.Provider value={session}>
         <main
-          className={`bg-background text-foreground font-geist py-3 px-3 min-h-screen h-screen flex flex-col`}
+          className={`bg-background text-foreground font-geist py-6 px-3 min-h-screen h-screen flex flex-col`}
         >
           <Outlet />
-          {router.location.pathname.match(/^(?!\/dm\/\w+).*/g) && <Navbar />}
+          {router.location.pathname.match(/^(?!(\/dm\/\w+|\/auth)).*/g) && (
+            <Navbar />
+          )}
           <Toaster />
+          <AppUrlListener />
         </main>
       </SessionContext.Provider>
     </ThemeProvider>

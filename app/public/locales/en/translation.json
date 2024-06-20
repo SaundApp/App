@@ -60,6 +60,7 @@
     "theme": {
       "light": "Light",
       "dark": "Dark",
+      "system": "System",
       "active": "Active theme"
     },
     "languages": "Change language",

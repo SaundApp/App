@@ -2,6 +2,7 @@ import AccountNavbar from "@/components/account/AccountNavbar";
 import Avatar from "@/components/account/Avatar";
 import Listeners from "@/components/account/Listeners";
 import Posts from "@/components/account/Posts";
+import Accounts from "@/components/drawers/Accounts";
 import Users from "@/components/drawers/Users";
 import { useSession } from "@/components/SessionContext";
 import { Button } from "@/components/ui/button";
@@ -12,7 +13,6 @@ import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { createLazyFileRoute, Link } from "@tanstack/react-router";
 import { useState } from "react";
 import { useTranslation } from "react-i18next";
-import { FaChevronDown } from "react-icons/fa";
 import { FaGear } from "react-icons/fa6";
 
 export const Route = createLazyFileRoute("/account/$username")({
@@ -98,10 +98,7 @@ function Account() {
         <div>
           <p className="muted">{!data.private ? "Public" : "Private"}</p>
 
-          <div className="flex items-center gap-1">
-            <h5>{data.username}</h5>
-            <FaChevronDown fontSize={20} />
-          </div>
+          <Accounts />
         </div>
 
         <Link to="/account/settings">
@@ -118,8 +115,11 @@ function Account() {
             <p className="muted">post</p>
           </div>
 
-          <div className="flex flex-col items-center">
-            <h5 onClick={() => setFollowersOpen(true)}>{data.followers}</h5>
+          <div
+            className="flex flex-col items-center"
+            onClick={() => setFollowersOpen(true)}
+          >
+            <h5>{data.followers}</h5>
             <p className="muted">{t("account.follower")}</p>
 
             {followers && (
@@ -132,8 +132,11 @@ function Account() {
             )}
           </div>
 
-          <div className="flex flex-col items-center">
-            <h5 onClick={() => setFollowingsOpen(true)}>{data.following}</h5>
+          <div
+            className="flex flex-col items-center"
+            onClick={() => setFollowingsOpen(true)}
+          >
+            <h5>{data.following}</h5>
             <p className="muted">{t("account.following")}</p>
 
             {following && (

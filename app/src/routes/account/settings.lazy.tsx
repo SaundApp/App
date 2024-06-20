@@ -10,7 +10,6 @@ import {
 } from "@/components/ui/select";
 import { useQuery, useQueryClient } from "@tanstack/react-query";
 import { Link, createLazyFileRoute } from "@tanstack/react-router";
-import { Moon, Sun } from "lucide-react";
 import { useTranslation } from "react-i18next";
 import { FaChevronLeft } from "react-icons/fa";
 import Twemoji from "react-twemoji";
@@ -58,6 +57,18 @@ function EditProfile() {
         <Button
           className={
             "w-full " +
+            (theme === "system"
+              ? "dark:bg-white dark:text-black bg-black text-white"
+              : "")
+          }
+          variant={theme === "system" ? "default" : "outline"}
+          onClick={() => setTheme("system")}
+        >
+          {t("account.theme.system")}
+        </Button>
+        <Button
+          className={
+            "w-full " +
             (theme === "dark"
               ? "dark:bg-white dark:text-black bg-black text-white"
               : "")
@@ -65,7 +76,7 @@ function EditProfile() {
           variant={theme === "dark" ? "default" : "outline"}
           onClick={() => setTheme("dark")}
         >
-          <Moon className="mr-3" /> {t("account.theme.dark")}
+          {t("account.theme.dark")}
         </Button>
         <Button
           className={
@@ -77,7 +88,7 @@ function EditProfile() {
           variant={theme === "light" ? "default" : "outline"}
           onClick={() => setTheme("light")}
         >
-          <Sun className="mr-3" /> {t("account.theme.light")}
+          {t("account.theme.light")}
         </Button>
       </div>
 

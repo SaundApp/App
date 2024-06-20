@@ -171,13 +171,18 @@ hono.get(
       const bIsFollowed = user.following.some(
         (u) => u.followingId === b.userId
       );
-      const aIsLiked = a.likes.includes(user.id);
-      const bIsLiked = b.likes.includes(user.id);
+      const aIsLiked = a.likes.some((u) =>
+        user.following.some((f) => f.followingId === u)
+      );
+      const bIsLiked = b.likes.some((u) =>
+        user.following.some((f) => f.followingId === u)
+      );
 
       if (aIsFollowed && !bIsFollowed) return -1;
       if (!aIsFollowed && bIsFollowed) return 1;
       if (aIsLiked && !bIsLiked) return -1;
       if (!aIsLiked && bIsLiked) return 1;
+
       return 0;
     });
 
@@ -422,7 +427,7 @@ hono.post("/:id/see", jwt({ secret: process.env.JWT_SECRET! }), async (ctx) => {
 
   const payload = ctx.get("jwtPayload");
 
-  await prisma.post.update({
+  /* todo: enable await prisma.post.update({
     where: {
       id,
     },
@@ -431,7 +436,7 @@ hono.post("/:id/see", jwt({ secret: process.env.JWT_SECRET! }), async (ctx) => {
         push: payload.user,
       },
     },
-  });
+  }); */
 
   return ctx.json({
     message: "Post seen",

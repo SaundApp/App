@@ -50,7 +50,7 @@ function Chat() {
   useEffect(() => {
     const timeout = setTimeout(() => {
       const webSocket = new WebSocket(
-        `ws://localhost:8000/dm/${username}/ws?token=${localStorage.getItem("token")}`
+        `${import.meta.env.VITE_WS_URL}/dm/${username}/ws?token=${localStorage.getItem("token")}`
       );
 
       webSocket.onopen = () => {

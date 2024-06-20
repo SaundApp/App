@@ -12,14 +12,14 @@ datasource db {
 }
 
 model User {
-  id          String  @id @default(auto()) @map("_id") @db.ObjectId
-  username    String  @unique
+  id          String   @id @default(auto()) @map("_id") @db.ObjectId
+  username    String   @unique
   bio         String?
   name        String
-  email       String  @unique
-  avatarId    String? @db.ObjectId
+  email       String   @unique
+  avatarId    String?  @db.ObjectId
   password    String?
-  private     Boolean @default(false)
+  private     Boolean  @default(false)
   streams     Int?
   nationality String?
   genres      String[]
@@ -43,17 +43,17 @@ model Follows {
 }
 
 model Post {
-  id        String   @id @default(auto()) @map("_id") @db.ObjectId
-  name      String
-  createdAt DateTime @default(now())
-  image     String
-  likes     String[] @default([])
-  seen      String[] @default([])
-  genres    String[]
-  userId    String   @db.ObjectId
-  url       String
-  type      PostType
-  spotifyId String
+  id            String   @id @default(auto()) @map("_id") @db.ObjectId
+  name          String
+  createdAt     DateTime @default(now())
+  image         String
+  likes         String[] @default([])
+  seen          String[] @default([])
+  genres        String[]
+  userId        String   @db.ObjectId
+  url           String
+  type          PostType
+  spotifyId     String
 
   user User @relation(fields: [userId], references: [id], onDelete: Cascade)
 

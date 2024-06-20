@@ -45,7 +45,7 @@ export default function Comments({ post }: { post: Post }) {
         <FaComment fontSize={25} />
       </DrawerTrigger>
       <DrawerContent className="p-3 flex flex-col gap-3">
-        <h5 className="font-semibold text-center">
+        <h5 className="text-center">
           {t("post.comments.title")}
         </h5>
 
@@ -103,7 +103,7 @@ export default function Comments({ post }: { post: Post }) {
               e.preventDefault();
               comment.mutate();
             }}
-            className="w-80"
+            className="w-96"
           >
             <Input
               placeholder={t("post.comments.placeholder")}

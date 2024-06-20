@@ -41,7 +41,7 @@ export default function Users({
   return (
     <Drawer open={open} onOpenChange={onOpenChange}>
       <DrawerContent className="p-3 flex flex-col gap-3 no-focus">
-        <h5 className="font-semibold text-center">{title}</h5>
+        <h5 className="text-center">{title}</h5>
 
         <Input
           placeholder={t("general.search")}

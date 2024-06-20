@@ -13,7 +13,7 @@ import { Link } from "@tanstack/react-router";
 import moment from "moment/min/moment-with-locales";
 import { useEffect, useRef, useState } from "react";
 import { useTranslation } from "react-i18next";
-import { FaHeart, FaRegHeart } from "react-icons/fa";
+import { FaHeart, FaRegHeart, FaSpotify } from "react-icons/fa";
 import {
   FaCircleArrowLeft,
   FaCircleArrowRight,
@@ -25,7 +25,6 @@ import { useSession } from "./SessionContext";
 import Avatar from "./account/Avatar";
 import Comments from "./drawers/Comments";
 import Users from "./drawers/Users";
-import PostActions from "./drawers/PostActions";
 import Share from "./drawers/Share";
 import { useInView } from "react-intersection-observer";
 
@@ -141,7 +140,9 @@ export default function Post({ post }: { post: PostType }) {
           </div>
         </div>
 
-        <PostActions color={color} url={post.url} />
+        <Link to={post.url}>
+          <FaSpotify fontSize={25} />
+        </Link>
       </div>
 
       <div className="flex flex-col gap-3 relative">
