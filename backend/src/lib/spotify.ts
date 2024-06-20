@@ -40,6 +40,10 @@ export async function syncUser(user: User) {
   const playlists = await spotifyClient.getUserPlaylists();
   const following = await spotifyClient.getFollowedArtists();
   const top = await spotifyClient.getMyTopArtists();
+  const topTracks = await spotifyClient.getMyTopTracks({
+    time_range: "short_term",
+    limit: 50,
+  });
   const genres = top.body.items.map((item) => item.genres).flat();
 
   for (const playlist of playlists.body.items) {
@@ -93,4 +97,65 @@ export async function syncUser(user: User) {
     where: { id: user.id },
     data: { genres },
   });
+
+  const topArtistByTracks: {
+    artist: string;
+    count: number;
+  }[] = [];
+  for (const track of topTracks.body.items) {
+    for (const artist of track.artists) {
+      const exists = topArtistByTracks.find((a) => a.artist === artist.name);
+      if (exists) {
+        exists.count++;
+      } else {
+        topArtistByTracks.push({
+          artist: artist.name,
+          count: 1,
+        });
+      }
+    }
+  }
+
+  for (const item of topArtistByTracks) {
+    const artist = await prisma.user.findUnique({
+      where: { spotifyId: item.artist },
+    });
+
+    if (!artist) continue;
+
+    const existingData = await prisma.listener.findUnique({
+      where: {
+        artistId_listenerId: {
+          artistId: artist.id,
+          listenerId: user.id,
+        },
+      },
+    });
+
+    if (
+      existingData &&
+      existingData.updatedAt > new Date(Date.now() - 2419200000)
+    )
+      continue;
+
+    await prisma.listener.upsert({
+      where: {
+        artistId_listenerId: {
+          artistId: artist.id,
+          listenerId: user.id,
+        },
+      },
+      update: {
+        count: {
+          increment: item.count,
+        },
+        updatedAt: new Date(),
+      },
+      create: {
+        count: item.count,
+        listenerId: user.id,
+        artistId: artist.id,
+      },
+    });
+  }
 }

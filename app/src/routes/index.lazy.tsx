@@ -9,6 +9,7 @@ import { FaPaperPlane } from "react-icons/fa";
 import { useInView } from "react-intersection-observer";
 import { Post as PostType } from "../types/prisma/models";
 import PostAd from "@/components/PostAd";
+import { Capacitor } from "@capacitor/core";
 
 export const Route = createLazyFileRoute("/")({
   component: Index,
@@ -41,6 +42,8 @@ function Index() {
     }
   }, [fetchNextPage, inView, hasNextPage, isLoading]);
   useEffect(() => {
+    if (Capacitor.getPlatform() === "web") return;
+
     if (data?.pages) {
       AdmobAds.loadNativeAd({
         adId: import.meta.env.VITE_ADMOB_HOME,

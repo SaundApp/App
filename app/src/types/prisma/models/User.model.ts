@@ -5,7 +5,15 @@ import {
   IsOptional,
   IsString,
 } from "class-validator";
-import { Attachment, Comment, Follows, Message, Post, SpotifyToken } from ".";
+import {
+  Attachment,
+  Comment,
+  Follows,
+  Listener,
+  Message,
+  Post,
+  SpotifyToken,
+} from ".";
 
 export class User {
   @IsDefined()
@@ -55,6 +63,12 @@ export class User {
   @IsOptional()
   @IsString()
   spotifyId?: string;
+
+  @IsDefined()
+  listeners!: Listener[];
+
+  @IsDefined()
+  listenerOf!: Listener[];
 
   @IsDefined()
   followers!: Follows[];

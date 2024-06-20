@@ -157,40 +157,54 @@ hono.get(
   }
 );
 
-hono.get("/:id/followers", async (ctx) => {
-  const id = ctx.req.param("id");
+hono.get(
+  "/:id/followers",
+  jwt({ secret: process.env.JWT_SECRET! }),
+  async (ctx) => {
+    const payload = ctx.get("jwtPayload");
+    const id = ctx.req.param("id");
 
-  const user = await prisma.user.findUnique({
-    where: {
-      id,
-    },
-    select: {
-      private: true,
-    },
-  });
+    const user = await prisma.user.findUnique({
+      where: {
+        id,
+      },
+      select: {
+        private: true,
+      },
+    });
 
-  if (!user || user.private) {
-    return ctx.json([]);
-  }
+    if (!user) {
+      return ctx.json(
+        {
+          error: "User not found",
+        },
+        404
+      );
+    }
 
-  const followers = await prisma.user.findMany({
-    where: {
-      following: {
-        some: {
-          followingId: id,
+    const followers = await prisma.user.findMany({
+      where: {
+        following: {
+          some: {
+            followingId: id,
+          },
         },
       },
-    },
-    select: {
-      id: true,
-      username: true,
-      name: true,
-      avatarId: true,
-    },
-  });
+      select: {
+        id: true,
+        username: true,
+        name: true,
+        avatarId: true,
+      },
+    });
 
-  return ctx.json(followers);
-});
+    if (user.private && !followers.some((f) => f.id === payload.user)) {
+      return ctx.json([]);
+    }
+
+    return ctx.json(followers);
+  }
+);
 
 hono.post(
   "/:id/follow",
@@ -208,17 +222,23 @@ hono.post(
     });
 
     if (!user || user.private) {
-      return ctx.json({
-        error: "User not found",
-      });
+      return ctx.json(
+        {
+          error: "User not found",
+        },
+        404
+      );
     }
 
     const payload = ctx.get("jwtPayload");
 
     if (payload.user === id) {
-      return ctx.json({
-        error: "Cannot follow yourself",
-      });
+      return ctx.json(
+        {
+          error: "Cannot follow yourself",
+        },
+        400
+      );
     }
 
     try {
@@ -233,47 +253,72 @@ hono.post(
         message: "User followed",
       });
     } catch (e) {
-      return ctx.json({
-        error: "User already followed",
-      });
+      return ctx.json(
+        {
+          error: "User already followed",
+        },
+        400
+      );
     }
   }
 );
 
-hono.get("/:id/following", async (ctx) => {
-  const id = ctx.req.param("id");
+hono.get(
+  "/:id/following",
+  jwt({ secret: process.env.JWT_SECRET! }),
+  async (ctx) => {
+    const payload = ctx.get("jwtPayload");
+    const id = ctx.req.param("id");
 
-  const user = await prisma.user.findUnique({
-    where: {
-      id,
-    },
-    select: {
-      private: true,
-    },
-  });
-
-  if (!user || user.private) {
-    return ctx.json([]);
-  }
-
-  const following = await prisma.user.findMany({
-    where: {
-      followers: {
-        some: {
-          followerId: id,
+    const user = await prisma.user.findUnique({
+      where: {
+        id,
+      },
+      select: {
+        private: true,
+        followers: {
+          select: {
+            followerId: true,
+          },
         },
       },
-    },
-    select: {
-      id: true,
-      username: true,
-      name: true,
-      avatarId: true,
-    },
-  });
+    });
 
-  return ctx.json(following);
-});
+    if (!user) {
+      return ctx.json(
+        {
+          error: "User not found",
+        },
+        404
+      );
+    }
+
+    if (
+      user.private &&
+      !user.followers.some((f) => f.followerId === payload.user)
+    ) {
+      return ctx.json([]);
+    }
+
+    const following = await prisma.user.findMany({
+      where: {
+        followers: {
+          some: {
+            followerId: id,
+          },
+        },
+      },
+      select: {
+        id: true,
+        username: true,
+        name: true,
+        avatarId: true,
+      },
+    });
+
+    return ctx.json(following);
+  }
+);
 
 hono.delete(
   "/:id/unfollow",
@@ -283,9 +328,12 @@ hono.delete(
     const payload = ctx.get("jwtPayload");
 
     if (payload.user === id) {
-      return ctx.json({
-        error: "Cannot unfollow yourself",
-      });
+      return ctx.json(
+        {
+          error: "Cannot unfollow yourself",
+        },
+        400
+      );
     }
 
     await prisma.follows.deleteMany({
@@ -348,5 +396,67 @@ hono.get("/:id/posts", async (ctx) => {
 
   return ctx.json(posts);
 });
+
+hono.get(
+  "/:id/listeners",
+  jwt({ secret: process.env.JWT_SECRET! }),
+  async (ctx) => {
+    const payload = ctx.get("jwtPayload");
+    const id = ctx.req.param("id");
+
+    const user = await prisma.user.findUnique({
+      where: {
+        id,
+      },
+      select: {
+        private: true,
+        followers: {
+          select: {
+            followerId: true,
+          },
+        },
+        listeners: {
+          where: {
+            listener: {
+              private: false,
+            },
+          },
+          select: {
+            listener: {
+              select: {
+                id: true,
+                username: true,
+                name: true,
+                avatarId: true,
+              },
+            },
+          },
+          orderBy: {
+            count: "desc",
+          },
+          take: 10,
+        },
+      },
+    });
+
+    if (!user) {
+      return ctx.json(
+        {
+          error: "User not found",
+        },
+        404
+      );
+    }
+
+    if (
+      user.private &&
+      !user.followers.some((f) => f.followerId === payload.user)
+    ) {
+      return ctx.json([]);
+    }
+
+    return ctx.json(user.listeners.map((l) => l.listener));
+  }
+);
 
 export default hono;

@@ -12,18 +12,20 @@ datasource db {
 }
 
 model User {
-  id          String   @id @default(auto()) @map("_id") @db.ObjectId
-  username    String   @unique
+  id          String     @id @default(auto()) @map("_id") @db.ObjectId
+  username    String     @unique
   bio         String?
   name        String
-  email       String   @unique
-  avatarId    String?  @db.ObjectId
+  email       String     @unique
+  avatarId    String?    @db.ObjectId
   password    String?
-  private     Boolean  @default(false)
+  private     Boolean    @default(false)
   streams     Int?
   nationality String?
   genres      String[]
-  spotifyId   String?  @unique
+  spotifyId   String?
+  listeners   Listener[] @relation("artist")
+  listenerOf  Listener[] @relation("listener")
 
   followers        Follows[]     @relation("following")
   following        Follows[]     @relation("follower")
@@ -43,6 +45,19 @@ model SpotifyToken {
 
   user   User   @relation(fields: [userId], references: [id], onDelete: Cascade)
   userId String @unique @db.ObjectId
+}
+
+model Listener {
+  id        String   @id @default(auto()) @map("_id") @db.ObjectId
+  count     Int
+  updatedAt DateTime @default(now())
+  artist    User     @relation("artist", fields: [artistId], references: [id], onDelete: Cascade)
+  artistId  String   @db.ObjectId
+
+  listener   User   @relation("listener", fields: [listenerId], references: [id], onDelete: Cascade)
+  listenerId String @db.ObjectId
+
+  @@unique([artistId, listenerId])
 }
 
 model Follows {

@@ -66,6 +66,7 @@ hono.get("/:id", async (ctx) => {
   ctx.header("Content-Type", type);
   ctx.header("Content-Length", attachment.data.length.toString());
   ctx.header("Content-Disposition", `inline; filename="${attachment.name}"`);
+  ctx.header("Cache-Control", "public, max-age=31536000");
 
   return stream(ctx, async (s) => {
     const buffer = attachment.data;
