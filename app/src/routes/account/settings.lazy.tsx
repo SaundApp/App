@@ -117,22 +117,42 @@ function EditProfile() {
       </div>
 
       <p>{t("account.actions")}</p>
-      <Button
-        onClick={() => {
-          const token = localStorage.getItem("token");
-          localStorage.clear();
-          if (token) {
-            localStorage.setItem("token", token);
-            localStorage.setItem("tokens", JSON.stringify([token]));
-          }
 
-          queryClient.invalidateQueries();
-        }}
-        className="w-full gap-1"
-        variant="destructive"
-      >
-        {t("account.clear_cache")}
-      </Button>
+      <div className="flex gap-3">
+        <Button
+          className="w-full gap-1"
+          variant="destructive"
+          onClick={() => {
+            const token = localStorage.getItem("token");
+            let tokens = JSON.parse(localStorage.getItem("tokens") || "[]");
+
+            tokens = tokens.filter((t: string) => t !== token);
+            localStorage.setItem("tokens", JSON.stringify(tokens));
+            if (tokens.length > 0) localStorage.setItem("token", tokens[0]);
+            else localStorage.removeItem("token");
+            window.location.reload();
+          }}
+        >
+          {t("account.remove")}
+        </Button>
+
+        <Button
+          variant="link"
+          className="w-full bg-transparent text-destructive"
+          onClick={() => {
+            const token = localStorage.getItem("token");
+            localStorage.clear();
+            if (token) {
+              localStorage.setItem("token", token);
+              localStorage.setItem("tokens", JSON.stringify([token]));
+            }
+
+            queryClient.invalidateQueries();
+          }}
+        >
+          {t("account.clear_cache")}
+        </Button>
+      </div>
     </div>
   );
 }

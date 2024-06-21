@@ -13,7 +13,7 @@ import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { createLazyFileRoute, Link } from "@tanstack/react-router";
 import { useState } from "react";
 import { useTranslation } from "react-i18next";
-import { FaLock } from "react-icons/fa";
+import { FaChevronLeft, FaLock } from "react-icons/fa";
 import { FaGear } from "react-icons/fa6";
 
 export const Route = createLazyFileRoute("/account/$username")({
@@ -100,8 +100,8 @@ function Account() {
 
   return (
     <div className="flex flex-col gap-3 h-full">
-      <div className="flex justify-between items-center">
-        <div>
+      <div className="flex justify-between items-center w-full">
+        <div className="w-full">
           {session?.username === data.username && (
             <p className="muted">{!data.private ? "Public" : "Private"}</p>
           )}
@@ -109,8 +109,13 @@ function Account() {
           {session?.username === data.username && <Accounts />}
 
           {session?.username !== data.username && (
-            <div className="flex items-center gap-1">
-              <h5>{data.username}</h5>
+            <div className="p-3 flex justify-center items-center relative w-full">
+              <Link className="mr-auto z-50" to="/search">
+                <FaChevronLeft fontSize={25} />
+              </Link>
+              <div className="absolute left-0 top-3 w-full h-full text-center">
+                <h5 className="m-auto">{data.username}</h5>
+              </div>
             </div>
           )}
         </div>

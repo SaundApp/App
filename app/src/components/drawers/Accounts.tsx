@@ -2,11 +2,11 @@ import { Drawer, DrawerContent, DrawerTrigger } from "@/components/ui/drawer";
 import { axiosClient } from "@/lib/axios";
 import { User } from "@/types/prisma/models";
 import { useQuery } from "@tanstack/react-query";
-import { FaChevronDown } from "react-icons/fa";
+import { useTranslation } from "react-i18next";
+import { FaCheckCircle, FaChevronDown } from "react-icons/fa";
 import Avatar from "../account/Avatar";
 import { useSession } from "../SessionContext";
 import { Button } from "../ui/button";
-import { useTranslation } from "react-i18next";
 
 export default function Accounts() {
   const { t } = useTranslation();
@@ -35,12 +35,15 @@ export default function Accounts() {
         <div className="relative">
           <div className="flex flex-col gap-3 h-[33vh] max-h-[33vh] overflow-y-auto">
             {data?.map((user) => (
-              <div key={user.username} className="flex justify-between">
+              <div
+                key={user.username}
+                className="flex justify-between items-center"
+              >
                 <div
                   className="flex gap-3 items-center"
                   onClick={() => {
                     localStorage.setItem("token", user.token);
-                    window.location.reload();
+                    window.location.href = "/";
                   }}
                 >
                   <Avatar user={user} width={40} height={40} />
@@ -54,23 +57,9 @@ export default function Accounts() {
                   </div>
                 </div>
 
-                <Button
-                  onClick={() => {
-                    const token = localStorage.getItem("token");
-                    let tokens = JSON.parse(
-                      localStorage.getItem("tokens") || "[]"
-                    );
-
-                    tokens = tokens.filter((t: string) => t !== token);
-                    localStorage.setItem("tokens", JSON.stringify(tokens));
-                    if (tokens.length > 0)
-                      localStorage.setItem("token", tokens[0]);
-                    else localStorage.removeItem("token");
-                    window.location.reload();
-                  }}
-                >
-                  {t("account.remove")}
-                </Button>
+                {user.username === session?.username && (
+                  <FaCheckCircle fontSize={25} className="text-primary" />
+                )}
               </div>
             ))}
           </div>

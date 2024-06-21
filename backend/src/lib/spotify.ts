@@ -117,7 +117,7 @@ export async function syncUser(user: User) {
   }
 
   for (const item of topArtistByTracks) {
-    const artist = await prisma.user.findUnique({
+    const artist = await prisma.user.findFirst({
       where: { spotifyId: item.artist },
     });
 

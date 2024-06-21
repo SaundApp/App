@@ -3,6 +3,7 @@ import Avatar from "@/components/account/Avatar";
 import { Button } from "@/components/ui/button";
 import { Form, FormControl, FormField, FormItem } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
+import { Switch } from "@/components/ui/switch";
 import { useToast } from "@/components/ui/use-toast";
 import { axiosClient } from "@/lib/axios";
 import { zodResolver } from "@hookform/resolvers/zod";
@@ -12,7 +13,7 @@ import { updateSchema } from "form-types";
 import { useEffect, useRef } from "react";
 import { useForm } from "react-hook-form";
 import { useTranslation } from "react-i18next";
-import { FaChevronLeft } from "react-icons/fa";
+import { FaChevronLeft, FaSpotify, FaStripeS } from "react-icons/fa";
 import { z } from "zod";
 
 export const Route = createLazyFileRoute("/account/edit")({
@@ -32,6 +33,7 @@ function EditProfile() {
       username: session?.username || "",
       bio: session?.bio || "",
       email: session?.email || "",
+      private: session?.private || false,
     },
   });
 
@@ -41,8 +43,9 @@ function EditProfile() {
     form.reset({
       name: session.name,
       username: session.username,
-      bio: session.bio,
+      bio: session.bio || "",
       email: session.email,
+      private: session.private,
     });
   }, [form, session]);
 
@@ -82,6 +85,7 @@ function EditProfile() {
                 });
             },
             (values) => {
+              console.log(values);
               const error =
                 values.name || values.username || values.bio || values.email;
               toast({
@@ -133,7 +137,7 @@ function EditProfile() {
                   e.preventDefault();
                   input.current?.click();
                 }}
-                className="muted"
+                className="text-sm"
               >
                 {t("account.edit_image")}
               </button>
@@ -203,6 +207,25 @@ function EditProfile() {
                 </FormItem>
               )}
             />
+
+            <div className="flex items-center gap-2">
+              <FormField
+                name="private"
+                control={form.control}
+                render={({ field }) => (
+                  <FormItem>
+                    <FormControl>
+                      <Switch
+                        checked={field.value}
+                        onCheckedChange={field.onChange}
+                      />
+                    </FormControl>
+                  </FormItem>
+                )}
+              />
+
+              <p className="text-sm">{t("account.private_account")}</p>
+            </div>
           </div>
 
           <div className="flex mt-3 gap-3">
@@ -217,47 +240,16 @@ function EditProfile() {
         </form>
       </Form>
 
-      <p>{t("account.link")}</p>
+      <p>{t("account.manage")}</p>
       <div className="w-full flex flex-col gap-3">
-        <Button
-          className={
-            "w-full text-white " +
-            (session.spotifyId ? "bg-secondary" : "bg-primary")
-          }
-          onClick={() => {
-            axiosClient
-              .post("/stripe/create")
-              .then((res) => res.data)
-              .then((res) => {
-                window.open(res.url, "_blank");
-              });
-          }}
-        >
-          {session.spotifyId
-            ? t("account.unlink_stripe")
-            : t("account.link_stripe")}
-        </Button>
-
-        <Button
-          className={
-            "w-full text-white " +
-            (session.spotifyId ? "bg-secondary" : "bg-primary")
-          }
-          asChild
-        >
-          <Link
-            to={
-              import.meta.env.VITE_API_URL +
-              (session.spotifyId
-                ? "/auth/spotify/unlink"
-                : "/auth/login/spotify")
-            }
-          >
-            {session.spotifyId
-              ? t("account.unlink_spotify")
-              : t("account.link_spotify")}
-          </Link>
-        </Button>
+        <div className="flex gap-3">
+          <Button className="w-fit">
+            <FaStripeS fontSize={20} />
+          </Button>
+          <Button className="w-fit">
+            <FaSpotify fontSize={20} />
+          </Button>
+        </div>
       </div>
     </div>
   );

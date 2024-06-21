@@ -38,4 +38,5 @@ export const updateSchema = z.object({
   username: z.string().min(3, "username_length").optional(),
   bio: z.string().optional(),
   email: z.string().email("invalid_email").optional(),
+  private: z.boolean().default(false).optional(),
 });

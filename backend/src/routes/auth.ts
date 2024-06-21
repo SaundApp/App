@@ -239,6 +239,17 @@ hono.patch(
       }
     }
 
+    if (body.private !== undefined) {
+      await prisma.user.update({
+        where: {
+          id: payload.user,
+        },
+        data: {
+          private: body.private,
+        },
+      });
+    }
+
     return ctx.json({
       success: true,
     });
@@ -357,6 +368,7 @@ hono.get("/callback/spotify", async (ctx) => {
       process.env.FRONTEND_URL + "/auth/login?token=" + token
     );
   } catch (error) {
+    console.log(error);
     return ctx.json(
       {
         error: "Invalid code",
