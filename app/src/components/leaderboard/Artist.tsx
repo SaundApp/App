@@ -21,8 +21,14 @@ export default function Artist({
     >
       <Avatar user={user} width={40} height={40} />
       <div>
-        <h5>{user.name}</h5>
-        {description && <p className="muted">{description}</p>}
+        <h5 className="max-w-[14rem] text-ellipsis whitespace-nowrap overflow-hidden">
+          {user.name}
+        </h5>
+        {description && (
+          <p className="muted max-w-[14rem] text-ellipsis whitespace-nowrap overflow-hidden">
+            {description}
+          </p>
+        )}
       </div>
       {position && <p className="ml-auto">{position}°</p>}
     </Link>

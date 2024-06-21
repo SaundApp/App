@@ -11,7 +11,7 @@ import { axiosClient } from "@/lib/axios";
 import { Post, User } from "@/types/prisma/models";
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { createLazyFileRoute, Link } from "@tanstack/react-router";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useTranslation } from "react-i18next";
 import { FaChevronLeft, FaLock } from "react-icons/fa";
 import { FaGear } from "react-icons/fa6";
@@ -62,6 +62,13 @@ function Account() {
         ? axiosClient.get(`/users/${data.id}/posts`).then((res) => res.data)
         : [],
   });
+  const { data: listeners } = useQuery<User[]>({
+    queryKey: ["listeners", data?.id],
+    queryFn: () =>
+      data
+        ? axiosClient.get(`/users/${data.id}/listeners`).then((res) => res.data)
+        : [],
+  });
   const follow = useMutation({
     mutationFn: (user: string) => axiosClient.post(`/users/${user}/follow`),
     onSuccess: () => {
@@ -86,9 +93,13 @@ function Account() {
           <Posts posts={posts?.filter((post) => post.type === "PLAYLIST")} />
         );
       case "listeners":
-        return <Listeners />;
+        return <Listeners listeners={listeners || []} />;
     }
   };
+
+  useEffect(() => {
+    if (activeTab === "listeners" && !listeners?.length) setActiveTab("posts");
+  }, [listeners, activeTab]);
 
   if (isLoading) return <Spinner className="m-auto" />;
   if (!data) return null;
@@ -114,7 +125,9 @@ function Account() {
                 <FaChevronLeft fontSize={25} />
               </Link>
               <div className="absolute left-0 top-3 w-full h-full text-center">
-                <h5 className="m-auto">{data.username}</h5>
+                <h5 className="m-auto max-w-[14rem] text-ellipsis whitespace-nowrap overflow-hidden">
+                  {data.username}
+                </h5>
               </div>
             </div>
           )}
@@ -209,7 +222,11 @@ function Account() {
 
       {!profileUnavailable && (
         <>
-          <AccountNavbar setActiveTab={setActiveTab} active={activeTab} />
+          <AccountNavbar
+            setActiveTab={setActiveTab}
+            active={activeTab}
+            listeners={(listeners?.length || 0) > 0}
+          />
           {renderTab()}
         </>
       )}

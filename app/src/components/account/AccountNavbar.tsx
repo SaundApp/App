@@ -3,9 +3,11 @@ import { useTranslation } from "react-i18next";
 export default function AccountNavbar({
   setActiveTab,
   active,
+  listeners,
 }: {
   setActiveTab: (tab: "posts" | "playlists" | "listeners") => void;
   active: "posts" | "playlists" | "listeners";
+  listeners: boolean;
 }) {
   const { t } = useTranslation();
 
@@ -33,17 +35,19 @@ export default function AccountNavbar({
       >
         Playlist
       </button>
-      <button
-        onClick={() => setActiveTab("listeners")}
-        className={
-          "w-full " +
-          (active === "listeners"
-            ? "border-b-2 border-b-white font-semibold"
-            : undefined)
-        }
-      >
-        {t("account.listeners")}
-      </button>
+      {listeners && (
+        <button
+          onClick={() => setActiveTab("listeners")}
+          className={
+            "w-full " +
+            (active === "listeners"
+              ? "border-b-2 border-b-white font-semibold"
+              : undefined)
+          }
+        >
+          {t("account.listeners")}
+        </button>
+      )}
     </div>
   );
 }
