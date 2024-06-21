@@ -1,3 +1,4 @@
+import BackIcon from "@/components/BackIcon";
 import { useSession } from "@/components/SessionContext";
 import { useTheme } from "@/components/ThemeProvider";
 import { Button } from "@/components/ui/button";
@@ -9,9 +10,8 @@ import {
   SelectValue,
 } from "@/components/ui/select";
 import { useQuery, useQueryClient } from "@tanstack/react-query";
-import { Link, createLazyFileRoute } from "@tanstack/react-router";
+import { createLazyFileRoute } from "@tanstack/react-router";
 import { useTranslation } from "react-i18next";
-import { FaChevronLeft } from "react-icons/fa";
 import Twemoji from "react-twemoji";
 
 export const Route = createLazyFileRoute("/account/settings")({
@@ -44,9 +44,7 @@ function EditProfile() {
   return (
     <div className="flex flex-col gap-3">
       <div className="p-4 flex justify-center items-center relative">
-        <Link className="mr-auto z-50" to={`/account/${session.username}`}>
-          <FaChevronLeft fontSize={25} />
-        </Link>
+        <BackIcon />
         <div className="absolute left-0 top-4 w-full h-full text-center">
           <h5 className="m-auto">{t("account.settings")}</h5>
         </div>

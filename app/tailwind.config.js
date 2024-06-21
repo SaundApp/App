@@ -84,5 +84,6 @@ export default {
     base: false,
     styled: true,
     prefix: "daisy-",
+    logs: false
   },
 };

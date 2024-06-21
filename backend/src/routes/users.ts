@@ -198,7 +198,11 @@ hono.get(
       },
     });
 
-    if (user.private && !followers.some((f) => f.id === payload.user)) {
+    if (
+      user.private &&
+      !followers.some((f) => f.id === payload.user) &&
+      id !== payload.user
+    ) {
       return ctx.json([]);
     }
 
@@ -295,7 +299,8 @@ hono.get(
 
     if (
       user.private &&
-      !user.followers.some((f) => f.followerId === payload.user)
+      !user.followers.some((f) => f.followerId === payload.user) &&
+      id !== payload.user
     ) {
       return ctx.json([]);
     }
@@ -450,7 +455,8 @@ hono.get(
 
     if (
       user.private &&
-      !user.followers.some((f) => f.followerId === payload.user)
+      !user.followers.some((f) => f.followerId === payload.user) &&
+      id !== payload.user
     ) {
       return ctx.json([]);
     }

@@ -13,6 +13,8 @@ import {
   Message,
   Post,
   SpotifyToken,
+  Subscription,
+  SubscriptionSettings,
 } from ".";
 
 export class User {
@@ -64,6 +66,17 @@ export class User {
   @IsString()
   spotifyId?: string;
 
+  @IsOptional()
+  @IsString()
+  stripeId?: string;
+
+  @IsDefined()
+  @IsBoolean()
+  verified!: boolean;
+
+  @IsOptional()
+  subscriptionSettings?: SubscriptionSettings;
+
   @IsDefined()
   listeners!: Listener[];
 
@@ -87,6 +100,12 @@ export class User {
 
   @IsDefined()
   messagesReceived!: Message[];
+
+  @IsDefined()
+  subscriptions!: Subscription[];
+
+  @IsDefined()
+  subscribers!: Subscription[];
 
   @IsDefined()
   attachments!: Attachment[];

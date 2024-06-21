@@ -2,6 +2,7 @@ import AccountNavbar from "@/components/account/AccountNavbar";
 import Avatar from "@/components/account/Avatar";
 import Listeners from "@/components/account/Listeners";
 import Posts from "@/components/account/Posts";
+import BackIcon from "@/components/BackIcon";
 import Accounts from "@/components/drawers/Accounts";
 import Users from "@/components/drawers/Users";
 import { useSession } from "@/components/SessionContext";
@@ -13,7 +14,7 @@ import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { createLazyFileRoute, Link } from "@tanstack/react-router";
 import { useState } from "react";
 import { useTranslation } from "react-i18next";
-import { FaChevronLeft, FaLock } from "react-icons/fa";
+import { FaLock } from "react-icons/fa";
 import { FaGear } from "react-icons/fa6";
 
 export const Route = createLazyFileRoute("/account/$username")({
@@ -110,9 +111,7 @@ function Account() {
 
           {session?.username !== data.username && (
             <div className="p-3 flex justify-center items-center relative w-full">
-              <Link className="mr-auto z-50" to="/search">
-                <FaChevronLeft fontSize={25} />
-              </Link>
+              <BackIcon />
               <div className="absolute left-0 top-3 w-full h-full text-center">
                 <h5 className="m-auto">{data.username}</h5>
               </div>

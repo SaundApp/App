@@ -1,3 +1,4 @@
+import BackIcon from "@/components/BackIcon";
 import { useSession } from "@/components/SessionContext";
 import Avatar from "@/components/account/Avatar";
 import { Button } from "@/components/ui/button";
@@ -13,7 +14,7 @@ import { updateSchema } from "form-types";
 import { useEffect, useRef } from "react";
 import { useForm } from "react-hook-form";
 import { useTranslation } from "react-i18next";
-import { FaChevronLeft, FaSpotify, FaStripeS } from "react-icons/fa";
+import { FaSpotify, FaStripeS } from "react-icons/fa";
 import { z } from "zod";
 
 export const Route = createLazyFileRoute("/account/edit")({
@@ -54,9 +55,7 @@ function EditProfile() {
   return (
     <div className="flex flex-col gap-3">
       <div className="p-4 flex justify-center items-center relative">
-        <Link className="mr-auto z-50" to={`/account/${session.username}`}>
-          <FaChevronLeft fontSize={25} />
-        </Link>
+        <BackIcon />
         <div className="absolute left-0 top-4 w-full h-full text-center">
           <h5 className="m-auto">{t("account.edit_profile")}</h5>
         </div>
@@ -243,11 +242,27 @@ function EditProfile() {
       <p>{t("account.manage")}</p>
       <div className="w-full flex flex-col gap-3">
         <div className="flex gap-3">
-          <Button className="w-fit">
+          <Button
+            className="w-fit"
+            onClick={() => {
+              axiosClient.post("/stripe/connect").then((res) => {
+                window.location.href = res.data.url;
+              });
+            }}
+          >
             <FaStripeS fontSize={20} />
           </Button>
-          <Button className="w-fit">
-            <FaSpotify fontSize={20} />
+          <Button className="w-fit" asChild>
+            <Link
+              to={
+                import.meta.env.VITE_API_URL +
+                (session.spotifyId
+                  ? "/auth/spotify/unlink"
+                  : "/auth/login/spotify")
+              }
+            >
+              <FaSpotify fontSize={20} />
+            </Link>
           </Button>
         </div>
       </div>
