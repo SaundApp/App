@@ -1,19 +1,19 @@
 import {
-  IsBoolean,
-  IsDefined,
-  IsInt,
-  IsOptional,
   IsString,
+  IsDefined,
+  IsOptional,
+  IsBoolean,
+  IsInt,
 } from "class-validator";
 import {
-  Attachment,
-  Comment,
-  Follows,
   Listener,
-  Message,
+  Follows,
   Post,
+  Comment,
+  Message,
+  Attachment,
   SpotifyToken,
-} from ".";
+} from "./";
 
 export class User {
   @IsDefined()
@@ -63,6 +63,10 @@ export class User {
   @IsOptional()
   @IsString()
   spotifyId?: string;
+
+  @IsOptional()
+  @IsString()
+  notificationToken?: string;
 
   @IsDefined()
   listeners!: Listener[];

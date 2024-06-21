@@ -4,4 +4,5 @@
     <string name="title_activity_main">Saund</string>
     <string name="package_name">app.saund</string>
     <string name="custom_url_scheme">app.saund</string>
+    <string name="default_notification_channel_id">default</string>
 </resources>

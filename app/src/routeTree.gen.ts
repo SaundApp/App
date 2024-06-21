@@ -20,6 +20,7 @@ const SearchLazyImport = createFileRoute('/search')()
 const NotificationsLazyImport = createFileRoute('/notifications')()
 const IndexLazyImport = createFileRoute('/')()
 const DmIndexLazyImport = createFileRoute('/dm/')()
+const TestALazyImport = createFileRoute('/test/a')()
 const LeaderboardArtistsLazyImport = createFileRoute('/leaderboard/artists')()
 const EditProfileLazyImport = createFileRoute('/edit/profile')()
 const DmUsernameLazyImport = createFileRoute('/dm/$username')()
@@ -50,6 +51,11 @@ const DmIndexLazyRoute = DmIndexLazyImport.update({
   path: '/dm/',
   getParentRoute: () => rootRoute,
 } as any).lazy(() => import('./routes/dm/index.lazy').then((d) => d.Route))
+
+const TestALazyRoute = TestALazyImport.update({
+  path: '/test/a',
+  getParentRoute: () => rootRoute,
+} as any).lazy(() => import('./routes/test/a.lazy').then((d) => d.Route))
 
 const LeaderboardArtistsLazyRoute = LeaderboardArtistsLazyImport.update({
   path: '/leaderboard/artists',
@@ -178,6 +184,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof LeaderboardArtistsLazyImport
       parentRoute: typeof rootRoute
     }
+    '/test/a': {
+      id: '/test/a'
+      path: '/test/a'
+      fullPath: '/test/a'
+      preLoaderRoute: typeof TestALazyImport
+      parentRoute: typeof rootRoute
+    }
     '/dm/': {
       id: '/dm/'
       path: '/dm'
@@ -202,6 +215,7 @@ export const routeTree = rootRoute.addChildren({
   DmUsernameLazyRoute,
   EditProfileLazyRoute,
   LeaderboardArtistsLazyRoute,
+  TestALazyRoute,
   DmIndexLazyRoute,
 })
 
@@ -224,6 +238,7 @@ export const routeTree = rootRoute.addChildren({
         "/dm/$username",
         "/edit/profile",
         "/leaderboard/artists",
+        "/test/a",
         "/dm/"
       ]
     },
@@ -259,6 +274,9 @@ export const routeTree = rootRoute.addChildren({
     },
     "/leaderboard/artists": {
       "filePath": "leaderboard/artists.lazy.tsx"
+    },
+    "/test/a": {
+      "filePath": "test/a.lazy.tsx"
     },
     "/dm/": {
       "filePath": "dm/index.lazy.tsx"

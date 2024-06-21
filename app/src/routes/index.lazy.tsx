@@ -10,6 +10,7 @@ import { useInView } from "react-intersection-observer";
 import { Post as PostType } from "../types/prisma/models";
 import PostAd from "@/components/PostAd";
 import { Capacitor } from "@capacitor/core";
+import { addListeners, registerNotifications } from "@/components/NotificationHandler";
 
 export const Route = createLazyFileRoute("/")({
   component: Index,
@@ -54,6 +55,10 @@ function Index() {
       });
     }
   }, [data]);
+
+  useEffect(() => {
+    registerNotifications().then(() => addListeners());
+  }, []);
 
   return (
     <div className="flex flex-col gap-3 h-full max-h-[92vh] overflow-y-auto">

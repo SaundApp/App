@@ -7,6 +7,11 @@ const config: CapacitorConfig = {
   server: {
     allowNavigation: ["10.0.2.2:8000", "10.0.2.2"],
   },
+  plugins: {
+    PushNotifications: {
+      presentationOptions: ["badge", "sound", "alert"],
+    },
+  },
 };
 
 export default config;

@@ -1,5 +1,6 @@
 import { Hono } from "hono";
 import { jwt } from "hono/jwt";
+import { NotificationType, sendNotification } from "../lib/notifications";
 import prisma from "../lib/prisma";
 
 const hono = new Hono();
@@ -248,6 +249,19 @@ hono.post(
           followerId: payload.user,
           followingId: id,
         },
+      });
+
+      const user = await prisma.user.findUnique({
+        where: {
+          id,
+        },
+        select: {
+          username: true,
+        },
+      });
+
+      sendNotification(id, NotificationType.FOLLOW, {
+        follower: user!.username,
       });
 
       return ctx.json({

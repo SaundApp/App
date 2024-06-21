@@ -1,5 +1,5 @@
-import { IsDate, IsDefined, IsInt, IsString } from "class-validator";
-import { User } from ".";
+import { IsString, IsDefined, IsInt, IsDate } from "class-validator";
+import { User } from "./";
 
 export class Listener {
   @IsDefined()

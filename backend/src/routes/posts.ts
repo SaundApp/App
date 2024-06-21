@@ -1,8 +1,9 @@
+import type { Prisma } from "@prisma/client";
 import { Hono } from "hono";
 import { jwt } from "hono/jwt";
+import { NotificationType, sendNotification } from "../lib/notifications";
 import prisma from "../lib/prisma";
 import { spotify } from "../lib/spotify";
-import type { Prisma } from "@prisma/client";
 
 const hono = new Hono();
 
@@ -261,6 +262,20 @@ hono.post(
       },
     });
 
+    const user = await prisma.user.findUnique({
+      where: {
+        id: payload.user,
+      },
+      select: {
+        username: true,
+      },
+    });
+
+    sendNotification(post.userId, NotificationType.LIKE, {
+      post: post.name,
+      user: user!.username,
+    });
+
     return ctx.json({
       message: "Post liked",
     });
@@ -353,6 +368,21 @@ hono.post(
           },
         },
       },
+    });
+
+    const user = await prisma.user.findUnique({
+      where: {
+        id: payload.user,
+      },
+      select: {
+        username: true,
+      },
+    });
+
+    sendNotification(post.userId, NotificationType.COMMENT, {
+      post: post.name,
+      user: user!.username,
+      comment: body.text,
     });
 
     return ctx.json(comment);

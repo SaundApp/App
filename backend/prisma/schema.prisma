@@ -12,20 +12,21 @@ datasource db {
 }
 
 model User {
-  id          String     @id @default(auto()) @map("_id") @db.ObjectId
-  username    String     @unique
-  bio         String?
-  name        String
-  email       String     @unique
-  avatarId    String?    @db.ObjectId
-  password    String?
-  private     Boolean    @default(false)
-  streams     Int?
-  nationality String?
-  genres      String[]
-  spotifyId   String?
-  listeners   Listener[] @relation("artist")
-  listenerOf  Listener[] @relation("listener")
+  id                String     @id @default(auto()) @map("_id") @db.ObjectId
+  username          String     @unique
+  bio               String?
+  name              String
+  email             String     @unique
+  avatarId          String?    @db.ObjectId
+  password          String?
+  private           Boolean    @default(false)
+  streams           Int?
+  nationality       String?
+  genres            String[]
+  spotifyId         String?
+  notificationToken String?
+  listeners         Listener[] @relation("artist")
+  listenerOf        Listener[] @relation("listener")
 
   followers        Follows[]     @relation("following")
   following        Follows[]     @relation("follower")

@@ -1,11 +1,11 @@
 import {
+  IsString,
+  IsDefined,
   IsBoolean,
   IsDate,
-  IsDefined,
   IsOptional,
-  IsString,
 } from "class-validator";
-import { User } from ".";
+import { User } from "./";
 
 export class Message {
   @IsDefined()

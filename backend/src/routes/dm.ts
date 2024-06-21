@@ -1,8 +1,9 @@
+import type { ServerWebSocket } from "bun";
 import { Hono } from "hono";
 import { jwt, verify } from "hono/jwt";
 import { upgradeWebSocket } from "..";
+import { NotificationType, sendNotification } from "../lib/notifications";
 import prisma from "../lib/prisma";
-import type { ServerWebSocket } from "bun";
 
 const hono = new Hono();
 
@@ -126,6 +127,20 @@ hono.get(
               receiverId: target!.id,
               replyId: origin.id,
             },
+          });
+
+          const user = await prisma.user.findUnique({
+            where: {
+              id: payload.user,
+            },
+            select: {
+              username: true,
+            },
+          });
+
+          sendNotification(target!.id, NotificationType.DM, {
+            user: user!.username,
+            message: content,
           });
 
           raw.publish(
