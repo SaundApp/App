@@ -2,6 +2,7 @@ import { Hono } from "hono";
 import { jwt } from "hono/jwt";
 import { NotificationType, sendNotification } from "../lib/notifications";
 import prisma from "../lib/prisma";
+import stripe from "../lib/stripe";
 
 const hono = new Hono();
 
@@ -477,6 +478,125 @@ hono.get(
     }
 
     return ctx.json(user.listeners.map((l) => l.listener));
+  }
+);
+
+hono.post(
+  "/:id/subscribe",
+  jwt({ secret: process.env.JWT_SECRET! }),
+  async (ctx) => {
+    const payload = ctx.get("jwtPayload");
+    const id = ctx.req.param("id");
+
+    if (payload.user === id) {
+      return ctx.json(
+        {
+          error: "Cannot subscribe to yourself",
+        },
+        400
+      );
+    }
+
+    const target = await prisma.user.findUnique({
+      where: {
+        id,
+      },
+      select: {
+        username: true,
+        subscriptionSettings: true,
+        stripeId: true,
+        verified: true,
+        private: true,
+        subscribers: {
+          where: {
+            userId: payload.user,
+          },
+        },
+      },
+    });
+
+    if (
+      !target ||
+      !target.verified ||
+      target.private ||
+      !target.subscriptionSettings ||
+      !target.stripeId
+    ) {
+      return ctx.json(
+        {
+          error: "Cannot subscribe to this user",
+        },
+        404
+      );
+    }
+
+    if (target.subscribers.length) {
+      return ctx.json(
+        {
+          error: "Already subscribed",
+        },
+        400
+      );
+    }
+
+    const user = await prisma.user.findUnique({
+      where: { id: payload.user },
+      select: { name: true, email: true, stripeCustomerId: true },
+    });
+    if (!user) {
+      return ctx.json(
+        {
+          error: "User not found",
+        },
+        404
+      );
+    }
+
+    let stripeId = user.stripeCustomerId;
+    if (!stripeId) {
+      stripeId = (
+        await stripe.customers.create({
+          metadata: {
+            user: payload.user,
+          },
+          name: user.name,
+          email: user.email,
+        })
+      ).id;
+
+      await prisma.user.update({
+        where: { id: payload.user },
+        data: {
+          stripeCustomerId: stripeId,
+        },
+      });
+    }
+
+    const checkout = await stripe.checkout.sessions.create({
+      mode: "subscription",
+      customer: stripeId,
+      line_items: [
+        {
+          price_data: {
+            currency: "eur",
+            product_data: {
+              name: `Subscription to ${target.username}`,
+            },
+            recurring: {
+              interval: "month",
+              interval_count: 1,
+            },
+            unit_amount_decimal: target.subscriptionSettings.price.toString(),
+          },
+          quantity: 1,
+          
+        },
+      ],
+      success_url: process.env.FRONTEND_URL,
+      cancel_url: process.env.FRONTEND_URL,
+    });
+
+    return ctx.json({ url: checkout.url });
   }
 );
 

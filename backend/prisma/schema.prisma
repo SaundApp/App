@@ -25,6 +25,7 @@ model User {
   genres               String[]
   spotifyId            String?
   stripeId             String?
+  stripeCustomerId     String?
   notificationToken    String?
   verified             Boolean               @default(false)
   subscriptionSettings SubscriptionSettings?
@@ -49,16 +50,6 @@ type SubscriptionSettings {
   price Float
 }
 
-model SpotifyToken {
-  id           String   @id @default(auto()) @map("_id") @db.ObjectId
-  accessToken  String
-  refreshToken String
-  expiration   DateTime
-
-  user   User   @relation(fields: [userId], references: [id], onDelete: Cascade)
-  userId String @unique @db.ObjectId
-}
-
 model Subscription {
   id String @id @default(auto()) @map("_id") @db.ObjectId
 
@@ -67,6 +58,16 @@ model Subscription {
 
   subscribedTo   User   @relation("subscribedTo", fields: [subscribedToId], references: [id], onDelete: Cascade)
   subscribedToId String @db.ObjectId
+}
+
+model SpotifyToken {
+  id           String   @id @default(auto()) @map("_id") @db.ObjectId
+  accessToken  String
+  refreshToken String
+  expiration   DateTime
+
+  user   User   @relation(fields: [userId], references: [id], onDelete: Cascade)
+  userId String @unique @db.ObjectId
 }
 
 model Listener {

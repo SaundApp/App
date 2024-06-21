@@ -1,7 +1,8 @@
 import { Hono } from "hono";
 import { jwt } from "hono/jwt";
-import stripe from "../lib/stripe";
+import type { Stripe } from "stripe";
 import prisma from "../lib/prisma";
+import stripe from "../lib/stripe";
 
 const hono = new Hono();
 hono.post(
@@ -49,5 +50,44 @@ hono.post(
     return ctx.json({ url: accountLink.url });
   }
 );
+
+hono.post("/webhook", async (ctx) => {
+  const signature = ctx.req.header("stripe-signature");
+
+  try {
+    if (!signature) {
+      return ctx.json({ error: true }, 400);
+    }
+
+    const body = await ctx.req.text();
+    const event = await stripe.webhooks.constructEventAsync(
+      body,
+      signature,
+      process.env.STRIPE_WEBHOOK_SECRET!
+    );
+
+    switch (event.type) {
+      case "customer.subscription.created": {
+        console.log(event.data.object.metadata);
+        break;
+      }
+      case "customer.subscription.deleted": {
+        console.log(event.data.object.metadata);
+        break;
+      }
+      default:
+        break;
+    }
+
+    return ctx.json({ success: true }, 200);
+  } catch (err) {
+    const errorMessage = `⚠️  Webhook signature verification failed. ${
+      err instanceof Error ? err.message : "Internal server error"
+    }`;
+
+    console.log(errorMessage);
+    return ctx.json({ error: true, message: errorMessage }, 400);
+  }
+});
 
 export default hono;
