@@ -12,30 +12,41 @@ datasource db {
 }
 
 model User {
-  id                String     @id @default(auto()) @map("_id") @db.ObjectId
-  username          String     @unique
-  bio               String?
-  name              String
-  email             String     @unique
-  avatarId          String?    @db.ObjectId
-  password          String?
-  private           Boolean    @default(false)
-  streams           Int?
-  nationality       String?
-  genres            String[]
-  spotifyId         String?
-  notificationToken String?
-  listeners         Listener[] @relation("artist")
-  listenerOf        Listener[] @relation("listener")
+  id                   String                @id @default(auto()) @map("_id") @db.ObjectId
+  username             String                @unique
+  bio                  String?
+  name                 String
+  email                String                @unique
+  avatarId             String?               @db.ObjectId
+  password             String?
+  private              Boolean               @default(false)
+  streams              Int?
+  nationality          String?
+  genres               String[]
+  spotifyId            String?
+  stripeId             String?
+  notificationToken    String?
+  verified             Boolean               @default(false)
+  subscriptionSettings SubscriptionSettings?
 
-  followers        Follows[]     @relation("following")
-  following        Follows[]     @relation("follower")
+  listeners  Listener[] @relation("artist")
+  listenerOf Listener[] @relation("listener")
+
+  followers        Follows[]      @relation("following")
+  following        Follows[]      @relation("follower")
   posts            Post[]
   comments         Comment[]
-  messagesSent     Message[]     @relation("sender")
-  messagesReceived Message[]     @relation("receiver")
+  messagesSent     Message[]      @relation("sender")
+  messagesReceived Message[]      @relation("receiver")
+  subscriptions    Subscription[] @relation("subscriber")
+  subscribers      Subscription[] @relation("subscribedTo")
   attachments      Attachment[]
   spotifyToken     SpotifyToken?
+}
+
+type SubscriptionSettings {
+  perks String[] @default([])
+  price Float
 }
 
 model SpotifyToken {
@@ -46,6 +57,16 @@ model SpotifyToken {
 
   user   User   @relation(fields: [userId], references: [id], onDelete: Cascade)
   userId String @unique @db.ObjectId
+}
+
+model Subscription {
+  id String @id @default(auto()) @map("_id") @db.ObjectId
+
+  user   User   @relation("subscriber", fields: [userId], references: [id], onDelete: Cascade)
+  userId String @db.ObjectId
+
+  subscribedTo   User   @relation("subscribedTo", fields: [subscribedToId], references: [id], onDelete: Cascade)
+  subscribedToId String @db.ObjectId
 }
 
 model Listener {

@@ -87,7 +87,7 @@ export default function Users({
                     onClick={() => {
                       if (
                         !session?.following.find(
-                          (user) => user.followingId === user.id
+                          (u) => u.followingId === user.id
                         )
                       )
                         follow.mutate(user.id);
@@ -95,7 +95,7 @@ export default function Users({
                     }}
                     className={
                       !session?.following.find(
-                        (user) => user.followingId === user.id
+                        (u) => u.followingId === user.id
                       )
                         ? ""
                         : "bg-secondary"
