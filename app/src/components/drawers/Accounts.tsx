@@ -7,6 +7,7 @@ import { FaCheckCircle, FaChevronDown } from "react-icons/fa";
 import Avatar from "../account/Avatar";
 import { useSession } from "../SessionContext";
 import { Button } from "../ui/button";
+import { useEffect } from "react";
 
 export default function Accounts() {
   const { t } = useTranslation();
@@ -25,10 +26,29 @@ export default function Accounts() {
         .then((res) => res.data),
   });
 
+  useEffect(() => {
+    if (data) {
+      let tokens: string[] = JSON.parse(localStorage.getItem("tokens") || "[]");
+      for (const user of data) {
+        const same = data
+          .filter((u) => u.username === user.username && u.token !== user.token)
+          .map((u) => u.token);
+
+        if (same.length) {
+          tokens = tokens.filter((token) => !same.includes(token));
+        }
+      }
+
+      localStorage.setItem("tokens", JSON.stringify(tokens));
+    }
+  }, [data]);
+
   return (
     <Drawer>
       <DrawerTrigger className="flex items-center gap-1">
-        <h5>{session?.username}</h5>
+        <h5 className="max-w-[14rem] text-ellipsis whitespace-nowrap overflow-hidden">
+          {session?.username}
+        </h5>
         <FaChevronDown fontSize={20} />
       </DrawerTrigger>
       <DrawerContent className="p-3 flex flex-col gap-3">

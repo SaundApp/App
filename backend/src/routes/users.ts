@@ -109,6 +109,7 @@ hono.get(
         id: true,
         username: true,
         name: true,
+        bio: true,
         avatarId: true,
         private: true,
         spotifyId: true,

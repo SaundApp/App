@@ -25,7 +25,9 @@ export default function TopArtist({
           {position}
         </p>
       </div>
-      <h5>{user.name}</h5>
+      <h5 className="max-w-[14rem] text-ellipsis whitespace-nowrap overflow-hidden">
+        {user.name}
+      </h5>
       <p className="muted">
         {Intl.NumberFormat("en", { notation: "compact" }).format(streams)}{" "}
         streams

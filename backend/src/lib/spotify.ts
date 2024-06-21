@@ -104,12 +104,12 @@ export async function syncUser(user: User) {
   }[] = [];
   for (const track of topTracks.body.items) {
     for (const artist of track.artists) {
-      const exists = topArtistByTracks.find((a) => a.artist === artist.name);
+      const exists = topArtistByTracks.find((a) => a.artist === artist.id);
       if (exists) {
         exists.count++;
       } else {
         topArtistByTracks.push({
-          artist: artist.name,
+          artist: artist.id,
           count: 1,
         });
       }

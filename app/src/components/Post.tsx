@@ -143,7 +143,7 @@ export default function Post({ post }: { post: PostType }) {
                 {post.user.name}
               </h5>
             </Link>
-            <p className="muted">
+            <p className="muted max-w-[14rem] text-ellipsis whitespace-nowrap overflow-hidden">
               {t(`post.${post.type.toLowerCase()}`) +
                 (post.type !== "SONG" ? " • " + post.name : "")}
             </p>
