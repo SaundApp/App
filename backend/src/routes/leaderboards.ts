@@ -1,21 +1,11 @@
 import { Hono } from "hono";
 import prisma from "../lib/prisma";
 import { fetchStreams } from "../lib/stats";
+import admin from "../middlewares/admin";
 
 const hono = new Hono();
 
-hono.post("/artists/create", async (ctx) => {
-  const token = ctx.req.header("Authorization");
-
-  if (!token || token.split(" ")[1] !== process.env.ADMIN_KEY) {
-    return ctx.json(
-      {
-        error: "Unauthorized",
-      },
-      401
-    );
-  }
-
+hono.post("/artists/create", admin, async (ctx) => {
   const users = await prisma.user.findMany({
     where: {
       spotifyId: {

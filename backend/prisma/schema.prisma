@@ -43,6 +43,7 @@ model User {
   subscribers      Subscription[] @relation("subscribedTo")
   attachments      Attachment[]
   spotifyToken     SpotifyToken?
+  payouts          Payout[]
 }
 
 type SubscriptionSettings {
@@ -51,13 +52,29 @@ type SubscriptionSettings {
 }
 
 model Subscription {
-  id String @id @default(auto()) @map("_id") @db.ObjectId
+  id        String   @id @default(auto()) @map("_id") @db.ObjectId
+  createdAt DateTime @default(now())
+  amount    Float
+  payout    Payout[]
 
   user   User   @relation("subscriber", fields: [userId], references: [id], onDelete: Cascade)
   userId String @db.ObjectId
 
   subscribedTo   User   @relation("subscribedTo", fields: [subscribedToId], references: [id], onDelete: Cascade)
   subscribedToId String @db.ObjectId
+}
+
+model Payout {
+  id        String   @id @default(auto()) @map("_id") @db.ObjectId
+  amount    Float
+  paid      Boolean  @default(false)
+  createdAt DateTime @default(now())
+
+  user   User   @relation(fields: [userId], references: [id], onDelete: Cascade)
+  userId String @db.ObjectId
+
+  subscription   Subscription? @relation(fields: [subscriptionId], references: [id], onDelete: SetNull)
+  subscriptionId String?       @db.ObjectId
 }
 
 model SpotifyToken {

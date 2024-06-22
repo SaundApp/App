@@ -4,21 +4,11 @@ import { jwt } from "hono/jwt";
 import { NotificationType, sendNotification } from "../lib/notifications";
 import prisma from "../lib/prisma";
 import { spotify } from "../lib/spotify";
+import admin from "../middlewares/admin";
 
 const hono = new Hono();
 
-hono.post("/create", async (ctx) => {
-  const token = ctx.req.header("Authorization");
-
-  if (!token || token.split(" ")[1] !== process.env.ADMIN_KEY) {
-    return ctx.json(
-      {
-        error: "Unauthorized",
-      },
-      401
-    );
-  }
-
+hono.post("/create", admin, async (ctx) => {
   const users = await prisma.user.findMany({
     where: {
       spotifyId: {

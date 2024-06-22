@@ -11,11 +11,12 @@ import {
   Post,
   Comment,
   Message,
+  Subscription,
   Attachment,
   SpotifyToken,
-  Subscription,
+  Payout,
   SubscriptionSettings,
-} from ".";
+} from "./";
 
 export class User {
   @IsDefined()
@@ -68,11 +69,15 @@ export class User {
 
   @IsOptional()
   @IsString()
-  notificationToken?: string;
+  stripeId?: string;
 
   @IsOptional()
   @IsString()
-  stripeId?: string;
+  stripeCustomerId?: string;
+
+  @IsOptional()
+  @IsString()
+  notificationToken?: string;
 
   @IsDefined()
   @IsBoolean()
@@ -116,4 +121,7 @@ export class User {
 
   @IsOptional()
   spotifyToken?: SpotifyToken;
+
+  @IsDefined()
+  payouts!: Payout[];
 }

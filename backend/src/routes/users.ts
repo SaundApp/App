@@ -589,11 +589,20 @@ hono.post(
             unit_amount_decimal: target.subscriptionSettings.price.toString(),
           },
           quantity: 1,
-          
         },
       ],
       success_url: process.env.FRONTEND_URL,
       cancel_url: process.env.FRONTEND_URL,
+      metadata: {
+        user: payload.user,
+        target: id,
+      },
+      subscription_data: {
+        metadata: {
+          user: payload.user,
+          target: id,
+        },
+      },
     });
 
     return ctx.json({ url: checkout.url });

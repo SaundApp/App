@@ -1,8 +1,8 @@
 import { Hono } from "hono";
 import { jwt } from "hono/jwt";
-import type { Stripe } from "stripe";
 import prisma from "../lib/prisma";
 import stripe from "../lib/stripe";
+import admin from "../middlewares/admin";
 
 const hono = new Hono();
 hono.post(
@@ -46,7 +46,6 @@ hono.post(
       },
     });
 
-    console.log(accountLink.url);
     return ctx.json({ url: accountLink.url });
   }
 );
@@ -66,13 +65,46 @@ hono.post("/webhook", async (ctx) => {
       process.env.STRIPE_WEBHOOK_SECRET!
     );
 
+    if (
+      event.type !== "customer.subscription.created" &&
+      event.type !== "customer.subscription.deleted"
+    )
+      return ctx.json({ success: true }, 200);
+
+    const metadata = event.data.object.metadata as {
+      user: string;
+      target: string;
+    };
+
     switch (event.type) {
       case "customer.subscription.created": {
-        console.log(event.data.object.metadata);
+        await prisma.subscription.create({
+          data: {
+            userId: metadata.user,
+            subscribedToId: metadata.target,
+            amount:
+              (event.data.object.items.data[0].price.unit_amount || 0) / 100,
+            payout: {
+              create: {
+                amount:
+                  (event.data.object.items.data[0].price.unit_amount || 0) /
+                  100,
+                userId: metadata.target,
+              },
+            },
+          },
+        });
+
         break;
       }
       case "customer.subscription.deleted": {
-        console.log(event.data.object.metadata);
+        await prisma.subscription.deleteMany({
+          where: {
+            userId: metadata.user,
+            subscribedToId: metadata.target,
+          },
+        });
+
         break;
       }
       default:
@@ -88,6 +120,68 @@ hono.post("/webhook", async (ctx) => {
     console.log(errorMessage);
     return ctx.json({ error: true, message: errorMessage }, 400);
   }
+});
+
+hono.post("/payout", admin, async (ctx) => {
+  const payouts = await prisma.payout.findMany({
+    where: {
+      paid: false,
+    },
+    include: {
+      user: {
+        select: {
+          stripeId: true,
+          username: true,
+        },
+      },
+    },
+  });
+
+  let total: {
+    stripeId: string;
+    username: string;
+    amount: number;
+    payouts: string[];
+  }[] = [];
+
+  payouts.forEach((payout) => {
+    const user = total.find((u) => u.stripeId === payout.user.stripeId);
+    if (user) {
+      user.amount += payout.amount;
+      user.payouts.push(payout.id);
+    } else {
+      total.push({
+        stripeId: payout.user.stripeId!,
+        username: payout.user.username,
+        amount: payout.amount,
+        payouts: [payout.id],
+      });
+    }
+  });
+
+  total = total.filter((user) => user.amount > 0);
+
+  for (const user of total) {
+    await stripe.transfers.create({
+      amount: user.amount * 100,
+      currency: "eur",
+      destination: user.stripeId,
+      description: `Payout for ${user.payouts.length} subscriptions for ${user.username}`,
+    });
+
+    await prisma.payout.updateMany({
+      where: {
+        id: {
+          in: user.payouts,
+        },
+      },
+      data: {
+        paid: true,
+      },
+    });
+  }
+
+  return ctx.json({ success: true, count: total.length });
 });
 
 export default hono;

@@ -21,7 +21,8 @@
       "cache": false
     },
     "db:studio": {
-      "cache": false
+      "cache": false,
+      "persistent": true
     }
   }
 }
