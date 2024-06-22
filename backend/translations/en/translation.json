@@ -1,0 +1,12 @@
+{
+  "notifications": {
+    "like": "{user} liked {post}",
+    "comment": "{user} commented on {post}",
+    "follow": "{user} followed you",
+    "follow_request": "{user} requested to follow you",
+    "mention": "{user} mentioned you in {post}",
+    "dm": "{message}",
+    "leaderboard": "The monthly leaderboard has been updated! Check it out.",
+    "post": "{user} posted {post}"
+  }
+}

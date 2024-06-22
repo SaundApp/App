@@ -359,6 +359,30 @@ hono.post(
         },
       },
     });
+    const mentions = (body.text as string).match(/@(\w*)/g);
+
+    const userDb = await prisma.user.findUnique({
+      where: {
+        id: payload.user,
+      },
+    });
+
+    for (const match of mentions || []) {
+      const username = match.slice(1);
+      const user = await prisma.user.findFirst({
+        where: {
+          username,
+        },
+      });
+
+      if (user) {
+        sendNotification(user.id, NotificationType.MENTION, {
+          post: post.name,
+          user: userDb!.username,
+          comment: body.text,
+        });
+      }
+    }
 
     const user = await prisma.user.findUnique({
       where: {

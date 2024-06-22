@@ -3,6 +3,7 @@ import { readdirSync } from "fs";
 import { Hono } from "hono";
 import { createBunWebSocket } from "hono/bun";
 import { cors } from "hono/cors";
+import { logger } from "hono/logger";
 import { prettyJSON } from "hono/pretty-json";
 import path from "path";
 
@@ -11,6 +12,7 @@ const { upgradeWebSocket, websocket } = createBunWebSocket();
 export const app = new Hono();
 export { upgradeWebSocket };
 
+app.use(logger());
 app.use(prettyJSON());
 app.use(
   cors({
