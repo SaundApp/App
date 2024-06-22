@@ -1,5 +1,5 @@
 import { IsString, IsDefined, IsDate } from "class-validator";
-import { Payout, User } from "./";
+import { User } from "./";
 
 export class Subscription {
   @IsDefined()
@@ -12,9 +12,6 @@ export class Subscription {
 
   @IsDefined()
   amount!: number;
-
-  @IsDefined()
-  payout!: Payout[];
 
   @IsDefined()
   user!: User;

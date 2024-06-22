@@ -1,3 +1,5 @@
+import prisma from "./prisma";
+
 export enum NotificationType {
   LIKE,
   COMMENT,
@@ -13,6 +15,4 @@ export async function sendNotification(
   userId: string,
   type: NotificationType,
   data: Record<string, string>
-) {
-  // TODO
-}
+) {}

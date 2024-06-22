@@ -12,9 +12,9 @@ import {
   Comment,
   Message,
   Subscription,
+  Notification,
   Attachment,
   SpotifyToken,
-  Payout,
   SubscriptionSettings,
 } from "./";
 
@@ -117,11 +117,11 @@ export class User {
   subscribers!: Subscription[];
 
   @IsDefined()
+  notifications!: Notification[];
+
+  @IsDefined()
   attachments!: Attachment[];
 
   @IsOptional()
   spotifyToken?: SpotifyToken;
-
-  @IsDefined()
-  payouts!: Payout[];
 }

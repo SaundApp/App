@@ -602,6 +602,10 @@ hono.post(
           user: payload.user,
           target: id,
         },
+        transfer_data: {
+          amount_percent: 90,
+          destination: target.stripeId,
+        },
       },
     });
 
