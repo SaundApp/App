@@ -1,5 +1,5 @@
 import { Link } from "@tanstack/react-router";
-import { AdmobAds, AdResult } from "capacitor-admob-ads";
+import { AdmobAds, type AdResult } from "capacitor-admob-ads";
 
 const viewAd = (id: string) => {
   AdmobAds.triggerNativeAd({ id });

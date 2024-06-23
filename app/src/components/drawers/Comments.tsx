@@ -1,5 +1,5 @@
 import { axiosClient } from "@/lib/axios";
-import { Comment, Post } from "@/types/prisma/models";
+import type { Post } from "backend";
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { Link } from "@tanstack/react-router";
 import moment from "moment/min/moment-with-locales";
@@ -11,6 +11,7 @@ import Mentions from "../dropdown/Mentions";
 import { useSession } from "../SessionContext";
 import { Drawer, DrawerContent, DrawerTrigger } from "../ui/drawer";
 import { Input } from "../ui/input";
+import type { ExtendedComment } from "@/types/prisma";
 
 export default function Comments({ post }: { post: Post }) {
   const { t, i18n } = useTranslation();
@@ -23,7 +24,7 @@ export default function Comments({ post }: { post: Post }) {
     moment.locale(i18n.language);
   }, [i18n.language]);
 
-  const { data } = useQuery<Comment[]>({
+  const { data } = useQuery<ExtendedComment[]>({
     queryKey: ["posts", post.id, "comments"],
     queryFn: () =>
       axiosClient.get(`/posts/${post.id}/comments`).then((res) => res.data),

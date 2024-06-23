@@ -1,11 +1,12 @@
 import { axiosClient } from "@/lib/axios";
-import { Message, Post } from "@/types/prisma/models";
+import type { Message } from "backend";
 import { useQuery } from "@tanstack/react-query";
 import { Link } from "@tanstack/react-router";
 import moment from "moment";
 import { SiSpotify } from "react-icons/si";
 import { ContextMenu, ContextMenuTrigger } from "../ui/context-menu";
 import Menu from "./Menu";
+import type { ExtendedPost } from "@/types/prisma";
 
 export default function Song({
   postId,
@@ -22,7 +23,7 @@ export default function Song({
   setEditing: (messageId: string) => void;
   setReplying: (messageId: string) => void;
 }) {
-  const { data: post } = useQuery<Post>({
+  const { data: post } = useQuery<ExtendedPost>({
     queryKey: ["posts", postId],
     queryFn: () => axiosClient.get(`/posts/${postId}`).then((res) => res.data),
   });

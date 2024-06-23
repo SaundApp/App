@@ -15,7 +15,7 @@ import { useEffect, useRef } from "react";
 import { useForm } from "react-hook-form";
 import { useTranslation } from "react-i18next";
 import { FaSpotify, FaStripeS } from "react-icons/fa";
-import { z } from "zod";
+import type { z } from "zod";
 
 export const Route = createLazyFileRoute("/account/edit")({
   component: EditProfile,
@@ -243,17 +243,35 @@ function EditProfile() {
       <p>{t("account.manage")}</p>
       <div className="w-full flex flex-col gap-3">
         <div className="flex gap-3">
-          <Button className="w-fit" asChild>
-            <Link
-              to={
-                import.meta.env.VITE_API_URL +
-                (session.spotifyId
-                  ? "/auth/spotify/unlink"
-                  : "/auth/login/spotify")
+          <Button
+            className="w-fit"
+            onClick={() => {
+              axiosClient.post("/stripe/artist/connect").then((res) => {
+                window.location.href = res.data.url;
+              });
+            }}
+          >
+            <FaStripeS fontSize={20} />
+          </Button>
+          <Button
+            className="w-fit"
+            onClick={async () => {
+              try {
+                if (session.spotifyId) {
+                  await axiosClient.post("/auth/sync/spotify");
+                  return;
+                }
+              } catch (_) {
+                /* empty */
               }
-            >
-              <FaSpotify fontSize={20} />
-            </Link>
+
+              window.open(
+                import.meta.env.VITE_API_URL + "/auth/login/spotify",
+                "_blank"
+              );
+            }}
+          >
+            <FaSpotify fontSize={20} />
           </Button>
 
           <Button

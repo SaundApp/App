@@ -1,4 +1,4 @@
-import { Message } from "@/types/prisma/models";
+import type { Message } from "backend";
 import moment from "moment";
 import { useTranslation } from "react-i18next";
 import { ContextMenu, ContextMenuTrigger } from "../ui/context-menu";

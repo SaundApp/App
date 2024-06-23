@@ -5,7 +5,7 @@ import stripe from "../lib/stripe";
 
 const hono = new Hono();
 hono.post(
-  "/connect",
+  "/artist/connect",
   jwt({
     secret: process.env.JWT_SECRET!,
   }),
@@ -19,7 +19,7 @@ hono.post(
     });
 
     if (user!.stripeId) {
-      return ctx.json({ url: "" });
+      return ctx.json({ url: "https://dashboard.stripe.com/account/status" });
     }
 
     const account = await stripe.accounts.create({
@@ -112,5 +112,32 @@ hono.post("/webhook", async (ctx) => {
     return ctx.json({ error: true, message: errorMessage }, 400);
   }
 });
+
+hono.post(
+  "/client/dashboard",
+  jwt({
+    secret: process.env.JWT_SECRET!,
+  }),
+  async (ctx) => {
+    const payload = ctx.get("jwtPayload");
+    const user = await prisma.user.findUnique({
+      where: { id: payload.user },
+      select: {
+        stripeCustomerId: true,
+      },
+    });
+
+    if (!user!.stripeCustomerId) {
+      return ctx.json({ url: "" });
+    }
+
+    const portal = await stripe.billingPortal.sessions.create({
+      customer: user!.stripeCustomerId,
+      return_url: process.env.FRONTEND_URL,
+    });
+
+    return ctx.json({ url: portal.url });
+  }
+);
 
 export default hono;

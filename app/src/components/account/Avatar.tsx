@@ -1,5 +1,5 @@
-import { User } from "@/types/prisma/models";
 import { MouseEventHandler } from "react";
+import type { PublicUser } from "@/types/prisma";
 
 export default function Avatar({
   user,
@@ -8,7 +8,7 @@ export default function Avatar({
   height,
   onClick,
 }: {
-  user?: User;
+  user?: PublicUser;
   imageId?: string;
   width: number;
   height: number;
@@ -22,7 +22,7 @@ export default function Avatar({
         "/attachments/" +
         (user?.avatarId || imageId)
       }
-      alt={user?.username}
+      alt={user?.username || undefined}
       width={width}
       height={height}
       style={{

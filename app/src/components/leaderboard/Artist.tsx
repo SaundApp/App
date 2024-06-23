@@ -1,6 +1,6 @@
-import { User } from "@/types/prisma/models";
 import { Link } from "@tanstack/react-router";
 import Avatar from "../account/Avatar";
+import type { PublicUser } from "@/types/prisma";
 
 export default function Artist({
   user,
@@ -8,7 +8,7 @@ export default function Artist({
   description,
   onClick,
 }: {
-  user: User;
+  user: PublicUser;
   position?: number;
   description?: string;
   onClick?: () => void;

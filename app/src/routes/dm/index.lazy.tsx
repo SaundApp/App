@@ -1,11 +1,12 @@
 import Chat from "@/components/dm/Chat";
 import { Input } from "@/components/ui/input";
 import { axiosClient } from "@/lib/axios";
-import { Message, User } from "@/types/prisma/models";
+import type { Message } from "backend";
 import { useQuery } from "@tanstack/react-query";
 import { createLazyFileRoute } from "@tanstack/react-router";
 import { useState } from "react";
 import { useTranslation } from "react-i18next";
+import type { PublicUser } from "@/types/prisma";
 
 export const Route = createLazyFileRoute("/dm/")({
   component: DmList,
@@ -15,7 +16,7 @@ function DmList() {
   const { t } = useTranslation();
   const [search, setSearch] = useState("");
   const { data } = useQuery<
-    { user: User; lastMessage: Message; read: boolean }[]
+    { user: PublicUser; lastMessage: Message; read: boolean }[]
   >({
     queryKey: ["dm"],
     queryFn: async () => axiosClient.get("/dm/list").then((res) => res.data),

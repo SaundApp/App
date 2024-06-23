@@ -1,5 +1,5 @@
 import { axiosClient } from "@/lib/axios";
-import { Attachment as AttachmentType, Message } from "@/types/prisma/models";
+import type { Attachment as AttachmentType, Message } from "backend";
 import { useQuery } from "@tanstack/react-query";
 import moment from "moment";
 import { ContextMenu, ContextMenuTrigger } from "../ui/context-menu";

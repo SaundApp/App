@@ -6,11 +6,11 @@ export enum NotificationType {
   LIKE = "like",
   COMMENT = "comment",
   FOLLOW = "follow",
-  FOLLOW_REQUEST = "follow_request", // TODO
+  FOLLOW_REQUEST = "follow_request",
   MENTION = "mention",
   DM = "dm",
-  LEADERBOARD = "leaderboard", // TODO
-  POST = "post", // TODO
+  LEADERBOARD = "leaderboard",
+  POST = "post",
 }
 
 export async function sendNotification(
@@ -18,16 +18,6 @@ export async function sendNotification(
   type: NotificationType,
   data: Record<string, string>
 ) {
-  await prisma.notification.create({
-    data: {
-      userId,
-      text: JSON.stringify({
-        type,
-        data,
-      }),
-    },
-  });
-
   const user = await prisma.user.findUnique({
     where: {
       id: userId,
@@ -37,14 +27,44 @@ export async function sendNotification(
     },
   });
 
-  if (!user?.notificationToken) return;
-
   let message = getMessage(type);
   for (const key in data) {
     message = message.replace(`{${key}}`, data[key]);
   }
 
-  await firebase.messaging().send({
+  let involvedUser;
+  if (data.user) {
+    involvedUser = (
+      await prisma.user.findUnique({
+        where: { username: data.user },
+        select: { id: true },
+      })
+    )?.id;
+  }
+
+  const notification = await prisma.notification.create({
+    data: {
+      userId,
+      text: message,
+      involvedUser,
+    },
+  });
+
+  if (type === NotificationType.FOLLOW_REQUEST) {
+    const button = {
+      text: getMessage("accept"),
+      href: `/users/requests/accept?id=${data.requestId}&notificationId=${notification.id}`,
+    };
+
+    await prisma.notification.update({
+      where: { id: notification.id },
+      data: { button },
+    });
+  }
+
+  if (!user?.notificationToken) return;
+
+  await firebase?.messaging().send({
     token: user.notificationToken,
     notification: {
       title: data.user ? data.user : message,

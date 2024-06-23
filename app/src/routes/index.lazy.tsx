@@ -3,14 +3,17 @@ import { Spinner } from "@/components/ui/spinner";
 import { axiosClient } from "@/lib/axios";
 import { useInfiniteQuery } from "@tanstack/react-query";
 import { Link, createLazyFileRoute } from "@tanstack/react-router";
-import { AdmobAds, AdResult } from "capacitor-admob-ads";
+import { AdmobAds, type AdResult } from "capacitor-admob-ads";
 import { Fragment, useEffect, useState } from "react";
 import { FaPaperPlane } from "react-icons/fa";
 import { useInView } from "react-intersection-observer";
-import { Post as PostType } from "../types/prisma/models";
 import PostAd from "@/components/PostAd";
 import { Capacitor } from "@capacitor/core";
-import { addListeners, registerNotifications } from "@/components/NotificationHandler";
+import {
+  addListeners,
+  registerNotifications,
+} from "@/components/NotificationHandler";
+import type { ExtendedPost } from "@/types/prisma";
 
 export const Route = createLazyFileRoute("/")({
   component: Index,
@@ -20,7 +23,7 @@ function Index() {
   const { ref, inView } = useInView();
   const [ads, setAds] = useState<AdResult[]>([]);
   const { data, fetchNextPage, hasNextPage, isLoading } = useInfiniteQuery<
-    PostType[]
+    ExtendedPost[]
   >({
     queryKey: ["posts"],
     queryFn: ({ pageParam }) =>
@@ -57,6 +60,8 @@ function Index() {
   }, [data]);
 
   useEffect(() => {
+    if (Capacitor.getPlatform() === "web") return;
+
     registerNotifications().then(() => addListeners());
   }, []);
 

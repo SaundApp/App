@@ -1,9 +1,9 @@
-import { useRouter } from "@tanstack/react-router";
+import { useNavigate } from "@tanstack/react-router";
 import { useEffect } from "react";
-import { App, URLOpenListenerEvent } from "@capacitor/app";
+import { App, type URLOpenListenerEvent } from "@capacitor/app";
 
 export default function AppUrlListener() {
-  const router = useRouter();
+  const navigate = useNavigate();
   useEffect(() => {
     App.addListener("appUrlOpen", (event: URLOpenListenerEvent) => {
       console.log(event.url);
@@ -18,9 +18,8 @@ export default function AppUrlListener() {
           to: "/" + to,
           search: Object.fromEntries(searchParams),
         };
-        console.log(item);
 
-        router.navigate(item);
+        navigate(item);
       }
     });
   }, []);

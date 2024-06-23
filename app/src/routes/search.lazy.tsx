@@ -1,10 +1,10 @@
-import Artist from "@/components/leaderboard/Artist";
 import { useSession } from "@/components/SessionContext";
+import Artist from "@/components/leaderboard/Artist";
 import { Input } from "@/components/ui/input";
 import { axiosClient } from "@/lib/axios";
-import { User } from "@/types/prisma/models";
 import { useQuery } from "@tanstack/react-query";
 import { createLazyFileRoute } from "@tanstack/react-router";
+import type { User } from "backend";
 import { useEffect, useState } from "react";
 import { useTranslation } from "react-i18next";
 import { FaXmark } from "react-icons/fa6";

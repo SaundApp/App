@@ -7,6 +7,7 @@
     "mention": "{user} mentioned you in {post}",
     "dm": "{message}",
     "leaderboard": "The monthly leaderboard has been updated! Check it out.",
-    "post": "{user} posted {post}"
+    "post": "{user} just posted {cont} new posts",
+    "accept": "Accept"
   }
 }

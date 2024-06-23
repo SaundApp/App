@@ -1,4 +1,4 @@
-import { Post } from "@/types/prisma/models";
+import type { Post } from "backend";
 import { Link } from "@tanstack/react-router";
 import { useTranslation } from "react-i18next";
 

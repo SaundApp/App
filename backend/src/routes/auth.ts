@@ -1,6 +1,11 @@
 import { zValidator } from "@hono/zod-validator";
 import { AttachmentType } from "@prisma/client";
-import { loginSchema, registerSchema, updateSchema } from "form-types";
+import {
+  loginSchema,
+  registerSchema,
+  updateSchema,
+  updateSubscriptionSchema,
+} from "form-types";
 import { Hono } from "hono";
 import { JwtVariables, jwt, verify } from "hono/jwt";
 import SpotifyWebApi from "spotify-web-api-node";
@@ -256,6 +261,49 @@ hono.patch(
   }
 );
 
+hono.patch(
+  "/me/update-subscription",
+  jwt({ secret: process.env.JWT_SECRET! }),
+  zValidator("json", updateSubscriptionSchema),
+  async (ctx) => {
+    const payload = ctx.get("jwtPayload");
+    const body = ctx.req.valid("json");
+
+    const user = await prisma.user.findUnique({
+      where: { id: payload.user },
+      select: { verified: true },
+    });
+
+    if (!user?.verified) {
+      return ctx.json(
+        {
+          error: "User not verified",
+          t: "account.not_verified",
+        },
+        400
+      );
+    }
+
+    const newBody = {
+      price: body.price * 100,
+      perks: body.perks.filter((perk) => perk !== ""),
+    };
+
+    await prisma.user.update({
+      where: {
+        id: payload.user,
+      },
+      data: {
+        subscriptionSettings: newBody,
+      },
+    });
+
+    return ctx.json({
+      success: true,
+    });
+  }
+);
+
 hono.get("/login/spotify", async (ctx) => {
   const state = Math.random().toString(36).substring(2, 18);
 
@@ -273,6 +321,7 @@ hono.get("/login/spotify", async (ctx) => {
           "user-top-read",
           "user-read-recently-played",
           "user-read-email",
+          "user-read-private",
         ].join(" "),
         state,
       }).toString()
@@ -339,7 +388,6 @@ hono.get("/callback/spotify", async (ctx) => {
       },
       data: {
         spotifyId: me.body.id,
-        nationality: me.body.country,
       },
     });
 

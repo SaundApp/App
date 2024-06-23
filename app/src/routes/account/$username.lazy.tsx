@@ -4,18 +4,21 @@ import Listeners from "@/components/account/Listeners";
 import Posts from "@/components/account/Posts";
 import BackIcon from "@/components/BackIcon";
 import Accounts from "@/components/drawers/Accounts";
+import Subscribe from "@/components/drawers/Subscribe";
 import Users from "@/components/drawers/Users";
 import { useSession } from "@/components/SessionContext";
 import { Button } from "@/components/ui/button";
 import { Spinner } from "@/components/ui/spinner";
 import { axiosClient } from "@/lib/axios";
-import { Post, User } from "@/types/prisma/models";
+import type { Post, SubscriptionSettings } from "backend";
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { createLazyFileRoute, Link } from "@tanstack/react-router";
 import { useEffect, useState } from "react";
 import { useTranslation } from "react-i18next";
 import { FaLock } from "react-icons/fa";
 import { FaGear } from "react-icons/fa6";
+import type { PublicUser } from "@/types/prisma";
+import { useToast } from "@/components/ui/use-toast";
 
 export const Route = createLazyFileRoute("/account/$username")({
   component: Account,
@@ -23,6 +26,7 @@ export const Route = createLazyFileRoute("/account/$username")({
 
 function Account() {
   const { t } = useTranslation();
+  const { toast } = useToast();
   const queryClient = useQueryClient();
   const { username } = Route.useParams();
   const session = useSession();
@@ -31,25 +35,30 @@ function Account() {
   >("posts");
   const [followersOpen, setFollowersOpen] = useState(false);
   const [followingsOpen, setFollowingsOpen] = useState(false);
+  const [subscribeOpen, setSubscribeOpen] = useState(false);
   const { data, isLoading } = useQuery<
-    User & {
+    PublicUser & {
+      bio: string;
       posts: number;
       followers: number;
       following: number;
+      subscribed: boolean;
+      subscriptionSettings: SubscriptionSettings;
+      verified: boolean;
     }
   >({
     queryKey: ["user", username],
     queryFn: () =>
       axiosClient.get(`/users/${username}`).then((res) => res.data),
   });
-  const { data: followers } = useQuery<User[]>({
+  const { data: followers } = useQuery<PublicUser[]>({
     queryKey: ["followers", data?.id],
     queryFn: () =>
       data
         ? axiosClient.get(`/users/${data.id}/followers`).then((res) => res.data)
         : [],
   });
-  const { data: following } = useQuery<User[]>({
+  const { data: following } = useQuery<PublicUser[]>({
     queryKey: ["following", data?.id],
     queryFn: () =>
       data
@@ -63,7 +72,7 @@ function Account() {
         ? axiosClient.get(`/users/${data.id}/posts`).then((res) => res.data)
         : [],
   });
-  const { data: listeners } = useQuery<User[]>({
+  const { data: listeners } = useQuery<PublicUser[]>({
     queryKey: ["listeners", data?.id],
     queryFn: () =>
       data
@@ -71,7 +80,17 @@ function Account() {
         : [],
   });
   const follow = useMutation({
-    mutationFn: (user: string) => axiosClient.post(`/users/${user}/follow`),
+    mutationFn: (user: string) =>
+      axiosClient
+        .post(`/users/${user}/follow`)
+        .then((res) => res.data)
+        .then((data) => {
+          if (data.request) {
+            toast({
+              description: t("general.follow_request"),
+            });
+          }
+        }),
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ["me"] });
     },
@@ -190,36 +209,59 @@ function Account() {
       </div>
 
       {session?.username !== data.username && (
-        <Button
-          onClick={() => {
-            if (
+        <div className="flex w-full gap-3">
+          <Button
+            onClick={() => {
+              if (
+                !session?.following.find((user) => user.followingId === data.id)
+              )
+                follow.mutate(data.id);
+              else unfollow.mutate(data.id);
+            }}
+            className={
               !session?.following.find((user) => user.followingId === data.id)
-            )
-              follow.mutate(data.id);
-            else unfollow.mutate(data.id);
-          }}
-          className={
-            !session?.following.find((user) => user.followingId === data.id)
-              ? ""
-              : "bg-secondary"
-          }
-        >
-          {!session?.following.find((user) => user.followingId === data.id)
-            ? t("general.follow")
-            : t("general.unfollow")}
-        </Button>
+                ? "w-full"
+                : "w-full bg-secondary"
+            }
+          >
+            {!session?.following.find((user) => user.followingId === data.id)
+              ? t("general.follow")
+              : t("general.unfollow")}
+          </Button>
+          {data.subscriptionSettings && data.verified && (
+            <Button
+              onClick={() => {
+                if (data.subscribed) {
+                  axiosClient
+                    .post("/stripe/client/dashboard")
+                    .then((res) => res.data)
+                    .then((data) => window.open(data.url, "_blank"));
+                } else setSubscribeOpen(true);
+              }}
+              className={!data.subscribed ? "w-full" : "w-full bg-secondary"}
+            >
+              {!data.subscribed
+                ? t("account.subscribe")
+                : t("account.edit_subscription")}
+            </Button>
+          )}
+        </div>
       )}
 
       {session?.username === data.username && (
-        <>
+        <div className="flex w-full gap-3">
           <Button className="w-full" asChild>
             <Link to={`/account/edit`}>{t("account.edit_profile")}</Link>
           </Button>
 
-          <Button className="w-full" variant="secondary">
-            {t("account.edit_subscription")}
-          </Button>
-        </>
+          {data.verified && (
+            <Button className="w-full" variant="secondary" asChild>
+              <Link to={`/account/edit-subscription`}>
+                {t("account.edit_subscription")}
+              </Link>
+            </Button>
+          )}
+        </div>
       )}
 
       {!profileUnavailable && (
@@ -241,6 +283,12 @@ function Account() {
           <p>{t("account.private")}</p>
         </div>
       )}
+
+      <Subscribe
+        user={data}
+        open={subscribeOpen}
+        onOpenChange={setSubscribeOpen}
+      />
     </div>
   );
 }

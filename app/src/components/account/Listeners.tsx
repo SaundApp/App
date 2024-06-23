@@ -1,8 +1,8 @@
-import { User } from "@/types/prisma/models";
 import { useTranslation } from "react-i18next";
+import type { PublicUser } from "@/types/prisma";
 import Artist from "../leaderboard/Artist";
 
-export default function Listeners({ listeners }: { listeners: User[] }) {
+export default function Listeners({ listeners }: { listeners: PublicUser[] }) {
   const { t } = useTranslation();
   return (
     <div className="flex flex-col gap-3 h-full max-h-[60vh] overflow-y-auto">

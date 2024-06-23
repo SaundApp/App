@@ -1,13 +1,13 @@
-import { User } from "@/types/prisma/models";
 import { Link } from "@tanstack/react-router";
 import Avatar from "../account/Avatar";
+import type { PublicUser } from "@/types/prisma";
 
 export default function TopArtist({
   user,
   position,
   streams,
 }: {
-  user: User | undefined;
+  user: PublicUser | undefined;
   position: string;
   streams: number;
 }) {
