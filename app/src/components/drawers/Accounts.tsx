@@ -1,6 +1,5 @@
 import { Drawer, DrawerContent, DrawerTrigger } from "@/components/ui/drawer";
 import { axiosClient } from "@/lib/axios";
-import { User } from "@/types/prisma/models";
 import { useQuery } from "@tanstack/react-query";
 import { useTranslation } from "react-i18next";
 import { FaCheckCircle, FaChevronDown } from "react-icons/fa";
@@ -8,12 +7,13 @@ import Avatar from "../account/Avatar";
 import { useSession } from "../SessionContext";
 import { Button } from "../ui/button";
 import { useEffect } from "react";
+import type { PublicUser } from "@/types/prisma";
 
 export default function Accounts() {
   const { t } = useTranslation();
   const session = useSession();
   const { data } = useQuery<
-    (User & {
+    (PublicUser & {
       token: string;
     })[]
   >({

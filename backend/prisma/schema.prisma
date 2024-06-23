@@ -2,10 +2,6 @@ generator client {
   provider = "prisma-client-js"
 }
 
-generator class_validator {
-  provider = "prisma-class-validator-generator"
-}
-
 datasource db {
   provider = "mongodb"
   url      = env("DATABASE_URL")
@@ -33,14 +29,16 @@ model User {
   listeners  Listener[] @relation("artist")
   listenerOf Listener[] @relation("listener")
 
-  followers        Follows[]      @relation("following")
-  following        Follows[]      @relation("follower")
+  followers        Follows[]       @relation("following")
+  following        Follows[]       @relation("follower")
+  requestsReceived FollowRequest[] @relation("receiver")
+  requestsSent     FollowRequest[] @relation("sender")
   posts            Post[]
   comments         Comment[]
-  messagesSent     Message[]      @relation("sender")
-  messagesReceived Message[]      @relation("receiver")
-  subscriptions    Subscription[] @relation("subscriber")
-  subscribers      Subscription[] @relation("subscribedTo")
+  messagesSent     Message[]       @relation("sender")
+  messagesReceived Message[]       @relation("receiver")
+  subscriptions    Subscription[]  @relation("subscriber")
+  subscribers      Subscription[]  @relation("subscribedTo")
   notifications    Notification[]
   attachments      Attachment[]
   spotifyToken     SpotifyToken?
@@ -151,14 +149,33 @@ model Attachment {
   user User @relation(fields: [userId], references: [id], onDelete: Cascade)
 }
 
-model Notification {
+model FollowRequest {
   id        String   @id @default(auto()) @map("_id") @db.ObjectId
-  text      String
-  read      Boolean  @default(false)
   createdAt DateTime @default(now())
+
+  sender     User   @relation("sender", fields: [senderId], references: [id], onDelete: Cascade)
+  senderId   String @db.ObjectId
+  receiver   User   @relation("receiver", fields: [receiverId], references: [id], onDelete: Cascade)
+  receiverId String @db.ObjectId
+
+  @@unique([senderId, receiverId])
+}
+
+model Notification {
+  id           String              @id @default(auto()) @map("_id") @db.ObjectId
+  text         String
+  read         Boolean             @default(false)
+  createdAt    DateTime            @default(now())
+  involvedUser String?             @db.ObjectId
+  button       NotificationButton?
 
   user   User   @relation(fields: [userId], references: [id], onDelete: Cascade)
   userId String @db.ObjectId
+}
+
+type NotificationButton {
+  text String
+  href String
 }
 
 enum PostType {

@@ -1,4 +1,4 @@
-import { Message } from "@/types/prisma/models";
+import type { Message } from "backend";
 import moment from "moment";
 import { useEffect, useRef, useState } from "react";
 import { FaCirclePause, FaCirclePlay } from "react-icons/fa6";

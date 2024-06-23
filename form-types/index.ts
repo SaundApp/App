@@ -40,3 +40,8 @@ export const updateSchema = z.object({
   email: z.string().email("invalid_email").optional(),
   private: z.boolean().default(false).optional(),
 });
+
+export const updateSubscriptionSchema = z.object({
+  perks: z.array(z.string().min(1, "empty_perks")).nonempty("empty_perks"),
+  price: z.coerce.number().min(0.5),
+});

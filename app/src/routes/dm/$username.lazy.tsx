@@ -1,7 +1,7 @@
 import Message from "@/components/dm/Message";
 import { Textarea } from "@/components/ui/textarea";
 import { axiosClient } from "@/lib/axios";
-import { Message as MessageType, User } from "@/types/prisma/models";
+import type { Message as MessageType } from "backend";
 import { useQuery } from "@tanstack/react-query";
 import { createLazyFileRoute, Link } from "@tanstack/react-router";
 import { useEffect, useRef, useState } from "react";
@@ -13,6 +13,7 @@ import VoiceRecorder from "../../components/dm/VoiceRecorder";
 import { useToast } from "@/components/ui/use-toast";
 import Avatar from "@/components/account/Avatar";
 import { Spinner } from "@/components/ui/spinner";
+import type { PublicUser } from "@/types/prisma";
 
 export const Route = createLazyFileRoute("/dm/$username")({
   component: Chat,
@@ -40,7 +41,7 @@ function Chat() {
     queryFn: async () =>
       axiosClient.get(`/dm/${username}`).then((res) => res.data),
   });
-  const { data: user, isLoading } = useQuery<User>({
+  const { data: user, isLoading } = useQuery<PublicUser>({
     queryKey: ["user", username],
     queryFn: async () =>
       axiosClient.get(`/users/${username}`).then((res) => res.data),

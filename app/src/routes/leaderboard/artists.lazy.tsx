@@ -2,9 +2,9 @@ import Artist from "@/components/leaderboard/Artist";
 import TopArtist from "@/components/leaderboard/TopArtist";
 import { Spinner } from "@/components/ui/spinner";
 import { axiosClient } from "@/lib/axios";
-import { User } from "@/types/prisma/models";
 import { useQuery } from "@tanstack/react-query";
 import { createLazyFileRoute } from "@tanstack/react-router";
+import type { User } from "backend";
 import { useTranslation } from "react-i18next";
 
 export const Route = createLazyFileRoute("/leaderboard/artists")({

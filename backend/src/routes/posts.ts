@@ -15,6 +15,20 @@ hono.post("/create", admin, async (ctx) => {
         not: null,
       },
     },
+    include: {
+      followers: {
+        select: {
+          followerId: true,
+        },
+        where: {
+          follower: {
+            notificationToken: {
+              not: null,
+            },
+          },
+        },
+      },
+    },
   });
   let cont = 0;
 
@@ -45,6 +59,7 @@ hono.post("/create", admin, async (ctx) => {
         })
         .slice(0, 5);
 
+      let artistCont = 0;
       for (const album of recent) {
         try {
           await prisma.post.create({
@@ -63,8 +78,18 @@ hono.post("/create", admin, async (ctx) => {
             },
           });
 
+          artistCont++;
           cont++;
         } catch (err) {}
+
+        if (artistCont > 0) {
+          for (const follower of user.followers) {
+            sendNotification(follower.followerId, NotificationType.POST, {
+              user: user.username,
+              count: artistCont.toString(),
+            });
+          }
+        }
       }
     } catch (err) {}
   }
@@ -261,7 +286,7 @@ hono.post(
       },
     });
 
-    sendNotification(post.userId, NotificationType.LIKE, {
+    await sendNotification(post.userId, NotificationType.LIKE, {
       post: post.name,
       user: user!.username,
     });

@@ -1,5 +1,4 @@
 import { axiosClient } from "@/lib/axios";
-import { User } from "@/types/prisma/models";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { Link } from "@tanstack/react-router";
 import moment from "moment/min/moment-with-locales";
@@ -7,6 +6,7 @@ import { useEffect } from "react";
 import { useTranslation } from "react-i18next";
 import SwipeToRevealActions from "react-swipe-to-reveal-actions";
 import Avatar from "../account/Avatar";
+import type { PublicUser } from "@/types/prisma";
 
 export default function Chat({
   user,
@@ -14,7 +14,7 @@ export default function Chat({
   read,
   timestamp,
 }: {
-  user: User;
+  user: PublicUser;
   message: string;
   read: boolean;
   timestamp: Date;

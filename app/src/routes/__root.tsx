@@ -4,11 +4,11 @@ import { SessionContext } from "@/components/SessionContext";
 import { ThemeProvider } from "@/components/ThemeProvider";
 import { Toaster } from "@/components/ui/toaster";
 import { axiosClient } from "@/lib/axios";
-import { User } from "@/types/prisma/models";
+import type { MeUser } from "@/types/prisma";
 import { useQuery, useQueryClient } from "@tanstack/react-query";
 import {
-  createRootRoute,
   Outlet,
+  createRootRoute,
   useRouterState,
 } from "@tanstack/react-router";
 import { useEffect, useState } from "react";
@@ -20,19 +20,14 @@ export const Route = createRootRoute({
 function App() {
   const router = useRouterState();
   const queryClient = useQueryClient();
-  const { data } = useQuery<
-    | (User & {
-        token?: string;
-      })
-    | null
-  >({
+  const { data } = useQuery<MeUser | null>({
     queryKey: ["me"],
     queryFn: () =>
       localStorage.getItem("token")
         ? axiosClient.get("/auth/me").then((res) => res.data)
         : null,
   });
-  const [session, setSession] = useState<User | null>(null);
+  const [session, setSession] = useState<MeUser | null>(null);
 
   useEffect(() => {
     if (data) {

@@ -240,7 +240,7 @@ hono.post(
       },
     });
 
-    if (!user || user.private) {
+    if (!user) {
       return ctx.json(
         {
           error: "User not found",
@@ -260,6 +260,58 @@ hono.post(
       );
     }
 
+    const self = await prisma.user.findUnique({
+      where: {
+        id: payload.user,
+      },
+      select: {
+        username: true,
+      },
+    });
+
+    const following = await prisma.follows.findFirst({
+      where: {
+        followerId: payload.user,
+        followingId: id,
+      },
+    });
+
+    if (following)
+      return ctx.json(
+        {
+          error: "User already followed",
+        },
+        400
+      );
+
+    if (user.private) {
+      try {
+        const req = await prisma.followRequest.create({
+          data: {
+            senderId: payload.user,
+            receiverId: id,
+          },
+        });
+
+        sendNotification(id, NotificationType.FOLLOW_REQUEST, {
+          user: self!.username,
+          requestId: req.id,
+        });
+
+        return ctx.json({
+          message: "Request sent",
+          request: true,
+        });
+      } catch (err) {
+        return ctx.json(
+          {
+            error: "Request already sent",
+          },
+          400
+        );
+      }
+    }
+
     try {
       await prisma.follows.create({
         data: {
@@ -268,17 +320,8 @@ hono.post(
         },
       });
 
-      const user = await prisma.user.findUnique({
-        where: {
-          id,
-        },
-        select: {
-          username: true,
-        },
-      });
-
       sendNotification(id, NotificationType.FOLLOW, {
-        follower: user!.username,
+        user: self!.username,
       });
 
       return ctx.json({
@@ -292,6 +335,68 @@ hono.post(
         400
       );
     }
+  }
+);
+
+hono.post(
+  "/requests/accept",
+  jwt({ secret: process.env.JWT_SECRET! }),
+  async (ctx) => {
+    const payload = ctx.get("jwtPayload");
+    const id = ctx.req.query("id");
+    const notificationId = ctx.req.query("notificationId");
+
+    if (!id || !notificationId) {
+      return ctx.json(
+        {
+          error: "Invalid request",
+        },
+        400
+      );
+    }
+
+    const request = await prisma.followRequest.findUnique({
+      where: {
+        id,
+      },
+      include: {
+        sender: {
+          select: {
+            username: true,
+          },
+        },
+      },
+    });
+
+    if (!request || request.receiverId !== payload.user) {
+      return ctx.json(
+        {
+          error: "Request not found",
+        },
+        404
+      );
+    }
+
+    await prisma.follows.create({
+      data: {
+        followerId: request.senderId,
+        followingId: request.receiverId,
+      },
+    });
+
+    await prisma.notification.delete({
+      where: {
+        id: notificationId,
+      },
+    });
+
+    await sendNotification(request.receiverId, NotificationType.FOLLOW, {
+      user: request.sender.username,
+    });
+
+    return ctx.json({
+      message: "Request accepted",
+    });
   }
 );
 

@@ -2,6 +2,7 @@
   "general": {
     "follow": "Follow",
     "unfollow": "Unfollow",
+    "follow_request": "Follow request sent",
     "search": "Search",
     "notifications": "Notifications",
     "today": "Today"
@@ -78,7 +79,13 @@
     "subscription": {
       "title": "Subscribe to {{username}}",
       "description": "Complete the subscription for €{{price}} to get the following perks:"
-    }
+    },
+    "not_verified": "This account is not verified",
+    "add_perk": "Add perk",
+    "price": "Price",
+    "perk": "Perk",
+    "perks": "Perks",
+    "empty_perks": "Perks cannot be empty"
   },
   "messages": {
     "messages": "Messages",

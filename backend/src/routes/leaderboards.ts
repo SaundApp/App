@@ -3,6 +3,7 @@ import prisma from "../lib/prisma";
 import { fetchStreams } from "../lib/stats";
 import admin from "../middlewares/admin";
 import { jwt } from "hono/jwt";
+import { NotificationType, sendNotification } from "../lib/notifications";
 
 const hono = new Hono();
 
@@ -31,6 +32,21 @@ hono.post("/artists/create", admin, async (ctx) => {
 
     cont++;
   }
+
+  const everyone = await prisma.user.findMany({
+    where: {
+      notificationToken: {
+        not: null,
+      },
+    },
+    select: {
+      id: true,
+    },
+  });
+
+  everyone.forEach((user) =>
+    sendNotification(user.id, NotificationType.LEADERBOARD, {})
+  );
 
   return ctx.json(cont);
 });

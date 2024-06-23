@@ -1,6 +1,6 @@
 import { axiosClient } from "@/lib/axios";
 import { getDominantColor } from "@/lib/utils";
-import { Post as PostType, User } from "@/types/prisma/models";
+import type { ExtendedPost } from "@/types/prisma";
 import type {
   Album,
   Playlist,
@@ -10,6 +10,7 @@ import type {
 } from "@spotify/web-api-ts-sdk";
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { Link } from "@tanstack/react-router";
+import type { User } from "backend";
 import moment from "moment/min/moment-with-locales";
 import { useEffect, useRef, useState } from "react";
 import { useTranslation } from "react-i18next";
@@ -20,13 +21,13 @@ import {
   FaCirclePause,
   FaCirclePlay,
 } from "react-icons/fa6";
+import { useInView } from "react-intersection-observer";
 import { useLongPress } from "use-long-press";
 import { useSession } from "./SessionContext";
 import Avatar from "./account/Avatar";
 import Comments from "./drawers/Comments";
-import Users from "./drawers/Users";
 import Share from "./drawers/Share";
-import { useInView } from "react-intersection-observer";
+import Users from "./drawers/Users";
 import { useToast } from "./ui/use-toast";
 
 function getTrack(
@@ -39,7 +40,11 @@ function getTrack(
   return track as SimplifiedTrack;
 }
 
-export default function Post({ post }: { post: PostType }) {
+export default function Post({
+  post,
+}: {
+  post: ExtendedPost
+}) {
   const { t, i18n } = useTranslation();
   const { toast } = useToast();
   const [saw, setSaw] = useState(false);
@@ -160,9 +165,11 @@ export default function Post({ post }: { post: PostType }) {
           src={post.image}
           alt={post.name}
           draggable={false}
-          className="w-full rounded-2xl"
+          className="w-full h-[390px] object-cover rounded-2xl"
           ref={imageRef}
           crossOrigin="anonymous"
+          height={390}
+          width={390}
         />
 
         <div className="w-full h-1/2 flex flex-col justify-between absolute p-3 top-1/2">

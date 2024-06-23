@@ -1,6 +1,5 @@
 import { Drawer, DrawerContent, DrawerTrigger } from "@/components/ui/drawer";
 import { axiosClient } from "@/lib/axios";
-import { User } from "@/types/prisma/models";
 import { useQuery } from "@tanstack/react-query";
 import { Link } from "@tanstack/react-router";
 import { useState } from "react";
@@ -8,12 +7,13 @@ import { useTranslation } from "react-i18next";
 import { FaPaperPlane } from "react-icons/fa";
 import Avatar from "../account/Avatar";
 import { Input } from "../ui/input";
+import type { PublicUser } from "@/types/prisma";
 
 export default function Share({ postId }: { postId: string }) {
   const [search, setSearch] = useState("");
   const { t } = useTranslation();
 
-  const { data } = useQuery<User[]>({
+  const { data } = useQuery<PublicUser[]>({
     queryKey: ["users"],
     queryFn: () =>
       axiosClient

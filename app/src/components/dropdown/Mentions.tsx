@@ -1,8 +1,8 @@
 import { axiosClient } from "@/lib/axios";
-import { User } from "@/types/prisma/models";
 import { useQuery } from "@tanstack/react-query";
 import { useEffect, useState } from "react";
 import Avatar from "../account/Avatar";
+import type { PublicUser } from "@/types/prisma";
 
 export default function Mentions({
   message,
@@ -12,7 +12,7 @@ export default function Mentions({
   setMessage: (message: string) => void;
 }) {
   const [mention, setMention] = useState("");
-  const { data } = useQuery<User[]>({
+  const { data } = useQuery<PublicUser[]>({
     queryKey: [
       "users",
       mention,
@@ -21,7 +21,7 @@ export default function Mentions({
     queryFn: () =>
       message.includes("@") && !message.includes("@ ")
         ? axiosClient
-            .get<User[]>(`/users/search?q=${mention}&friends=true`)
+            .get<PublicUser[]>(`/users/search?q=${mention}&friends=true`)
             .then((res) => res.data)
             .then((data) =>
               data.find((user) => user.username === mention) ? [] : data

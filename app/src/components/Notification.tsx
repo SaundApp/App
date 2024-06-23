@@ -3,22 +3,26 @@ import moment from "moment/min/moment-with-locales";
 import React, { useEffect } from "react";
 import { useTranslation } from "react-i18next";
 import { Button } from "./ui/button";
+import type { NotificationButton } from "backend";
+import Avatar from "./account/Avatar";
+import { axiosClient } from "@/lib/axios";
+import { useQueryClient } from "@tanstack/react-query";
 
 export default function Notification({
-  image,
+  imageId,
   children: text,
   timestamp,
   button,
+  href,
 }: {
-  image: string;
+  imageId?: string;
   children: React.ReactElement | string;
-  timestamp: number;
-  button?: {
-    text: string;
-    href: string;
-  };
+  timestamp: Date;
+  button: NotificationButton | null;
+  href?: string;
 }) {
   const { i18n } = useTranslation();
+  const queryClient = useQueryClient();
 
   useEffect(() => {
     moment.locale(i18n.language);
@@ -26,21 +30,25 @@ export default function Notification({
 
   return (
     <div className="flex flex-row gap-3 w-full items-center">
-      <img
-        src={image}
-        alt={text.toString()}
-        draggable={false}
-        className="w-10 h-10 rounded-full"
-      />
+      {imageId && <Avatar imageId={imageId} width={40} height={40} />}
 
-      <div>
+      <Link to={href}>
         <h5>{text}</h5>
         <p className="muted">{moment(timestamp).fromNow()}</p>
-      </div>
+      </Link>
 
       {button && (
-        <Button className="ml-auto" asChild>
-          <Link to={button.href}>{button.text}</Link>
+        <Button
+          className="ml-auto"
+          onClick={() => {
+            axiosClient.post(button.href).then(() => {
+              queryClient.invalidateQueries({
+                queryKey: ["notifications"],
+              });
+            });
+          }}
+        >
+          {button.text}
         </Button>
       )}
     </div>

@@ -1,15 +1,18 @@
 import { Drawer, DrawerContent } from "@/components/ui/drawer";
-import { User } from "@/types/prisma/models";
 import { useTranslation } from "react-i18next";
 import { Button } from "../ui/button";
 import { axiosClient } from "@/lib/axios";
+import type { PublicUser } from "@/types/prisma";
+import type { SubscriptionSettings } from "backend";
 
 export default function Subscribe({
   user,
   open,
   onOpenChange,
 }: {
-  user: User;
+  user: PublicUser & {
+    subscriptionSettings: SubscriptionSettings;
+  };
   open: boolean;
   onOpenChange: (open: boolean) => void;
 }) {
@@ -28,7 +31,7 @@ export default function Subscribe({
             price: user.subscriptionSettings.price / 100,
           })}
         </p>
-        
+
         <ul className="list-inside list-disc h-[33vh] max-h-[33vh] overflow-y-auto">
           {user.subscriptionSettings.perks.map((perk, index) => (
             <li key={index}>{perk}</li>

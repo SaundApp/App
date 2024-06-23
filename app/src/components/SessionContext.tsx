@@ -1,5 +1,5 @@
-import { User } from "@/types/prisma/models";
+import type { MeUser } from "@/types/prisma";
 import { createContext, useContext } from "react";
 
-export const SessionContext = createContext<User | null>(null);
+export const SessionContext = createContext<MeUser | null>(null);
 export const useSession = () => useContext(SessionContext);

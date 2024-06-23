@@ -1,6 +1,5 @@
 import { Drawer, DrawerContent } from "@/components/ui/drawer";
 import { axiosClient } from "@/lib/axios";
-import { User } from "@/types/prisma/models";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { Link } from "@tanstack/react-router";
 import { useState } from "react";
@@ -9,6 +8,8 @@ import { useSession } from "../SessionContext";
 import Avatar from "../account/Avatar";
 import { Button } from "../ui/button";
 import { Input } from "../ui/input";
+import type { PublicUser } from "@/types/prisma";
+import { useToast } from "../ui/use-toast";
 
 export default function Users({
   users,
@@ -16,17 +17,28 @@ export default function Users({
   onOpenChange,
   title,
 }: {
-  users: User[];
+  users: PublicUser[];
   open: boolean;
   onOpenChange: (open: boolean) => void;
   title: string;
 }) {
   const { t } = useTranslation();
+  const { toast } = useToast();
   const queryClient = useQueryClient();
   const [search, setSearch] = useState("");
   const session = useSession();
   const follow = useMutation({
-    mutationFn: (user: string) => axiosClient.post(`/users/${user}/follow`),
+    mutationFn: (user: string) =>
+      axiosClient
+        .post(`/users/${user}/follow`)
+        .then((res) => res.data)
+        .then((data) => {
+          if (data.request) {
+            toast({
+              description: t("general.follow_request"),
+            });
+          }
+        }),
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ["me"] });
     },
@@ -94,9 +106,7 @@ export default function Users({
                       else unfollow.mutate(user.id);
                     }}
                     className={
-                      !session?.following.find(
-                        (u) => u.followingId === user.id
-                      )
+                      !session?.following.find((u) => u.followingId === user.id)
                         ? ""
                         : "bg-secondary"
                     }

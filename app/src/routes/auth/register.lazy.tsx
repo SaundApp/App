@@ -9,7 +9,7 @@ import { createLazyFileRoute, Link } from "@tanstack/react-router";
 import { registerSchema } from "form-types";
 import { useForm } from "react-hook-form";
 import { useTranslation } from "react-i18next";
-import { z } from "zod";
+import type { z } from "zod";
 
 export const Route = createLazyFileRoute("/auth/register")({
   component: Register,
