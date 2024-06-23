@@ -9,7 +9,7 @@ import { useToast } from "@/components/ui/use-toast";
 import { axiosClient } from "@/lib/axios";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useQueryClient } from "@tanstack/react-query";
-import { Link, createLazyFileRoute } from "@tanstack/react-router";
+import { createLazyFileRoute } from "@tanstack/react-router";
 import { updateSchema } from "form-types";
 import { useEffect, useRef } from "react";
 import { useForm } from "react-hook-form";
@@ -261,9 +261,7 @@ function EditProfile() {
                   await axiosClient.post("/auth/sync/spotify");
                   return;
                 }
-              } catch (_) {
-                /* empty */
-              }
+              } catch (_) {}
 
               window.open(
                 import.meta.env.VITE_API_URL + "/auth/login/spotify",
@@ -272,17 +270,6 @@ function EditProfile() {
             }}
           >
             <FaSpotify fontSize={20} />
-          </Button>
-
-          <Button
-            className="w-fit"
-            onClick={() => {
-              axiosClient.post("/stripe/connect").then((res) => {
-                window.location.href = res.data.url;
-              });
-            }}
-          >
-            <FaStripeS fontSize={20} />
           </Button>
         </div>
       </div>

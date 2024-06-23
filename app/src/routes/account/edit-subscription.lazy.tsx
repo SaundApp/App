@@ -64,7 +64,7 @@ function EditSubscriptionSettings() {
                 .patch("/auth/me/update-subscription", values)
                 .then(() => {
                   toast({
-                    description: t("account.edit_success"),
+                    description: t("toast.success.edit"),
                   });
 
                   queryClient.invalidateQueries({
@@ -91,7 +91,7 @@ function EditSubscriptionSettings() {
 
               toast({
                 variant: "destructive",
-                description: t("account." + error?.message || "base_error"),
+                description: t("toast.error." + error?.message || "base"),
               });
             }
           )}

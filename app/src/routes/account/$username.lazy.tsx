@@ -9,16 +9,16 @@ import Users from "@/components/drawers/Users";
 import { useSession } from "@/components/SessionContext";
 import { Button } from "@/components/ui/button";
 import { Spinner } from "@/components/ui/spinner";
+import { useToast } from "@/components/ui/use-toast";
 import { axiosClient } from "@/lib/axios";
-import type { Post, SubscriptionSettings } from "backend";
+import type { PublicUser } from "@/types/prisma";
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { createLazyFileRoute, Link } from "@tanstack/react-router";
+import type { Post, SubscriptionSettings } from "backend";
 import { useEffect, useState } from "react";
 import { useTranslation } from "react-i18next";
 import { FaLock } from "react-icons/fa";
 import { FaGear } from "react-icons/fa6";
-import type { PublicUser } from "@/types/prisma";
-import { useToast } from "@/components/ui/use-toast";
 
 export const Route = createLazyFileRoute("/account/$username")({
   component: Account,
@@ -45,6 +45,7 @@ function Account() {
       subscribed: boolean;
       subscriptionSettings: SubscriptionSettings;
       verified: boolean;
+      requestSent: boolean;
     }
   >({
     queryKey: ["user", username],
@@ -87,12 +88,21 @@ function Account() {
         .then((data) => {
           if (data.request) {
             toast({
-              description: t("general.follow_request"),
+              description: t("toast.success.follow_request"),
             });
+
+            queryClient.invalidateQueries({ queryKey: ["user", username] });
           }
         }),
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ["me"] });
+    },
+  });
+  const cancelRequest = useMutation({
+    mutationFn: (user: string) => axiosClient.delete(`/users/${user}/request`),
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ["me"] });
+      queryClient.invalidateQueries({ queryKey: ["user", username] });
     },
   });
   const unfollow = useMutation({
@@ -212,6 +222,7 @@ function Account() {
         <div className="flex w-full gap-3">
           <Button
             onClick={() => {
+              if (data.requestSent) return cancelRequest.mutate(data.id);
               if (
                 !session?.following.find((user) => user.followingId === data.id)
               )
@@ -219,16 +230,22 @@ function Account() {
               else unfollow.mutate(data.id);
             }}
             className={
-              !session?.following.find((user) => user.followingId === data.id)
-                ? "w-full"
-                : "w-full bg-secondary"
+              data.requestSent
+                ? "w-full bg-secondary"
+                : !session?.following.find(
+                      (user) => user.followingId === data.id
+                    )
+                  ? "w-full"
+                  : "w-full bg-secondary"
             }
           >
-            {!session?.following.find((user) => user.followingId === data.id)
-              ? t("general.follow")
-              : t("general.unfollow")}
+            {data.requestSent
+              ? t("general.request_sent")
+              : !session?.following.find((user) => user.followingId === data.id)
+                ? t("general.follow")
+                : t("general.unfollow")}
           </Button>
-          {data.subscriptionSettings && data.verified && (
+          {data.subscriptionSettings && data.verified && !profileUnavailable && (
             <Button
               onClick={() => {
                 if (data.subscribed) {
@@ -277,10 +294,10 @@ function Account() {
 
       {profileUnavailable && (
         <div className="w-full h-full flex flex-col gap-3 items-center justify-center">
-          <div className="border-4 border-black dark:border-white  rounded-full p-4">
-            <FaLock size={40} />
+          <div className="border-2 border-[#a3a3a3]  rounded-full p-4">
+            <FaLock color="#a3a3a3" size={50} />
           </div>
-          <p>{t("account.private")}</p>
+          <p className="muted">{t("account.private")}</p>
         </div>
       )}
 

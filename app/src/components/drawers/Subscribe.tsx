@@ -24,14 +24,9 @@ export default function Subscribe({
     <Drawer open={open} onOpenChange={onOpenChange}>
       <DrawerContent className="p-3 px-5 flex flex-col gap-3 no-focus justify-center">
         <h5 className="text-center">
-          {t("account.subscription.title", { username: user.username })}
+          {t("account.subscription_title", { username: user.username })}
         </h5>
-        <p className="muted text-center">
-          {t("account.subscription.description", {
-            price: user.subscriptionSettings.price / 100,
-          })}
-        </p>
-
+        
         <ul className="list-inside list-disc h-[33vh] max-h-[33vh] overflow-y-auto">
           {user.subscriptionSettings.perks.map((perk, index) => (
             <li key={index}>{perk}</li>

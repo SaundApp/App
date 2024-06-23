@@ -58,7 +58,7 @@ function Artists() {
                   description={
                     Intl.NumberFormat("en", { notation: "compact" }).format(
                       user.streams || 0
-                    ) + " streams"
+                    ) + ` ${t("leaderboard.streams")}`
                   }
                 />
               ))}

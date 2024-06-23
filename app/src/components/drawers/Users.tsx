@@ -35,7 +35,7 @@ export default function Users({
         .then((data) => {
           if (data.request) {
             toast({
-              description: t("general.follow_request"),
+              description: t("toast.success.follow_request"),
             });
           }
         }),

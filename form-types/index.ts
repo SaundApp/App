@@ -46,6 +46,10 @@ export const updateSchema = z.object({
 });
 
 export const updateSubscriptionSchema = z.object({
-  perks: z.array(z.string().min(1, "empty_perks")).nonempty("empty_perks"),
-  price: z.coerce.number().min(0.5),
+  perks: z
+    .array(z.string().min(1, "empty_perks"), {
+      message: "empty_perks",
+    })
+    .nonempty("empty_perks"),
+  price: z.coerce.number().min(0.5, "min_price"),
 });

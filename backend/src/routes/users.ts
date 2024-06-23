@@ -125,6 +125,11 @@ hono.get(
           },
         },
         subscriptionSettings: true,
+        requestsReceived: {
+          where: {
+            senderId: payload.user,
+          },
+        },
       },
     });
 
@@ -167,6 +172,7 @@ hono.get(
       following,
       spotifyId: undefined,
       subscribed: user.subscribers.length > 0,
+      requestSent: user.requestsReceived.length > 0,
     });
   }
 );
@@ -393,8 +399,56 @@ hono.post(
       user: request.sender.username,
     });
 
+    await prisma.followRequest.delete({
+      where: {
+        id,
+      },
+    });
+
     return ctx.json({
       message: "Request accepted",
+    });
+  }
+);
+
+hono.delete(
+  "/:id/request",
+  jwt({ secret: process.env.JWT_SECRET! }),
+  async (ctx) => {
+    const payload = ctx.get("jwtPayload");
+    const id = ctx.req.param("id");
+
+    const request = await prisma.followRequest.findFirst({
+      where: {
+        senderId: payload.user,
+        receiverId: id,
+      },
+    });
+
+    if (!request) {
+      return ctx.json(
+        {
+          error: "Request not found",
+        },
+        404
+      );
+    }
+
+    const req = await prisma.followRequest.delete({
+      where: {
+        id: request.id,
+      },
+    });
+
+    if (req.notificationId)
+      await prisma.notification.delete({
+        where: {
+          id: req.notificationId,
+        },
+      });
+
+    return ctx.json({
+      message: "Request removed",
     });
   }
 );

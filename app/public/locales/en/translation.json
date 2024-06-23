@@ -3,6 +3,7 @@
     "search": "Search",
     "follow": "Follow",
     "unfollow": "Unfollow",
+    "request_sent": "Request sent",
     "empty": "No data yet",
     "or": "OR"
   },
@@ -18,7 +19,8 @@
     "success": {
       "edit": "Changes have been saved successfully",
       "cache_cleared": "Cache has been cleared successfully",
-      "edit_image": "Image has been updated successfully"
+      "edit_image": "Image has been updated successfully",
+      "follow_request": "Follow request sent successfully"
     },
     "error": {
       "login": "Invalid username or password",
@@ -29,7 +31,10 @@
       "min_username": "Username must be at least 3 characters",
       "max_username": "Username must be at most 20 characters",
       "invalid_email": "Invalid email",
-      "invalid_password": "The password must be at least 8 characters long and contain at least one uppercase letter, one lowercase letter, one number and one special character"
+      "invalid_password": "The password must be at least 8 characters long and contain at least one uppercase letter, one lowercase letter, one number and one special character",
+      "empty_perks": "You must add at least one perk",
+      "min_price": "You must add a price greater than 0.5",
+      "no_preview": "No preview available"
     }
   },
   "index": {
@@ -56,7 +61,8 @@
     "copy": "Copy"
   },
   "leaderboard": {
-    "title": "Top Artists"
+    "title": "Top Artists",
+    "streams": "streams"
   },
   "account": {
     "private": "Private",
@@ -82,7 +88,12 @@
     "save": "Save",
     "change_password": "Change password",
     "manage": "Manage accounts",
-    "new": "Add new account"
+    "new": "Add new account",
+    "subscribe": "Subscribe",
+    "subscription_title": "Subscription",
+    "price": "Price",
+    "add_perk": "Add perk",
+    "perk": "Perk"
   },
   "auth": {
     "register": "Register",
@@ -90,5 +101,8 @@
     "login_description": "Welcome back! Ready to come back?",
     "register_description": "Create an account now and start discovering new artists!",
     "forgot_password": "Forgot password?"
+  },
+  "notification": {
+    "title": "Notifications"
   }
 }

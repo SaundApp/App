@@ -1,6 +1,7 @@
-import { Link } from "@tanstack/react-router";
-import Avatar from "../account/Avatar";
 import type { PublicUser } from "@/types/prisma";
+import { Link } from "@tanstack/react-router";
+import { useTranslation } from "react-i18next";
+import Avatar from "../account/Avatar";
 
 export default function TopArtist({
   user,
@@ -11,10 +12,12 @@ export default function TopArtist({
   position: string;
   streams: number;
 }) {
+  const { t } = useTranslation();
   if (!user) return null;
 
   return (
     <Link
+      to={`/account/${user.username}`}
       className={
         "flex flex-col items-center " + (position !== "🥇" ? "mt-20" : "")
       }
@@ -30,7 +33,7 @@ export default function TopArtist({
       </h5>
       <p className="muted">
         {Intl.NumberFormat("en", { notation: "compact" }).format(streams)}{" "}
-        streams
+        {t("leaderboard.streams")}
       </p>
     </Link>
   );

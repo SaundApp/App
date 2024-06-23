@@ -80,7 +80,11 @@ export default function Chat({
                 <p className="muted"> • </p>
                 <p className="muted">{moment(timestamp).fromNow()}</p>
               </>
-            )) || <p className="muted">@{user.username}</p>}
+            )) || (
+              <p className="muted max-w-[10rem] text-left text-ellipsis whitespace-nowrap overflow-hidden">
+                @{user.username}
+              </p>
+            )}
           </div>
         </div>
         {!read && (

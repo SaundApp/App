@@ -86,7 +86,7 @@ export default function Post({
       else {
         setPlaying(false);
         toast({
-          description: t("post.no-preview"),
+          description: t("toast.error.no_preview"),
           variant: "destructive",
         });
       }
@@ -144,11 +144,11 @@ export default function Post({
 
           <div>
             <Link to={`/account/${post.user.username}`}>
-              <h5 className="max-w-[14rem] text-ellipsis whitespace-nowrap overflow-hidden">
+              <h5 className="max-w-[10rem] text-left text-ellipsis whitespace-nowrap overflow-hidden">
                 {post.user.name}
               </h5>
             </Link>
-            <p className="muted max-w-[14rem] text-ellipsis whitespace-nowrap overflow-hidden">
+            <p className="muted max-w-[10rem] text-left text-ellipsis whitespace-nowrap overflow-hidden">
               {t(`index.${post.type.toLowerCase()}`) +
                 (post.type !== "SONG" ? " • " + post.name : "")}
             </p>

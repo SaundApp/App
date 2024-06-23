@@ -64,7 +64,7 @@ hono.get(
       select: { nationality: true },
     });
 
-    let nationality = user?.nationality?.toLowerCase() || "en";
+    let nationality = user?.nationality?.toUpperCase() || "EN";
 
     const users = await prisma.user.findMany({
       where: {

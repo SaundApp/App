@@ -51,10 +51,10 @@ export default function Mentions({
 
   return (
     <div
-      className="absolute flex left-3 -ml-[1px] w-full flex-col gap-3 top-[5.5rem] bg-background overflow-y-auto"
+      className="absolute flex left-3 -ml-[1px] w-full flex-col gap-3 top-[5.2rem] bg-background overflow-y-auto"
       style={{
-        height: "calc(100% - 9rem)",
-        maxHeight: "calc(100% - 9rem)",
+        height: "calc(100% - 8.75rem)",
+        maxHeight: "calc(100% - 8.75rem)",
       }}
     >
       {data?.map((user) => (

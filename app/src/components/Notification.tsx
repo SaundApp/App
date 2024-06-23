@@ -29,11 +29,13 @@ export default function Notification({
   }, [i18n.language]);
 
   return (
-    <div className="flex flex-row gap-3 w-full items-center">
+    <div className="flex flex-row gap-3 w-full items-start">
       {imageId && <Avatar imageId={imageId} width={40} height={40} />}
 
-      <Link to={href}>
-        <h5>{text}</h5>
+      <Link to={href} className="break-all">
+        <h5 className="!font-normal max-w-[14rem] text-left text-ellipsis whitespace-nowrap overflow-hidden">
+          {text}
+        </h5>
         <p className="muted">{moment(timestamp).fromNow()}</p>
       </Link>
 

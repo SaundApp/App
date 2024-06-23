@@ -23,10 +23,11 @@ function Notifications() {
 
   return (
     <div className="flex flex-col gap-3">
-      <h1>{t("general.notifications")}</h1>
-      <h3>{t("general.today")}</h3>
+      <h1>{t("notification.title")}</h1>
 
-      <div className="flex flex-col gap-3 h-full max-h-[80vh] overflow-y-auto">
+      <div className="flex flex-col gap-3 h-full max-h-[85vh] overflow-y-auto">
+        {data?.length === 0 && <p className="muted">{t("general.empty")}</p>}
+
         {data?.map((item) => (
           <Notification
             key={item.id}
@@ -39,7 +40,7 @@ function Notifications() {
                 : undefined
             }
           >
-            <p className="font-normal">{item.text}</p>
+            {item.text}
           </Notification>
         ))}
       </div>

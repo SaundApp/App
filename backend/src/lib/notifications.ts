@@ -60,6 +60,11 @@ export async function sendNotification(
       where: { id: notification.id },
       data: { button },
     });
+
+    await prisma.followRequest.update({
+      where: { id: data.requestId },
+      data: { notificationId: notification.id },
+    });
   }
 
   if (!user?.notificationToken) return;
