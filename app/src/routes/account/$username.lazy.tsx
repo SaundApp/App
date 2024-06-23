@@ -4,6 +4,7 @@ import Listeners from "@/components/account/Listeners";
 import Posts from "@/components/account/Posts";
 import BackIcon from "@/components/BackIcon";
 import Accounts from "@/components/drawers/Accounts";
+import Subscribe from "@/components/drawers/Subscribe";
 import Users from "@/components/drawers/Users";
 import { useSession } from "@/components/SessionContext";
 import { Button } from "@/components/ui/button";
@@ -31,11 +32,13 @@ function Account() {
   >("posts");
   const [followersOpen, setFollowersOpen] = useState(false);
   const [followingsOpen, setFollowingsOpen] = useState(false);
+  const [subscribeOpen, setSubscribeOpen] = useState(false);
   const { data, isLoading } = useQuery<
     User & {
       posts: number;
       followers: number;
       following: number;
+      subscribed: boolean;
     }
   >({
     queryKey: ["user", username],
@@ -187,28 +190,47 @@ function Account() {
       </div>
 
       {session?.username !== data.username && (
-        <Button
-          onClick={() => {
-            if (
+        <div className="flex w-full gap-3">
+          <Button
+            onClick={() => {
+              if (
+                !session?.following.find((user) => user.followingId === data.id)
+              )
+                follow.mutate(data.id);
+              else unfollow.mutate(data.id);
+            }}
+            className={
               !session?.following.find((user) => user.followingId === data.id)
-            )
-              follow.mutate(data.id);
-            else unfollow.mutate(data.id);
-          }}
-          className={
-            !session?.following.find((user) => user.followingId === data.id)
-              ? ""
-              : "bg-secondary"
-          }
-        >
-          {!session?.following.find((user) => user.followingId === data.id)
-            ? t("general.follow")
-            : t("general.unfollow")}
-        </Button>
+                ? "w-full"
+                : "w-full bg-secondary"
+            }
+          >
+            {!session?.following.find((user) => user.followingId === data.id)
+              ? t("general.follow")
+              : t("general.unfollow")}
+          </Button>
+          {data.subscriptionSettings && data.verified && (
+            <Button
+              onClick={() => {
+                if (data.subscribed) {
+                  axiosClient
+                    .post("/stripe/client/dashboard")
+                    .then((res) => res.data)
+                    .then((data) => window.open(data.url, "_blank"));
+                } else setSubscribeOpen(true);
+              }}
+              className={!data.subscribed ? "w-full" : "w-full bg-secondary"}
+            >
+              {!data.subscribed
+                ? t("account.subscribe")
+                : t("account.edit_subscription")}
+            </Button>
+          )}
+        </div>
       )}
 
       {session?.username === data.username && (
-        <>
+        <div className="flex w-full gap-3">
           <Button className="w-full" asChild>
             <Link to={`/account/edit`}>{t("account.edit_profile")}</Link>
           </Button>
@@ -216,7 +238,7 @@ function Account() {
           <Button className="w-full" variant="secondary">
             {t("account.edit_subscription")}
           </Button>
-        </>
+        </div>
       )}
 
       {!profileUnavailable && (
@@ -238,6 +260,12 @@ function Account() {
           <p>{t("account.private")}</p>
         </div>
       )}
+
+      <Subscribe
+        user={data}
+        open={subscribeOpen}
+        onOpenChange={setSubscribeOpen}
+      />
     </div>
   );
 }

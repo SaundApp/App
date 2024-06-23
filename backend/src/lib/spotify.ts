@@ -95,7 +95,7 @@ export async function syncUser(user: User) {
 
   await prisma.user.update({
     where: { id: user.id },
-    data: { genres },
+    data: { genres, nationality: me.body.country },
   });
 
   const topArtistByTracks: {

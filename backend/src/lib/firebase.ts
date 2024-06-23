@@ -1,12 +1,21 @@
 import { initializeApp } from "firebase-admin/app";
 import { credential } from "firebase-admin";
-import { readFileSync } from "fs";
+import { existsSync, readFileSync } from "fs";
 import firebase from "firebase-admin";
 
-const googleCredentials = readFileSync("google-credentials.json", "utf-8");
+const googleCredentials = existsSync("google-credentials.json")
+  ? readFileSync("google-credentials.json", "utf-8")
+  : null;
 
-initializeApp({
-  credential: credential.cert(JSON.parse(googleCredentials)),
-});
+if (!googleCredentials) {
+  console.warn(
+    "[Firebase] Google credentials file not found. Returning empty firebase implementation."
+  );
+}
 
-export default firebase;
+googleCredentials &&
+  initializeApp({
+    credential: credential.cert(JSON.parse(googleCredentials)),
+  });
+
+export default googleCredentials ? firebase : null;

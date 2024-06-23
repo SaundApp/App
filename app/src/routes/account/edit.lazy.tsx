@@ -245,24 +245,30 @@ function EditProfile() {
           <Button
             className="w-fit"
             onClick={() => {
-              axiosClient.post("/stripe/connect").then((res) => {
+              axiosClient.post("/stripe/artist/connect").then((res) => {
                 window.location.href = res.data.url;
               });
             }}
           >
             <FaStripeS fontSize={20} />
           </Button>
-          <Button className="w-fit" asChild>
-            <Link
-              to={
-                import.meta.env.VITE_API_URL +
-                (session.spotifyId
-                  ? "/auth/spotify/unlink"
-                  : "/auth/login/spotify")
-              }
-            >
-              <FaSpotify fontSize={20} />
-            </Link>
+          <Button
+            className="w-fit"
+            onClick={async () => {
+              try {
+                if (session.spotifyId) {
+                  await axiosClient.post("/auth/sync/spotify");
+                  return;
+                }
+              } catch (_) { /* empty */ }
+
+              window.open(
+                import.meta.env.VITE_API_URL + "/auth/login/spotify",
+                "_blank"
+              );
+            }}
+          >
+            <FaSpotify fontSize={20} />
           </Button>
         </div>
       </div>

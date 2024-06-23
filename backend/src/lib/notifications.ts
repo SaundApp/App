@@ -44,7 +44,7 @@ export async function sendNotification(
     message = message.replace(`{${key}}`, data[key]);
   }
 
-  await firebase.messaging().send({
+  await firebase?.messaging().send({
     token: user.notificationToken,
     notification: {
       title: data.user ? data.user : message,

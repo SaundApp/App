@@ -273,6 +273,7 @@ hono.get("/login/spotify", async (ctx) => {
           "user-top-read",
           "user-read-recently-played",
           "user-read-email",
+          "user-read-private"
         ].join(" "),
         state,
       }).toString()
@@ -339,7 +340,6 @@ hono.get("/callback/spotify", async (ctx) => {
       },
       data: {
         spotifyId: me.body.id,
-        nationality: me.body.country,
       },
     });
 

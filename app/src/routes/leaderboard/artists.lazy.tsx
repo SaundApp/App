@@ -12,13 +12,11 @@ export const Route = createLazyFileRoute("/leaderboard/artists")({
 });
 
 function Artists() {
-  const { t, i18n } = useTranslation();
+  const { t } = useTranslation();
   const { data, isLoading } = useQuery<User[]>({
-    queryKey: ["leaderboards", i18n.language],
+    queryKey: ["leaderboards"],
     queryFn: async () =>
-      await axiosClient
-        .get(`/leaderboards/artists/${i18n.language}`)
-        .then((res) => res.data),
+      await axiosClient.get(`/leaderboards/artists`).then((res) => res.data),
   });
 
   if (isLoading) return <Spinner className="m-auto" />;

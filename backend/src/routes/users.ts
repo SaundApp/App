@@ -101,6 +101,7 @@ hono.get(
   "/:username",
   jwt({ secret: process.env.JWT_SECRET! }),
   async (ctx) => {
+    const payload = ctx.get("jwtPayload");
     const username = ctx.req.param("username");
 
     const user = await prisma.user.findUnique({
@@ -114,7 +115,17 @@ hono.get(
         bio: true,
         avatarId: true,
         private: true,
+        verified: true,
         spotifyId: true,
+        subscribers: {
+          select: {
+            userId: true,
+          },
+          where: {
+            userId: payload.user,
+          },
+        },
+        subscriptionSettings: true,
       },
     });
 
@@ -156,6 +167,7 @@ hono.get(
       followers,
       following,
       spotifyId: undefined,
+      subscribed: user.subscribers.length > 0,
     });
   }
 );

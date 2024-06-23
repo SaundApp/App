@@ -73,7 +73,12 @@
     "manage": "Manage accounts",
     "private": "This account is private!",
     "remove": "Logout",
-    "new": "Add account"
+    "new": "Add account",
+    "subscribe": "Subscribe",
+    "subscription": {
+      "title": "Subscribe to {{username}}",
+      "description": "Complete the subscription for €{{price}} to get the following perks:"
+    }
   },
   "messages": {
     "messages": "Messages",
