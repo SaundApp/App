@@ -264,7 +264,15 @@ hono.get("/list", jwt({ secret: process.env.JWT_SECRET! }), async (ctx) => {
     })
   );
 
-  return ctx.json(chats);
+  return ctx.json(
+    chats.sort((a, b) => {
+      if (!a.lastMessage) return 1;
+      if (!b.lastMessage) return -1;
+      return (
+        b.lastMessage.createdAt.getTime() - a.lastMessage.createdAt.getTime()
+      );
+    })
+  );
 });
 
 hono.get(
@@ -347,6 +355,30 @@ hono.delete(
     });
 
     return ctx.json(result);
+  }
+);
+
+hono.post(
+  "/:username/read",
+  jwt({ secret: process.env.JWT_SECRET! }),
+  async (ctx) => {
+    const username = ctx.req.param("username");
+    const payload = ctx.get("jwtPayload");
+
+    await prisma.message.updateMany({
+      where: {
+        sender: {
+          username,
+        },
+        receiverId: payload.user,
+        read: false,
+      },
+      data: {
+        read: true,
+      },
+    });
+
+    return ctx.json({ success: true });
   }
 );
 

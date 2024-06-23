@@ -18,7 +18,7 @@ export default function AccountNavbar({
         className={
           "w-full " +
           (active === "posts"
-            ? "border-b-2 border-b-white font-semibold"
+            ? "border-b-2 border-b-foreground font-semibold"
             : undefined)
         }
       >
@@ -29,7 +29,7 @@ export default function AccountNavbar({
         className={
           "w-full " +
           (active === "playlists"
-            ? "border-b-2 border-b-white font-semibold"
+            ? "border-b-2 border-b-foreground font-semibold"
             : undefined)
         }
       >
@@ -41,11 +41,11 @@ export default function AccountNavbar({
           className={
             "w-full " +
             (active === "listeners"
-              ? "border-b-2 border-b-white font-semibold"
+              ? "border-b-2 border-b-foreground font-semibold"
               : undefined)
           }
         >
-          {t("account.listeners")}
+          {t("account.listener")}
         </button>
       )}
     </div>

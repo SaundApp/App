@@ -144,7 +144,7 @@ export default function Post({ post }: { post: PostType }) {
               </h5>
             </Link>
             <p className="muted max-w-[14rem] text-ellipsis whitespace-nowrap overflow-hidden">
-              {t(`post.${post.type.toLowerCase()}`) +
+              {t(`index.${post.type.toLowerCase()}`) +
                 (post.type !== "SONG" ? " • " + post.name : "")}
             </p>
           </div>
@@ -239,7 +239,7 @@ export default function Post({ post }: { post: PostType }) {
         </div>
 
         <Users
-          title={t("post.likes.title")}
+          title={t("index.likes.title")}
           users={data || []}
           open={open}
           onOpenChange={setOpen}

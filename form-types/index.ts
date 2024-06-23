@@ -7,8 +7,8 @@ export const registerSchema = z
       .min(3, "min_username")
       .max(20, "max_username")
       .regex(/^[a-zA-Z0-9_]+$/, "invalid_username"),
-    name: z.string(),
-    email: z.string().email(),
+    name: z.string().min(3, "min_name"),
+    email: z.string().email("invalid_email"),
     password: z
       .string()
       .regex(
@@ -34,9 +34,13 @@ export const loginSchema = z.object({
 
 export const updateSchema = z.object({
   avatar: z.string().optional(),
-  name: z.string().optional(),
-  username: z.string().min(3, "username_length").optional(),
+  name: z.string().min(3, "min_name"),
+  username: z
+    .string()
+    .min(3, "min_username")
+    .max(20, "max_username")
+    .regex(/^[a-zA-Z0-9_]+$/, "invalid_username"),
   bio: z.string().optional(),
-  email: z.string().email("invalid_email").optional(),
+  email: z.string().email("invalid_email"),
   private: z.boolean().default(false).optional(),
 });

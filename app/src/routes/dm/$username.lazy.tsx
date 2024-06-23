@@ -7,7 +7,7 @@ import { createLazyFileRoute, Link } from "@tanstack/react-router";
 import { useEffect, useRef, useState } from "react";
 import { useAudioRecorder } from "react-audio-voice-recorder";
 import { useTranslation } from "react-i18next";
-import { FaCamera, FaChevronLeft, FaReplyAll } from "react-icons/fa";
+import { FaCamera, FaChevronLeft } from "react-icons/fa";
 import { FaXmark } from "react-icons/fa6";
 import VoiceRecorder from "../../components/dm/VoiceRecorder";
 import { useToast } from "@/components/ui/use-toast";
@@ -78,6 +78,8 @@ function Chat() {
                 top: chat.scrollHeight,
                 behavior: "smooth",
               });
+
+              axiosClient.post(`/dm/${username}/read`).catch(() => {});
             }, 100);
             break;
           case "-":
@@ -145,10 +147,10 @@ function Chat() {
           {user && <Avatar user={user} width={40} height={40} />}
 
           <div>
-            <h5 className="max-w-[14rem] text-ellipsis whitespace-nowrap overflow-hidden">
+            <h5 className="max-w-[10rem] text-left text-ellipsis whitespace-nowrap overflow-hidden">
               {user?.name}
             </h5>
-            <p className="muted max-w-[14rem] text-ellipsis whitespace-nowrap overflow-hidden">
+            <p className="muted max-w-[10rem] text-left text-ellipsis whitespace-nowrap overflow-hidden">
               @{user?.username}
             </p>
           </div>
@@ -159,7 +161,7 @@ function Chat() {
         className="flex gap-3 h-full overflow-y-auto flex-col-reverse"
         id="chat"
         style={{
-          maxHeight: !replying ? "83vh" : "78vh",
+          maxHeight: !replying ? "83vh" : "76vh",
         }}
       >
         {messages.map((message) => (
@@ -236,13 +238,10 @@ function Chat() {
                 {replying && (
                   <div className="flex justify-between">
                     <div className="flex gap-1 w-fit py-2">
-                      <div className="flex items-center gap-1">
-                        <FaReplyAll className="muted" />
-                        <span className="muted">{t("dm.message.reply")}</span>
-                      </div>
+                      <span className="muted">{t("dm.message.reply")}</span>
 
                       <span
-                        className="muted !text-primary font-semibold max-w-[3rem] text-ellipsis whitespace-nowrap overflow-hidden"
+                        className="muted !text-primary max-w-[3rem] text-ellipsis whitespace-nowrap overflow-hidden"
                         onClick={() => {
                           document
                             .querySelector(`[data-message="${replying}"]`)
@@ -264,7 +263,7 @@ function Chat() {
                 )}
 
                 <Textarea
-                  placeholder={t("messages.send")}
+                  placeholder={t("dm.placeholder")}
                   className="bg-secondary w-full h-10 items-center min-h-0 resize-none"
                   rows={1}
                   value={message}

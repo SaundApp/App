@@ -13,44 +13,43 @@ export const Route = createLazyFileRoute("/dm/")({
 
 function DmList() {
   const { t } = useTranslation();
+  const [search, setSearch] = useState("");
   const { data } = useQuery<
     { user: User; lastMessage: Message; read: boolean }[]
   >({
     queryKey: ["dm"],
     queryFn: async () => axiosClient.get("/dm/list").then((res) => res.data),
   });
-  const [search, setSearch] = useState("");
+  const { data: users } = useQuery<User[]>({
+    queryKey: ["users", search],
+    queryFn: () =>
+      axiosClient.get(`/users/search?q=${search}`).then((res) => res.data),
+  });
 
   return (
     <div className="flex flex-col gap-3">
-      <h1>{t("messages.messages")}</h1>
+      <h1>{t("dm.title")}</h1>
       <Input
-        placeholder={t("messages.search")}
+        placeholder={t("general.search")}
         className="bg-secondary"
         value={search}
         onChange={(event) => setSearch(event.target.value)}
       />
 
       <div className="flex flex-col gap-3 h-full max-h-[80vh] overflow-y-auto">
-        {data?.length === 0 && (
-          <div className="muted">{t("messages.no-messages")}</div>
+        {data?.length === 0 && users?.length === 0 && (
+          <div className="muted">{t("general.empty")}</div>
         )}
-
-        {data
-          ?.filter(
-            (chat) =>
-              chat.user.name.toLowerCase().includes(search.toLowerCase()) ||
-              chat.user.username.toLowerCase().includes(search.toLowerCase())
-          )
-          .map((chat) => (
+        {!search &&
+          data?.map((dm) => (
             <Chat
-              key={chat.user.id}
-              timestamp={chat.lastMessage.createdAt}
-              user={chat.user}
-              message={chat.lastMessage.text}
-              read={chat.read}
+              key={dm.user.id}
+              user={dm.user}
+              message={dm.lastMessage.text}
+              read={dm.read}
             />
           ))}
+        {users?.map((user) => <Chat key={user.id} user={user} read={true} />)}
       </div>
     </div>
   );

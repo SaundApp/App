@@ -1,4 +1,5 @@
 import { User } from "@/types/prisma/models";
+import { MouseEventHandler } from "react";
 
 export default function Avatar({
   user,
@@ -11,7 +12,7 @@ export default function Avatar({
   imageId?: string;
   width: number;
   height: number;
-  onClick?: () => void;
+  onClick?: MouseEventHandler<HTMLImageElement>;
 }) {
   return (
     <img

@@ -15,9 +15,9 @@ export default function Chat({
   timestamp,
 }: {
   user: User;
-  message: string;
+  message?: string;
   read: boolean;
-  timestamp: Date;
+  timestamp?: Date;
 }) {
   const { t, i18n } = useTranslation();
   const queryClient = useQueryClient();
@@ -43,7 +43,7 @@ export default function Chat({
         {
           content: (
             <div className="bg-secondary h-full w-full flex items-center justify-center">
-              {t("messages.mute")}
+              {t("dm.mute")}
             </div>
           ),
           // TODO: Implement mute functionality
@@ -52,7 +52,7 @@ export default function Chat({
         {
           content: (
             <div className="bg-destructive h-full w-full flex items-center justify-center">
-              {t("messages.delete")}
+              {t("dm.delete")}
             </div>
           ),
           onClick: () => deleteChat.mutate(),
@@ -66,17 +66,21 @@ export default function Chat({
       >
         <Avatar user={user} width={40} height={40} />
         <div>
-          <h5 className="max-w-[14rem] text-ellipsis whitespace-nowrap overflow-hidden">
+          <h5 className="max-w-[10rem] text-left text-ellipsis whitespace-nowrap overflow-hidden">
             {user.name}
           </h5>
           <div className="flex gap-1 items-center">
-            <p className="max-w-[14rem] text-ellipsis whitespace-nowrap overflow-hidden">
-              {message.startsWith(`${import.meta.env.VITE_APP_URL}/`)
-                ? t("messages.attachment")
-                : message}
-            </p>
-            <p className="muted"> • </p>
-            <p className="muted">{moment(timestamp).fromNow()}</p>
+            {(message && (
+              <>
+                <p className="max-w-[10rem] text-left text-ellipsis whitespace-nowrap overflow-hidden">
+                  {message.startsWith(`${import.meta.env.VITE_APP_URL}/`)
+                    ? t("dm.attachment")
+                    : message}
+                </p>
+                <p className="muted"> • </p>
+                <p className="muted">{moment(timestamp).fromNow()}</p>
+              </>
+            )) || <p className="muted">@{user.username}</p>}
           </div>
         </div>
         {!read && (

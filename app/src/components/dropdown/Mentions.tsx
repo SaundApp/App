@@ -51,15 +51,15 @@ export default function Mentions({
 
   return (
     <div
-      className="absolute flex flex-col gap-3 top-[5.5rem] bg-black overflow-y-auto"
+      className="absolute flex left-3 -ml-[1px] w-full flex-col gap-3 top-[5.5rem] bg-background overflow-y-auto"
       style={{
-        width: "calc(100% - 1.5rem)",
-        height: "calc(100% - 9.75rem)",
-        maxHeight: "calc(100% - 9.75rem)",
+        height: "calc(100% - 9rem)",
+        maxHeight: "calc(100% - 9rem)",
       }}
     >
       {data?.map((user) => (
         <button
+          className="flex gap-3 items-center"
           key={user.id}
           onClick={() => {
             setMessage(
@@ -68,10 +68,16 @@ export default function Mentions({
               )
             );
           }}
-          className="flex items-center gap-3 w-full text-left"
         >
           <Avatar user={user} width={40} height={40} />
-          {user.username}
+          <div className="flex flex-col">
+            <h5 className="text-left font-semibold max-w-[10rem] text-ellipsis whitespace-nowrap overflow-hidden">
+              {user.name}
+            </h5>
+            <p className="muted text-left max-w-[10rem] text-ellipsis whitespace-nowrap overflow-hidden">
+              @{user.username}
+            </p>
+          </div>
         </button>
       ))}
     </div>

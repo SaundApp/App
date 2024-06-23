@@ -45,32 +45,30 @@ export default function Comments({ post }: { post: Post }) {
         <FaComment fontSize={25} />
       </DrawerTrigger>
       <DrawerContent className="p-3 flex flex-col gap-3">
-        <h5 className="text-center">
-          {t("post.comments.title")}
-        </h5>
+        <h5 className="text-center">{t("index.comments.title")}</h5>
 
         <div className="flex flex-col gap-3 h-[33vh] max-h-[33vh] overflow-y-auto">
           {data?.length === 0 && (
-            <p className="muted">{t("post.comments.empty")}</p>
+            <p className="muted">{t("general.empty")}</p>
           )}
 
           {data?.map((comment, index) => (
-            <div key={index} className="flex gap-3 items-center">
+            <div key={index} className="flex gap-3 items-start">
               <Link to={`/account/${comment.user.username}`}>
                 <Avatar user={comment.user} width={40} height={40} />
               </Link>
 
               <div>
-                <div className="flex items-center gap-1">
+                <div className="flex items-center gap-2">
                   <Link to={`/account/${comment.user.username}`}>
-                    <h5 className="max-w-[14rem] text-ellipsis whitespace-nowrap overflow-hidden">
+                    <h5 className="max-w-[10rem] text-ellipsis whitespace-nowrap overflow-hidden">
                       {comment.user.name}
                     </h5>
                   </Link>
                   <p className="muted">{moment(comment.createdAt).fromNow()}</p>
                 </div>
 
-                <p>
+                <div>
                   {comment.text.split(" ").map((word, index) => {
                     if (word.startsWith("@")) {
                       return (
@@ -83,9 +81,13 @@ export default function Comments({ post }: { post: Post }) {
                         </Link>
                       );
                     }
-                    return <span key={index}>{word} </span>;
+                    return (
+                      <p key={index} className="max-w-72 break-all">
+                        {word}
+                      </p>
+                    );
                   })}
-                </p>
+                </div>
               </div>
             </div>
           ))}
@@ -103,10 +105,10 @@ export default function Comments({ post }: { post: Post }) {
               e.preventDefault();
               comment.mutate();
             }}
-            className="w-96"
+            className="w-[21rem]"
           >
             <Input
-              placeholder={t("post.comments.placeholder")}
+              placeholder={t("index.comments.placeholder")}
               className="bg-secondary"
               value={message}
               onChange={(event) => setMessage(event.target.value)}

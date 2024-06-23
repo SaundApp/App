@@ -6,8 +6,8 @@ export default function Posts({ posts }: { posts?: Post[] }) {
   const { t } = useTranslation();
 
   return (
-    <div className="h-full max-h-[80vh] overflow-y-auto">
-      {posts?.length === 0 && <p className="muted">{t("account.no_posts")}</p>}
+    <div className="h-full max-h-[60vh] overflow-y-auto">
+      {posts?.length === 0 && <p className="muted">{t("general.empty")}</p>}
       <div className="grid grid-cols-3 gap-3">
         {posts?.map((post) => (
           <Link key={post.id} to={post.url} target="_blank">

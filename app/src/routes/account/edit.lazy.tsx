@@ -69,7 +69,7 @@ function EditProfile() {
                 .patch("/auth/me/update", values)
                 .then(() => {
                   toast({
-                    description: t("account.edit_success"),
+                    description: t("toast.success.edit"),
                   });
 
                   queryClient.invalidateQueries({
@@ -84,12 +84,11 @@ function EditProfile() {
                 });
             },
             (values) => {
-              console.log(values);
               const error =
                 values.name || values.username || values.bio || values.email;
               toast({
                 variant: "destructive",
-                description: t("account." + error?.message || "base_error"),
+                description: t("toast.error." + error?.message || "base"),
               });
             }
           )}
@@ -116,7 +115,7 @@ function EditProfile() {
                         })
                         .then(() => {
                           toast({
-                            description: t("account.edit_image_success"),
+                            description: t("toast.success.edit_image"),
                           });
 
                           queryClient.invalidateQueries({
@@ -130,16 +129,15 @@ function EditProfile() {
                 type="file"
                 accept="image/png"
               />
-              <Avatar user={session} width={80} height={80} />
-              <button
+              <Avatar
+                user={session}
+                width={80}
+                height={80}
                 onClick={(e) => {
                   e.preventDefault();
                   input.current?.click();
                 }}
-                className="text-sm"
-              >
-                {t("account.edit_image")}
-              </button>
+              />
             </div>
 
             <div className="flex gap-3">
@@ -151,7 +149,7 @@ function EditProfile() {
                     <FormControl>
                       <Input
                         {...field}
-                        placeholder="Name"
+                        placeholder={t("input.name")}
                         className="bg-secondary"
                       />
                     </FormControl>
@@ -166,7 +164,7 @@ function EditProfile() {
                     <FormControl>
                       <Input
                         {...field}
-                        placeholder="Username"
+                        placeholder={t("input.username")}
                         className="bg-secondary"
                       />
                     </FormControl>
@@ -183,7 +181,7 @@ function EditProfile() {
                   <FormControl>
                     <Input
                       {...field}
-                      placeholder="Bio"
+                      placeholder={t("input.bio")}
                       className="bg-secondary"
                     />
                   </FormControl>
@@ -198,7 +196,7 @@ function EditProfile() {
                   <FormControl>
                     <Input
                       {...field}
-                      placeholder="Email"
+                      placeholder={t("input.email")}
                       className="bg-secondary"
                       type="email"
                     />
@@ -223,7 +221,7 @@ function EditProfile() {
                 )}
               />
 
-              <p className="text-sm">{t("account.private_account")}</p>
+              <p className="muted">{t("account.private")}</p>
             </div>
           </div>
 
@@ -232,8 +230,11 @@ function EditProfile() {
               {t("account.save")}
             </Button>
 
-            <Button asChild className="w-full bg-transparent text-primary">
-              <Link>{t("account.password_change")}</Link>
+            <Button
+              variant="link"
+              className="w-full bg-transparent text-primary"
+            >
+              {t("account.change_password")}
             </Button>
           </div>
         </form>
@@ -242,16 +243,6 @@ function EditProfile() {
       <p>{t("account.manage")}</p>
       <div className="w-full flex flex-col gap-3">
         <div className="flex gap-3">
-          <Button
-            className="w-fit"
-            onClick={() => {
-              axiosClient.post("/stripe/connect").then((res) => {
-                window.location.href = res.data.url;
-              });
-            }}
-          >
-            <FaStripeS fontSize={20} />
-          </Button>
           <Button className="w-fit" asChild>
             <Link
               to={
@@ -263,6 +254,17 @@ function EditProfile() {
             >
               <FaSpotify fontSize={20} />
             </Link>
+          </Button>
+
+          <Button
+            className="w-fit"
+            onClick={() => {
+              axiosClient.post("/stripe/connect").then((res) => {
+                window.location.href = res.data.url;
+              });
+            }}
+          >
+            <FaStripeS fontSize={20} />
           </Button>
         </div>
       </div>

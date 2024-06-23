@@ -41,9 +41,7 @@ export default function Users({
   return (
     <Drawer open={open} onOpenChange={onOpenChange}>
       <DrawerContent className="p-3 flex flex-col gap-3 no-focus">
-        <h5 className="text-center max-w-[14rem] text-ellipsis whitespace-nowrap overflow-hidden">
-          {title}
-        </h5>
+        <h5 className="text-center">{title}</h5>
 
         <Input
           placeholder={t("general.search")}
@@ -54,7 +52,7 @@ export default function Users({
 
         <div className="flex flex-col gap-3 h-[33vh] max-h-[33vh] overflow-y-auto">
           {users.length === 0 && (
-            <p className="muted">{t("post.likes.empty")}</p>
+            <p className="muted">{t("general.empty")}</p>
           )}
 
           {users
@@ -64,23 +62,25 @@ export default function Users({
                 user.username.toLowerCase().includes(search.toLowerCase())
             )
             .map((user) => (
-              <Link
-                to={`/account/${user.username}`}
+              <div
                 key={user.username}
-                className="flex justify-between"
-                onClick={() => onOpenChange(false)}
+                className="flex justify-between items-center"
               >
-                <div className="flex gap-3 items-center">
+                <Link
+                  to={`/account/${user.username}`}
+                  className="flex gap-3 items-center"
+                  onClick={() => onOpenChange(false)}
+                >
                   <Avatar user={user} width={40} height={40} />
                   <div className="flex flex-col">
-                    <h5 className="font-semibold max-w-[14rem] text-ellipsis whitespace-nowrap overflow-hidden">
+                    <h5 className="text-left max-w-[10rem] text-ellipsis whitespace-nowrap overflow-hidden">
                       {user.name}
                     </h5>
-                    <p className="muted max-w-[14rem] text-ellipsis whitespace-nowrap overflow-hidden">
+                    <p className="muted text-left max-w-[10rem] text-ellipsis whitespace-nowrap overflow-hidden">
                       @{user.username}
                     </p>
                   </div>
-                </div>
+                </Link>
 
                 {session?.username !== user.username && (
                   <Button
@@ -93,22 +93,18 @@ export default function Users({
                         follow.mutate(user.id);
                       else unfollow.mutate(user.id);
                     }}
-                    className={
-                      !session?.following.find(
-                        (u) => u.followingId === user.id
-                      )
-                        ? ""
-                        : "bg-secondary"
+                    variant={
+                      !session?.following.find((u) => u.followingId === user.id)
+                        ? "default"
+                        : "secondary"
                     }
                   >
-                    {!session?.following.find(
-                      (user) => user.followingId === user.id
-                    )
+                    {!session?.following.find((u) => u.followingId === user.id)
                       ? t("general.follow")
                       : t("general.unfollow")}
                   </Button>
                 )}
-              </Link>
+              </div>
             ))}
         </div>
       </DrawerContent>

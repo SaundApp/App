@@ -68,10 +68,10 @@ export default function Accounts() {
                 >
                   <Avatar user={user} width={40} height={40} />
                   <div className="flex flex-col">
-                    <h5 className="text-left max-w-[14rem] text-ellipsis whitespace-nowrap overflow-hidden">
+                    <h5 className="text-left max-w-[10rem] text-ellipsis whitespace-nowrap overflow-hidden">
                       {user.name}
                     </h5>
-                    <p className="text-left muted max-w-[14rem] text-ellipsis whitespace-nowrap overflow-hidden">
+                    <p className="text-left muted max-w-[10rem] text-ellipsis whitespace-nowrap overflow-hidden">
                       @{user.username}
                     </p>
                   </div>
@@ -84,7 +84,7 @@ export default function Accounts() {
             ))}
           </div>
 
-          <div className="bg-black absolute bottom-0 w-full pt-3">
+          <div className="bg-background absolute bottom-0 w-full pt-3">
             <Button
               variant="secondary"
               className="mt-auto w-full"

@@ -115,7 +115,9 @@ function Account() {
       <div className="flex justify-between items-center w-full">
         <div className="w-full">
           {session?.username === data.username && (
-            <p className="muted">{!data.private ? "Public" : "Private"}</p>
+            <p className="muted">
+              {!data.private ? t("account.public") : t("account.private")}
+            </p>
           )}
 
           {session?.username === data.username && <Accounts />}
@@ -181,9 +183,10 @@ function Account() {
           </div>
         </div>
 
-        <p className="font-semibold">{data.name}</p>
-
-        {data.bio && <p className="muted">{data.bio}</p>}
+        <div>
+          <p className="font-semibold">{data.name}</p>
+          {data.bio && <p className="muted">{data.bio}</p>}
+        </div>
       </div>
 
       {session?.username !== data.username && (

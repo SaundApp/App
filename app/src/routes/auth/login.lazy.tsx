@@ -46,9 +46,7 @@ function Login() {
     <div className="flex flex-col gap-3 justify-center m-auto w-full">
       <div>
         <h1>Login</h1>
-        <p className="muted">
-          Lorem ipsum dolor sit amet, consectetur adipiscing elit.
-        </p>
+        <p className="muted">{t("auth.login_description")}</p>
       </div>
 
       <Form {...form}>
@@ -76,7 +74,7 @@ function Login() {
                 .catch(() =>
                   toast({
                     variant: "destructive",
-                    description: t("auth.login_error"),
+                    description: t("toast.error.login"),
                   })
                 );
             },
@@ -84,7 +82,7 @@ function Login() {
               const error = values.password || values.username || values.root;
               toast({
                 variant: "destructive",
-                description: t("auth." + error?.message || "login_error"),
+                description: t("toast.error." + error?.message || "base"),
               });
             }
           )}
@@ -99,7 +97,7 @@ function Login() {
                   <Input
                     {...field}
                     className="bg-secondary"
-                    placeholder="Username"
+                    placeholder={t("input.username")}
                   />
                 </FormControl>
               </FormItem>
@@ -114,7 +112,7 @@ function Login() {
                   <Input
                     {...field}
                     className="bg-secondary"
-                    placeholder="Password"
+                    placeholder={t("input.password")}
                     type="password"
                   />
                 </FormControl>

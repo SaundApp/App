@@ -28,7 +28,7 @@ export default function Share({ postId }: { postId: string }) {
       </DrawerTrigger>
       <DrawerContent className="p-3 flex flex-col gap-3">
         <Input
-          placeholder={t("post.share.search")}
+          placeholder={t("general.search")}
           className="bg-secondary"
           value={search}
           onChange={(event) => setSearch(event.target.value)}
@@ -55,10 +55,10 @@ export default function Share({ postId }: { postId: string }) {
                   <Avatar user={user} width={40} height={40} />
 
                   <div>
-                    <h5 className="max-w-[14rem] text-ellipsis whitespace-nowrap overflow-hidden">
+                    <h5 className="max-w-[10rem] text-left text-ellipsis whitespace-nowrap overflow-hidden">
                       {user.name}
                     </h5>
-                    <p className="muted max-w-[14rem] text-ellipsis whitespace-nowrap overflow-hidden">
+                    <p className="muted max-w-[10rem] text-left text-ellipsis whitespace-nowrap overflow-hidden">
                       @{user.username}
                     </p>
                   </div>

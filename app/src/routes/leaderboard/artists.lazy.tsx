@@ -26,11 +26,9 @@ function Artists() {
 
   return (
     <div className="flex flex-col gap-3">
-      <h1>
-        {t("leaderboard.top")} {t("leaderboard.artists")}
-      </h1>
+      <h1>{t("leaderboard.title")}</h1>
 
-      {data.length < 3 && <p className="muted">{t("leaderboard.no_data")}</p>}
+      {data.length < 3 && <p className="muted">{t("general.empty")}</p>}
       {data.length >= 3 && (
         <>
           <div className="flex justify-between">

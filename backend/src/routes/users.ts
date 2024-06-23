@@ -9,11 +9,11 @@ const hono = new Hono();
 hono.get("/search", jwt({ secret: process.env.JWT_SECRET! }), async (ctx) => {
   const query = ctx.req.query("q");
   const friends = ctx.req.query("friends");
+  const payload = ctx.get("jwtPayload");
 
   if (!query) {
     if (!friends) return ctx.json([]);
 
-    const payload = ctx.get("jwtPayload");
     const results = await prisma.user.findMany({
       where: {
         OR: [
@@ -39,7 +39,6 @@ hono.get("/search", jwt({ secret: process.env.JWT_SECRET! }), async (ctx) => {
         name: true,
         avatarId: true,
       },
-
       take: 10,
     });
 
@@ -94,7 +93,7 @@ hono.get("/search", jwt({ secret: process.env.JWT_SECRET! }), async (ctx) => {
     take: 10,
   });
 
-  return ctx.json(results);
+  return ctx.json(results.filter((user) => user.id !== payload.user));
 });
 
 hono.get(

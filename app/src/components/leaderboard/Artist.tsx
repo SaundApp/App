@@ -21,11 +21,11 @@ export default function Artist({
     >
       <Avatar user={user} width={40} height={40} />
       <div>
-        <h5 className="max-w-[14rem] text-ellipsis whitespace-nowrap overflow-hidden">
+        <h5 className="max-w-[10rem] text-left text-ellipsis whitespace-nowrap overflow-hidden">
           {user.name}
         </h5>
         {description && (
-          <p className="muted max-w-[14rem] text-ellipsis whitespace-nowrap overflow-hidden">
+          <p className="muted max-w-[10rem] text-left text-ellipsis whitespace-nowrap overflow-hidden">
             {description}
           </p>
         )}

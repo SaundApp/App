@@ -33,7 +33,9 @@ export default function Song({
     <ContextMenu>
       <ContextMenuTrigger className={self ? "ml-auto" : ""} disabled={!self}>
         <div
-          className={"daisy-chat " + (self ? "daisy-chat-end" : "daisy-chat-start")}
+          className={
+            "daisy-chat " + (self ? "daisy-chat-end" : "daisy-chat-start")
+          }
           data-message={message.id}
         >
           <div
@@ -50,12 +52,15 @@ export default function Song({
             />
 
             <div className="pt-3">
-              <h5 className="max-w-[14rem] text-ellipsis whitespace-nowrap overflow-hidden">
+              <h5 className="max-w-[10rem] text-ellipsis whitespace-nowrap overflow-hidden">
                 {post.name}
               </h5>
-              <p className="text-sm max-w-[14rem] text-ellipsis whitespace-nowrap overflow-hidden">
+              <Link
+                to={`/account/${post.user.username}`}
+                className="text-sm max-w-[10rem] text-ellipsis whitespace-nowrap overflow-hidden"
+              >
                 {post.user.name}
-              </p>
+              </Link>
 
               <div className="flex gap-3 justify-end">
                 {post.url && (

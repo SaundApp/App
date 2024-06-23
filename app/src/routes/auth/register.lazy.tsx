@@ -33,9 +33,7 @@ function Register() {
     <div className="flex flex-col gap-3 justify-center m-auto">
       <div>
         <h1>{t("auth.register")}</h1>
-        <p className="muted">
-          Lorem ipsum dolor sit amet, consectetur adipiscing elit.
-        </p>
+        <p className="muted">{t("auth.register_description")}</p>
       </div>
 
       <Form {...form}>
@@ -61,21 +59,21 @@ function Register() {
                 .catch(() =>
                   toast({
                     variant: "destructive",
-                    description: t("auth.register_error"),
+                    description: t("toast.error.register"),
                   })
                 );
             },
             (values) => {
               const error =
-                values.confirmPassword ||
-                values.password ||
                 values.username ||
-                values.email ||
                 values.name ||
+                values.email ||
+                values.password ||
+                values.confirmPassword ||
                 values.root;
               toast({
                 variant: "destructive",
-                description: t("auth." + error?.message || "register_error"),
+                description: t("toast.error." + error?.message || "base"),
               });
             }
           )}
@@ -91,7 +89,7 @@ function Register() {
                     <Input
                       {...field}
                       className="bg-secondary"
-                      placeholder="Username"
+                      placeholder={t("input.username")}
                     />
                   </FormControl>
                 </FormItem>
@@ -106,7 +104,7 @@ function Register() {
                     <Input
                       {...field}
                       className="bg-secondary"
-                      placeholder="Name"
+                      placeholder={t("input.name")}
                     />
                   </FormControl>
                 </FormItem>
@@ -123,7 +121,7 @@ function Register() {
                   <Input
                     {...field}
                     className="bg-secondary"
-                    placeholder="Email"
+                    placeholder={t("input.email")}
                     type="email"
                   />
                 </FormControl>
@@ -140,7 +138,7 @@ function Register() {
                   <Input
                     {...field}
                     className="bg-secondary"
-                    placeholder="Password"
+                    placeholder={t("input.password")}
                     type="password"
                   />
                 </FormControl>
@@ -157,7 +155,7 @@ function Register() {
                   <Input
                     {...field}
                     className="bg-secondary"
-                    placeholder="Confirm Password"
+                    placeholder={t("input.password_confirm")}
                     type="password"
                   />
                 </FormControl>

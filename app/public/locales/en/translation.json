@@ -1,108 +1,94 @@
 {
   "general": {
+    "search": "Search",
     "follow": "Follow",
     "unfollow": "Unfollow",
-    "search": "Search",
-    "notifications": "Notifications",
-    "today": "Today"
+    "empty": "No data yet",
+    "or": "OR"
+  },
+  "input": {
+    "name": "Name",
+    "username": "Username",
+    "bio": "Bio",
+    "email": "Email",
+    "password": "Password",
+    "password_confirm": "Confirm password"
+  },
+  "toast": {
+    "success": {
+      "edit": "Changes have been saved successfully",
+      "cache_cleared": "Cache has been cleared successfully",
+      "edit_image": "Image has been updated successfully"
+    },
+    "error": {
+      "login": "Invalid username or password",
+      "register": "An error occurred while creating the account",
+      "match_passwords": "Passwords do not match",
+      "base": "An error occurred",
+      "min_name": "Name must be at least 3 characters",
+      "min_username": "Username must be at least 3 characters",
+      "max_username": "Username must be at most 20 characters",
+      "invalid_email": "Invalid email",
+      "invalid_password": "The password must be at least 8 characters long and contain at least one uppercase letter, one lowercase letter, one number and one special character"
+    }
   },
   "index": {
-    "popular": "Popular",
-    "new": "New"
-  },
-  "post": {
     "song": "Song",
     "album": "Album",
     "playlist": "Playlist",
-    "no-preview": "This track does not have a preview currently",
-    "actions": {
-      "title": "Actions",
-      "not_interested": "Not interested",
-      "hide": "Hide"
-    },
     "likes": {
-      "title": "Likes",
-      "empty": "No one yet"
+      "title": "Likes"
     },
     "comments": {
       "title": "Comments",
-      "empty": "No comments yet",
-      "count_one": "See {{count}} comment",
-      "count_other": "See {{count}} comments",
       "placeholder": "Write a comment..."
-    },
-    "share": {
-      "search": "Search"
     }
-  },
-  "leaderboard": {
-    "artists": "Artists",
-    "top": "Top",
-    "no_data": "No data yet"
-  },
-  "account": {
-    "follower": "Follower",
-    "following": "Following",
-    "edit_profile": "Edit Profile",
-    "edit_subscription": "Edit subscription",
-    "listeners": "Listeners",
-    "no_posts": "No posts yet",
-    "edit_image": "Click to edit",
-    "edit_image_success": "Profile image updated successfully",
-    "save": "Save",
-    "private_account": "Private",
-    "edit_success": "Profile updated successfully",
-    "username_exists": "The username is already taken",
-    "email_exists": "The email is already taken",
-    "username_length": "Username must be at least 3 characters",
-    "invalid_email": "Invalid email",
-    "base_error": "An error occurred",
-    "password_change": "Change password",
-    "settings": "Settings",
-    "theme": {
-      "light": "Light",
-      "dark": "Dark",
-      "system": "System",
-      "active": "Active theme"
-    },
-    "languages": "Change language",
-    "actions": "Actions",
-    "clear_cache": "Clear cache",
-    "link_account": "Link",
-    "unlink_account": "Unlink",
-    "manage": "Manage accounts",
-    "private": "This account is private!",
-    "remove": "Logout",
-    "new": "Add account"
-  },
-  "messages": {
-    "messages": "Messages",
-    "send": "Send a message",
-    "delete": "Delete",
-    "mute": "Mute",
-    "no-messages": "No messages yet",
-    "search": "Search",
-    "attachment": "Attachment"
   },
   "dm": {
+    "title": "Direct Messages",
+    "mute": "Mute",
+    "unmute": "Unmute",
+    "delete": "Delete",
+    "attachment": "Attachment",
+    "placeholder": "Type a message...",
     "reply": "Reply",
     "edit": "Edit",
-    "copy": "Copy",
-    "message": {
-      "reply": "Replying to:",
-      "attachment": "Attachment",
-      "attachment_error": "The file is too large. The maximum file size is 10MB"
-    }
+    "copy": "Copy"
+  },
+  "leaderboard": {
+    "title": "Top Artists"
+  },
+  "account": {
+    "private": "Private",
+    "public": "Public",
+    "follower": "Follower",
+    "following": "Following",
+    "edit_profile": "Edit profile",
+    "edit_subscription": "Edit subscription",
+    "listener": "Listener",
+    "settings": "Settings",
+    "theme": {
+      "title": "Theme",
+      "light": "Light",
+      "dark": "Dark",
+      "system": "System"
+    },
+    "language": "Language",
+    "actions": {
+      "title": "Actions",
+      "logout": "Logout",
+      "cache_cleared": "Clear cache"
+    },
+    "save": "Save",
+    "change_password": "Change password",
+    "manage": "Manage accounts",
+    "new": "Add new account"
   },
   "auth": {
     "register": "Register",
-    "forgot_password": "Forgot password?",
-    "login_error": "Invalid email or password",
-    "register_error": "The username is already taken",
-    "min_username": "Username must be at least 3 characters",
-    "max_username": "Username must be at most 20 characters",
-    "invalid_username": "Username must be alphanumeric",
-    "invalid_password": "Password must contain at least one uppercase letter, one lowercase letter, one number, and one special character",
-    "match_passwords": "The passwords did not match"
+    "login": "Login",
+    "login_description": "Welcome back! Ready to come back?",
+    "register_description": "Create an account now and start discovering new artists!",
+    "forgot_password": "Forgot password?"
   }
 }

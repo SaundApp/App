@@ -9,6 +9,7 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
+import { useToast } from "@/components/ui/use-toast";
 import { useQuery, useQueryClient } from "@tanstack/react-query";
 import { createLazyFileRoute } from "@tanstack/react-router";
 import { useTranslation } from "react-i18next";
@@ -28,6 +29,7 @@ const getFlagEmoji = (countryCode: string): string => {
 
 function EditProfile() {
   const { t, i18n } = useTranslation();
+  const { toast } = useToast();
   const session = useSession();
   const queryClient = useQueryClient();
   const { setTheme, theme } = useTheme();
@@ -50,7 +52,7 @@ function EditProfile() {
         </div>
       </div>
 
-      <p>{t("account.theme.active")}</p>
+      <p>{t("account.theme.title")}</p>
       <div className="flex justify-between items-center gap-3">
         <Button
           className={
@@ -90,14 +92,14 @@ function EditProfile() {
         </Button>
       </div>
 
-      <p>{t("account.languages")}</p>
+      <p>{t("account.language")}</p>
       <div className="flex justify-between items-center gap-3">
         <Select
           defaultValue={i18n.language}
           onValueChange={(value) => i18n.changeLanguage(value)}
         >
           <SelectTrigger className="w-full">
-            <SelectValue placeholder={t("account.languages")} />
+            <SelectValue placeholder={t("account.language")} />
           </SelectTrigger>
           <SelectContent className="z-20">
             {languages &&
@@ -114,7 +116,7 @@ function EditProfile() {
         </Select>
       </div>
 
-      <p>{t("account.actions")}</p>
+      <p>{t("account.actions.title")}</p>
 
       <div className="flex gap-3">
         <Button
@@ -131,7 +133,7 @@ function EditProfile() {
             window.location.reload();
           }}
         >
-          {t("account.remove")}
+          {t("account.actions.logout")}
         </Button>
 
         <Button
@@ -145,10 +147,14 @@ function EditProfile() {
               localStorage.setItem("tokens", JSON.stringify([token]));
             }
 
+            toast({
+              description: t("toast.success.cache_cleared"),
+            });
+
             queryClient.invalidateQueries();
           }}
         >
-          {t("account.clear_cache")}
+          {t("account.actions.cache_cleared")}
         </Button>
       </div>
     </div>

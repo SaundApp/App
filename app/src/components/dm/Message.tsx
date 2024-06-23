@@ -56,7 +56,7 @@ export default function MessageComponent({
             </div>
 
             <span
-              className="muted !text-primary font-semibold max-w-[3rem] text-ellipsis whitespace-nowrap overflow-hidden"
+              className="muted !text-primary max-w-[3rem] text-ellipsis whitespace-nowrap overflow-hidden"
               onClick={() => {
                 document
                   .querySelector(`[data-message="${reply.id}"]`)
@@ -71,12 +71,14 @@ export default function MessageComponent({
         )}
 
         <div
-          className={"daisy-chat " + (self ? "daisy-chat-end" : "daisy-chat-start")}
+          className={
+            "daisy-chat " + (self ? "daisy-chat-end" : "daisy-chat-start")
+          }
           data-message={message.id}
         >
           <div
             className={
-              "daisy-chat-bubble text-white max-w-72 break-all " +
+              "daisy-chat-bubble text-white max-w-72 break-all !p-3 " +
               (self ? "bg-primary" : "bg-secondary")
             }
           >

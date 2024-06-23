@@ -25,6 +25,7 @@ export default function Menu({
       {!song && (
         <>
           <ContextMenuItem
+            className="!rounded-2xl"
             onClick={() => {
               setEditing(message.id);
             }}
@@ -32,6 +33,7 @@ export default function Menu({
             {t("dm.edit")}
           </ContextMenuItem>
           <ContextMenuItem
+            className="!rounded-2xl"
             onClick={() => navigator.clipboard.writeText(message.text)}
           >
             {t("dm.copy")}
@@ -39,12 +41,12 @@ export default function Menu({
         </>
       )}
       <ContextMenuItem
-        className="bg-destructive"
+        className="bg-destructive !rounded-2xl"
         onClick={() => {
           websocket?.send("-" + message.id);
         }}
       >
-        Delete
+        {t("dm.delete")}
       </ContextMenuItem>
     </ContextMenuContent>
   );
