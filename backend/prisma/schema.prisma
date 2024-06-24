@@ -18,6 +18,7 @@ model User {
   private              Boolean               @default(false)
   streams              Int?
   nationality          String?
+  language             String                @default("en")
   genres               String[]
   spotifyId            String?
   stripeId             String?
@@ -51,14 +52,14 @@ type SubscriptionSettings {
 }
 
 type NotificationSettings {
-  like           NotificationMethod[] @default([])
-  comment        NotificationMethod[] @default([])
-  follow         NotificationMethod[] @default([])
-  follow_request NotificationMethod[] @default([]) @map("followRequest")
-  mention        NotificationMethod[] @default([])
-  dm             NotificationMethod[] @default([])
-  leaderboard    NotificationMethod[] @default([])
-  post           NotificationMethod[] @default([])
+  like           NotificationMethod[] @default([APP, PUSH])
+  comment        NotificationMethod[] @default([APP, PUSH])
+  follow         NotificationMethod[] @default([APP, PUSH])
+  follow_request NotificationMethod[] @default([APP, PUSH]) @map("followRequest")
+  mention        NotificationMethod[] @default([APP, PUSH])
+  dm             NotificationMethod[] @default([APP, PUSH])
+  leaderboard    NotificationMethod[] @default([APP, PUSH, EMAIL])
+  post           NotificationMethod[] @default([APP, PUSH])
   mutedChats     String[]             @default([])
 }
 

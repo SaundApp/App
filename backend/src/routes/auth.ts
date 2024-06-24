@@ -13,6 +13,7 @@ import { createAvatar } from "../lib/avatar";
 import { signToken } from "../lib/jwt";
 import prisma from "../lib/prisma";
 import { spotifyCredentials, syncUser } from "../lib/spotify";
+import { isLanguageSupported } from "../lib/translations";
 
 const hono = new Hono<{ Variables: JwtVariables }>();
 
@@ -73,7 +74,7 @@ hono.post("/register", zValidator("json", registerSchema), async (ctx) => {
       name: body.name,
       email: body.email,
       password: hashedPassword,
-      notificationSettings: {}
+      notificationSettings: {},
     },
   });
 
@@ -376,7 +377,7 @@ hono.get("/callback/spotify", async (ctx) => {
             email: me.body.email,
             name: me.body.display_name || "Unknown",
             username: me.body.id,
-            notificationSettings: {}
+            notificationSettings: {},
           },
         });
 
@@ -511,5 +512,30 @@ hono.get("/accounts", async (ctx) => {
 
   return ctx.json(users);
 });
+
+hono.patch(
+  "/me/language",
+  jwt({ secret: process.env.JWT_SECRET! }),
+  async (ctx) => {
+    const payload = ctx.get("jwtPayload");
+    const body = await ctx.req.json();
+
+    if (!body.language || !isLanguageSupported(body.language))
+      return ctx.json({ error: "Invalid language" }, 400);
+
+    await prisma.user.update({
+      where: {
+        id: payload.user,
+      },
+      data: {
+        language: body.language,
+      },
+    });
+
+    return ctx.json({
+      success: true,
+    });
+  }
+);
 
 export default hono;

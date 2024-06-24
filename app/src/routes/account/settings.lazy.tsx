@@ -60,7 +60,9 @@ function EditProfile() {
         .catch((err) => {
           if (err?.response?.data?.error?.issues[0]?.message)
             toast({
-              description: t(`toast.error.${err?.response?.data?.error?.issues[0]?.message}`),
+              description: t(
+                `toast.error.${err?.response?.data?.error?.issues[0]?.message}`
+              ),
               variant: "destructive",
             });
         }),
@@ -126,7 +128,12 @@ function EditProfile() {
       <div className="flex justify-between items-center gap-3">
         <Select
           defaultValue={i18n.language}
-          onValueChange={(value) => i18n.changeLanguage(value)}
+          onValueChange={(value) => {
+            i18n.changeLanguage(value);
+            axiosClient.patch("/auth/me/language", {
+              language: value,
+            });
+          }}
         >
           <SelectTrigger className="w-full bg-secondary">
             <SelectValue placeholder={t("account.language")} />

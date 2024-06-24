@@ -25,6 +25,7 @@ export async function sendNotification(
     select: {
       notificationToken: true,
       notificationSettings: true,
+      language: true,
     },
   });
 
@@ -32,7 +33,7 @@ export async function sendNotification(
   if (!settings?.length) return;
   if (user?.notificationSettings.mutedChats.includes(data.userId)) return;
 
-  let message = getMessage(type);
+  let message = getMessage(type, user?.language);
   for (const key in data) {
     message = message.replace(`{${key}}`, data[key]);
   }
@@ -58,7 +59,7 @@ export async function sendNotification(
 
     if (type === NotificationType.FOLLOW_REQUEST) {
       const button = {
-        text: getMessage("accept"),
+        text: getMessage("accept", user?.language),
         href: `/users/requests/accept?id=${data.requestId}&notificationId=${notification.id}`,
       };
 
