@@ -2,6 +2,8 @@ import { Hono } from "hono";
 import { jwt } from "hono/jwt";
 import prisma from "../lib/prisma";
 import type { Notification } from "@prisma/client";
+import { notificationSettingsSchema } from "form-types";
+import { zValidator } from "@hono/zod-validator";
 
 const hono = new Hono();
 
@@ -64,5 +66,26 @@ hono.get("/", jwt({ secret: process.env.JWT_SECRET! }), async (ctx) => {
 
   return ctx.json(updated);
 });
+
+hono.post(
+  "/settings",
+  jwt({
+    secret: process.env.JWT_SECRET!,
+  }),
+  zValidator("json", notificationSettingsSchema),
+  async (ctx) => {
+    const payload = ctx.get("jwtPayload");
+    const body = ctx.req.valid("json");
+
+    await prisma.user.update({
+      where: { id: payload.user },
+      data: {
+        notificationSettings: body,
+      },
+    });
+
+    return ctx.json({ success: true });
+  }
+);
 
 export default hono;

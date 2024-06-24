@@ -73,6 +73,7 @@ hono.post("/register", zValidator("json", registerSchema), async (ctx) => {
       name: body.name,
       email: body.email,
       password: hashedPassword,
+      notificationSettings: {}
     },
   });
 
@@ -375,6 +376,7 @@ hono.get("/callback/spotify", async (ctx) => {
             email: me.body.email,
             name: me.body.display_name || "Unknown",
             username: me.body.id,
+            notificationSettings: {}
           },
         });
 

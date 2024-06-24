@@ -3,6 +3,12 @@ import { useSession } from "@/components/SessionContext";
 import { useTheme } from "@/components/ThemeProvider";
 import { Button } from "@/components/ui/button";
 import {
+  DropdownMenu,
+  DropdownMenuCheckboxItem,
+  DropdownMenuContent,
+  DropdownMenuTrigger,
+} from "@/components/ui/dropdown-menu";
+import {
   Select,
   SelectContent,
   SelectItem,
@@ -10,8 +16,10 @@ import {
   SelectValue,
 } from "@/components/ui/select";
 import { useToast } from "@/components/ui/use-toast";
+import type { DropdownMenuCheckboxItemProps } from "@radix-ui/react-dropdown-menu";
 import { useQuery, useQueryClient } from "@tanstack/react-query";
 import { createLazyFileRoute } from "@tanstack/react-router";
+import { useState } from "react";
 import { useTranslation } from "react-i18next";
 import Twemoji from "react-twemoji";
 
@@ -27,12 +35,18 @@ const getFlagEmoji = (countryCode: string): string => {
   return String.fromCodePoint(...codePoints);
 };
 
+type Checked = DropdownMenuCheckboxItemProps["checked"];
+
 function EditProfile() {
   const { t, i18n } = useTranslation();
   const { toast } = useToast();
   const session = useSession();
   const queryClient = useQueryClient();
   const { setTheme, theme } = useTheme();
+  const [showStatusBar, setShowStatusBar] = useState<Checked>(true);
+  const [showActivityBar, setShowActivityBar] = useState<Checked>(false);
+  const [showPanel, setShowPanel] = useState<Checked>(false);
+
   const { data: languages } = useQuery<Record<string, string>>({
     queryKey: ["languages"],
     queryFn: async () => {
@@ -114,6 +128,94 @@ function EditProfile() {
               ))}
           </SelectContent>
         </Select>
+      </div>
+
+      <div className="flex flex-col gap-1 w-full">
+        <p>{t("account.notifications.title")}</p>
+
+        <div className="grid gap-3 grid-cols-1">
+          <DropdownMenu>
+            <DropdownMenuTrigger asChild>
+              <Button className="w-full" variant="outline">
+                Likes
+              </Button>
+            </DropdownMenuTrigger>
+            <DropdownMenuContent className="w-56">
+              <DropdownMenuCheckboxItem
+                checked={showStatusBar}
+                onCheckedChange={setShowStatusBar}
+              >
+                Push
+              </DropdownMenuCheckboxItem>
+              <DropdownMenuCheckboxItem
+                checked={showActivityBar}
+                onCheckedChange={setShowActivityBar}
+              >
+                Email
+              </DropdownMenuCheckboxItem>
+              <DropdownMenuCheckboxItem
+                checked={showPanel}
+                onCheckedChange={setShowPanel}
+              >
+                In App
+              </DropdownMenuCheckboxItem>
+            </DropdownMenuContent>
+          </DropdownMenu>
+          <DropdownMenu>
+            <DropdownMenuTrigger asChild>
+              <Button className="w-full" variant="outline">
+                Likes
+              </Button>
+            </DropdownMenuTrigger>
+            <DropdownMenuContent className="w-56">
+              <DropdownMenuCheckboxItem
+                checked={showStatusBar}
+                onCheckedChange={setShowStatusBar}
+              >
+                Push
+              </DropdownMenuCheckboxItem>
+              <DropdownMenuCheckboxItem
+                checked={showActivityBar}
+                onCheckedChange={setShowActivityBar}
+              >
+                Email
+              </DropdownMenuCheckboxItem>
+              <DropdownMenuCheckboxItem
+                checked={showPanel}
+                onCheckedChange={setShowPanel}
+              >
+                In App
+              </DropdownMenuCheckboxItem>
+            </DropdownMenuContent>
+          </DropdownMenu>
+          <DropdownMenu>
+            <DropdownMenuTrigger asChild>
+              <Button className="w-full" variant="outline">
+                Likes
+              </Button>
+            </DropdownMenuTrigger>
+            <DropdownMenuContent className="w-56">
+              <DropdownMenuCheckboxItem
+                checked={showStatusBar}
+                onCheckedChange={setShowStatusBar}
+              >
+                Push
+              </DropdownMenuCheckboxItem>
+              <DropdownMenuCheckboxItem
+                checked={showActivityBar}
+                onCheckedChange={setShowActivityBar}
+              >
+                Email
+              </DropdownMenuCheckboxItem>
+              <DropdownMenuCheckboxItem
+                checked={showPanel}
+                onCheckedChange={setShowPanel}
+              >
+                In App
+              </DropdownMenuCheckboxItem>
+            </DropdownMenuContent>
+          </DropdownMenu>
+        </div>
       </div>
 
       <p>{t("account.actions.title")}</p>

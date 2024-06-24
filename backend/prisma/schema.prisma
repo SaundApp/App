@@ -25,6 +25,7 @@ model User {
   notificationToken    String?
   verified             Boolean               @default(false)
   subscriptionSettings SubscriptionSettings?
+  notificationSettings NotificationSettings
 
   listeners  Listener[] @relation("artist")
   listenerOf Listener[] @relation("listener")
@@ -47,6 +48,17 @@ model User {
 type SubscriptionSettings {
   perks String[] @default([])
   price Float
+}
+
+type NotificationSettings {
+  like           NotificationMethod[] @default([])
+  comment        NotificationMethod[] @default([])
+  follow         NotificationMethod[] @default([])
+  follow_request NotificationMethod[] @default([]) @map("followRequest")
+  mention        NotificationMethod[] @default([])
+  dm             NotificationMethod[] @default([])
+  leaderboard    NotificationMethod[] @default([])
+  post           NotificationMethod[] @default([])
 }
 
 model Subscription {
@@ -177,6 +189,12 @@ model Notification {
 type NotificationButton {
   text String
   href String
+}
+
+enum NotificationMethod {
+  EMAIL
+  PUSH
+  APP
 }
 
 enum PostType {

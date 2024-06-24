@@ -53,3 +53,55 @@ export const updateSubscriptionSchema = z.object({
     .nonempty("empty_perks"),
   price: z.coerce.number().min(0.5, "min_price"),
 });
+
+export const NotificationMethod = z.enum(["EMAIL", "PUSH", "APP"]);
+export const notificationSettingsSchema = z.object({
+  like: z
+    .array(NotificationMethod)
+    .default([])
+    .refine((val) => val.length === 0 || val.includes("APP"), {
+      message: "app_required",
+    }),
+  comment: z
+    .array(NotificationMethod)
+    .default([])
+    .refine((val) => val.length === 0 || val.includes("APP"), {
+      message: "app_required",
+    }),
+  follow: z
+    .array(NotificationMethod)
+    .default([])
+    .refine((val) => val.length === 0 || val.includes("APP"), {
+      message: "app_required",
+    }),
+  follow_request: z
+    .array(NotificationMethod)
+    .default([])
+    .refine((val) => val.length === 0 || val.includes("APP"), {
+      message: "app_required",
+    }),
+  mention: z
+    .array(NotificationMethod)
+    .default([])
+    .refine((val) => val.length === 0 || val.includes("APP"), {
+      message: "app_required",
+    }),
+  dm: z
+    .array(NotificationMethod)
+    .default([])
+    .refine((val) => val.length === 0 || val.includes("APP"), {
+      message: "app_required",
+    }),
+  leaderboard: z
+    .array(NotificationMethod)
+    .default([])
+    .refine((val) => val.length === 0 || val.includes("APP"), {
+      message: "app_required",
+    }),
+  post: z
+    .array(NotificationMethod)
+    .default([])
+    .refine((val) => val.length === 0 || val.includes("APP"), {
+      message: "app_required",
+    }),
+});

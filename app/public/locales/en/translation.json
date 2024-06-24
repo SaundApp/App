@@ -85,6 +85,9 @@
       "logout": "Logout",
       "cache_cleared": "Clear cache"
     },
+    "notifications": {
+      "title": "Notifications"
+    },
     "save": "Save",
     "change_password": "Change password",
     "manage": "Manage accounts",

@@ -24,8 +24,12 @@ export async function sendNotification(
     },
     select: {
       notificationToken: true,
+      notificationSettings: true,
     },
   });
+
+  const settings = user?.notificationSettings[type];
+  if (!settings?.length) return;
 
   let message = getMessage(type);
   for (const key in data) {
@@ -42,32 +46,38 @@ export async function sendNotification(
     )?.id;
   }
 
-  const notification = await prisma.notification.create({
-    data: {
-      userId,
-      text: message,
-      involvedUser,
-    },
-  });
-
-  if (type === NotificationType.FOLLOW_REQUEST) {
-    const button = {
-      text: getMessage("accept"),
-      href: `/users/requests/accept?id=${data.requestId}&notificationId=${notification.id}`,
-    };
-
-    await prisma.notification.update({
-      where: { id: notification.id },
-      data: { button },
+  if (settings.includes("APP")) {
+    const notification = await prisma.notification.create({
+      data: {
+        userId,
+        text: message,
+        involvedUser,
+      },
     });
 
-    await prisma.followRequest.update({
-      where: { id: data.requestId },
-      data: { notificationId: notification.id },
-    });
+    if (type === NotificationType.FOLLOW_REQUEST) {
+      const button = {
+        text: getMessage("accept"),
+        href: `/users/requests/accept?id=${data.requestId}&notificationId=${notification.id}`,
+      };
+
+      await prisma.notification.update({
+        where: { id: notification.id },
+        data: { button },
+      });
+
+      await prisma.followRequest.update({
+        where: { id: data.requestId },
+        data: { notificationId: notification.id },
+      });
+    }
   }
 
-  if (!user?.notificationToken) return;
+  if (settings.includes("EMAIL")) {
+    // todo: send email
+  }
+
+  if (!user?.notificationToken || !settings.includes("PUSH")) return;
 
   await firebase?.messaging().send({
     token: user.notificationToken,
