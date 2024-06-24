@@ -1,0 +1,13 @@
+{
+  "notifications": {
+    "like": "{user} が {post} にいいねしました",
+    "comment": "{user} が {post} にコメントしました",
+    "follow": "{user} がフォローしました",
+    "follow_request": "{user} がフォローリクエストを送信しました",
+    "mention": "{user} が {post} であなたをメンションしました",
+    "dm": "{message}",
+    "leaderboard": "月間ランキングが更新されました！ご確認ください。",
+    "post": "{user} が {cont} 件の新しい投稿を行いました",
+    "accept": "承認する"
+  }
+}

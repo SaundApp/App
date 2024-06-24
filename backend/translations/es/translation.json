@@ -1,0 +1,13 @@
+{
+  "notifications": {
+    "like": "{user} ha dado me gusta a {post}",
+    "comment": "{user} ha comentado en {post}",
+    "follow": "{user} te ha seguido",
+    "follow_request": "{user} ha solicitado seguirte",
+    "mention": "{user} te ha mencionado en {post}",
+    "dm": "{message}",
+    "leaderboard": "¡El leaderboard mensual ha sido actualizado! Échale un vistazo.",
+    "post": "{user} acaba de publicar {cont} nuevas publicaciones",
+    "accept": "Aceptar"
+  }
+}
