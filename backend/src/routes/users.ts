@@ -560,33 +560,45 @@ hono.delete(
   }
 );
 
-hono.get("/:id/posts", async (ctx) => {
-  const id = ctx.req.param("id");
+hono.get(
+  "/:id/posts",
+  jwt({ secret: process.env.JWT_SECRET! }),
+  async (ctx) => {
+    const id = ctx.req.param("id");
 
-  const user = await prisma.user.findUnique({
-    where: {
-      id,
-    },
-    select: {
-      private: true,
-    },
-  });
+    const user = await prisma.user.findUnique({
+      where: {
+        id,
+      },
+      select: {
+        private: true,
+        followers: {
+          select: {
+            followerId: true,
+          },
+          where: {
+            followerId: ctx.get("jwtPayload").user,
+          },
+        },
+      },
+    });
 
-  if (!user || user.private) {
-    return ctx.json([]);
+    if (!user || (user.private && !user.followers.length)) {
+      return ctx.json([]);
+    }
+
+    const posts = await prisma.post.findMany({
+      where: {
+        userId: id,
+      },
+      orderBy: {
+        createdAt: "desc",
+      },
+    });
+
+    return ctx.json(posts);
   }
-
-  const posts = await prisma.post.findMany({
-    where: {
-      userId: id,
-    },
-    orderBy: {
-      createdAt: "desc",
-    },
-  });
-
-  return ctx.json(posts);
-});
+);
 
 hono.get(
   "/:id/listeners",

@@ -90,7 +90,10 @@
     "manage": "Manage accounts",
     "new": "Add new account",
     "subscribe": "Subscribe",
-    "subscription_title": "Subscription",
+    "subscription": {
+      "title": "Subscribe to {{username}}!",
+      "description": "Complete the subscription for €{{price}} to get the following perks:"
+    },
     "price": "Price",
     "add_perk": "Add perk",
     "perk": "Perk"

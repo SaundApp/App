@@ -140,12 +140,12 @@ function EditProfile() {
               />
             </div>
 
-            <div className="flex gap-3">
+            <div className="flex gap-3 w-full">
               <FormField
                 name="name"
                 control={form.control}
                 render={({ field }) => (
-                  <FormItem>
+                  <FormItem className="w-full">
                     <FormControl>
                       <Input
                         {...field}
@@ -160,12 +160,12 @@ function EditProfile() {
                 name="username"
                 control={form.control}
                 render={({ field }) => (
-                  <FormItem>
+                  <FormItem className="w-full">
                     <FormControl>
                       <Input
                         {...field}
                         placeholder={t("input.username")}
-                        className="bg-secondary"
+                        className="bg-secondary w-full"
                       />
                     </FormControl>
                   </FormItem>

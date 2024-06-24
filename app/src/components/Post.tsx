@@ -40,11 +40,7 @@ function getTrack(
   return track as SimplifiedTrack;
 }
 
-export default function Post({
-  post,
-}: {
-  post: ExtendedPost
-}) {
+export default function Post({ post }: { post: ExtendedPost }) {
   const { t, i18n } = useTranslation();
   const { toast } = useToast();
   const [saw, setSaw] = useState(false);
@@ -165,7 +161,7 @@ export default function Post({
           src={post.image}
           alt={post.name}
           draggable={false}
-          className="w-full h-[390px] object-cover rounded-2xl"
+          className="w-full h-full object-cover rounded-2xl aspect-square"
           ref={imageRef}
           crossOrigin="anonymous"
           height={390}

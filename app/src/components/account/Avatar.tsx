@@ -30,7 +30,7 @@ export default function Avatar({
         width: width,
         height: height,
       }}
-      className="rounded-full"
+      className="rounded-full aspect-square"
     />
   );
 }

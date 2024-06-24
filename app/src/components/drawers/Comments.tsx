@@ -49,9 +49,7 @@ export default function Comments({ post }: { post: Post }) {
         <h5 className="text-center">{t("index.comments.title")}</h5>
 
         <div className="flex flex-col gap-3 h-[33vh] max-h-[33vh] overflow-y-auto">
-          {data?.length === 0 && (
-            <p className="muted">{t("general.empty")}</p>
-          )}
+          {data?.length === 0 && <p className="muted">{t("general.empty")}</p>}
 
           {data?.map((comment, index) => (
             <div key={index} className="flex gap-3 items-start">
@@ -94,9 +92,12 @@ export default function Comments({ post }: { post: Post }) {
           ))}
         </div>
 
-        <div className="flex justify-between gap-3 mt-auto">
+        <div className="flex gap-3 mt-auto">
           {session && (
-            <Link to={`/account/${session?.username}`}>
+            <Link
+              to={`/account/${session?.username}`}
+              className="w-14 h-10 block"
+            >
               <Avatar user={session} width={40} height={40} />
             </Link>
           )}
@@ -106,7 +107,7 @@ export default function Comments({ post }: { post: Post }) {
               e.preventDefault();
               comment.mutate();
             }}
-            className="w-[21rem]"
+            className="w-full"
           >
             <Input
               placeholder={t("index.comments.placeholder")}

@@ -245,23 +245,25 @@ function Account() {
                 ? t("general.follow")
                 : t("general.unfollow")}
           </Button>
-          {data.subscriptionSettings && data.verified && !profileUnavailable && (
-            <Button
-              onClick={() => {
-                if (data.subscribed) {
-                  axiosClient
-                    .post("/stripe/client/dashboard")
-                    .then((res) => res.data)
-                    .then((data) => window.open(data.url, "_blank"));
-                } else setSubscribeOpen(true);
-              }}
-              className={!data.subscribed ? "w-full" : "w-full bg-secondary"}
-            >
-              {!data.subscribed
-                ? t("account.subscribe")
-                : t("account.edit_subscription")}
-            </Button>
-          )}
+          {data.subscriptionSettings &&
+            data.verified &&
+            !profileUnavailable && (
+              <Button
+                onClick={() => {
+                  if (data.subscribed) {
+                    axiosClient
+                      .post("/stripe/client/dashboard")
+                      .then((res) => res.data)
+                      .then((data) => window.open(data.url, "_blank"));
+                  } else setSubscribeOpen(true);
+                }}
+                className={!data.subscribed ? "w-full" : "w-full bg-secondary"}
+              >
+                {!data.subscribed
+                  ? t("account.subscribe")
+                  : t("account.edit_subscription")}
+              </Button>
+            )}
         </div>
       )}
 

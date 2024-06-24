@@ -1,12 +1,12 @@
 import Chat from "@/components/dm/Chat";
 import { Input } from "@/components/ui/input";
 import { axiosClient } from "@/lib/axios";
-import type { Message } from "backend";
+import type { PublicUser } from "@/types/prisma";
 import { useQuery } from "@tanstack/react-query";
 import { createLazyFileRoute } from "@tanstack/react-router";
+import type { Message, User } from "backend";
 import { useState } from "react";
 import { useTranslation } from "react-i18next";
-import type { PublicUser } from "@/types/prisma";
 
 export const Route = createLazyFileRoute("/dm/")({
   component: DmList,
