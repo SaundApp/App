@@ -140,6 +140,7 @@ hono.get(
 
           sendNotification(target!.id, NotificationType.DM, {
             user: user!.username,
+            userId: payload.user,
             message: content,
           });
 

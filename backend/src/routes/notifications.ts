@@ -77,15 +77,108 @@ hono.post(
     const payload = ctx.get("jwtPayload");
     const body = ctx.req.valid("json");
 
+    const user = await prisma.user.findUnique({
+      where: { id: payload.user },
+      select: {
+        notificationSettings: true,
+      },
+    });
+
     await prisma.user.update({
       where: { id: payload.user },
       data: {
-        notificationSettings: body,
+        notificationSettings: {
+          ...body,
+          mutedChats: user?.notificationSettings.mutedChats,
+        },
       },
     });
 
     return ctx.json({ success: true });
   }
 );
+
+hono.post(
+  "/mute/:id",
+  jwt({ secret: process.env.JWT_SECRET! }),
+  async (ctx) => {
+    const payload = ctx.get("jwtPayload");
+    const id = ctx.req.param("id");
+
+    const user = await prisma.user.findUnique({
+      where: { id: payload.user },
+      select: {
+        notificationSettings: true,
+      },
+    });
+
+    if (!user) return ctx.json({ error: "User not found" }, 404);
+
+    if (!user.notificationSettings.mutedChats.includes(id))
+      await prisma.user.update({
+        where: { id: payload.user },
+        data: {
+          notificationSettings: {
+            update: {
+              mutedChats: {
+                push: id,
+              },
+            },
+          },
+        },
+      });
+
+    return ctx.json({ success: true });
+  }
+);
+
+hono.delete(
+  "/mute/:id",
+  jwt({ secret: process.env.JWT_SECRET! }),
+  async (ctx) => {
+    const payload = ctx.get("jwtPayload");
+    const id = ctx.req.param("id");
+
+    const user = await prisma.user.findUnique({
+      where: { id: payload.user },
+      select: {
+        notificationSettings: true,
+      },
+    });
+
+    if (!user) return ctx.json({ error: "User not found" }, 404);
+
+    if (user.notificationSettings.mutedChats.includes(id))
+      await prisma.user.update({
+        where: { id: payload.user },
+        data: {
+          notificationSettings: {
+            update: {
+              mutedChats: {
+                set: user.notificationSettings.mutedChats.filter(
+                  (chat) => chat !== id
+                ),
+              },
+            },
+          },
+        },
+      });
+
+    return ctx.json({ success: true });
+  }
+);
+
+hono.get("/mute", jwt({ secret: process.env.JWT_SECRET! }), async (ctx) => {
+  const payload = ctx.get("jwtPayload");
+
+  const user = await prisma.user.findUnique({
+    where: { id: payload.user },
+    select: {
+      notificationSettings: true,
+    },
+  });
+
+  return ctx.json(user?.notificationSettings.mutedChats ?? []);
+});
 
 export default hono;

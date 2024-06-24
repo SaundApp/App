@@ -1,13 +1,15 @@
 import BackIcon from "@/components/BackIcon";
 import { useSession } from "@/components/SessionContext";
+import Avatar from "@/components/account/Avatar";
 import { Button } from "@/components/ui/button";
 import { Form, FormControl, FormField, FormItem } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
 import { useToast } from "@/components/ui/use-toast";
 import { axiosClient } from "@/lib/axios";
+import type { PublicUser } from "@/types/prisma";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { useQueryClient } from "@tanstack/react-query";
-import { createLazyFileRoute } from "@tanstack/react-router";
+import { useQuery, useQueryClient } from "@tanstack/react-query";
+import { Link, createLazyFileRoute } from "@tanstack/react-router";
 import { updateSubscriptionSchema } from "form-types";
 import { useEffect } from "react";
 import { type FieldError, useFieldArray, useForm } from "react-hook-form";
@@ -23,6 +25,15 @@ function EditSubscriptionSettings() {
   const { toast } = useToast();
   const queryClient = useQueryClient();
   const session = useSession();
+  const { data: subscribers } = useQuery<PublicUser[]>({
+    queryKey: ["subscribers"],
+    queryFn: () =>
+      session
+        ? axiosClient
+            .get(`/users/${session.id}/subscribers`)
+            .then((res) => res.data)
+        : [],
+  });
   const form = useForm<z.infer<typeof updateSubscriptionSchema>>({
     resolver: zodResolver(updateSubscriptionSchema),
     defaultValues: {
@@ -56,6 +67,31 @@ function EditSubscriptionSettings() {
         </div>
       </div>
 
+      <div className="flex flex-col gap-3">
+        <h5>{t("account.subscribers")}</h5>
+        <div className="flex gap-3">
+          {subscribers?.map((user) => (
+            <Link
+              key={user.id}
+              to={`/account/${user.username}`}
+              className="flex gap-3 items-center"
+            >
+              <Avatar user={user} width={40} height={40} />
+              <div className="flex flex-col">
+                <h5 className="text-left max-w-[10rem] text-ellipsis whitespace-nowrap overflow-hidden">
+                  {user.name}
+                </h5>
+                <p className="muted text-left max-w-[10rem] text-ellipsis whitespace-nowrap overflow-hidden">
+                  @{user.username}
+                </p>
+              </div>
+            </Link>
+          ))}
+        </div>
+      </div>
+
+      <h5>{t("account.settings")}</h5>
+
       <Form {...form}>
         <form
           onSubmit={form.handleSubmit(
@@ -85,7 +121,7 @@ function EditSubscriptionSettings() {
                 | FieldError[]
                 | undefined;
 
-              if (error && ("length" in error)) {
+              if (error && "length" in error) {
                 error = error[0];
               }
 

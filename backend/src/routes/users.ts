@@ -795,4 +795,44 @@ hono.post(
   }
 );
 
+hono.get(
+  "/:id/subscribers",
+  jwt({ secret: process.env.JWT_SECRET! }),
+  async (ctx) => {
+    const payload = ctx.get("jwtPayload");
+    const id = ctx.req.param("id");
+
+    if (payload.user !== id) {
+      return ctx.json(
+        {
+          error: "Unauthorized",
+        },
+        401
+      );
+    }
+
+    const user = await prisma.user.findUnique({
+      where: {
+        id,
+      },
+      select: {
+        subscribers: {
+          select: {
+            user: {
+              select: {
+                id: true,
+                username: true,
+                name: true,
+                avatarId: true,
+              },
+            },
+          },
+        },
+      },
+    });
+
+    return ctx.json(user?.subscribers.map((s) => s.user) || []);
+  }
+);
+
 export default hono;

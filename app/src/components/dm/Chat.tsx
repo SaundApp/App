@@ -1,5 +1,5 @@
 import { axiosClient } from "@/lib/axios";
-import { useMutation, useQueryClient } from "@tanstack/react-query";
+import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { Link } from "@tanstack/react-router";
 import moment from "moment/min/moment-with-locales";
 import { useEffect } from "react";
@@ -26,10 +26,30 @@ export default function Chat({
     moment.locale(i18n.language);
   }, [i18n.language]);
 
+  const { data: mutedChats } = useQuery<string[]>({
+    queryKey: ["mute"],
+    queryFn: () =>
+      axiosClient.get("/notifications/mute").then((res) => res.data),
+  });
+
   const deleteChat = useMutation({
     mutationFn: () => axiosClient.delete(`/dm/${user.username}`),
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ["dm"] });
+    },
+  });
+
+  const muteChat = useMutation({
+    mutationFn: () => axiosClient.post(`/notifications/mute/${user.id}`),
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ["mute"] });
+    },
+  });
+
+  const unmuteChat = useMutation({
+    mutationFn: () => axiosClient.delete(`/notifications/mute/${user.id}`),
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ["mute"] });
     },
   });
 
@@ -43,11 +63,15 @@ export default function Chat({
         {
           content: (
             <div className="bg-secondary h-full w-full flex items-center justify-center">
-              {t("dm.mute")}
+              {mutedChats?.includes(user.id)
+                ? t("dm.unmute")
+                : t("dm.mute")}
             </div>
           ),
-          // TODO: Implement mute functionality
-          onClick: () => {},
+          onClick: () => {
+            if (mutedChats?.includes(user.id)) unmuteChat.mutate();
+            else muteChat.mutate();
+          },
         },
         {
           content: (

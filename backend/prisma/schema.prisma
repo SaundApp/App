@@ -59,6 +59,7 @@ type NotificationSettings {
   dm             NotificationMethod[] @default([])
   leaderboard    NotificationMethod[] @default([])
   post           NotificationMethod[] @default([])
+  mutedChats     String[]             @default([])
 }
 
 model Subscription {
