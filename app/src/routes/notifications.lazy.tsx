@@ -25,8 +25,15 @@ function Notifications() {
     <div className="flex flex-col gap-3">
       <h1>{t("notification.title")}</h1>
 
-      <div className="flex flex-col gap-3 h-full max-h-[85vh] overflow-y-auto">
-        {data?.length === 0 && <p className="muted">{t("general.empty")}</p>}
+      <div className="flex flex-col gap-3 h-[85vh] max-h-[85vh] overflow-y-auto">
+        {data?.length === 0 && (
+          <div className="w-full h-full flex flex-col items-center justify-center">
+            <h5>{t("general.empty")}</h5>
+            <p className="muted text-center">
+              {t("general.empty_description")}
+            </p>
+          </div>
+        )}
 
         {data?.map((item) => (
           <Notification

@@ -1,0 +1,13 @@
+{
+  "notifications": {
+    "like": "{user} ने {post} पर पसंद किया",
+    "comment": "{user} ने {post} पर टिप्पणी की",
+    "follow": "{user} ने आपको फॉलो किया",
+    "follow_request": "{user} ने आपको फॉलो करने का अनुरोध किया",
+    "mention": "{user} ने {post} में आपका उल्लेख किया",
+    "dm": "{message}",
+    "leaderboard": "मासिक लीडरबोर्ड अपडेट किया गया है! इसे देखें।",
+    "post": "{user} ने अभी {cont} नए पोस्ट किए हैं",
+    "accept": "स्वीकार करें"
+  }
+}

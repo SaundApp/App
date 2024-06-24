@@ -49,7 +49,14 @@ export default function Comments({ post }: { post: Post }) {
         <h5 className="text-center">{t("index.comments.title")}</h5>
 
         <div className="flex flex-col gap-3 h-[33vh] max-h-[33vh] overflow-y-auto">
-          {data?.length === 0 && <p className="muted">{t("general.empty")}</p>}
+          {data?.length === 0 && (
+            <div className="w-full h-full flex flex-col items-center justify-center">
+              <h5>{t("general.empty")}</h5>
+              <p className="muted text-center">
+                {t("general.empty_description")}
+              </p>
+            </div>
+          )}
 
           {data?.map((comment, index) => (
             <div key={index} className="flex gap-3 items-start">

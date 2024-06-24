@@ -1,0 +1,13 @@
+{
+  "notifications": {
+    "like": "{user} 给你的帖子 {post} 点了赞",
+    "comment": "{user} 在你的帖子 {post} 发表了评论",
+    "follow": "{user} 关注了你",
+    "follow_request": "{user} 请求关注你",
+    "mention": "{user} 在帖子 {post} 中提到了你",
+    "dm": "{message}",
+    "leaderboard": "月度排行榜已更新！赶快查看。",
+    "post": "{user} 刚刚发布了 {cont} 条新帖子",
+    "accept": "接受"
+  }
+}

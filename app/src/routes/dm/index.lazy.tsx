@@ -37,10 +37,16 @@ function DmList() {
         onChange={(event) => setSearch(event.target.value)}
       />
 
-      <div className="flex flex-col gap-3 h-full max-h-[80vh] overflow-y-auto">
-        {data?.length === 0 && users?.length === 0 && (
-          <div className="muted">{t("general.empty")}</div>
+      <div className="flex flex-col gap-3 h-[80vh] max-h-[80vh] overflow-y-auto">
+        {data?.length === 0 && (
+          <div className="w-full h-full flex flex-col items-center justify-center">
+            <h5>{t("general.empty")}</h5>
+            <p className="muted text-center">
+              {t("general.empty_description")}
+            </p>
+          </div>
         )}
+
         {!search &&
           data?.map((dm) => (
             <Chat

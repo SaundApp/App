@@ -33,9 +33,9 @@ export default function Notification({
       {imageId && <Avatar imageId={imageId} width={40} height={40} />}
 
       <Link to={href} className="break-all">
-        <h5 className="!font-normal max-w-[14rem] text-left text-ellipsis whitespace-nowrap overflow-hidden">
+        <p className="max-w-[14rem] text-left text-ellipsis whitespace-nowrap overflow-hidden">
           {text}
-        </h5>
+        </p>
         <p className="muted">{moment(timestamp).fromNow()}</p>
       </Link>
 

@@ -1,0 +1,126 @@
+{
+  "general": {
+    "search": "Buscar",
+    "follow": "Seguir",
+    "unfollow": "Dejar de seguir",
+    "request_sent": "Solicitud enviada",
+    "empty": "Aún no hay datos",
+    "empty_description": "No hay nada que ver aquí por ahora...",
+    "or": "O"
+  },
+  "input": {
+    "name": "Nombre",
+    "username": "Nombre de usuario",
+    "bio": "Biografía",
+    "email": "Correo electrónico",
+    "password": "Contraseña",
+    "password_confirm": "Confirmar contraseña"
+  },
+  "toast": {
+    "success": {
+      "edit": "Los cambios se han guardado correctamente",
+      "cache_cleared": "La caché se ha limpiado correctamente",
+      "edit_image": "La imagen se ha actualizado correctamente",
+      "follow_request": "Solicitud de seguimiento enviada correctamente"
+    },
+    "error": {
+      "login": "Nombre de usuario o contraseña inválidos",
+      "register": "Ocurrió un error al crear la cuenta",
+      "match_passwords": "Las contraseñas no coinciden",
+      "base": "Ocurrió un error",
+      "min_name": "El nombre debe tener al menos 3 caracteres",
+      "min_username": "El nombre de usuario debe tener al menos 3 caracteres",
+      "max_username": "El nombre de usuario debe tener como máximo 20 caracteres",
+      "invalid_email": "Correo electrónico no válido",
+      "invalid_password": "La contraseña debe tener al menos 8 caracteres y contener al menos una letra mayúscula, una letra minúscula, un número y un carácter especial",
+      "empty_perks": "Debe agregar al menos un beneficio",
+      "min_price": "Debe agregar un precio mayor a 0.5",
+      "no_preview": "No hay vista previa disponible",
+      "app_required": "Las notificaciones en la aplicación deben estar habilitadas para activar esto"
+    }
+  },
+  "index": {
+    "song": "Canción",
+    "album": "Álbum",
+    "playlist": "Lista de reproducción",
+    "likes": {
+      "title": "Me gusta"
+    },
+    "comments": {
+      "title": "Comentarios",
+      "placeholder": "Escribe un comentario..."
+    }
+  },
+  "dm": {
+    "title": "Mensajes directos",
+    "mute": "Silenciar",
+    "unmute": "Activar sonido",
+    "delete": "Eliminar",
+    "attachment": "Adjunto",
+    "placeholder": "Escribe un mensaje...",
+    "reply": "Responder",
+    "edit": "Editar",
+    "copy": "Copiar"
+  },
+  "leaderboard": {
+    "title": "Artistas principales",
+    "streams": "reproducciones"
+  },
+  "account": {
+    "private": "Privado",
+    "private_description": "Envía una solicitud de seguimiento para ver el contenido de esta cuenta",
+    "public": "Público",
+    "follower": "Seguidor",
+    "following": "Siguiendo",
+    "edit_profile": "Editar perfil",
+    "edit_subscription": "Editar suscripción",
+    "listener": "Oyente",
+    "settings": "Configuraciones",
+    "theme": {
+      "title": "Tema",
+      "light": "Claro",
+      "dark": "Oscuro",
+      "system": "Sistema"
+    },
+    "language": "Idioma",
+    "actions": {
+      "title": "Acciones",
+      "logout": "Cerrar sesión",
+      "cache_cleared": "Limpiar caché"
+    },
+    "notifications": {
+      "title": "Notificaciones",
+      "likes": "Me gusta",
+      "comments": "Comentarios",
+      "follows": "Seguimientos",
+      "follow_requests": "Solicitudes de seguimiento",
+      "mentions": "Menciones",
+      "dms": "Mensajes directos",
+      "leaderboard": "Clasificación",
+      "new_posts": "Nueva publicación"
+    },
+    "save": "Guardar",
+    "change_password": "Cambiar contraseña",
+    "manage": "Gestionar cuentas",
+    "new": "Agregar nueva cuenta",
+    "subscribe": "Suscribirse",
+    "subscribers": "Suscriptores",
+    "subscription": {
+      "title": "¡Suscríbete a {{username}}!",
+      "description": "Completa la suscripción por €{{price}} para obtener los siguientes beneficios:"
+    },
+    "price": "Precio",
+    "add_perk": "Agregar beneficio",
+    "perk": "Beneficio"
+  },
+  "auth": {
+    "register": "Registrarse",
+    "login": "Iniciar sesión",
+    "login_description": "¡Bienvenido de nuevo! ¿Listo para regresar?",
+    "register_description": "¡Crea una cuenta ahora y empieza a descubrir nuevos artistas!",
+    "forgot_password": "¿Olvidaste tu contraseña?"
+  },
+  "notification": {
+    "title": "Notificaciones"
+  }
+}

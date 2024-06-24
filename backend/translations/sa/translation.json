@@ -1,0 +1,13 @@
+{
+  "notifications": {
+    "like": "{user} أعجب بـ {post}",
+    "comment": "{user} علق على {post}",
+    "follow": "{user} بدأ يتابعك",
+    "follow_request": "{user} طلب متابعتك",
+    "mention": "{user} ذكرك في {post}",
+    "dm": "{message}",
+    "leaderboard": "تم تحديث قائمة المتصدرين الشهرية! تحقق من ذلك.",
+    "post": "{user} قام للتو بنشر {cont} مشاركات جديدة",
+    "accept": "قبول"
+  }
+}
