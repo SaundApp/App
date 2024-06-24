@@ -86,7 +86,15 @@
       "cache_cleared": "Clear cache"
     },
     "notifications": {
-      "title": "Notifications"
+      "title": "Notifications",
+      "likes": "Likes",
+      "comments": "Comments",
+      "follows": "Follows",
+      "follow_requests": "Follow requests",
+      "mentions": "Mentions",
+      "dms": "DMs",
+      "leaderboard": "Leaderboard",
+      "new_posts": "New post"
     },
     "save": "Save",
     "change_password": "Change password",

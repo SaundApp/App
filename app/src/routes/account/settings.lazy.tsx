@@ -3,24 +3,21 @@ import { useSession } from "@/components/SessionContext";
 import { useTheme } from "@/components/ThemeProvider";
 import { Button } from "@/components/ui/button";
 import {
-  DropdownMenu,
-  DropdownMenuCheckboxItem,
-  DropdownMenuContent,
-  DropdownMenuTrigger,
-} from "@/components/ui/dropdown-menu";
-import {
   Select,
   SelectContent,
+  SelectGroup,
   SelectItem,
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
+import { ToggleGroup, ToggleGroupItem } from "@/components/ui/toggle-group";
 import { useToast } from "@/components/ui/use-toast";
-import type { DropdownMenuCheckboxItemProps } from "@radix-ui/react-dropdown-menu";
 import { useQuery, useQueryClient } from "@tanstack/react-query";
 import { createLazyFileRoute } from "@tanstack/react-router";
+import type { NotificationSettings } from "backend";
 import { useState } from "react";
 import { useTranslation } from "react-i18next";
+import { FaBell, FaEnvelope, FaMobile } from "react-icons/fa";
 import Twemoji from "react-twemoji";
 
 export const Route = createLazyFileRoute("/account/settings")({
@@ -35,17 +32,14 @@ const getFlagEmoji = (countryCode: string): string => {
   return String.fromCodePoint(...codePoints);
 };
 
-type Checked = DropdownMenuCheckboxItemProps["checked"];
-
 function EditProfile() {
   const { t, i18n } = useTranslation();
   const { toast } = useToast();
   const session = useSession();
   const queryClient = useQueryClient();
   const { setTheme, theme } = useTheme();
-  const [showStatusBar, setShowStatusBar] = useState<Checked>(true);
-  const [showActivityBar, setShowActivityBar] = useState<Checked>(false);
-  const [showPanel, setShowPanel] = useState<Checked>(false);
+  const [activeTab, setActiveTab] =
+    useState<keyof NotificationSettings>("like");
 
   const { data: languages } = useQuery<Record<string, string>>({
     queryKey: ["languages"],
@@ -70,7 +64,7 @@ function EditProfile() {
       <div className="flex justify-between items-center gap-3">
         <Button
           className={
-            "w-full " +
+            "w-full bg-secondary " +
             (theme === "system"
               ? "dark:bg-white dark:text-black bg-black text-white"
               : "")
@@ -82,7 +76,7 @@ function EditProfile() {
         </Button>
         <Button
           className={
-            "w-full " +
+            "w-full bg-secondary " +
             (theme === "dark"
               ? "dark:bg-white dark:text-black bg-black text-white"
               : "")
@@ -94,7 +88,7 @@ function EditProfile() {
         </Button>
         <Button
           className={
-            "w-full " +
+            "w-full bg-secondary " +
             (theme === "light"
               ? "dark:bg-white dark:text-black bg-black text-white"
               : "")
@@ -112,7 +106,7 @@ function EditProfile() {
           defaultValue={i18n.language}
           onValueChange={(value) => i18n.changeLanguage(value)}
         >
-          <SelectTrigger className="w-full">
+          <SelectTrigger className="w-full bg-secondary">
             <SelectValue placeholder={t("account.language")} />
           </SelectTrigger>
           <SelectContent className="z-20">
@@ -133,88 +127,71 @@ function EditProfile() {
       <div className="flex flex-col gap-1 w-full">
         <p>{t("account.notifications.title")}</p>
 
-        <div className="grid gap-3 grid-cols-1">
-          <DropdownMenu>
-            <DropdownMenuTrigger asChild>
-              <Button className="w-full" variant="outline">
-                Likes
-              </Button>
-            </DropdownMenuTrigger>
-            <DropdownMenuContent className="w-56">
-              <DropdownMenuCheckboxItem
-                checked={showStatusBar}
-                onCheckedChange={setShowStatusBar}
-              >
-                Push
-              </DropdownMenuCheckboxItem>
-              <DropdownMenuCheckboxItem
-                checked={showActivityBar}
-                onCheckedChange={setShowActivityBar}
-              >
-                Email
-              </DropdownMenuCheckboxItem>
-              <DropdownMenuCheckboxItem
-                checked={showPanel}
-                onCheckedChange={setShowPanel}
-              >
-                In App
-              </DropdownMenuCheckboxItem>
-            </DropdownMenuContent>
-          </DropdownMenu>
-          <DropdownMenu>
-            <DropdownMenuTrigger asChild>
-              <Button className="w-full" variant="outline">
-                Likes
-              </Button>
-            </DropdownMenuTrigger>
-            <DropdownMenuContent className="w-56">
-              <DropdownMenuCheckboxItem
-                checked={showStatusBar}
-                onCheckedChange={setShowStatusBar}
-              >
-                Push
-              </DropdownMenuCheckboxItem>
-              <DropdownMenuCheckboxItem
-                checked={showActivityBar}
-                onCheckedChange={setShowActivityBar}
-              >
-                Email
-              </DropdownMenuCheckboxItem>
-              <DropdownMenuCheckboxItem
-                checked={showPanel}
-                onCheckedChange={setShowPanel}
-              >
-                In App
-              </DropdownMenuCheckboxItem>
-            </DropdownMenuContent>
-          </DropdownMenu>
-          <DropdownMenu>
-            <DropdownMenuTrigger asChild>
-              <Button className="w-full" variant="outline">
-                Likes
-              </Button>
-            </DropdownMenuTrigger>
-            <DropdownMenuContent className="w-56">
-              <DropdownMenuCheckboxItem
-                checked={showStatusBar}
-                onCheckedChange={setShowStatusBar}
-              >
-                Push
-              </DropdownMenuCheckboxItem>
-              <DropdownMenuCheckboxItem
-                checked={showActivityBar}
-                onCheckedChange={setShowActivityBar}
-              >
-                Email
-              </DropdownMenuCheckboxItem>
-              <DropdownMenuCheckboxItem
-                checked={showPanel}
-                onCheckedChange={setShowPanel}
-              >
-                In App
-              </DropdownMenuCheckboxItem>
-            </DropdownMenuContent>
-          </DropdownMenu>
+        <div className="mt-3">
+          <Select defaultValue="like">
+            <SelectTrigger className="bg-secondary">
+              <SelectValue />
+            </SelectTrigger>
+            <SelectContent>
+              <SelectGroup>
+                <SelectItem value="like" className="!rounded-2xl">
+                  {t("account.notifications.likes")}
+                </SelectItem>
+                <SelectItem value="comment" className="!rounded-2xl">
+                  {t("account.notifications.comments")}
+                </SelectItem>
+                <SelectItem value="follow" className="!rounded-2xl">
+                  {t("account.notifications.follows")}
+                </SelectItem>
+                <SelectItem value="follow_request" className="!rounded-2xl">
+                  {t("account.notifications.follow_requests")}
+                </SelectItem>
+                <SelectItem value="mention" className="!rounded-2xl">
+                  {t("account.notifications.mentions")}
+                </SelectItem>
+                <SelectItem value="dm" className="!rounded-2xl">
+                  {t("account.notifications.dms")}
+                </SelectItem>
+                <SelectItem value="leaderboard" className="!rounded-2xl">
+                  {t("account.notifications.leaderboard")}
+                </SelectItem>
+                <SelectItem value="posts" className="!rounded-2xl">
+                  {t("account.notifications.new_posts")}
+                </SelectItem>
+              </SelectGroup>
+            </SelectContent>
+          </Select>
+
+          {activeTab && (
+            <div className="mt-3 flex flex-col gap-3">
+              <ToggleGroup type="multiple" className="flex justify-start">
+                <ToggleGroupItem
+                  value="push"
+                  aria-label="Push toggle"
+                  className="hover:bg-transparent hover:text-foreground flex gap-2"
+                >
+                  <FaBell className="h-4 w-4" />
+                  Push
+                </ToggleGroupItem>
+                <ToggleGroupItem
+                  value="email"
+                  aria-label="Email toggle"
+                  className="hover:bg-transparent hover:text-foreground flex gap-2"
+                >
+                  <FaEnvelope className="h-4 w-4" />
+                  Email
+                </ToggleGroupItem>
+                <ToggleGroupItem
+                  value="app"
+                  aria-label="App toggle"
+                  className="hover:bg-transparent hover:text-foreground flex gap-2"
+                >
+                  <FaMobile className="h-4 w-4" />
+                  In App
+                </ToggleGroupItem>
+              </ToggleGroup>
+            </div>
+          )}
         </div>
       </div>
 
