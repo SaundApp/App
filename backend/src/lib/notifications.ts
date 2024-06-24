@@ -30,6 +30,7 @@ export async function sendNotification(
 
   const settings = user?.notificationSettings[type];
   if (!settings?.length) return;
+  if (user?.notificationSettings.mutedChats.includes(data.userId)) return;
 
   let message = getMessage(type);
   for (const key in data) {

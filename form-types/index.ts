@@ -58,50 +58,50 @@ export const NotificationMethod = z.enum(["EMAIL", "PUSH", "APP"]);
 export const notificationSettingsSchema = z.object({
   like: z
     .array(NotificationMethod)
-    .default([])
     .refine((val) => val.length === 0 || val.includes("APP"), {
       message: "app_required",
-    }),
+    })
+    .optional(),
   comment: z
     .array(NotificationMethod)
-    .default([])
     .refine((val) => val.length === 0 || val.includes("APP"), {
       message: "app_required",
-    }),
+    })
+    .optional(),
   follow: z
     .array(NotificationMethod)
-    .default([])
     .refine((val) => val.length === 0 || val.includes("APP"), {
       message: "app_required",
-    }),
+    })
+    .optional(),
   follow_request: z
     .array(NotificationMethod)
-    .default([])
     .refine((val) => val.length === 0 || val.includes("APP"), {
       message: "app_required",
-    }),
+    })
+    .optional(),
   mention: z
     .array(NotificationMethod)
-    .default([])
     .refine((val) => val.length === 0 || val.includes("APP"), {
       message: "app_required",
-    }),
+    })
+    .optional(),
   dm: z
     .array(NotificationMethod)
-    .default([])
     .refine((val) => val.length === 0 || val.includes("APP"), {
       message: "app_required",
-    }),
+    })
+    .optional(),
   leaderboard: z
     .array(NotificationMethod)
-    .default([])
     .refine((val) => val.length === 0 || val.includes("APP"), {
       message: "app_required",
-    }),
+    })
+    .optional(),
   post: z
     .array(NotificationMethod)
-    .default([])
     .refine((val) => val.length === 0 || val.includes("APP"), {
       message: "app_required",
-    }),
+    })
+    .optional(),
 });

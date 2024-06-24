@@ -35,7 +35,8 @@
       "invalid_password": "The password must be at least 8 characters long and contain at least one uppercase letter, one lowercase letter, one number and one special character",
       "empty_perks": "You must add at least one perk",
       "min_price": "You must add a price greater than 0.5",
-      "no_preview": "No preview available"
+      "no_preview": "No preview available",
+      "app_required": "In app notifications must be enabled to activate this"
     }
   },
   "index": {
@@ -103,6 +104,7 @@
     "manage": "Manage accounts",
     "new": "Add new account",
     "subscribe": "Subscribe",
+    "subscribers": "Subscribers",
     "subscription": {
       "title": "Subscribe to {{username}}!",
       "description": "Complete the subscription for €{{price}} to get the following perks:"
