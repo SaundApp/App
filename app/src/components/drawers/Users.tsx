@@ -64,7 +64,12 @@ export default function Users({
 
         <div className="flex flex-col gap-3 h-[33vh] max-h-[33vh] overflow-y-auto">
           {users.length === 0 && (
-            <p className="muted">{t("general.empty")}</p>
+            <div className="w-full h-full flex flex-col items-center justify-center">
+              <h5>{t("general.empty")}</h5>
+              <p className="muted text-center">
+                {t("general.empty_description")}
+              </p>
+            </div>
           )}
 
           {users

@@ -5,6 +5,7 @@
     "unfollow": "Unfollow",
     "request_sent": "Request sent",
     "empty": "No data yet",
+    "empty_description": "There is nothing to see here for now...",
     "or": "OR"
   },
   "input": {
@@ -66,6 +67,7 @@
   },
   "account": {
     "private": "Private",
+    "private_description": "Send a follow request to see the content of this account",
     "public": "Public",
     "follower": "Follower",
     "following": "Following",

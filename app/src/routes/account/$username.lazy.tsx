@@ -17,7 +17,6 @@ import { createLazyFileRoute, Link } from "@tanstack/react-router";
 import type { Post, SubscriptionSettings } from "backend";
 import { useEffect, useState } from "react";
 import { useTranslation } from "react-i18next";
-import { FaLock } from "react-icons/fa";
 import { FaGear } from "react-icons/fa6";
 
 export const Route = createLazyFileRoute("/account/$username")({
@@ -295,11 +294,9 @@ function Account() {
       )}
 
       {profileUnavailable && (
-        <div className="w-full h-full flex flex-col gap-3 items-center justify-center">
-          <div className="border-2 border-[#a3a3a3]  rounded-full p-4">
-            <FaLock color="#a3a3a3" size={50} />
-          </div>
-          <p className="muted">{t("account.private")}</p>
+        <div className="w-full h-full flex flex-col items-center justify-center">
+          <h5>{t("account.private")}</h5>
+          <p className="muted">{t("account.private_description")}</p>
         </div>
       )}
 

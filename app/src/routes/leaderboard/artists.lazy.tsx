@@ -23,10 +23,16 @@ function Artists() {
   if (!data) return;
 
   return (
-    <div className="flex flex-col gap-3">
+    <div className="flex h-full flex-col gap-3">
       <h1>{t("leaderboard.title")}</h1>
 
-      {data.length < 3 && <p className="muted">{t("general.empty")}</p>}
+      {data?.length < 3 && (
+        <div className="w-full h-full flex flex-col items-center justify-center">
+          <h5>{t("general.empty")}</h5>
+          <p className="muted text-center">{t("general.empty_description")}</p>
+        </div>
+      )}
+
       {data.length >= 3 && (
         <>
           <div className="flex justify-between">
@@ -47,7 +53,7 @@ function Artists() {
             />
           </div>
 
-          <div className="flex flex-col gap-3 h-full max-h-[60vh] overflow-y-auto">
+          <div className="flex flex-col gap-3 h-full max-h-[57vh] overflow-y-auto">
             {data
               ?.slice(3)
               .map((user, i) => (
