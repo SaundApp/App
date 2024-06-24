@@ -67,7 +67,7 @@ hono.get("/", jwt({ secret: process.env.JWT_SECRET! }), async (ctx) => {
   return ctx.json(updated);
 });
 
-hono.post(
+hono.patch(
   "/settings",
   jwt({
     secret: process.env.JWT_SECRET!,
@@ -77,19 +77,15 @@ hono.post(
     const payload = ctx.get("jwtPayload");
     const body = ctx.req.valid("json");
 
-    const user = await prisma.user.findUnique({
-      where: { id: payload.user },
-      select: {
-        notificationSettings: true,
-      },
-    });
+    console.log(body)
 
     await prisma.user.update({
       where: { id: payload.user },
       data: {
         notificationSettings: {
-          ...body,
-          mutedChats: user?.notificationSettings.mutedChats,
+          update: {
+            ...body,
+          },
         },
       },
     });

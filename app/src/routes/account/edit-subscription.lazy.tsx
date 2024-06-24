@@ -1,6 +1,6 @@
 import BackIcon from "@/components/BackIcon";
 import { useSession } from "@/components/SessionContext";
-import Avatar from "@/components/account/Avatar";
+import Users from "@/components/drawers/Users";
 import { Button } from "@/components/ui/button";
 import { Form, FormControl, FormField, FormItem } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
@@ -9,10 +9,10 @@ import { axiosClient } from "@/lib/axios";
 import type { PublicUser } from "@/types/prisma";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useQuery, useQueryClient } from "@tanstack/react-query";
-import { Link, createLazyFileRoute } from "@tanstack/react-router";
+import { createLazyFileRoute } from "@tanstack/react-router";
 import { updateSubscriptionSchema } from "form-types";
-import { useEffect } from "react";
-import { type FieldError, useFieldArray, useForm } from "react-hook-form";
+import { useEffect, useState } from "react";
+import { useFieldArray, useForm, type FieldError } from "react-hook-form";
 import { useTranslation } from "react-i18next";
 import type { z } from "zod";
 
@@ -25,6 +25,7 @@ function EditSubscriptionSettings() {
   const { toast } = useToast();
   const queryClient = useQueryClient();
   const session = useSession();
+  const [subscribersOpen, setSubscribersOpen] = useState(false);
   const { data: subscribers } = useQuery<PublicUser[]>({
     queryKey: ["subscribers"],
     queryFn: () =>
@@ -63,34 +64,9 @@ function EditSubscriptionSettings() {
       <div className="p-4 flex justify-center items-center relative">
         <BackIcon />
         <div className="absolute left-0 top-4 w-full h-full text-center">
-          <h5 className="m-auto">{t("account.edit_profile")}</h5>
+          <h5 className="m-auto">{t("account.edit_subscription")}</h5>
         </div>
       </div>
-
-      <div className="flex flex-col gap-3">
-        <h5>{t("account.subscribers")}</h5>
-        <div className="flex gap-3">
-          {subscribers?.map((user) => (
-            <Link
-              key={user.id}
-              to={`/account/${user.username}`}
-              className="flex gap-3 items-center"
-            >
-              <Avatar user={user} width={40} height={40} />
-              <div className="flex flex-col">
-                <h5 className="text-left max-w-[10rem] text-ellipsis whitespace-nowrap overflow-hidden">
-                  {user.name}
-                </h5>
-                <p className="muted text-left max-w-[10rem] text-ellipsis whitespace-nowrap overflow-hidden">
-                  @{user.username}
-                </p>
-              </div>
-            </Link>
-          ))}
-        </div>
-      </div>
-
-      <h5>{t("account.settings")}</h5>
 
       <Form {...form}>
         <form
@@ -160,7 +136,7 @@ function EditSubscriptionSettings() {
             ))}
           </div>
 
-          <div className="flex mt-3 gap-3">
+          <div className="flex my-3 gap-3">
             <Button type="submit" className="w-full">
               {t("account.save")}
             </Button>
@@ -173,8 +149,23 @@ function EditSubscriptionSettings() {
               {t("account.add_perk")}
             </Button>
           </div>
+          <Button
+            className="w-full"
+            type="button"
+            onClick={() => setSubscribersOpen(true)}
+            variant="secondary"
+          >
+            {t("account.subscribers")}
+          </Button>
         </form>
       </Form>
+
+      <Users
+        open={subscribersOpen}
+        onOpenChange={setSubscribersOpen}
+        users={subscribers || []}
+        title={t("account.subscribers")}
+      />
     </div>
   );
 }

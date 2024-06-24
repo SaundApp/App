@@ -12,9 +12,10 @@ import {
 } from "@/components/ui/select";
 import { ToggleGroup, ToggleGroupItem } from "@/components/ui/toggle-group";
 import { useToast } from "@/components/ui/use-toast";
-import { useQuery, useQueryClient } from "@tanstack/react-query";
+import { axiosClient } from "@/lib/axios";
+import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { createLazyFileRoute } from "@tanstack/react-router";
-import type { NotificationSettings } from "backend";
+import type { NotificationMethod, NotificationSettings } from "backend";
 import { useState } from "react";
 import { useTranslation } from "react-i18next";
 import { FaBell, FaEnvelope, FaMobile } from "react-icons/fa";
@@ -39,13 +40,34 @@ function EditProfile() {
   const queryClient = useQueryClient();
   const { setTheme, theme } = useTheme();
   const [activeTab, setActiveTab] =
-    useState<keyof NotificationSettings>("like");
+    useState<Exclude<keyof NotificationSettings, "mutedChats">>("like");
 
   const { data: languages } = useQuery<Record<string, string>>({
     queryKey: ["languages"],
     queryFn: async () => {
       const response = await fetch(new URL("/languages.json", import.meta.url));
       return response.json();
+    },
+  });
+
+  const changeSettings = useMutation({
+    mutationKey: ["settings", "notifications", activeTab],
+    mutationFn: (values: NotificationMethod[]) =>
+      axiosClient
+        .patch("/notifications/settings", {
+          [activeTab]: values,
+        })
+        .catch((err) => {
+          if (err?.response?.data?.error?.issues[0]?.message)
+            toast({
+              description: t(`toast.error.${err?.response?.data?.error?.issues[0]?.message}`),
+              variant: "destructive",
+            });
+        }),
+    onSuccess: () => {
+      queryClient.invalidateQueries({
+        queryKey: ["me"],
+      });
     },
   });
 
@@ -128,7 +150,14 @@ function EditProfile() {
         <p>{t("account.notifications.title")}</p>
 
         <div className="mt-3">
-          <Select defaultValue="like">
+          <Select
+            value={activeTab}
+            onValueChange={(value) =>
+              setActiveTab(
+                value as Exclude<keyof NotificationSettings, "mutedChats">
+              )
+            }
+          >
             <SelectTrigger className="bg-secondary">
               <SelectValue />
             </SelectTrigger>
@@ -155,7 +184,7 @@ function EditProfile() {
                 <SelectItem value="leaderboard" className="!rounded-2xl">
                   {t("account.notifications.leaderboard")}
                 </SelectItem>
-                <SelectItem value="posts" className="!rounded-2xl">
+                <SelectItem value="post" className="!rounded-2xl">
                   {t("account.notifications.new_posts")}
                 </SelectItem>
               </SelectGroup>
@@ -164,9 +193,16 @@ function EditProfile() {
 
           {activeTab && (
             <div className="mt-3 flex flex-col gap-3">
-              <ToggleGroup type="multiple" className="flex justify-start">
+              <ToggleGroup
+                type="multiple"
+                className="flex justify-start"
+                onValueChange={(values: NotificationMethod[]) => {
+                  changeSettings.mutate(values);
+                }}
+                value={session.notificationSettings[activeTab]}
+              >
                 <ToggleGroupItem
-                  value="push"
+                  value="PUSH"
                   aria-label="Push toggle"
                   className="hover:bg-transparent hover:text-foreground flex gap-2"
                 >
@@ -174,7 +210,7 @@ function EditProfile() {
                   Push
                 </ToggleGroupItem>
                 <ToggleGroupItem
-                  value="email"
+                  value="EMAIL"
                   aria-label="Email toggle"
                   className="hover:bg-transparent hover:text-foreground flex gap-2"
                 >
@@ -182,7 +218,7 @@ function EditProfile() {
                   Email
                 </ToggleGroupItem>
                 <ToggleGroupItem
-                  value="app"
+                  value="APP"
                   aria-label="App toggle"
                   className="hover:bg-transparent hover:text-foreground flex gap-2"
                 >
