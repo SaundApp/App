@@ -104,7 +104,7 @@ export default function Post({ post }: { post: ExtendedPost }) {
           setColor("white");
         }
       });
-  }, [imageRef, post.image]);
+  }, [imageRef, post.image, song]);
   useEffect(() => {
     if (isPlaying && player.current?.paused) {
       document
@@ -130,6 +130,8 @@ export default function Post({ post }: { post: ExtendedPost }) {
       setSaw(true);
     }
   }, [inView, post.id, saw]);
+
+  if (!song) return null;
 
   return (
     <div className="flex flex-col gap-3">

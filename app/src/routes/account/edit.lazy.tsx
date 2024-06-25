@@ -261,10 +261,14 @@ function EditProfile() {
                   await axiosClient.post("/auth/sync/spotify");
                   return;
                 }
-              } catch (_) { /* empty */ }
+              } catch (_) {
+                /* empty */
+              }
 
               window.open(
-                import.meta.env.VITE_API_URL + "/auth/login/spotify",
+                import.meta.env.VITE_API_URL +
+                  "/auth/login/spotify?token=" +
+                  localStorage.getItem("token"),
                 "_blank",
               );
             }}

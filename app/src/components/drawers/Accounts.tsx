@@ -1,6 +1,6 @@
 import { Drawer, DrawerContent, DrawerTrigger } from "@/components/ui/drawer";
 import { axiosClient } from "@/lib/axios";
-import { useQuery } from "@tanstack/react-query";
+import { useQuery, useQueryClient } from "@tanstack/react-query";
 import { useTranslation } from "react-i18next";
 import { FaCheckCircle, FaChevronDown } from "react-icons/fa";
 import Avatar from "../account/Avatar";
@@ -12,6 +12,7 @@ import type { PublicUser } from "@/types/prisma";
 export default function Accounts() {
   const { t } = useTranslation();
   const session = useSession();
+  const queryClient = useQueryClient();
   const { data } = useQuery<
     (PublicUser & {
       token: string;
@@ -40,15 +41,16 @@ export default function Accounts() {
       }
 
       localStorage.setItem("tokens", JSON.stringify(tokens));
+      queryClient.invalidateQueries({
+        queryKey: ["accounts"],
+      });
     }
-  }, [data]);
+  }, [data, queryClient]);
 
   return (
     <Drawer>
       <DrawerTrigger className="flex items-center gap-1">
-        <h5 className="max-w-56 truncate">
-          {session?.username}
-        </h5>
+        <h5 className="max-w-56 truncate">{session?.username}</h5>
         <FaChevronDown fontSize={20} />
       </DrawerTrigger>
       <DrawerContent className="flex flex-col gap-3 p-3">
@@ -68,9 +70,7 @@ export default function Accounts() {
                 >
                   <Avatar user={user} width={40} height={40} />
                   <div className="flex flex-col">
-                    <h5 className="max-w-40 truncate text-left">
-                      {user.name}
-                    </h5>
+                    <h5 className="max-w-40 truncate text-left">{user.name}</h5>
                     <p className="muted max-w-40 truncate text-left">
                       @{user.username}
                     </p>
@@ -90,7 +90,7 @@ export default function Accounts() {
               className="mt-auto w-full"
               onClick={() => {
                 localStorage.removeItem("token");
-                window.location.reload();
+                window.location.href = "/auth/login";
               }}
             >
               {t("account.new")}

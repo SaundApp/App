@@ -1,3 +1,4 @@
+import BackIcon from "@/components/BackIcon";
 import Divider from "@/components/Divider";
 import { Button } from "@/components/ui/button";
 import { Form, FormControl, FormField, FormItem } from "@/components/ui/form";
@@ -44,6 +45,12 @@ function Login() {
 
   return (
     <div className="m-auto flex w-full flex-col justify-center gap-3">
+      {localStorage.getItem("tokens") && (
+        <div className="absolute left-4 top-8">
+          <BackIcon />
+        </div>
+      )}
+
       <div>
         <h1>Login</h1>
         <p className="muted">{t("auth.login_description")}</p>
