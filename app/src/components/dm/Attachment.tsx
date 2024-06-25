@@ -42,12 +42,12 @@ export default function Attachment({
         >
           <div
             className={
-              "daisy-chat-bubble text-white max-w-72 break-all !p-3 " +
+              "daisy-chat-bubble max-w-72 break-all !p-3 text-white " +
               (self ? "bg-primary" : "bg-secondary")
             }
           >
             <video
-              className="rounded-2xl max-w-64 max-h-64"
+              className="max-h-64 max-w-64 rounded-2xl"
               draggable={false}
               controls
             >
@@ -56,7 +56,7 @@ export default function Attachment({
               />
             </video>
           </div>
-          <time className="daisy-chat-footer muted">
+          <time className="muted daisy-chat-footer">
             {moment(message.createdAt).format("hh:mm")}
           </time>
         </div>
@@ -72,18 +72,18 @@ export default function Attachment({
         >
           <div
             className={
-              "daisy-chat-bubble text-white max-w-72 break-all !p-3 " +
+              "daisy-chat-bubble max-w-72 break-all !p-3 text-white " +
               (self ? "bg-primary" : "bg-secondary")
             }
           >
             <img
-              className="rounded-2xl max-w-64 max-h-64"
+              className="max-h-64 max-w-64 rounded-2xl"
               src={`${import.meta.env.VITE_API_URL}/attachments/` + postId}
               alt="Attachment"
               draggable={false}
             />
           </div>
-          <time className="daisy-chat-footer muted">
+          <time className="muted daisy-chat-footer">
             {moment(message.createdAt).format("hh:mm")}
           </time>
         </div>

@@ -24,7 +24,7 @@ export default function Mentions({
             .get<PublicUser[]>(`/users/search?q=${mention}&friends=true`)
             .then((res) => res.data)
             .then((data) =>
-              data.find((user) => user.username === mention) ? [] : data
+              data.find((user) => user.username === mention) ? [] : data,
             )
         : [],
   });
@@ -34,7 +34,7 @@ export default function Mentions({
       if (!message || !message.includes("@")) return;
 
       const match = Array.from(message.matchAll(/@(\w*)/g)).map(
-        (match) => match[1]
+        (match) => match[1],
       );
 
       if (match && match.length > 0) {
@@ -51,7 +51,7 @@ export default function Mentions({
 
   return (
     <div
-      className="absolute flex left-3 -ml-[1px] w-full flex-col gap-3 top-[5.2rem] bg-background overflow-y-auto"
+      className="absolute left-3 top-[5.2rem] -ml-px flex w-full flex-col gap-3 overflow-y-auto bg-background"
       style={{
         height: "calc(100% - 8.75rem)",
         maxHeight: "calc(100% - 8.75rem)",
@@ -59,22 +59,22 @@ export default function Mentions({
     >
       {data?.map((user) => (
         <button
-          className="flex gap-3 items-center"
+          className="flex items-center gap-3"
           key={user.id}
           onClick={() => {
             setMessage(
               message.replace(/@(\w*)/g, (match, username) =>
-                username === mention ? `@${user.username} ` : match
-              )
+                username === mention ? `@${user.username} ` : match,
+              ),
             );
           }}
         >
           <Avatar user={user} width={40} height={40} />
           <div className="flex flex-col">
-            <h5 className="text-left font-semibold max-w-[10rem] text-ellipsis whitespace-nowrap overflow-hidden">
+            <h5 className="max-w-40 truncate text-left font-semibold">
               {user.name}
             </h5>
-            <p className="muted text-left max-w-[10rem] text-ellipsis whitespace-nowrap overflow-hidden">
+            <p className="muted max-w-40 truncate text-left">
               @{user.username}
             </p>
           </div>

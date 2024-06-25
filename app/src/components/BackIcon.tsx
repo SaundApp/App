@@ -5,7 +5,7 @@ export default function BackIcon() {
   const router = useRouter();
 
   return (
-    <button className="mr-auto z-50" onClick={() => router.history.back()}>
+    <button className="z-50 mr-auto" onClick={() => router.history.back()}>
       <FaChevronLeft fontSize={25} />
     </button>
   );

@@ -18,6 +18,7 @@ import type { Post, SubscriptionSettings } from "backend";
 import { useEffect, useState } from "react";
 import { useTranslation } from "react-i18next";
 import { FaGear } from "react-icons/fa6";
+import { LucideHeartHandshake } from "lucide-react";
 
 export const Route = createLazyFileRoute("/account/$username")({
   component: Account,
@@ -42,6 +43,7 @@ function Account() {
       followers: number;
       following: number;
       subscribed: boolean;
+      subscriber: boolean;
       subscriptionSettings: SubscriptionSettings;
       verified: boolean;
       requestSent: boolean;
@@ -139,8 +141,8 @@ function Account() {
     !session?.following.find((user) => user.followingId === data.id);
 
   return (
-    <div className="flex flex-col gap-3 h-full">
-      <div className="flex justify-between items-center w-full">
+    <div className="flex h-full flex-col gap-3">
+      <div className="flex w-full items-center justify-between">
         <div className="w-full">
           {session?.username === data.username && (
             <p className="muted">
@@ -151,12 +153,10 @@ function Account() {
           {session?.username === data.username && <Accounts />}
 
           {session?.username !== data.username && (
-            <div className="p-3 flex justify-center items-center relative w-full">
+            <div className="relative flex w-full items-center justify-center p-3">
               <BackIcon />
-              <div className="absolute left-0 top-3 w-full h-full text-center">
-                <h5 className="m-auto max-w-[14rem] text-ellipsis whitespace-nowrap overflow-hidden">
-                  {data.username}
-                </h5>
+              <div className="absolute left-0 top-3 size-full text-center">
+                <h5 className="m-auto max-w-56 truncate">{data.username}</h5>
               </div>
             </div>
           )}
@@ -212,7 +212,9 @@ function Account() {
         </div>
 
         <div>
-          <p className="font-semibold">{data.name}</p>
+          <p className="flex items-center gap-2 font-semibold">
+            {data.name} {data.subscriber && <LucideHeartHandshake />}
+          </p>
           {data.bio && <p className="muted">{data.bio}</p>}
         </div>
       </div>
@@ -232,7 +234,7 @@ function Account() {
               data.requestSent
                 ? "w-full bg-secondary"
                 : !session?.following.find(
-                      (user) => user.followingId === data.id
+                      (user) => user.followingId === data.id,
                     )
                   ? "w-full"
                   : "w-full bg-secondary"
@@ -294,7 +296,7 @@ function Account() {
       )}
 
       {profileUnavailable && (
-        <div className="w-full h-full flex flex-col items-center justify-center">
+        <div className="flex size-full flex-col items-center justify-center">
           <h5>{t("account.private")}</h5>
           <p className="muted">{t("account.private_description")}</p>
         </div>

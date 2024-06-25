@@ -30,7 +30,7 @@ function Register() {
   });
 
   return (
-    <div className="flex flex-col gap-3 justify-center m-auto">
+    <div className="m-auto flex flex-col justify-center gap-3">
       <div>
         <h1>{t("auth.register")}</h1>
         <p className="muted">{t("auth.register_description")}</p>
@@ -45,7 +45,7 @@ function Register() {
                 .then((res) => {
                   if (res.data && res.data.token) {
                     const tokens = JSON.parse(
-                      localStorage.getItem("tokens") || "[]"
+                      localStorage.getItem("tokens") || "[]",
                     );
 
                     tokens.push(res.data.token);
@@ -60,7 +60,7 @@ function Register() {
                   toast({
                     variant: "destructive",
                     description: t("toast.error.register"),
-                  })
+                  }),
                 );
             },
             (values) => {
@@ -75,7 +75,7 @@ function Register() {
                 variant: "destructive",
                 description: t("toast.error." + error?.message || "base"),
               });
-            }
+            },
           )}
           className="flex flex-col gap-3"
         >

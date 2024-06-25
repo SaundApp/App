@@ -45,12 +45,12 @@ export default function Comments({ post }: { post: Post }) {
       <DrawerTrigger className="text-left">
         <FaComment fontSize={25} />
       </DrawerTrigger>
-      <DrawerContent className="p-3 flex flex-col gap-3">
+      <DrawerContent className="flex flex-col gap-3 p-3">
         <h5 className="text-center">{t("index.comments.title")}</h5>
 
-        <div className="flex flex-col gap-3 h-[33vh] max-h-[33vh] overflow-y-auto">
+        <div className="flex h-[33vh] max-h-[33vh] flex-col gap-3 overflow-y-auto">
           {data?.length === 0 && (
-            <div className="w-full h-full flex flex-col items-center justify-center">
+            <div className="flex size-full flex-col items-center justify-center">
               <h5>{t("general.empty")}</h5>
               <p className="muted text-center">
                 {t("general.empty_description")}
@@ -59,7 +59,7 @@ export default function Comments({ post }: { post: Post }) {
           )}
 
           {data?.map((comment, index) => (
-            <div key={index} className="flex gap-3 items-start">
+            <div key={index} className="flex items-start gap-3">
               <Link to={`/account/${comment.user.username}`}>
                 <Avatar user={comment.user} width={40} height={40} />
               </Link>
@@ -67,7 +67,7 @@ export default function Comments({ post }: { post: Post }) {
               <div>
                 <div className="flex items-center gap-2">
                   <Link to={`/account/${comment.user.username}`}>
-                    <h5 className="max-w-[10rem] text-ellipsis whitespace-nowrap overflow-hidden">
+                    <h5 className="max-w-40 truncate">
                       {comment.user.name}
                     </h5>
                   </Link>
@@ -99,11 +99,11 @@ export default function Comments({ post }: { post: Post }) {
           ))}
         </div>
 
-        <div className="flex gap-3 mt-auto">
+        <div className="mt-auto flex gap-3">
           {session && (
             <Link
               to={`/account/${session?.username}`}
-              className="w-14 h-10 block"
+              className="block h-10 w-14"
             >
               <Avatar user={session} width={40} height={40} />
             </Link>

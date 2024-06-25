@@ -1,3 +1,4 @@
+import type { recorderControls } from "node_modules/react-audio-voice-recorder/dist/hooks/useAudioRecorder";
 import { axiosClient } from "@/lib/axios";
 import { AudioRecorder } from "react-audio-voice-recorder";
 import { useTranslation } from "react-i18next";
@@ -7,7 +8,7 @@ export default function VoiceRecorder({
   controls,
   websocket,
 }: {
-  controls: any;
+  controls: recorderControls;
   websocket: WebSocket | null;
 }) {
   const { t } = useTranslation();
@@ -20,7 +21,7 @@ export default function VoiceRecorder({
     try {
       const { data } = await axiosClient.post("/attachments/upload", formData);
       websocket?.send(
-        "+" + `${import.meta.env.VITE_APP_URL}/?attachment=${data.id}`
+        "+" + `${import.meta.env.VITE_APP_URL}/?attachment=${data.id}`,
       );
     } catch (_) {
       toast({

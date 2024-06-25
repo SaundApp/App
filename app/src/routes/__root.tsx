@@ -28,6 +28,7 @@ function App() {
         : null,
   });
   const [session, setSession] = useState<MeUser | null>(null);
+  const token = localStorage.getItem("token");
 
   useEffect(() => {
     if (data) {
@@ -51,7 +52,7 @@ function App() {
   }, [data]);
 
   useEffect(() => {
-    if (localStorage.getItem("token")) {
+    if (token) {
       queryClient.invalidateQueries({ queryKey: ["me"] });
     } else if (
       router.location.pathname !== "/auth/login" &&
@@ -59,13 +60,13 @@ function App() {
     ) {
       location.href = "/auth/login";
     }
-  }, [localStorage.getItem("token"), router.location.pathname, queryClient]);
+  }, [token, router.location.pathname, queryClient]);
 
   return (
     <ThemeProvider defaultTheme="system" storageKey="vite-ui-theme">
       <SessionContext.Provider value={session}>
         <main
-          className={`bg-background text-foreground font-geist py-6 px-3 min-h-screen h-screen flex flex-col`}
+          className={`flex h-screen min-h-screen flex-col bg-background px-3 py-6 font-geist text-foreground`}
         >
           <Outlet />
           {router.location.pathname.match(/^(?!(\/dm\/\w+|\/auth)).*/g) && (

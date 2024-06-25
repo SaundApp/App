@@ -52,7 +52,7 @@ export default function Users({
 
   return (
     <Drawer open={open} onOpenChange={onOpenChange}>
-      <DrawerContent className="p-3 flex flex-col gap-3 no-focus">
+      <DrawerContent className="no-focus flex flex-col gap-3 p-3">
         <h5 className="text-center">{title}</h5>
 
         <Input
@@ -62,9 +62,9 @@ export default function Users({
           onChange={(event) => setSearch(event.target.value)}
         />
 
-        <div className="flex flex-col gap-3 h-[33vh] max-h-[33vh] overflow-y-auto">
+        <div className="flex h-[33vh] max-h-[33vh] flex-col gap-3 overflow-y-auto">
           {users.length === 0 && (
-            <div className="w-full h-full flex flex-col items-center justify-center">
+            <div className="flex size-full flex-col items-center justify-center">
               <h5>{t("general.empty")}</h5>
               <p className="muted text-center">
                 {t("general.empty_description")}
@@ -76,24 +76,24 @@ export default function Users({
             .filter(
               (user) =>
                 user.name.toLowerCase().includes(search.toLowerCase()) ||
-                user.username.toLowerCase().includes(search.toLowerCase())
+                user.username.toLowerCase().includes(search.toLowerCase()),
             )
             .map((user) => (
               <div
                 key={user.username}
-                className="flex justify-between items-center"
+                className="flex items-center justify-between"
               >
                 <Link
                   to={`/account/${user.username}`}
-                  className="flex gap-3 items-center"
+                  className="flex items-center gap-3"
                   onClick={() => onOpenChange(false)}
                 >
                   <Avatar user={user} width={40} height={40} />
                   <div className="flex flex-col">
-                    <h5 className="text-left max-w-[10rem] text-ellipsis whitespace-nowrap overflow-hidden">
+                    <h5 className="max-w-40 truncate text-left">
                       {user.name}
                     </h5>
-                    <p className="muted text-left max-w-[10rem] text-ellipsis whitespace-nowrap overflow-hidden">
+                    <p className="muted max-w-40 truncate text-left">
                       @{user.username}
                     </p>
                   </div>
@@ -104,7 +104,7 @@ export default function Users({
                     onClick={() => {
                       if (
                         !session?.following.find(
-                          (u) => u.followingId === user.id
+                          (u) => u.followingId === user.id,
                         )
                       )
                         follow.mutate(user.id);

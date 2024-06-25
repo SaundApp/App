@@ -41,7 +41,7 @@ export default function Menu({
         </>
       )}
       <ContextMenuItem
-        className="bg-destructive !rounded-2xl"
+        className="!rounded-2xl bg-destructive"
         onClick={() => {
           websocket?.send("-" + message.id);
         }}

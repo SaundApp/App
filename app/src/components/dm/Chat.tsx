@@ -62,10 +62,8 @@ export default function Chat({
       actionButtons={[
         {
           content: (
-            <div className="bg-secondary h-full w-full flex items-center justify-center">
-              {mutedChats?.includes(user.id)
-                ? t("dm.unmute")
-                : t("dm.mute")}
+            <div className="flex size-full items-center justify-center bg-secondary">
+              {mutedChats?.includes(user.id) ? t("dm.unmute") : t("dm.mute")}
             </div>
           ),
           onClick: () => {
@@ -75,7 +73,7 @@ export default function Chat({
         },
         {
           content: (
-            <div className="bg-destructive h-full w-full flex items-center justify-center">
+            <div className="flex size-full items-center justify-center bg-destructive">
               {t("dm.delete")}
             </div>
           ),
@@ -86,17 +84,17 @@ export default function Chat({
     >
       <Link
         to={`/dm/${user.username}`}
-        className="flex flex-row gap-3 w-full items-center"
+        className="flex w-full flex-row items-center gap-3"
       >
         <Avatar user={user} width={40} height={40} />
         <div>
-          <h5 className="max-w-[10rem] text-left text-ellipsis whitespace-nowrap overflow-hidden">
+          <h5 className="max-w-40 truncate text-left">
             {user.name}
           </h5>
-          <div className="flex gap-1 items-center">
+          <div className="flex items-center gap-1">
             {(message && (
               <>
-                <p className="max-w-[10rem] text-left text-ellipsis whitespace-nowrap overflow-hidden">
+                <p className="max-w-40 truncate text-left">
                   {message.startsWith(`${import.meta.env.VITE_APP_URL}/`)
                     ? t("dm.attachment")
                     : message}
@@ -105,14 +103,14 @@ export default function Chat({
                 <p className="muted">{moment(timestamp).fromNow()}</p>
               </>
             )) || (
-              <p className="muted max-w-[10rem] text-left text-ellipsis whitespace-nowrap overflow-hidden">
+              <p className="muted max-w-40 truncate text-left">
                 @{user.username}
               </p>
             )}
           </div>
         </div>
         {!read && (
-          <span className="block w-2 h-2 rounded-full bg-primary ml-auto"></span>
+          <span className="ml-auto block size-2 rounded-full bg-primary"></span>
         )}
       </Link>
     </SwipeToRevealActions>

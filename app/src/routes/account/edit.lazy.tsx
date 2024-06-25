@@ -54,9 +54,9 @@ function EditProfile() {
 
   return (
     <div className="flex flex-col gap-3">
-      <div className="p-4 flex justify-center items-center relative">
+      <div className="relative flex items-center justify-center p-4">
         <BackIcon />
-        <div className="absolute left-0 top-4 w-full h-full text-center">
+        <div className="absolute left-0 top-4 size-full text-center">
           <h5 className="m-auto">{t("account.edit_profile")}</h5>
         </div>
       </div>
@@ -90,11 +90,11 @@ function EditProfile() {
                 variant: "destructive",
                 description: t("toast.error." + error?.message || "base"),
               });
-            }
+            },
           )}
         >
           <div className="flex flex-col gap-3">
-            <div className="w-full flex flex-col gap-3 items-center">
+            <div className="flex w-full flex-col items-center gap-3">
               <input
                 name="avatar"
                 onChange={(e) => {
@@ -140,7 +140,7 @@ function EditProfile() {
               />
             </div>
 
-            <div className="flex gap-3 w-full">
+            <div className="flex w-full gap-3">
               <FormField
                 name="name"
                 control={form.control}
@@ -165,7 +165,7 @@ function EditProfile() {
                       <Input
                         {...field}
                         placeholder={t("input.username")}
-                        className="bg-secondary w-full"
+                        className="w-full bg-secondary"
                       />
                     </FormControl>
                   </FormItem>
@@ -225,7 +225,7 @@ function EditProfile() {
             </div>
           </div>
 
-          <div className="flex mt-3 gap-3">
+          <div className="mt-3 flex gap-3">
             <Button type="submit" className="w-full">
               {t("account.save")}
             </Button>
@@ -241,7 +241,7 @@ function EditProfile() {
       </Form>
 
       <p>{t("account.manage")}</p>
-      <div className="w-full flex flex-col gap-3">
+      <div className="flex w-full flex-col gap-3">
         <div className="flex gap-3">
           <Button
             className="w-fit"
@@ -261,11 +261,11 @@ function EditProfile() {
                   await axiosClient.post("/auth/sync/spotify");
                   return;
                 }
-              } catch (_) {}
+              } catch (_) { /* empty */ }
 
               window.open(
                 import.meta.env.VITE_API_URL + "/auth/login/spotify",
-                "_blank"
+                "_blank",
               );
             }}
           >

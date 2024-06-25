@@ -31,7 +31,7 @@ import Users from "./drawers/Users";
 import { useToast } from "./ui/use-toast";
 
 function getTrack(
-  track: SimplifiedTrack | PlaylistedTrack<TrackItem> | undefined
+  track: SimplifiedTrack | PlaylistedTrack<TrackItem> | undefined,
 ) {
   if (!track) return null;
   if ("track" in track && !(track.track instanceof Boolean))
@@ -54,6 +54,40 @@ export default function Post({ post }: { post: ExtendedPost }) {
   const queryClient = useQueryClient();
   const session = useSession();
   const { ref, inView } = useInView();
+
+  const { data } = useQuery<User[]>({
+    queryKey: ["posts", post.id, "likes"],
+    queryFn: () =>
+      axiosClient.get(`/posts/${post.id}/likes`).then((res) => res.data),
+  });
+  const { data: song } = useQuery<Album | Playlist>({
+    queryKey: ["songs", post.id],
+    queryFn: () =>
+      axiosClient
+        .get(
+          `/songs/${post.url.split("/")[4]}?type=${post.type === "PLAYLIST" ? "playlist" : "album"}`,
+        )
+        .then((res) => res.data)
+        .then((data) => {
+          if (post.type !== "PLAYLIST") return data;
+
+          return {
+            ...data,
+            tracks: {
+              items: data.tracks.items.filter(
+                (track: { track: { preview_url: string } }) =>
+                  track.track.preview_url,
+              ),
+            },
+          };
+        }),
+  });
+  const like = useMutation({
+    mutationFn: () => axiosClient.post(`/posts/${post.id}/like`),
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ["posts", post.id, "likes"] });
+    },
+  });
 
   useEffect(() => {
     moment.locale(i18n.language);
@@ -89,50 +123,17 @@ export default function Post({ post }: { post: ExtendedPost }) {
     } else {
       player.current?.pause();
     }
-  }, [isPlaying]);
+  }, [currentTrack, isPlaying, song?.tracks.items, t, toast]);
   useEffect(() => {
     if (inView && !saw) {
       axiosClient.post("/posts/" + post.id + "/see");
       setSaw(true);
     }
-  }, [inView, saw]);
-
-  const { data } = useQuery<User[]>({
-    queryKey: ["posts", post.id, "likes"],
-    queryFn: () =>
-      axiosClient.get(`/posts/${post.id}/likes`).then((res) => res.data),
-  });
-  const { data: song } = useQuery<Album | Playlist>({
-    queryKey: ["songs", post.id],
-    queryFn: () =>
-      axiosClient
-        .get(
-          `/songs/${post.url.split("/")[4]}?type=${post.type === "PLAYLIST" ? "playlist" : "album"}`
-        )
-        .then((res) => res.data)
-        .then((data) => {
-          if (post.type !== "PLAYLIST") return data;
-
-          return {
-            ...data,
-            tracks: {
-              items: data.tracks.items.filter(
-                (track: any) => track.track.preview_url
-              ),
-            },
-          };
-        }),
-  });
-  const like = useMutation({
-    mutationFn: () => axiosClient.post(`/posts/${post.id}/like`),
-    onSuccess: () => {
-      queryClient.invalidateQueries({ queryKey: ["posts", post.id, "likes"] });
-    },
-  });
+  }, [inView, post.id, saw]);
 
   return (
     <div className="flex flex-col gap-3">
-      <div className="flex justify-between items-center">
+      <div className="flex items-center justify-between">
         <div className="flex items-center gap-3">
           <Link to={`/account/${post.user.username}`}>
             <Avatar user={post.user} width={40} height={40} />
@@ -140,11 +141,9 @@ export default function Post({ post }: { post: ExtendedPost }) {
 
           <div>
             <Link to={`/account/${post.user.username}`}>
-              <h5 className="max-w-[10rem] text-left text-ellipsis whitespace-nowrap overflow-hidden">
-                {post.user.name}
-              </h5>
+              <h5 className="max-w-40 truncate text-left">{post.user.name}</h5>
             </Link>
-            <p className="muted max-w-[10rem] text-left text-ellipsis whitespace-nowrap overflow-hidden">
+            <p className="muted max-w-40 truncate text-left">
               {t(`index.${post.type.toLowerCase()}`) +
                 (post.type !== "SONG" ? " • " + post.name : "")}
             </p>
@@ -156,19 +155,19 @@ export default function Post({ post }: { post: ExtendedPost }) {
         </Link>
       </div>
 
-      <div className="flex flex-col gap-3 relative">
+      <div className="relative flex flex-col gap-3">
         <img
           src={post.image}
           alt={post.name}
           draggable={false}
-          className="w-full h-full object-cover rounded-2xl aspect-square"
+          className="aspect-square size-full rounded-2xl object-cover"
           ref={imageRef}
           crossOrigin="anonymous"
           height={390}
           width={390}
         />
 
-        <div className="w-full h-1/2 flex flex-col justify-between absolute p-3 top-1/2">
+        <div className="absolute top-1/2 flex h-1/2 w-full flex-col justify-between p-3">
           {post.type !== "SONG" && (
             <div className="flex justify-between" style={{ color }}>
               <button
@@ -198,7 +197,7 @@ export default function Post({ post }: { post: ExtendedPost }) {
 
           <div
             className={
-              "flex justify-between items-center " +
+              "flex items-center justify-between " +
               (post.type === "SONG" ? "mt-auto" : "")
             }
           >
@@ -216,7 +215,7 @@ export default function Post({ post }: { post: ExtendedPost }) {
 
             <div
               ref={ref}
-              className="w-fit py-3 px-6 rounded-3xl flex items-center gap-3"
+              className="flex w-fit items-center gap-3 rounded-3xl px-6 py-3"
               style={{
                 backgroundColor: color,
                 color: color === "black" ? "white" : "black",
@@ -234,7 +233,7 @@ export default function Post({ post }: { post: ExtendedPost }) {
                   <FaCirclePause fontSize={25} />
                 )}
               </button>
-              <h5 className="max-w-[5rem] text-ellipsis whitespace-nowrap overflow-hidden z-10">
+              <h5 className="z-10 max-w-20 truncate">
                 {getTrack(song?.tracks.items[currentTrack])?.name || "..."}
               </h5>
             </div>

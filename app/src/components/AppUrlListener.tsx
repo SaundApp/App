@@ -22,7 +22,7 @@ export default function AppUrlListener() {
         navigate(item);
       }
     });
-  }, []);
+  }, [navigate]);
 
   return null;
 }

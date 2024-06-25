@@ -50,13 +50,13 @@ export default function MessageComponent({
     <ContextMenu>
       <ContextMenuTrigger disabled={!self}>
         {reply && (
-          <div className={"flex gap-1 w-fit " + (self ? "ml-auto" : "")}>
+          <div className={"flex w-fit gap-1 " + (self ? "ml-auto" : "")}>
             <div className="flex items-center gap-1">
               <span className="muted">{t("dm.message.reply")}</span>
             </div>
 
             <span
-              className="muted !text-primary max-w-[3rem] text-ellipsis whitespace-nowrap overflow-hidden"
+              className="muted max-w-12 truncate !text-primary"
               onClick={() => {
                 document
                   .querySelector(`[data-message="${reply.id}"]`)
@@ -78,13 +78,13 @@ export default function MessageComponent({
         >
           <div
             className={
-              "daisy-chat-bubble text-white max-w-72 break-all !p-3 " +
+              "daisy-chat-bubble max-w-72 break-all !p-3 text-white " +
               (self ? "bg-primary" : "bg-secondary")
             }
           >
             {message.text}
           </div>
-          <time className="daisy-chat-footer muted">
+          <time className="muted daisy-chat-footer">
             {moment(message.createdAt).format("hh:mm")}
           </time>
         </div>

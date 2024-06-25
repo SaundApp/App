@@ -25,10 +25,14 @@ export default function AudioPlayer({
 
   return (
     <div>
-      <div className={"daisy-chat " + (self ? "daisy-chat-end" : "daisy-chat-start")}>
+      <div
+        className={
+          "daisy-chat " + (self ? "daisy-chat-end" : "daisy-chat-start")
+        }
+      >
         <div
           className={
-            "daisy-chat-bubble flex items-center gap-3 text-white max-w-72 break-all " +
+            "daisy-chat-bubble flex max-w-72 items-center gap-3 break-all text-white " +
             (self ? "bg-primary" : "bg-secondary")
           }
         >
@@ -40,9 +44,9 @@ export default function AudioPlayer({
             )}
           </button>
 
-          <div className="block relative w-32 rounded-full h-1 bg-gray-400">
+          <div className="relative block h-1 w-32 rounded-full bg-gray-400">
             <span
-              className="absolute rounded-full bg-white h-1 left-0 top-0"
+              className="absolute left-0 top-0 h-1 rounded-full bg-white"
               style={{
                 width:
                   ((ref.current?.currentTime || 0) /
@@ -53,7 +57,7 @@ export default function AudioPlayer({
             ></span>
           </div>
         </div>
-        <time className="daisy-chat-footer muted">
+        <time className="muted daisy-chat-footer">
           {moment(message.createdAt).format("hh:mm")}
         </time>
       </div>

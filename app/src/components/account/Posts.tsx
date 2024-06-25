@@ -8,12 +8,12 @@ export default function Posts({ posts }: { posts?: Post[] }) {
   return (
     <div className="h-full max-h-[60vh] overflow-y-auto">
       {posts?.length === 0 && (
-        <div className="w-full h-full flex flex-col items-center justify-center">
+        <div className="flex size-full flex-col items-center justify-center">
           <h5>{t("general.empty")}</h5>
           <p className="muted text-center">{t("general.empty_description")}</p>
         </div>
       )}
-      
+
       <div className="grid grid-cols-3 gap-3">
         {posts?.map((post) => (
           <Link key={post.id} to={post.url} target="_blank">
@@ -23,7 +23,7 @@ export default function Posts({ posts }: { posts?: Post[] }) {
               width={120}
               height={120}
               draggable={false}
-              className="rounded-2xl"
+              className="size-[120px] rounded-2xl object-cover"
             />
           </Link>
         ))}

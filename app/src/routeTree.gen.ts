@@ -21,7 +21,6 @@ const NotificationsLazyImport = createFileRoute('/notifications')()
 const IndexLazyImport = createFileRoute('/')()
 const DmIndexLazyImport = createFileRoute('/dm/')()
 const LeaderboardArtistsLazyImport = createFileRoute('/leaderboard/artists')()
-const EditProfileLazyImport = createFileRoute('/edit/profile')()
 const DmUsernameLazyImport = createFileRoute('/dm/$username')()
 const AuthRegisterLazyImport = createFileRoute('/auth/register')()
 const AuthLoginLazyImport = createFileRoute('/auth/login')()
@@ -60,11 +59,6 @@ const LeaderboardArtistsLazyRoute = LeaderboardArtistsLazyImport.update({
 } as any).lazy(() =>
   import('./routes/leaderboard/artists.lazy').then((d) => d.Route),
 )
-
-const EditProfileLazyRoute = EditProfileLazyImport.update({
-  path: '/edit/profile',
-  getParentRoute: () => rootRoute,
-} as any).lazy(() => import('./routes/edit/profile.lazy').then((d) => d.Route))
 
 const DmUsernameLazyRoute = DmUsernameLazyImport.update({
   path: '/dm/$username',
@@ -182,13 +176,6 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof DmUsernameLazyImport
       parentRoute: typeof rootRoute
     }
-    '/edit/profile': {
-      id: '/edit/profile'
-      path: '/edit/profile'
-      fullPath: '/edit/profile'
-      preLoaderRoute: typeof EditProfileLazyImport
-      parentRoute: typeof rootRoute
-    }
     '/leaderboard/artists': {
       id: '/leaderboard/artists'
       path: '/leaderboard/artists'
@@ -219,7 +206,6 @@ export const routeTree = rootRoute.addChildren({
   AuthLoginLazyRoute,
   AuthRegisterLazyRoute,
   DmUsernameLazyRoute,
-  EditProfileLazyRoute,
   LeaderboardArtistsLazyRoute,
   DmIndexLazyRoute,
 })
@@ -242,7 +228,6 @@ export const routeTree = rootRoute.addChildren({
         "/auth/login",
         "/auth/register",
         "/dm/$username",
-        "/edit/profile",
         "/leaderboard/artists",
         "/dm/"
       ]
@@ -276,9 +261,6 @@ export const routeTree = rootRoute.addChildren({
     },
     "/dm/$username": {
       "filePath": "dm/$username.lazy.tsx"
-    },
-    "/edit/profile": {
-      "filePath": "edit/profile.lazy.tsx"
     },
     "/leaderboard/artists": {
       "filePath": "leaderboard/artists.lazy.tsx"

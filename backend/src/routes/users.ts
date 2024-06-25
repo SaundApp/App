@@ -124,6 +124,14 @@ hono.get(
             userId: payload.user,
           },
         },
+        subscriptions: {
+          select: {
+            userId: true,
+          },
+          where: {
+            subscribedToId: payload.user,
+          },
+        },
         subscriptionSettings: true,
         requestsReceived: {
           where: {
@@ -171,6 +179,9 @@ hono.get(
       followers,
       following,
       spotifyId: undefined,
+      subscribers: undefined,
+      subscriptions: undefined,
+      subscriber: user.subscriptions.length > 0,
       subscribed: user.subscribers.length > 0,
       requestSent: user.requestsReceived.length > 0,
     });

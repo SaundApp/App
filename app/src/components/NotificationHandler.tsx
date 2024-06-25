@@ -14,7 +14,7 @@ export const addListeners = async () => {
     "pushNotificationReceived",
     (notification) => {
       console.log("Push notification received: ", notification);
-    }
+    },
   );
 
   await PushNotifications.addListener(
@@ -23,9 +23,9 @@ export const addListeners = async () => {
       console.log(
         "Push notification action performed",
         notification.actionId,
-        notification.inputValue
+        notification.inputValue,
       );
-    }
+    },
   );
 };
 

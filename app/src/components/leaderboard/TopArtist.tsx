@@ -28,7 +28,7 @@ export default function TopArtist({
           {position}
         </p>
       </div>
-      <h5 className="max-w-[14rem] text-ellipsis whitespace-nowrap overflow-hidden">
+      <h5 className="max-w-56 truncate">
         {user.name}
       </h5>
       <p className="muted">

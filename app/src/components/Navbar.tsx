@@ -8,7 +8,7 @@ export default function Navbar() {
   const session = useSession();
   return (
     <nav
-      className="flex fixed bottom-0 items-center justify-between mt-auto bg-background p-3"
+      className="fixed bottom-0 mt-auto flex items-center justify-between bg-background p-3"
       style={{
         width: "calc(100vw - 1.5rem)",
       }}

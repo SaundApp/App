@@ -26,7 +26,7 @@ export default function Share({ postId }: { postId: string }) {
       <DrawerTrigger>
         <FaPaperPlane fontSize={25} />
       </DrawerTrigger>
-      <DrawerContent className="p-3 flex flex-col gap-3">
+      <DrawerContent className="flex flex-col gap-3 p-3">
         <Input
           placeholder={t("general.search")}
           className="bg-secondary"
@@ -34,12 +34,12 @@ export default function Share({ postId }: { postId: string }) {
           onChange={(event) => setSearch(event.target.value)}
         />
 
-        <div className="flex flex-col gap-3 h-[33vh] max-h-[33vh] overflow-y-auto">
+        <div className="flex h-[33vh] max-h-[33vh] flex-col gap-3 overflow-y-auto">
           {data
             ?.filter(
               (user) =>
                 user.name.toLowerCase().includes(search.toLowerCase()) ||
-                user.username.toLowerCase().includes(search.toLowerCase())
+                user.username.toLowerCase().includes(search.toLowerCase()),
             )
             .map((user) => (
               <Link
@@ -55,10 +55,10 @@ export default function Share({ postId }: { postId: string }) {
                   <Avatar user={user} width={40} height={40} />
 
                   <div>
-                    <h5 className="max-w-[10rem] text-left text-ellipsis whitespace-nowrap overflow-hidden">
+                    <h5 className="max-w-40 truncate text-left">
                       {user.name}
                     </h5>
-                    <p className="muted max-w-[10rem] text-left text-ellipsis whitespace-nowrap overflow-hidden">
+                    <p className="muted max-w-40 truncate text-left">
                       @{user.username}
                     </p>
                   </div>

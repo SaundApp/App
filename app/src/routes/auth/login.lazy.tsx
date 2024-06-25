@@ -43,7 +43,7 @@ function Login() {
   }, [token]);
 
   return (
-    <div className="flex flex-col gap-3 justify-center m-auto w-full">
+    <div className="m-auto flex w-full flex-col justify-center gap-3">
       <div>
         <h1>Login</h1>
         <p className="muted">{t("auth.login_description")}</p>
@@ -58,7 +58,7 @@ function Login() {
                 .then((res) => {
                   if (res.data && res.data.token) {
                     const tokens = JSON.parse(
-                      localStorage.getItem("tokens") || "[]"
+                      localStorage.getItem("tokens") || "[]",
                     );
 
                     if (!tokens.includes(res.data.token)) {
@@ -75,7 +75,7 @@ function Login() {
                   toast({
                     variant: "destructive",
                     description: t("toast.error.login"),
-                  })
+                  }),
                 );
             },
             (values) => {
@@ -84,7 +84,7 @@ function Login() {
                 variant: "destructive",
                 description: t("toast.error." + error?.message || "base"),
               });
-            }
+            },
           )}
           className="flex flex-col gap-3"
         >

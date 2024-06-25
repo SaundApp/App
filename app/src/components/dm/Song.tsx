@@ -41,29 +41,29 @@ export default function Song({
         >
           <div
             className={
-              "daisy-chat-bubble !p-3 text-white max-w-72 break-all " +
+              "daisy-chat-bubble max-w-72 break-all !p-3 text-white " +
               (self ? "bg-primary" : "bg-secondary")
             }
           >
             <img
-              className="rounded-2xl w-64 h-64"
+              className="size-64 rounded-2xl"
               src={post.image}
               alt={post.name}
               draggable={false}
             />
 
             <div className="pt-3">
-              <h5 className="max-w-[10rem] text-ellipsis whitespace-nowrap overflow-hidden">
+              <h5 className="max-w-40 truncate">
                 {post.name}
               </h5>
               <Link
                 to={`/account/${post.user.username}`}
-                className="text-sm max-w-[10rem] text-ellipsis whitespace-nowrap overflow-hidden"
+                className="max-w-40 truncate text-sm"
               >
                 {post.user.name}
               </Link>
 
-              <div className="flex gap-3 justify-end">
+              <div className="flex justify-end gap-3">
                 {post.url && (
                   <Link to={post.url} target="_blank">
                     <SiSpotify fontSize={25} />
@@ -72,7 +72,7 @@ export default function Song({
               </div>
             </div>
           </div>
-          <time className="daisy-chat-footer muted">
+          <time className="muted daisy-chat-footer">
             {moment(message.createdAt).format("hh:mm")}
           </time>
         </div>

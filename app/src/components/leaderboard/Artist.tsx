@@ -16,16 +16,16 @@ export default function Artist({
   return (
     <Link
       to={`/account/${user.username}`}
-      className="flex flex-row gap-3 w-full items-center"
+      className="flex w-full flex-row items-center gap-3"
       onClick={onClick}
     >
       <Avatar user={user} width={40} height={40} />
       <div>
-        <h5 className="max-w-[10rem] text-left text-ellipsis whitespace-nowrap overflow-hidden">
+        <h5 className="max-w-40 truncate text-left">
           {user.name}
         </h5>
         {description && (
-          <p className="muted max-w-[10rem] text-left text-ellipsis whitespace-nowrap overflow-hidden">
+          <p className="muted max-w-40 truncate text-left">
             {description}
           </p>
         )}

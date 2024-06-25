@@ -23,7 +23,7 @@ export default function Subscribe({
 
   return (
     <Drawer open={open} onOpenChange={onOpenChange}>
-      <DrawerContent className="p-3 px-5 flex flex-col gap-3 no-focus justify-center">
+      <DrawerContent className="no-focus flex flex-col justify-center gap-3 p-3 px-5">
         <h5 className="text-center">
           {t("account.subscription.title", { username: user.username })}
         </h5>

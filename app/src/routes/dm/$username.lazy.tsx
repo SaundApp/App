@@ -27,7 +27,7 @@ function Chat() {
   }>();
   const navigate = Route.useNavigate();
   const [message, setMessage] = useState(
-    !text?.startsWith(import.meta.env.VITE_APP_URL) ? text : "" || ""
+    !text?.startsWith(import.meta.env.VITE_APP_URL) ? text : "" || "",
   );
   const [messages, setMessages] = useState<MessageType[]>([]);
   const [webSocket, setWebSocket] = useState<WebSocket | null>(null);
@@ -51,7 +51,7 @@ function Chat() {
   useEffect(() => {
     const timeout = setTimeout(() => {
       const webSocket = new WebSocket(
-        `${import.meta.env.VITE_WS_URL}/dm/${username}/ws?token=${localStorage.getItem("token")}`
+        `${import.meta.env.VITE_WS_URL}/dm/${username}/ws?token=${localStorage.getItem("token")}`,
       );
 
       webSocket.onopen = () => {
@@ -91,8 +91,8 @@ function Chat() {
               prev.map((msg) =>
                 msg.id === message.slice(0, 24)
                   ? { ...msg, text: message.slice(24) }
-                  : msg
-              )
+                  : msg,
+              ),
             );
             break;
         }
@@ -106,6 +106,7 @@ function Chat() {
       webSocket?.close();
       setWebSocket(null);
     };
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [username]);
   useEffect(() => {
     setMessages(data || []);
@@ -114,6 +115,7 @@ function Chat() {
     if (editing) {
       setMessage(messages.find((msg) => msg.id === editing)?.text || "");
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [editing]);
 
   const handleSubmit = () => {
@@ -131,27 +133,25 @@ function Chat() {
 
   return (
     <div
-      className="flex flex-col gap-3 justify-between"
+      className="flex flex-col justify-between gap-3"
       style={{
         height: "calc(100vh - 3.75rem)",
       }}
     >
-      <div className="flex gap-3 items-center">
+      <div className="flex items-center gap-3">
         <Link to="/dm">
           <FaChevronLeft fontSize={25} />
         </Link>
 
         <Link
-          className="flex gap-3 items-center"
+          className="flex items-center gap-3"
           to={`/account/${user?.username}`}
         >
           {user && <Avatar user={user} width={40} height={40} />}
 
           <div>
-            <h5 className="max-w-[10rem] text-left text-ellipsis whitespace-nowrap overflow-hidden">
-              {user?.name}
-            </h5>
-            <p className="muted max-w-[10rem] text-left text-ellipsis whitespace-nowrap overflow-hidden">
+            <h5 className="max-w-40 truncate text-left">{user?.name}</h5>
+            <p className="muted max-w-40 truncate text-left">
               @{user?.username}
             </p>
           </div>
@@ -159,7 +159,7 @@ function Chat() {
       </div>
 
       <div
-        className="flex gap-3 h-full overflow-y-auto flex-col-reverse"
+        className="flex h-full flex-col-reverse gap-3 overflow-y-auto"
         id="chat"
         style={{
           maxHeight: !replying ? "83vh" : "76vh",
@@ -189,7 +189,7 @@ function Chat() {
         }}
       >
         <div
-          className="absolute bottom-4 left-2 flex justify-center items-end gap-3"
+          className="absolute bottom-4 left-2 flex items-end justify-center gap-3"
           style={{
             width: "calc(100% - 1rem)",
           }}
@@ -211,7 +211,7 @@ function Chat() {
                 .then((data) => {
                   webSocket?.send(
                     "+" +
-                      `${import.meta.env.VITE_APP_URL}/?attachment=${data.id}`
+                      `${import.meta.env.VITE_APP_URL}/?attachment=${data.id}`,
                   );
                 })
                 .catch(() => {
@@ -227,7 +227,7 @@ function Chat() {
           {!recorderControls.isRecording && !recorderControls.isPaused && (
             <>
               <button
-                className="w-10 h-10 flex items-center justify-center mt-auto"
+                className="mt-auto flex size-10 items-center justify-center"
                 onClick={() => {
                   image.current?.click();
                 }}
@@ -238,11 +238,11 @@ function Chat() {
               <div className="w-4/5">
                 {replying && (
                   <div className="flex justify-between">
-                    <div className="flex gap-1 w-fit py-2">
+                    <div className="flex w-fit gap-1 py-2">
                       <span className="muted">{t("dm.message.reply")}</span>
 
                       <span
-                        className="muted !text-primary max-w-[3rem] text-ellipsis whitespace-nowrap overflow-hidden"
+                        className="muted max-w-12 truncate !text-primary"
                         onClick={() => {
                           document
                             .querySelector(`[data-message="${replying}"]`)
@@ -265,7 +265,7 @@ function Chat() {
 
                 <Textarea
                   placeholder={t("dm.placeholder")}
-                  className="bg-secondary w-full h-10 items-center min-h-0 resize-none"
+                  className="h-10 min-h-0 w-full resize-none items-center bg-secondary"
                   rows={1}
                   value={message}
                   onChange={(event) => setMessage(event.target.value)}
@@ -280,7 +280,7 @@ function Chat() {
               </div>
             </>
           )}
-          <button className="flex items-center justify-center h-full">
+          <button className="flex h-full items-center justify-center">
             <VoiceRecorder controls={recorderControls} websocket={webSocket} />
           </button>
         </div>

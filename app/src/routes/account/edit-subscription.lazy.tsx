@@ -61,9 +61,9 @@ function EditSubscriptionSettings() {
 
   return (
     <div className="flex flex-col gap-3">
-      <div className="p-4 flex justify-center items-center relative">
+      <div className="relative flex items-center justify-center p-4">
         <BackIcon />
-        <div className="absolute left-0 top-4 w-full h-full text-center">
+        <div className="absolute left-0 top-4 size-full text-center">
           <h5 className="m-auto">{t("account.edit_subscription")}</h5>
         </div>
       </div>
@@ -105,7 +105,7 @@ function EditSubscriptionSettings() {
                 variant: "destructive",
                 description: t("toast.error." + error?.message || "base"),
               });
-            }
+            },
           )}
         >
           <div className="flex flex-col gap-3">
@@ -136,7 +136,7 @@ function EditSubscriptionSettings() {
             ))}
           </div>
 
-          <div className="flex my-3 gap-3">
+          <div className="my-3 flex gap-3">
             <Button type="submit" className="w-full">
               {t("account.save")}
             </Button>

@@ -27,7 +27,7 @@ function Artists() {
       <h1>{t("leaderboard.title")}</h1>
 
       {data?.length < 3 && (
-        <div className="w-full h-full flex flex-col items-center justify-center">
+        <div className="flex size-full flex-col items-center justify-center">
           <h5>{t("general.empty")}</h5>
           <p className="muted text-center">{t("general.empty_description")}</p>
         </div>
@@ -53,7 +53,7 @@ function Artists() {
             />
           </div>
 
-          <div className="flex flex-col gap-3 h-full max-h-[57vh] overflow-y-auto">
+          <div className="flex h-full max-h-[57vh] flex-col gap-3 overflow-y-auto">
             {data
               ?.slice(3)
               .map((user, i) => (
@@ -63,7 +63,7 @@ function Artists() {
                   position={i + 4}
                   description={
                     Intl.NumberFormat("en", { notation: "compact" }).format(
-                      user.streams || 0
+                      user.streams || 0,
                     ) + ` ${t("leaderboard.streams")}`
                   }
                 />

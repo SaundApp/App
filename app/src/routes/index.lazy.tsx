@@ -66,8 +66,8 @@ function Index() {
   }, []);
 
   return (
-    <div className="flex flex-col gap-3 h-full max-h-[93vh] overflow-y-auto">
-      <div className="flex justify-between items-center">
+    <div className="flex h-full max-h-[93vh] flex-col gap-3 overflow-y-auto">
+      <div className="flex items-center justify-between">
         <h1>Saund</h1>
         <Link to="/dm">
           <FaPaperPlane fontSize={25} />

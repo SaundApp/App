@@ -37,9 +37,9 @@ function DmList() {
         onChange={(event) => setSearch(event.target.value)}
       />
 
-      <div className="flex flex-col gap-3 h-[80vh] max-h-[80vh] overflow-y-auto">
+      <div className="flex h-[80vh] max-h-[80vh] flex-col gap-3 overflow-y-auto">
         {data?.length === 0 && (
-          <div className="w-full h-full flex flex-col items-center justify-center">
+          <div className="flex size-full flex-col items-center justify-center">
             <h5>{t("general.empty")}</h5>
             <p className="muted text-center">
               {t("general.empty_description")}

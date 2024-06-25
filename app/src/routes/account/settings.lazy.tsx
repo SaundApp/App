@@ -61,7 +61,7 @@ function EditProfile() {
           if (err?.response?.data?.error?.issues[0]?.message)
             toast({
               description: t(
-                `toast.error.${err?.response?.data?.error?.issues[0]?.message}`
+                `toast.error.${err?.response?.data?.error?.issues[0]?.message}`,
               ),
               variant: "destructive",
             });
@@ -77,20 +77,20 @@ function EditProfile() {
 
   return (
     <div className="flex flex-col gap-3">
-      <div className="p-4 flex justify-center items-center relative">
+      <div className="relative flex items-center justify-center p-4">
         <BackIcon />
-        <div className="absolute left-0 top-4 w-full h-full text-center">
+        <div className="absolute left-0 top-4 size-full text-center">
           <h5 className="m-auto">{t("account.settings")}</h5>
         </div>
       </div>
 
       <p>{t("account.theme.title")}</p>
-      <div className="flex justify-between items-center gap-3">
+      <div className="flex items-center justify-between gap-3">
         <Button
           className={
             "w-full bg-secondary " +
             (theme === "system"
-              ? "dark:bg-white dark:text-black bg-black text-white"
+              ? "bg-black text-white dark:bg-white dark:text-black"
               : "")
           }
           variant={theme === "system" ? "default" : "outline"}
@@ -102,7 +102,7 @@ function EditProfile() {
           className={
             "w-full bg-secondary " +
             (theme === "dark"
-              ? "dark:bg-white dark:text-black bg-black text-white"
+              ? "bg-black text-white dark:bg-white dark:text-black"
               : "")
           }
           variant={theme === "dark" ? "default" : "outline"}
@@ -114,7 +114,7 @@ function EditProfile() {
           className={
             "w-full bg-secondary " +
             (theme === "light"
-              ? "dark:bg-white dark:text-black bg-black text-white"
+              ? "bg-black text-white dark:bg-white dark:text-black"
               : "")
           }
           variant={theme === "light" ? "default" : "outline"}
@@ -125,7 +125,7 @@ function EditProfile() {
       </div>
 
       <p>{t("account.language")}</p>
-      <div className="flex justify-between items-center gap-3">
+      <div className="flex items-center justify-between gap-3">
         <Select
           defaultValue={i18n.language}
           onValueChange={(value) => {
@@ -153,7 +153,7 @@ function EditProfile() {
         </Select>
       </div>
 
-      <div className="flex flex-col gap-1 w-full">
+      <div className="flex w-full flex-col gap-1">
         <p>{t("account.notifications.title")}</p>
 
         <div className="mt-3">
@@ -161,7 +161,7 @@ function EditProfile() {
             value={activeTab}
             onValueChange={(value) =>
               setActiveTab(
-                value as Exclude<keyof NotificationSettings, "mutedChats">
+                value as Exclude<keyof NotificationSettings, "mutedChats">,
               )
             }
           >
@@ -211,25 +211,25 @@ function EditProfile() {
                 <ToggleGroupItem
                   value="PUSH"
                   aria-label="Push toggle"
-                  className="hover:bg-transparent hover:text-foreground flex gap-2"
+                  className="flex gap-2 hover:bg-transparent hover:text-foreground"
                 >
-                  <FaBell className="h-4 w-4" />
+                  <FaBell className="size-4" />
                   Push
                 </ToggleGroupItem>
                 <ToggleGroupItem
                   value="EMAIL"
                   aria-label="Email toggle"
-                  className="hover:bg-transparent hover:text-foreground flex gap-2"
+                  className="flex gap-2 hover:bg-transparent hover:text-foreground"
                 >
-                  <FaEnvelope className="h-4 w-4" />
+                  <FaEnvelope className="size-4" />
                   Email
                 </ToggleGroupItem>
                 <ToggleGroupItem
                   value="APP"
                   aria-label="App toggle"
-                  className="hover:bg-transparent hover:text-foreground flex gap-2"
+                  className="flex gap-2 hover:bg-transparent hover:text-foreground"
                 >
-                  <FaMobile className="h-4 w-4" />
+                  <FaMobile className="size-4" />
                   In App
                 </ToggleGroupItem>
               </ToggleGroup>

@@ -21,7 +21,7 @@ export default function Accounts() {
     queryFn: () =>
       axiosClient
         .get(
-          `/auth/accounts?tokens=${JSON.parse(localStorage.getItem("tokens") || "[]").join(",")}`
+          `/auth/accounts?tokens=${JSON.parse(localStorage.getItem("tokens") || "[]").join(",")}`,
         )
         .then((res) => res.data),
   });
@@ -46,21 +46,21 @@ export default function Accounts() {
   return (
     <Drawer>
       <DrawerTrigger className="flex items-center gap-1">
-        <h5 className="max-w-[14rem] text-ellipsis whitespace-nowrap overflow-hidden">
+        <h5 className="max-w-56 truncate">
           {session?.username}
         </h5>
         <FaChevronDown fontSize={20} />
       </DrawerTrigger>
-      <DrawerContent className="p-3 flex flex-col gap-3">
+      <DrawerContent className="flex flex-col gap-3 p-3">
         <div className="relative">
-          <div className="flex flex-col gap-3 h-[33vh] max-h-[33vh] overflow-y-auto">
+          <div className="flex h-[33vh] max-h-[33vh] flex-col gap-3 overflow-y-auto">
             {data?.map((user) => (
               <div
                 key={user.username}
-                className="flex justify-between items-center"
+                className="flex items-center justify-between"
               >
                 <div
-                  className="flex gap-3 items-center"
+                  className="flex items-center gap-3"
                   onClick={() => {
                     localStorage.setItem("token", user.token);
                     window.location.href = "/";
@@ -68,10 +68,10 @@ export default function Accounts() {
                 >
                   <Avatar user={user} width={40} height={40} />
                   <div className="flex flex-col">
-                    <h5 className="text-left max-w-[10rem] text-ellipsis whitespace-nowrap overflow-hidden">
+                    <h5 className="max-w-40 truncate text-left">
                       {user.name}
                     </h5>
-                    <p className="text-left muted max-w-[10rem] text-ellipsis whitespace-nowrap overflow-hidden">
+                    <p className="muted max-w-40 truncate text-left">
                       @{user.username}
                     </p>
                   </div>
@@ -84,7 +84,7 @@ export default function Accounts() {
             ))}
           </div>
 
-          <div className="bg-background absolute bottom-0 w-full pt-3">
+          <div className="absolute bottom-0 w-full bg-background pt-3">
             <Button
               variant="secondary"
               className="mt-auto w-full"

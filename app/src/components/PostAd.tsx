@@ -8,7 +8,7 @@ const viewAd = (id: string) => {
 export default function PostAd({ ad }: { ad: AdResult }) {
   return (
     <div className="flex flex-col gap-3">
-      <div className="flex justify-between items-center">
+      <div className="flex items-center justify-between">
         <div className="flex items-center gap-3">
           <img
             src={ad.icon}
@@ -24,10 +24,10 @@ export default function PostAd({ ad }: { ad: AdResult }) {
           />
 
           <div>
-            <h5 className="max-w-[14rem] text-ellipsis whitespace-nowrap overflow-hidden">
+            <h5 className="max-w-56 truncate">
               {ad.headline}
             </h5>
-            <p className="muted max-w-[14rem] text-ellipsis whitespace-nowrap overflow-hidden">
+            <p className="muted max-w-56 truncate">
               {ad.body}
             </p>
           </div>
@@ -44,7 +44,7 @@ export default function PostAd({ ad }: { ad: AdResult }) {
         </Link>
       </div>
 
-      <div className="flex flex-col gap-3 relative">
+      <div className="relative flex flex-col gap-3">
         <img
           width={490}
           height={490}
@@ -55,11 +55,11 @@ export default function PostAd({ ad }: { ad: AdResult }) {
           crossOrigin="anonymous"
         />
 
-        <div className="w-full h-1/2 flex flex-col justify-between absolute p-3 top-1/2">
-          <div className="flex justify-end items-center mt-auto">
-            <div className="w-fit bg-black text-white py-3 px-6 rounded-3xl flex items-center gap-3">
+        <div className="absolute top-1/2 flex h-1/2 w-full flex-col justify-between p-3">
+          <div className="mt-auto flex items-center justify-end">
+            <div className="flex w-fit items-center gap-3 rounded-3xl bg-black px-6 py-3 text-white">
               <h5
-                className="max-w-[5rem] text-ellipsis whitespace-nowrap overflow-hidden z-10"
+                className="z-10 max-w-20 truncate"
                 onClick={() => viewAd(ad.id)}
               >
                 {ad.cta}

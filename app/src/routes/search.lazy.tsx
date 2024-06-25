@@ -23,16 +23,17 @@ function Search() {
     queryFn: () =>
       axiosClient.get(`/users/search?q=${search}`).then((res) => res.data),
   });
+  const searchHistoryData = localStorage.getItem("searchHistory");
 
   useEffect(() => {
     const searchHistory = JSON.parse(
-      localStorage.getItem("searchHistory") || "[]"
+      searchHistoryData || "[]",
     );
 
     axiosClient
       .get(`/users/search?q=${searchHistory.join(",")}`)
       .then((res) => setHistory(res.data));
-  }, [localStorage.getItem("searchHistory")]);
+  }, [searchHistoryData]);
 
   return (
     <div className="flex flex-col gap-3">
@@ -43,7 +44,7 @@ function Search() {
         onChange={(event) => setSearch(event.target.value)}
       />
 
-      <div className="flex flex-col gap-3 h-full max-h-[88vh] overflow-y-auto">
+      <div className="flex h-full max-h-[88vh] flex-col gap-3 overflow-y-auto">
         {data
           ?.filter((user) => user.username !== session?.username)
           .map((user) => (
@@ -53,13 +54,13 @@ function Search() {
               description={"@" + user.username}
               onClick={() => {
                 const searchHistory = JSON.parse(
-                  localStorage.getItem("searchHistory") || "[]"
+                  localStorage.getItem("searchHistory") || "[]",
                 );
 
                 if (!searchHistory.includes(user.username)) {
                   localStorage.setItem(
                     "searchHistory",
-                    JSON.stringify([...searchHistory, user.username])
+                    JSON.stringify([...searchHistory, user.username]),
                   );
                 }
               }}

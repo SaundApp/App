@@ -1,4 +1,4 @@
-import { MouseEventHandler } from "react";
+import type { MouseEventHandler } from "react";
 import type { PublicUser } from "@/types/prisma";
 
 export default function Avatar({
@@ -30,7 +30,7 @@ export default function Avatar({
         width: width,
         height: height,
       }}
-      className="rounded-full aspect-square"
+      className="aspect-square rounded-full"
     />
   );
 }
