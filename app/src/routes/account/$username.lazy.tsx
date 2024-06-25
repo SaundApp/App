@@ -212,8 +212,8 @@ function Account() {
         </div>
 
         <div>
-          <p className="flex items-center gap-2 font-semibold">
-            {data.name} {data.subscriber && <LucideHeartHandshake />}
+          <p className="flex items-center gap-1 font-semibold">
+            {data.name} {data.subscriber && <LucideHeartHandshake size="20" />}
           </p>
           {data.bio && <p className="muted">{data.bio}</p>}
         </div>
