@@ -38,10 +38,10 @@ function DmList() {
       />
 
       <div className="flex h-[80vh] max-h-[80vh] flex-col gap-3 overflow-y-auto">
-        {data?.length === 0 && (
+        {data?.length === 0 && !search && (
           <div className="flex size-full flex-col items-center justify-center">
             <h5>{t("general.empty")}</h5>
-            <p className="muted text-center">
+            <p className="muted ctext-center">
               {t("general.empty_description")}
             </p>
           </div>

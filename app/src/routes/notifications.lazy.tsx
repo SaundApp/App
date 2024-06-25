@@ -1,10 +1,11 @@
 import Notification from "@/components/Notification";
+import { Spinner } from "@/components/ui/spinner";
 import { axiosClient } from "@/lib/axios";
+import type { PublicUser } from "@/types/prisma";
 import { useQuery } from "@tanstack/react-query";
 import { createLazyFileRoute } from "@tanstack/react-router";
-import { useTranslation } from "react-i18next";
 import type { Notification as NotificationModel } from "backend";
-import type { PublicUser } from "@/types/prisma";
+import { useTranslation } from "react-i18next";
 
 export const Route = createLazyFileRoute("/notifications")({
   component: Notifications,
@@ -12,7 +13,7 @@ export const Route = createLazyFileRoute("/notifications")({
 
 function Notifications() {
   const { t } = useTranslation();
-  const { data } = useQuery<
+  const { data, isLoading } = useQuery<
     (NotificationModel & {
       involvedUserData: PublicUser | null;
     })[]
@@ -26,6 +27,8 @@ function Notifications() {
       <h1>{t("notification.title")}</h1>
 
       <div className="flex h-[85vh] max-h-[85vh] flex-col gap-3 overflow-y-auto">
+        {isLoading && <Spinner className="m-auto" />}
+
         {data?.length === 0 && (
           <div className="flex size-full flex-col items-center justify-center">
             <h5>{t("general.empty")}</h5>
