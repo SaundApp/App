@@ -30,6 +30,7 @@ export default function Avatar({
         width: width,
         height: height,
       }}
+      crossOrigin="anonymous"
       className="aspect-square rounded-full"
     />
   );

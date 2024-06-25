@@ -252,7 +252,7 @@ function EditProfile() {
             localStorage.setItem("tokens", JSON.stringify(tokens));
             if (tokens.length > 0) localStorage.setItem("token", tokens[0]);
             else localStorage.removeItem("token");
-            window.location.reload();
+            window.location.href = "/auth/login";
           }}
         >
           {t("account.actions.logout")}

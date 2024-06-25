@@ -6,5 +6,6 @@ export const axiosClient = axios.create({
     Authorization: localStorage.getItem("token")
       ? `Bearer ${localStorage.getItem("token")}`
       : undefined,
+    "ngrok-skip-browser-warning": "yes"
   },
 });

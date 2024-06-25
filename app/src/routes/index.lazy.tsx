@@ -14,6 +14,7 @@ import {
   registerNotifications,
 } from "@/components/NotificationHandler";
 import type { ExtendedPost } from "@/types/prisma";
+import { useSession } from "@/components/SessionContext";
 
 export const Route = createLazyFileRoute("/")({
   component: Index,
@@ -21,6 +22,7 @@ export const Route = createLazyFileRoute("/")({
 
 function Index() {
   const { ref, inView } = useInView();
+  const session = useSession();
   const [ads, setAds] = useState<AdResult[]>([]);
   const { data, fetchNextPage, hasNextPage, isLoading } = useInfiniteQuery<
     ExtendedPost[]
@@ -64,6 +66,8 @@ function Index() {
 
     registerNotifications().then(() => addListeners());
   }, []);
+
+  if (!session) return null;
 
   return (
     <div className="flex h-full max-h-[93vh] flex-col gap-3 overflow-y-auto">

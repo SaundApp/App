@@ -1,5 +1,5 @@
 import type { Message } from "backend";
-import moment from "moment";
+import { format } from "date-fns";
 import { useEffect, useRef, useState } from "react";
 import { FaCirclePause, FaCirclePlay } from "react-icons/fa6";
 
@@ -58,7 +58,7 @@ export default function AudioPlayer({
           </div>
         </div>
         <time className="muted daisy-chat-footer">
-          {moment(message.createdAt).format("hh:mm")}
+          {format(message.createdAt, "hh:mm")}
         </time>
       </div>
 

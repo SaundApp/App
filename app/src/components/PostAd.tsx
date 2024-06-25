@@ -24,12 +24,8 @@ export default function PostAd({ ad }: { ad: AdResult }) {
           />
 
           <div>
-            <h5 className="max-w-56 truncate">
-              {ad.headline}
-            </h5>
-            <p className="muted max-w-56 truncate">
-              {ad.body}
-            </p>
+            <h5 className="max-w-56 truncate">{ad.headline}</h5>
+            <p className="muted max-w-56 truncate">{ad.body}</p>
           </div>
         </div>
 
@@ -52,7 +48,6 @@ export default function PostAd({ ad }: { ad: AdResult }) {
           alt={ad.headline}
           className="rounded-2xl object-cover"
           draggable={false}
-          crossOrigin="anonymous"
         />
 
         <div className="absolute top-1/2 flex h-1/2 w-full flex-col justify-between p-3">

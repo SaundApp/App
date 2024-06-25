@@ -2,11 +2,11 @@ import { axiosClient } from "@/lib/axios";
 import type { Message } from "backend";
 import { useQuery } from "@tanstack/react-query";
 import { Link } from "@tanstack/react-router";
-import moment from "moment";
 import { SiSpotify } from "react-icons/si";
 import { ContextMenu, ContextMenuTrigger } from "../ui/context-menu";
 import Menu from "./Menu";
 import type { ExtendedPost } from "@/types/prisma";
+import { format } from "date-fns";
 
 export default function Song({
   postId,
@@ -53,9 +53,7 @@ export default function Song({
             />
 
             <div className="pt-3">
-              <h5 className="max-w-40 truncate">
-                {post.name}
-              </h5>
+              <h5 className="max-w-40 truncate">{post.name}</h5>
               <Link
                 to={`/account/${post.user.username}`}
                 className="max-w-40 truncate text-sm"
@@ -73,7 +71,7 @@ export default function Song({
             </div>
           </div>
           <time className="muted daisy-chat-footer">
-            {moment(message.createdAt).format("hh:mm")}
+            {format(message.createdAt, "hh:mm")}
           </time>
         </div>
       </ContextMenuTrigger>

@@ -23,6 +23,7 @@ function Login() {
   const { token } = Route.useSearch<{
     token: string | undefined;
   }>();
+  const tokens = JSON.parse(localStorage.getItem("tokens") || "[]");
   const form = useForm<z.infer<typeof loginSchema>>({
     resolver: zodResolver(loginSchema),
     defaultValues: {
@@ -45,7 +46,7 @@ function Login() {
 
   return (
     <div className="m-auto flex w-full flex-col justify-center gap-3">
-      {localStorage.getItem("tokens") && (
+      {tokens.length > 0 && (
         <div className="absolute left-4 top-8">
           <BackIcon />
         </div>

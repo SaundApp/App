@@ -1,10 +1,10 @@
 import type { Message } from "backend";
-import moment from "moment";
 import { useTranslation } from "react-i18next";
 import { ContextMenu, ContextMenuTrigger } from "../ui/context-menu";
 import Attachment from "./Attachment";
 import Menu from "./Menu";
 import Song from "./Song";
+import { format } from "date-fns";
 
 export default function MessageComponent({
   message,
@@ -85,7 +85,7 @@ export default function MessageComponent({
             {message.text}
           </div>
           <time className="muted daisy-chat-footer">
-            {moment(message.createdAt).format("hh:mm")}
+            {format(message.createdAt, "hh:mm")}
           </time>
         </div>
       </ContextMenuTrigger>

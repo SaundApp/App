@@ -11,7 +11,7 @@ import type {
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { Link } from "@tanstack/react-router";
 import type { User } from "backend";
-import moment from "moment/min/moment-with-locales";
+
 import { useEffect, useRef, useState } from "react";
 import { useTranslation } from "react-i18next";
 import { FaHeart, FaRegHeart, FaSpotify } from "react-icons/fa";
@@ -41,7 +41,7 @@ function getTrack(
 }
 
 export default function Post({ post }: { post: ExtendedPost }) {
-  const { t, i18n } = useTranslation();
+  const { t } = useTranslation();
   const { toast } = useToast();
   const [saw, setSaw] = useState(false);
   const [open, setOpen] = useState(false);
@@ -89,9 +89,6 @@ export default function Post({ post }: { post: ExtendedPost }) {
     },
   });
 
-  useEffect(() => {
-    moment.locale(i18n.language);
-  }, [i18n.language]);
   useEffect(() => {
     if (imageRef.current)
       getDominantColor(imageRef.current).then((color) => {

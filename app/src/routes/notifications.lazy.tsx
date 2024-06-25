@@ -23,37 +23,37 @@ function Notifications() {
   });
 
   return (
-    <div className="flex flex-col gap-3">
+    <div className="flex h-full flex-col gap-3">
       <h1>{t("notification.title")}</h1>
 
-      <div className="flex h-[85vh] max-h-[85vh] flex-col gap-3 overflow-y-auto">
-        {isLoading && <Spinner className="m-auto" />}
+      {isLoading && <Spinner className="m-auto" />}
 
-        {data?.length === 0 && (
-          <div className="flex size-full flex-col items-center justify-center">
-            <h5>{t("general.empty")}</h5>
-            <p className="muted text-center">
-              {t("general.empty_description")}
-            </p>
-          </div>
-        )}
+      {data?.length === 0 && (
+        <div className="flex size-full flex-col items-center justify-center">
+          <h5>{t("general.empty")}</h5>
+          <p className="muted text-center">{t("general.empty_description")}</p>
+        </div>
+      )}
 
-        {data?.map((item) => (
-          <Notification
-            key={item.id}
-            imageId={item.involvedUserData?.avatarId || undefined}
-            timestamp={new Date(item.createdAt)}
-            button={item.button}
-            href={
-              item.involvedUserData
-                ? `/account/${item.involvedUserData.username}`
-                : undefined
-            }
-          >
-            {item.text}
-          </Notification>
-        ))}
-      </div>
+      {(data?.length || 0) > 0 && (
+        <div className="flex h-[85vh] max-h-[85vh] flex-col gap-3 overflow-y-auto">
+          {data?.map((item) => (
+            <Notification
+              key={item.id}
+              imageId={item.involvedUserData?.avatarId || undefined}
+              timestamp={new Date(item.createdAt)}
+              button={item.button}
+              href={
+                item.involvedUserData
+                  ? `/account/${item.involvedUserData.username}`
+                  : undefined
+              }
+            >
+              {item.text}
+            </Notification>
+          ))}
+        </div>
+      )}
     </div>
   );
 }

@@ -4,20 +4,29 @@ import { Hono } from "hono";
 import { createBunWebSocket } from "hono/bun";
 import { cors } from "hono/cors";
 import path from "path";
-import { timeout } from "hono/timeout";
+import { sentry } from "@hono/sentry";
 
 const { upgradeWebSocket, websocket } = createBunWebSocket();
 
 export const app = new Hono();
 export { upgradeWebSocket };
 
-app.use(timeout(5000));
+app.use(
+  sentry({
+    dsn: process.env.SENTRY_DSN!,
+  })
+);
 app.use(
   cors({
     origin: "*",
-    allowHeaders: ["Authorization", "Content-Type"],
+    allowHeaders: [
+      "Authorization",
+      "Content-Type",
+      "User-Agent",
+      "ngrok-skip-browser-warning",
+    ],
     allowMethods: ["POST", "GET", "OPTIONS", "PUT", "DELETE", "PATCH"],
-    exposeHeaders: ["Content-Length", "Content-Type"],
+    exposeHeaders: ["Content-Length", "Content-Type", "Content-Disposition"],
     maxAge: 600,
   })
 );

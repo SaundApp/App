@@ -1,10 +1,10 @@
 import { axiosClient } from "@/lib/axios";
 import type { Attachment as AttachmentType, Message } from "backend";
 import { useQuery } from "@tanstack/react-query";
-import moment from "moment";
 import { ContextMenu, ContextMenuTrigger } from "../ui/context-menu";
 import AudioPlayer from "./AudioPlayer";
 import Menu from "./Menu";
+import { format } from "date-fns";
 
 export default function Attachment({
   postId,
@@ -57,7 +57,7 @@ export default function Attachment({
             </video>
           </div>
           <time className="muted daisy-chat-footer">
-            {moment(message.createdAt).format("hh:mm")}
+            {format(message.createdAt, "hh:mm")}
           </time>
         </div>
       );
@@ -84,7 +84,7 @@ export default function Attachment({
             />
           </div>
           <time className="muted daisy-chat-footer">
-            {moment(message.createdAt).format("hh:mm")}
+            {format(message.createdAt, "hh:mm")}
           </time>
         </div>
       );

@@ -1,12 +1,11 @@
 import { axiosClient } from "@/lib/axios";
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { Link } from "@tanstack/react-router";
-import moment from "moment/min/moment-with-locales";
-import { useEffect } from "react";
 import { useTranslation } from "react-i18next";
 import SwipeToRevealActions from "react-swipe-to-reveal-actions";
 import Avatar from "../account/Avatar";
 import type { PublicUser } from "@/types/prisma";
+import { formatDistance } from "date-fns";
 
 export default function Chat({
   user,
@@ -19,12 +18,8 @@ export default function Chat({
   read: boolean;
   timestamp?: Date;
 }) {
-  const { t, i18n } = useTranslation();
+  const { t } = useTranslation();
   const queryClient = useQueryClient();
-
-  useEffect(() => {
-    moment.locale(i18n.language);
-  }, [i18n.language]);
 
   const { data: mutedChats } = useQuery<string[]>({
     queryKey: ["mute"],
@@ -88,9 +83,7 @@ export default function Chat({
       >
         <Avatar user={user} width={40} height={40} />
         <div>
-          <h5 className="max-w-40 truncate text-left">
-            {user.name}
-          </h5>
+          <h5 className="max-w-40 truncate text-left">{user.name}</h5>
           <div className="flex items-center gap-1">
             {(message && (
               <>
@@ -100,7 +93,9 @@ export default function Chat({
                     : message}
                 </p>
                 <p className="muted"> • </p>
-                <p className="muted">{moment(timestamp).fromNow()}</p>
+                <p className="muted">
+                  {timestamp && formatDistance(timestamp, new Date())}
+                </p>
               </>
             )) || (
               <p className="muted max-w-40 truncate text-left">

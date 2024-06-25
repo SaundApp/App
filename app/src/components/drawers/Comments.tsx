@@ -2,8 +2,7 @@ import { axiosClient } from "@/lib/axios";
 import type { Post } from "backend";
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { Link } from "@tanstack/react-router";
-import moment from "moment/min/moment-with-locales";
-import { useEffect, useRef, useState } from "react";
+import { useRef, useState } from "react";
 import { useTranslation } from "react-i18next";
 import { FaComment } from "react-icons/fa";
 import Avatar from "../account/Avatar";
@@ -12,17 +11,14 @@ import { useSession } from "../SessionContext";
 import { Drawer, DrawerContent, DrawerTrigger } from "../ui/drawer";
 import { Input } from "../ui/input";
 import type { ExtendedComment } from "@/types/prisma";
+import { formatDistance } from "date-fns";
 
 export default function Comments({ post }: { post: Post }) {
-  const { t, i18n } = useTranslation();
+  const { t } = useTranslation();
   const session = useSession();
   const queryClient = useQueryClient();
   const [message, setMessage] = useState("");
   const input = useRef<HTMLInputElement>(null);
-
-  useEffect(() => {
-    moment.locale(i18n.language);
-  }, [i18n.language]);
 
   const { data } = useQuery<ExtendedComment[]>({
     queryKey: ["posts", post.id, "comments"],
@@ -67,11 +63,11 @@ export default function Comments({ post }: { post: Post }) {
               <div>
                 <div className="flex items-center gap-2">
                   <Link to={`/account/${comment.user.username}`}>
-                    <h5 className="max-w-40 truncate">
-                      {comment.user.name}
-                    </h5>
+                    <h5 className="max-w-40 truncate">{comment.user.name}</h5>
                   </Link>
-                  <p className="muted">{moment(comment.createdAt).fromNow()}</p>
+                  <p className="muted">
+                    {formatDistance(comment.createdAt, new Date())}
+                  </p>
                 </div>
 
                 <div>

@@ -1,5 +1,6 @@
 import AppUrlListener from "@/components/AppUrlListener";
 import Navbar from "@/components/Navbar";
+import "@/components/SentryLoader";
 import { SessionContext } from "@/components/SessionContext";
 import { ThemeProvider } from "@/components/ThemeProvider";
 import { Toaster } from "@/components/ui/toaster";
@@ -76,7 +77,7 @@ function App() {
           className={`flex h-screen min-h-screen flex-col bg-background px-3 py-6 font-geist text-foreground`}
         >
           <Outlet />
-          {router.location.pathname.match(/^(?!(\/dm\/\w+|\/auth)).*/g) && (
+          {session && router.location.pathname.match(/^(?!(\/dm\/\w+|\/auth)).*/g) && (
             <Navbar />
           )}
           <Toaster />
