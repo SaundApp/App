@@ -14,6 +14,7 @@ import { signToken } from "../lib/jwt";
 import prisma from "../lib/prisma";
 import { spotifyCredentials, syncUser } from "../lib/spotify";
 import { isLanguageSupported } from "../lib/translations";
+import { deleteCookie, getCookie, setCookie } from "hono/cookie";
 
 const hono = new Hono<{ Variables: JwtVariables }>();
 
@@ -307,7 +308,10 @@ hono.patch(
 );
 
 hono.get("/login/spotify", async (ctx) => {
+  const token = ctx.req.query("token");
   const state = Math.random().toString(36).substring(2, 18);
+
+  if (token) setCookie(ctx, "spotify_token", token);
 
   return ctx.redirect(
     "https://accounts.spotify.com/authorize?" +
@@ -331,11 +335,13 @@ hono.get("/login/spotify", async (ctx) => {
 });
 
 hono.get("/callback/spotify", async (ctx) => {
+  const token = getCookie(ctx, "spotify_token");
   let user;
 
-  if (ctx.req.header("Authorization")) {
-    const token = ctx.req.header("Authorization")!.split(" ")[1];
+  if (token) {
     const payload = await verify(token, process.env.JWT_SECRET!);
+
+    deleteCookie(ctx, "spotify_token");
 
     if (payload && payload.user)
       user = await prisma.user.findUnique({

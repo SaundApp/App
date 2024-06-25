@@ -58,6 +58,13 @@ function App() {
       router.location.pathname !== "/auth/login" &&
       router.location.pathname !== "/auth/register"
     ) {
+      const tokens = localStorage.getItem("tokens");
+      if (tokens) {
+        localStorage.setItem("token", JSON.parse(tokens)[0]);
+        location.reload();
+        return;
+      }
+
       location.href = "/auth/login";
     }
   }, [token, router.location.pathname, queryClient]);
