@@ -49,4 +49,5 @@ USER hono
 COPY --from=installer /app .
 COPY ./translations /translations
 
+EXPOSE 8000
 CMD node backend/dist/backend/src/index.js
