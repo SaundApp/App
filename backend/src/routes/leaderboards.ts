@@ -1,9 +1,8 @@
+import { NotificationType, prisma, sendNotification } from "backend-common";
 import { Hono } from "hono";
-import prisma from "../lib/prisma";
+import { jwt } from "hono/jwt";
 import { fetchStreams } from "../lib/stats";
 import admin from "../middlewares/admin";
-import { jwt } from "hono/jwt";
-import { NotificationType, sendNotification } from "../lib/notifications";
 
 const hono = new Hono();
 

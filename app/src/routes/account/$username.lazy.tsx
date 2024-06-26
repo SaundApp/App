@@ -1,24 +1,24 @@
+import BackIcon from "@/components/BackIcon";
+import { useSession } from "@/components/SessionContext";
 import AccountNavbar from "@/components/account/AccountNavbar";
 import Avatar from "@/components/account/Avatar";
 import Listeners from "@/components/account/Listeners";
 import Posts from "@/components/account/Posts";
-import BackIcon from "@/components/BackIcon";
 import Accounts from "@/components/drawers/Accounts";
 import Subscribe from "@/components/drawers/Subscribe";
 import Users from "@/components/drawers/Users";
-import { useSession } from "@/components/SessionContext";
 import { Button } from "@/components/ui/button";
 import { Spinner } from "@/components/ui/spinner";
 import { useToast } from "@/components/ui/use-toast";
 import { axiosClient } from "@/lib/axios";
 import type { PublicUser } from "@/types/prisma";
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
-import { createLazyFileRoute, Link } from "@tanstack/react-router";
-import type { Post, SubscriptionSettings } from "backend";
+import { Link, createLazyFileRoute } from "@tanstack/react-router";
+import type { Post, SubscriptionSettings } from "backend-common/types";
+import { LucideHeartHandshake } from "lucide-react";
 import { useEffect, useState } from "react";
 import { useTranslation } from "react-i18next";
 import { FaGear } from "react-icons/fa6";
-import { LucideHeartHandshake } from "lucide-react";
 
 export const Route = createLazyFileRoute("/account/$username")({
   component: Account,

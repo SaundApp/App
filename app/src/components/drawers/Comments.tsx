@@ -1,17 +1,17 @@
 import { axiosClient } from "@/lib/axios";
-import type { Post } from "backend";
+import type { ExtendedComment } from "@/types/prisma";
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { Link } from "@tanstack/react-router";
+import type { Post } from "backend-common/types";
+import { formatDistance } from "date-fns";
 import { useRef, useState } from "react";
 import { useTranslation } from "react-i18next";
 import { FaComment } from "react-icons/fa";
+import { useSession } from "../SessionContext";
 import Avatar from "../account/Avatar";
 import Mentions from "../dropdown/Mentions";
-import { useSession } from "../SessionContext";
 import { Drawer, DrawerContent, DrawerTrigger } from "../ui/drawer";
 import { Input } from "../ui/input";
-import type { ExtendedComment } from "@/types/prisma";
-import { formatDistance } from "date-fns";
 
 export default function Comments({ post }: { post: Post }) {
   const { t } = useTranslation();

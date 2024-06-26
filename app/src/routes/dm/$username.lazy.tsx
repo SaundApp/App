@@ -1,19 +1,19 @@
+import Avatar from "@/components/account/Avatar";
 import Message from "@/components/dm/Message";
+import { Spinner } from "@/components/ui/spinner";
 import { Textarea } from "@/components/ui/textarea";
+import { useToast } from "@/components/ui/use-toast";
 import { axiosClient } from "@/lib/axios";
-import type { Message as MessageType } from "backend";
+import type { PublicUser } from "@/types/prisma";
 import { useQuery } from "@tanstack/react-query";
 import { createLazyFileRoute, Link } from "@tanstack/react-router";
+import type { Message as MessageType } from "backend-common/types";
 import { useEffect, useRef, useState } from "react";
 import { useAudioRecorder } from "react-audio-voice-recorder";
 import { useTranslation } from "react-i18next";
 import { FaCamera, FaChevronLeft } from "react-icons/fa";
 import { FaXmark } from "react-icons/fa6";
 import VoiceRecorder from "../../components/dm/VoiceRecorder";
-import { useToast } from "@/components/ui/use-toast";
-import Avatar from "@/components/account/Avatar";
-import { Spinner } from "@/components/ui/spinner";
-import type { PublicUser } from "@/types/prisma";
 
 export const Route = createLazyFileRoute("/dm/$username")({
   component: Chat,

@@ -1,8 +1,7 @@
-import { AttachmentType } from "@prisma/client";
+import { AttachmentType, prisma } from "backend-common";
 import { Hono } from "hono";
 import { jwt } from "hono/jwt";
 import { stream } from "hono/streaming";
-import prisma from "../lib/prisma";
 
 const hono = new Hono();
 

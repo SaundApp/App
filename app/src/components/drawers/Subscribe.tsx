@@ -1,10 +1,10 @@
 import { Drawer, DrawerContent } from "@/components/ui/drawer";
-import { useTranslation } from "react-i18next";
-import { Button } from "../ui/button";
 import { axiosClient } from "@/lib/axios";
 import type { PublicUser } from "@/types/prisma";
-import type { SubscriptionSettings } from "backend";
+import type { SubscriptionSettings } from "backend-common/types";
+import { useTranslation } from "react-i18next";
 import { MdVerified } from "react-icons/md";
+import { Button } from "../ui/button";
 
 export default function Subscribe({
   user,

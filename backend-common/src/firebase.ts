@@ -1,7 +1,6 @@
+import firebaseClient, { credential } from "firebase-admin";
 import { initializeApp } from "firebase-admin/app";
-import { credential } from "firebase-admin";
-import { existsSync, readFileSync } from "fs";
-import firebase from "firebase-admin";
+import { existsSync, readFileSync } from "node:fs";
 
 const googleCredentials = existsSync("google-credentials.json")
   ? readFileSync("google-credentials.json", "utf-8")
@@ -18,4 +17,4 @@ googleCredentials &&
     credential: credential.cert(JSON.parse(googleCredentials)),
   });
 
-export default googleCredentials ? firebase : null;
+export const firebase = googleCredentials ? firebaseClient : null;

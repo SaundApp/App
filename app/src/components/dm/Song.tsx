@@ -1,12 +1,12 @@
 import { axiosClient } from "@/lib/axios";
-import type { Message } from "backend";
+import type { ExtendedPost } from "@/types/prisma";
 import { useQuery } from "@tanstack/react-query";
 import { Link } from "@tanstack/react-router";
+import type { Message } from "backend-common/types";
+import { format } from "date-fns";
 import { SiSpotify } from "react-icons/si";
 import { ContextMenu, ContextMenuTrigger } from "../ui/context-menu";
 import Menu from "./Menu";
-import type { ExtendedPost } from "@/types/prisma";
-import { format } from "date-fns";
 
 export default function Song({
   postId,

@@ -2,7 +2,7 @@ import { Link } from "@tanstack/react-router";
 import { formatDistance } from "date-fns";
 import React from "react";
 import { Button } from "./ui/button";
-import type { NotificationButton } from "backend";
+import type { NotificationButton } from "backend-common/types";
 import Avatar from "./account/Avatar";
 import { axiosClient } from "@/lib/axios";
 import { useQueryClient } from "@tanstack/react-query";

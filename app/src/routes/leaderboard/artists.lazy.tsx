@@ -4,7 +4,7 @@ import { Spinner } from "@/components/ui/spinner";
 import { axiosClient } from "@/lib/axios";
 import { useQuery } from "@tanstack/react-query";
 import { createLazyFileRoute } from "@tanstack/react-router";
-import type { User } from "backend";
+import type { User } from "backend-common/types";
 import { useTranslation } from "react-i18next";
 
 export const Route = createLazyFileRoute("/leaderboard/artists")({

@@ -1,4 +1,4 @@
-import type { Post, Comment, User, Follows } from "backend";
+import type { Comment, Follows, Post, User } from "backend-common/types";
 
 export type PublicUser = {
   id: string;
