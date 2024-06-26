@@ -1,3 +1,6 @@
 [submodule "react-audio-recorder"]
 	path = react-audio-recorder
 	url = https://github.com/Michelo11/react-audio-recorder
+[submodule "email"]
+	path = email
+	url = https://github.com/SaundApp/Emails
