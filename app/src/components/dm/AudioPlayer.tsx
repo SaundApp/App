@@ -1,4 +1,4 @@
-import type { Message } from "backend";
+import type { Message } from "backend-common/types";
 import { format } from "date-fns";
 import { useEffect, useRef, useState } from "react";
 import { FaCirclePause, FaCirclePlay } from "react-icons/fa6";

@@ -1,15 +1,12 @@
+import { serve } from "@hono/node-server";
+import { sentry } from "@hono/sentry";
 import "dotenv/config";
 import { readdirSync } from "fs";
 import { Hono } from "hono";
-import { createBunWebSocket } from "hono/bun";
 import { cors } from "hono/cors";
 import path from "path";
-import { sentry } from "@hono/sentry";
-
-const { upgradeWebSocket, websocket } = createBunWebSocket();
 
 export const app = new Hono();
-export { upgradeWebSocket };
 
 app.use(
   sentry({
@@ -43,8 +40,7 @@ readdirSync(path.join(__dirname, "routes")).forEach((file) => {
 const port = 8000;
 console.log(`[Server] Running on port ${port}`);
 
-Bun.serve({
+serve({
   fetch: app.fetch,
   port,
-  websocket,
 });

@@ -4,7 +4,7 @@ import { Input } from "@/components/ui/input";
 import { axiosClient } from "@/lib/axios";
 import { useQuery } from "@tanstack/react-query";
 import { createLazyFileRoute } from "@tanstack/react-router";
-import type { User } from "backend";
+import type { User } from "backend-common/types";
 import { useEffect, useState } from "react";
 import { useTranslation } from "react-i18next";
 import { FaXmark } from "react-icons/fa6";
@@ -26,9 +26,7 @@ function Search() {
   const searchHistoryData = localStorage.getItem("searchHistory");
 
   useEffect(() => {
-    const searchHistory = JSON.parse(
-      searchHistoryData || "[]",
-    );
+    const searchHistory = JSON.parse(searchHistoryData || "[]");
 
     axiosClient
       .get(`/users/search?q=${searchHistory.join(",")}`)

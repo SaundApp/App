@@ -1,6 +1,4 @@
-import firebase from "./firebase";
-import prisma from "./prisma";
-import { getMessage } from "./translations";
+import { firebase, getMessage, prisma } from ".";
 
 export enum NotificationType {
   LIKE = "like",

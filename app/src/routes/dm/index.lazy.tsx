@@ -4,7 +4,7 @@ import { axiosClient } from "@/lib/axios";
 import type { PublicUser } from "@/types/prisma";
 import { useQuery } from "@tanstack/react-query";
 import { createLazyFileRoute } from "@tanstack/react-router";
-import type { Message, User } from "backend";
+import type { Message, User } from "backend-common/types";
 import { useState } from "react";
 import { useTranslation } from "react-i18next";
 

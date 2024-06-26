@@ -1,10 +1,16 @@
-import { readFileSync, readdirSync } from "fs";
+import { readFileSync, readdirSync } from "node:fs";
+import { join } from "node:path";
 
 const locales = new Map<string, any>();
-readdirSync("translations").forEach((locale) => {
+readdirSync(join(__dirname, "../translations")).forEach((locale) => {
   locales.set(
     locale,
-    JSON.parse(readFileSync(`translations/${locale}/translation.json`, "utf-8"))
+    JSON.parse(
+      readFileSync(
+        join(__dirname, `../translations/${locale}/translation.json`),
+        "utf-8"
+      )
+    )
   );
 });
 

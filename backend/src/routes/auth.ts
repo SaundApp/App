@@ -1,5 +1,6 @@
 import { zValidator } from "@hono/zod-validator";
-import { AttachmentType } from "@prisma/client";
+import { compareSync, hashSync } from "@node-rs/bcrypt";
+import { AttachmentType, prisma } from "backend-common";
 import {
   loginSchema,
   registerSchema,
@@ -7,14 +8,13 @@ import {
   updateSubscriptionSchema,
 } from "form-types";
 import { Hono } from "hono";
+import { deleteCookie, getCookie, setCookie } from "hono/cookie";
 import { JwtVariables, jwt, verify } from "hono/jwt";
 import SpotifyWebApi from "spotify-web-api-node";
 import { createAvatar } from "../lib/avatar";
 import { signToken } from "../lib/jwt";
-import prisma from "../lib/prisma";
 import { spotifyCredentials, syncUser } from "../lib/spotify";
-import { isLanguageSupported } from "../lib/translations";
-import { deleteCookie, getCookie, setCookie } from "hono/cookie";
+import { isLanguageSupported } from "../../../backend-common/src/translations";
 
 const hono = new Hono<{ Variables: JwtVariables }>();
 
@@ -68,7 +68,7 @@ hono.post("/register", zValidator("json", registerSchema), async (ctx) => {
     );
   }
 
-  const hashedPassword = await Bun.password.hash(body.password);
+  const hashedPassword = hashSync(body.password);
   const user = await prisma.user.create({
     data: {
       username: body.username,
@@ -107,7 +107,7 @@ hono.post("/login", zValidator("json", loginSchema), async (ctx) => {
     );
   }
 
-  const passwordMatch = await Bun.password.verify(body.password, user.password);
+  const passwordMatch = compareSync(body.password, user.password);
 
   if (!passwordMatch) {
     return ctx.json(

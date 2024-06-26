@@ -1,9 +1,9 @@
+import { zValidator } from "@hono/zod-validator";
+import { prisma } from "backend-common";
+import type { Notification } from "backend-common/types";
+import { notificationSettingsSchema } from "form-types";
 import { Hono } from "hono";
 import { jwt } from "hono/jwt";
-import prisma from "../lib/prisma";
-import type { Notification } from "@prisma/client";
-import { notificationSettingsSchema } from "form-types";
-import { zValidator } from "@hono/zod-validator";
 
 const hono = new Hono();
 
@@ -77,7 +77,7 @@ hono.patch(
     const payload = ctx.get("jwtPayload");
     const body = ctx.req.valid("json");
 
-    console.log(body)
+    console.log(body);
 
     await prisma.user.update({
       where: { id: payload.user },

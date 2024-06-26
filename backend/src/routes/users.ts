@@ -1,7 +1,6 @@
+import { NotificationType, prisma, sendNotification } from "backend-common";
 import { Hono } from "hono";
 import { jwt } from "hono/jwt";
-import { NotificationType, sendNotification } from "../lib/notifications";
-import prisma from "../lib/prisma";
 import stripe from "../lib/stripe";
 
 const hono = new Hono();

@@ -1,7 +1,7 @@
 import { SpotifyApi } from "@spotify/web-api-ts-sdk";
+import { prisma } from "backend-common";
+import type { User } from "backend-common/types";
 import SpotifyWebApi from "spotify-web-api-node";
-import prisma from "./prisma";
-import { User } from "@prisma/client";
 
 export const spotify = SpotifyApi.withClientCredentials(
   process.env.SPOTIFY_CLIENT_ID!,

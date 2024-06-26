@@ -15,7 +15,10 @@ import { useToast } from "@/components/ui/use-toast";
 import { axiosClient } from "@/lib/axios";
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { createLazyFileRoute } from "@tanstack/react-router";
-import type { NotificationMethod, NotificationSettings } from "backend";
+import type {
+  NotificationMethod,
+  NotificationSettings,
+} from "backend-common/types";
 import { useState } from "react";
 import { useTranslation } from "react-i18next";
 import { FaBell, FaEnvelope, FaMobile } from "react-icons/fa";

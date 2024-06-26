@@ -1,5 +1,7 @@
 packages:
   - "app"
-  - "backend"
   - "react-audio-recorder"
   - "form-types"
+  - "ws-server"
+  - "backend-common"
+  - "backend"
