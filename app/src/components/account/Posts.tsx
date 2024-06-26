@@ -1,5 +1,5 @@
+import type { Post } from "@repo/backend-common/types";
 import { Link } from "@tanstack/react-router";
-import type { Post } from "backend-common/types";
 import { useTranslation } from "react-i18next";
 
 export default function Posts({ posts }: { posts?: Post[] }) {

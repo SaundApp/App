@@ -1,10 +1,10 @@
 import { serve } from "@hono/node-server";
 import { sentry } from "@hono/sentry";
 import "dotenv/config";
-import { readdirSync } from "fs";
 import { Hono } from "hono";
 import { cors } from "hono/cors";
-import path from "path";
+import { readdirSync } from "node:fs";
+import path from "node:path";
 
 export const app = new Hono();
 

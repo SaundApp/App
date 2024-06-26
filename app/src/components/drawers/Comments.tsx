@@ -1,8 +1,8 @@
 import { axiosClient } from "@/lib/axios";
 import type { ExtendedComment } from "@/types/prisma";
+import type { Post } from "@repo/backend-common/types";
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { Link } from "@tanstack/react-router";
-import type { Post } from "backend-common/types";
 import { formatDistance } from "date-fns";
 import { useRef, useState } from "react";
 import { useTranslation } from "react-i18next";

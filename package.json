@@ -3,7 +3,12 @@
   "private": true,
   "workspaces": [
     "app",
-    "backend"
+    "backend",
+    "backend-common",
+    "email",
+    "form-types",
+    "react-audio-recorder",
+    "ws-server"
   ],
   "scripts": {
     "build": "turbo build",
@@ -15,8 +20,8 @@
     "prettier": "^3.3.2",
     "turbo": "^2.0.5"
   },
-  "packageManager": "pnpm@9.4.0",
   "engines": {
     "node": ">=18"
-  }
+  },
+  "packageManager": "yarn@1.22.19+sha1.4ba7fc5c6e704fce2066ecbfb0b0d8976fe62447"
 }

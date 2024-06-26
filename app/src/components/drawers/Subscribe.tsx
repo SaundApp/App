@@ -1,7 +1,7 @@
 import { Drawer, DrawerContent } from "@/components/ui/drawer";
 import { axiosClient } from "@/lib/axios";
 import type { PublicUser } from "@/types/prisma";
-import type { SubscriptionSettings } from "backend-common/types";
+import type { SubscriptionSettings } from "@repo/backend-common/types";
 import { useTranslation } from "react-i18next";
 import { MdVerified } from "react-icons/md";
 import { Button } from "../ui/button";

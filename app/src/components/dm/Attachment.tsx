@@ -1,9 +1,9 @@
 import { axiosClient } from "@/lib/axios";
-import { useQuery } from "@tanstack/react-query";
 import type {
   Attachment as AttachmentType,
   Message,
-} from "backend-common/types";
+} from "@repo/backend-common/types";
+import { useQuery } from "@tanstack/react-query";
 import { format } from "date-fns";
 import { ContextMenu, ContextMenuTrigger } from "../ui/context-menu";
 import AudioPlayer from "./AudioPlayer";

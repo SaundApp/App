@@ -1,4 +1,8 @@
-import { NotificationType, prisma, sendNotification } from "backend-common";
+import {
+  NotificationType,
+  prisma,
+  sendNotification,
+} from "@repo/backend-common";
 import type { ServerWebSocket } from "bun";
 import { Hono } from "hono";
 import { createBunWebSocket } from "hono/bun";

@@ -1,4 +1,4 @@
-import type { Message } from "backend-common/types";
+import type { Message } from "@repo/backend-common/types";
 import { format } from "date-fns";
 import { useTranslation } from "react-i18next";
 import { ContextMenu, ContextMenuTrigger } from "../ui/context-menu";

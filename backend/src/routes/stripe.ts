@@ -1,4 +1,4 @@
-import { prisma } from "backend-common";
+import { prisma } from "@repo/backend-common";
 import { Hono } from "hono";
 import { jwt } from "hono/jwt";
 import stripe from "../lib/stripe";

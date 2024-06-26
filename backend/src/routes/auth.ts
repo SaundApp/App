@@ -1,20 +1,20 @@
 import { zValidator } from "@hono/zod-validator";
 import { compareSync, hashSync } from "@node-rs/bcrypt";
-import { AttachmentType, prisma } from "backend-common";
+import { AttachmentType, prisma } from "@repo/backend-common";
 import {
   loginSchema,
   registerSchema,
   updateSchema,
   updateSubscriptionSchema,
-} from "form-types";
+} from "@repo/form-types";
 import { Hono } from "hono";
 import { deleteCookie, getCookie, setCookie } from "hono/cookie";
 import { JwtVariables, jwt, verify } from "hono/jwt";
 import SpotifyWebApi from "spotify-web-api-node";
+import { isLanguageSupported } from "../../../backend-common/src/translations";
 import { createAvatar } from "../lib/avatar";
 import { signToken } from "../lib/jwt";
 import { spotifyCredentials, syncUser } from "../lib/spotify";
-import { isLanguageSupported } from "../../../backend-common/src/translations";
 
 const hono = new Hono<{ Variables: JwtVariables }>();
 

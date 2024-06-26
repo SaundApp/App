@@ -1,10 +1,11 @@
 {
-  "name": "ws-server",
+  "name": "@repo/ws-server",
+  "version": "0.0.0",
   "scripts": {
     "dev": "bun run --hot src/index.ts"
   },
   "dependencies": {
-    "backend-common": "link:../backend-common",
+    "@repo/backend-common": "0.0.0",
     "hono": "^4.4.8"
   },
   "devDependencies": {

@@ -1,18 +1,21 @@
 {
-  "name": "backend-common",
+  "name": "@repo/backend-common",
   "version": "0.0.0",
   "main": "src/index.ts",
   "exports": {
-    ".": "./src/index.ts",
+    ".": "./dist/index.js",
     "./types": "./src/types/index.ts"
   },
   "scripts": {
     "db:studio": "prisma studio",
     "db:generate": "prisma generate",
-    "db:push": "prisma db push"
+    "db:push": "prisma db push",
+    "build": "tsc",
+    "postinstall": "prisma generate"
   },
   "devDependencies": {
-    "prisma": "^5.16.0"
+    "prisma": "^5.16.0",
+    "typescript": "^5.5.2"
   },
   "dependencies": {
     "@prisma/client": "^5.16.0",

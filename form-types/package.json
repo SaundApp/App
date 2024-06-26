@@ -1,15 +1,14 @@
 {
-  "name": "form-types",
+  "name": "@repo/form-types",
   "version": "0.0.0",
-  "description": "",
-  "main": "index.ts",
+  "main": "dist/index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "build": "tsc"
   },
-  "keywords": [],
-  "author": "",
-  "license": "ISC",
   "dependencies": {
     "zod": "^3.23.8"
+  },
+  "devDependencies": {
+    "typescript": "^5.5.2"
   }
 }

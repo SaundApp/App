@@ -1,7 +1,7 @@
 import { zValidator } from "@hono/zod-validator";
-import { prisma } from "backend-common";
-import type { Notification } from "backend-common/types";
-import { notificationSettingsSchema } from "form-types";
+import type { Notification } from "@repo/backend-common";
+import { prisma } from "@repo/backend-common";
+import { notificationSettingsSchema } from "@repo/form-types";
 import { Hono } from "hono";
 import { jwt } from "hono/jwt";
 

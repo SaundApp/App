@@ -1,4 +1,4 @@
-import type { Comment, Follows, Post, User } from "backend-common/types";
+import type { Comment, Follows, Post, User } from "@repo/backend-common/types";
 
 export type PublicUser = {
   id: string;

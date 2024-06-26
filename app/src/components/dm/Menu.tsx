@@ -1,4 +1,4 @@
-import type { Message } from "backend-common/types";
+import type { Message } from "@repo/backend-common/types";
 import { useTranslation } from "react-i18next";
 import { ContextMenuContent, ContextMenuItem } from "../ui/context-menu";
 

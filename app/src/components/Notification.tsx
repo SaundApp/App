@@ -1,11 +1,11 @@
+import { axiosClient } from "@/lib/axios";
+import type { NotificationButton } from "@repo/backend-common/types";
+import { useQueryClient } from "@tanstack/react-query";
 import { Link } from "@tanstack/react-router";
 import { formatDistance } from "date-fns";
 import React from "react";
-import { Button } from "./ui/button";
-import type { NotificationButton } from "backend-common/types";
 import Avatar from "./account/Avatar";
-import { axiosClient } from "@/lib/axios";
-import { useQueryClient } from "@tanstack/react-query";
+import { Button } from "./ui/button";
 
 export default function Notification({
   imageId,

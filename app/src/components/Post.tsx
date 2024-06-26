@@ -1,6 +1,7 @@
 import { axiosClient } from "@/lib/axios";
 import { getDominantColor } from "@/lib/utils";
 import type { ExtendedPost } from "@/types/prisma";
+import type { User } from "@repo/backend-common/types";
 import type {
   Album,
   Playlist,
@@ -10,7 +11,6 @@ import type {
 } from "@spotify/web-api-ts-sdk";
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { Link } from "@tanstack/react-router";
-import type { User } from "backend-common/types";
 
 import { useEffect, useRef, useState } from "react";
 import { useTranslation } from "react-i18next";

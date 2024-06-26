@@ -1,5 +1,9 @@
-import { NotificationType, prisma, sendNotification } from "backend-common";
-import type { Prisma } from "backend-common/types";
+import type { Prisma } from "@repo/backend-common";
+import {
+  NotificationType,
+  prisma,
+  sendNotification,
+} from "@repo/backend-common";
 import { Hono } from "hono";
 import { jwt } from "hono/jwt";
 import { spotify } from "../lib/spotify";

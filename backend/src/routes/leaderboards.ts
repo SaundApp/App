@@ -1,4 +1,8 @@
-import { NotificationType, prisma, sendNotification } from "backend-common";
+import {
+  NotificationType,
+  prisma,
+  sendNotification,
+} from "@repo/backend-common";
 import { Hono } from "hono";
 import { jwt } from "hono/jwt";
 import { fetchStreams } from "../lib/stats";

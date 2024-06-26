@@ -13,12 +13,12 @@ import {
 import { ToggleGroup, ToggleGroupItem } from "@/components/ui/toggle-group";
 import { useToast } from "@/components/ui/use-toast";
 import { axiosClient } from "@/lib/axios";
-import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
-import { createLazyFileRoute } from "@tanstack/react-router";
 import type {
   NotificationMethod,
   NotificationSettings,
-} from "backend-common/types";
+} from "@repo/backend-common/types";
+import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
+import { createLazyFileRoute } from "@tanstack/react-router";
 import { useState } from "react";
 import { useTranslation } from "react-i18next";
 import { FaBell, FaEnvelope, FaMobile } from "react-icons/fa";

@@ -2,9 +2,9 @@ import Notification from "@/components/Notification";
 import { Spinner } from "@/components/ui/spinner";
 import { axiosClient } from "@/lib/axios";
 import type { PublicUser } from "@/types/prisma";
+import type { Notification as NotificationModel } from "@repo/backend-common/types";
 import { useQuery } from "@tanstack/react-query";
 import { createLazyFileRoute } from "@tanstack/react-router";
-import type { Notification as NotificationModel } from "backend-common/types";
 import { useTranslation } from "react-i18next";
 
 export const Route = createLazyFileRoute("/notifications")({
