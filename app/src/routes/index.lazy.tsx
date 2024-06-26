@@ -70,7 +70,7 @@ function Index() {
   if (!session) return null;
 
   return (
-    <div className="flex h-full max-h-[93vh] flex-col gap-3 overflow-y-auto">
+    <div className="flex h-full max-h-[92vh] flex-col gap-3 overflow-y-auto">
       <div className="flex items-center justify-between">
         <h1>Saund</h1>
         <Link to="/dm">

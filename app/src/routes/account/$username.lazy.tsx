@@ -91,11 +91,10 @@ function Account() {
             toast({
               description: t("toast.success.follow_request"),
             });
-
-            queryClient.invalidateQueries({ queryKey: ["user", username] });
           }
         }),
     onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ["user", username] });
       queryClient.invalidateQueries({ queryKey: ["me"] });
     },
   });
@@ -109,6 +108,7 @@ function Account() {
   const unfollow = useMutation({
     mutationFn: (user: string) => axiosClient.delete(`/users/${user}/unfollow`),
     onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ["user", username] });
       queryClient.invalidateQueries({ queryKey: ["me"] });
     },
   });

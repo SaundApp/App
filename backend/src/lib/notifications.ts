@@ -76,16 +76,19 @@ export async function sendNotification(
   }
 
   if (settings.includes("EMAIL")) {
-    // todo: send email
+    // TODO: send email
   }
 
   if (!user?.notificationToken || !settings.includes("PUSH")) return;
 
-  await firebase?.messaging().send({
-    token: user.notificationToken,
-    notification: {
-      title: data.user ? data.user : message,
-      body: data.user ? message : undefined,
-    },
-  });
+  firebase
+    ?.messaging()
+    .send({
+      token: user.notificationToken,
+      notification: {
+        title: data.user ? data.user : message,
+        body: data.user ? message : undefined,
+      },
+    })
+    .catch();
 }
