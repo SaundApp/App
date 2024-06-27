@@ -8,7 +8,7 @@ import { Hono } from "hono";
 import { createBunWebSocket } from "hono/bun";
 import { verify } from "hono/jwt";
 
-const { upgradeWebSocket } = createBunWebSocket();
+const { upgradeWebSocket, websocket } = createBunWebSocket();
 const app = new Hono();
 
 app.get(
@@ -193,4 +193,9 @@ app.get(
     };
   })
 );
-export default app;
+
+Bun.serve({
+  fetch: app.fetch,
+  port: 8056,
+  websocket,
+});
