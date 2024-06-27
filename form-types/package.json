@@ -2,6 +2,17 @@
   "name": "@repo/form-types",
   "version": "0.0.0",
   "main": "dist/index.js",
+  "types": "index.ts",
+  "exports": {
+    ".": {
+      "import": "./index.ts",
+      "require": "./index.ts"
+    },
+    "./dist": {
+      "import": "./dist/index.js",
+      "require": "./dist/index.js"
+    }
+  },
   "scripts": {
     "build": "tsc"
   },

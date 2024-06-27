@@ -2,7 +2,8 @@
   "name": "@repo/ws-server",
   "version": "0.0.0",
   "scripts": {
-    "dev": "bun run --hot src/index.ts"
+    "dev": "bun run --hot src/index.ts",
+    "build": "bun build ./src/index.ts --target=bun --sourcemap --outfile=dist/server.js"
   },
   "dependencies": {
     "@repo/backend-common": "0.0.0",

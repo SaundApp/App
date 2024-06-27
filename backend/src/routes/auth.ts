@@ -6,7 +6,7 @@ import {
   registerSchema,
   updateSchema,
   updateSubscriptionSchema,
-} from "@repo/form-types";
+} from "@repo/form-types/dist";
 import { Hono } from "hono";
 import { deleteCookie, getCookie, setCookie } from "hono/cookie";
 import { JwtVariables, jwt, verify } from "hono/jwt";
