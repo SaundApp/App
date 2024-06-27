@@ -1067,6 +1067,13 @@
   resolved "https://registry.yarnpkg.com/@hono/node-server/-/node-server-1.11.4.tgz#f0439a424e4a2037d5cbf2b2cc8e9f6a5f86d4db"
   integrity sha512-8TOiiiAqcFC6f62P7M9p6adQREAlWdVi1awehAwgWW+3R65/rKzHnLARO/Hu/466z01VNViBoogqatqXJMyItA==
 
+"@hono/node-ws@^1.0.1":
+  version "1.0.1"
+  resolved "https://registry.yarnpkg.com/@hono/node-ws/-/node-ws-1.0.1.tgz#0296f5ba41aafc6bffcc89786d96289b334d880f"
+  integrity sha512-mY2oXLq0DPBDT99cT+eJy2YDufB6GYHU1LnUkE8d/Ej/yKp1+VTPrD88oYh79pXHUP0yMeHZV2dTt5O4OpkndA==
+  dependencies:
+    ws "^8.17.0"
+
 "@hono/sentry@^1.1.0":
   version "1.1.0"
   resolved "https://registry.yarnpkg.com/@hono/sentry/-/sentry-1.1.0.tgz#c8311439b46eaaaebd53e6150f1ec345a004a98e"
@@ -3508,13 +3515,6 @@
     "@types/connect" "*"
     "@types/node" "*"
 
-"@types/bun@latest":
-  version "1.1.5"
-  resolved "https://registry.yarnpkg.com/@types/bun/-/bun-1.1.5.tgz#b93ef56737179f05cbea48d849888b34f5f98c46"
-  integrity sha512-7RprVDMF+1o+EWSo7F1+iJpkfNz+Ikw9K//vwambcY+D1QHXfb9l7jWY1hSBfuFEkW9yFAhkMzP2uTi1pQXoqw==
-  dependencies:
-    bun-types "1.1.14"
-
 "@types/caseless@*":
   version "0.12.5"
   resolved "https://registry.yarnpkg.com/@types/caseless/-/caseless-0.12.5.tgz#db9468cb1b1b5a925b8f34822f1669df0c5472f5"
@@ -3630,13 +3630,6 @@
   version "16.9.1"
   resolved "https://registry.yarnpkg.com/@types/node/-/node-16.9.1.tgz#0611b37db4246c937feef529ddcc018cf8e35708"
   integrity sha512-QpLcX9ZSsq3YYUUnD3nFDY8H7wctAhQj/TFKL8Ya8v5fMm3CFXxo8zStsLAl780ltoYoo1WvKUVGBQK+1ifr7g==
-
-"@types/node@~20.12.8":
-  version "20.12.14"
-  resolved "https://registry.yarnpkg.com/@types/node/-/node-20.12.14.tgz#0c5cf7ef26aedfd64b0539bba9380ed1f57dcc77"
-  integrity sha512-scnD59RpYD91xngrQQLGkE+6UrHUPzeKZWhhjBSa3HSkwjbQc38+q3RoIVEwxQGRw3M+j5hpNAM+lgV3cVormg==
-  dependencies:
-    undici-types "~5.26.4"
 
 "@types/normalize-package-data@^2.4.0":
   version "2.4.4"
@@ -3763,13 +3756,6 @@
     "@types/node" "*"
     tapable "^2.2.0"
     webpack "^5"
-
-"@types/ws@~8.5.10":
-  version "8.5.10"
-  resolved "https://registry.yarnpkg.com/@types/ws/-/ws-8.5.10.tgz#4acfb517970853fa6574a3a6886791d04a396787"
-  integrity sha512-vmQSUcfalpIq0R9q7uTo2lXs6eGIpt9wtnLdMv9LVpIjCA/+ufZRozlVoVelIYixx1ugCBKDhn89vnsEGOCx9A==
-  dependencies:
-    "@types/node" "*"
 
 "@typescript-eslint/eslint-plugin@^7.14.1":
   version "7.14.1"
@@ -4518,14 +4504,6 @@ buffer@^5.2.0, buffer@^5.5.0:
   dependencies:
     base64-js "^1.3.1"
     ieee754 "^1.1.13"
-
-bun-types@1.1.14:
-  version "1.1.14"
-  resolved "https://registry.yarnpkg.com/bun-types/-/bun-types-1.1.14.tgz#d91e26403f64d7bb475c263bef6744acc4b1ae60"
-  integrity sha512-esfxOvECTkjEuUEHBOoOo590Qggf4b9cz5h29AOB2SKt3yZwG3LbAX4iIYwWZX7GnO7vaY5hIdcQygwN0xGdNw==
-  dependencies:
-    "@types/node" "~20.12.8"
-    "@types/ws" "~8.5.10"
 
 busboy@1.6.0:
   version "1.6.0"
@@ -9992,7 +9970,7 @@ wrappy@1:
   resolved "https://registry.yarnpkg.com/wrappy/-/wrappy-1.0.2.tgz#b5243d8f3ec1aa35f1364605bc0d1036e30ab69f"
   integrity sha512-l4Sp/DRseor9wL6EvV2+TuQn63dMkPjZ/sp9XkghTEbV9KlPS1xUsZ3u7/IQO4wxtcFB4bgpQPRcR3QCvezPcQ==
 
-ws@~8.17.1:
+ws@^8.17.0, ws@~8.17.1:
   version "8.17.1"
   resolved "https://registry.yarnpkg.com/ws/-/ws-8.17.1.tgz#9293da530bb548febc95371d90f9c878727d919b"
   integrity sha512-6XQFvXTkbfUOZOKKILFG1PDK2NDQs4azKQl26T0YS5CxqWLgXajbPZ+h4gZekJyRqFU8pvnbAbbs/3TgRPy+GQ==

@@ -1,15 +1,19 @@
+import "dotenv/config";
 import {
   NotificationType,
   prisma,
   sendNotification,
 } from "@repo/backend-common";
-import type { ServerWebSocket } from "bun";
 import { Hono } from "hono";
-import { createBunWebSocket } from "hono/bun";
+import { createNodeWebSocket } from "@hono/node-ws";
+import { serve } from "@hono/node-server";
 import { verify } from "hono/jwt";
+import type { WSContext } from "hono/ws";
 
-const { upgradeWebSocket, websocket } = createBunWebSocket();
 const app = new Hono();
+const { injectWebSocket, upgradeWebSocket } = createNodeWebSocket({ app });
+
+const connectedSockets = new Map<string, WSContext>();
 
 app.get(
   "/:username",
@@ -42,7 +46,6 @@ app.get(
     return {
       async onMessage(event, ws) {
         const command = event.data.toString();
-        const raw = ws.raw as ServerWebSocket;
 
         if (
           !command.startsWith("+") &&
@@ -75,8 +78,8 @@ app.get(
             },
           });
 
-          raw.publish(`${target!.id}:${payload.user}`, command);
-          raw.send(command);
+          connectedSockets.get(`${target!.id}:${payload.user}`)?.send(command);
+          ws.send(command);
 
           return;
         }
@@ -103,8 +106,10 @@ app.get(
 
             if (!result) return;
 
-            raw.publish(`${target!.id}:${payload.user}`, command);
-            raw.send(command);
+            connectedSockets
+              .get(`${target!.id}:${payload.user}`)
+              ?.send(command);
+            ws.send(command);
           } catch (e) {}
 
           return;
@@ -148,11 +153,10 @@ app.get(
             message: content,
           });
 
-          raw.publish(
-            `${target!.id}:${payload.user}`,
-            "+" + JSON.stringify(result)
-          );
-          raw.send("+" + JSON.stringify(result));
+          connectedSockets
+            .get(`${target!.id}:${payload.user}`)
+            ?.send("+" + JSON.stringify(result));
+          ws.send("+" + JSON.stringify(result));
 
           return;
         }
@@ -165,16 +169,13 @@ app.get(
           },
         });
 
-        raw.publish(
-          `${target!.id}:${payload.user}`,
-          "+" + JSON.stringify(result)
-        );
-        raw.send("+" + JSON.stringify(result));
+        connectedSockets
+          .get(`${target!.id}:${payload.user}`)
+          ?.send("+" + JSON.stringify(result));
+        ws.send("+" + JSON.stringify(result));
       },
       async onOpen(_, ws) {
         console.log(`[WS] ${payload.user} connected to ${username}`);
-
-        const raw = ws.raw as ServerWebSocket;
 
         if (!target) {
           ws.send("error:User not found");
@@ -182,20 +183,19 @@ app.get(
           return;
         }
 
-        raw.subscribe(`${payload.user}:${target.id}`);
-      },
-      async onClose(_, ws) {
-        const raw = ws.raw as ServerWebSocket;
+        (ws.raw as WebSocket).onclose = () => {
+          console.log(`[WS] ${payload.user} disconnected from ${username}`);
+          connectedSockets.delete(`${payload.user}:${target.id}`);
+        };
 
-        raw.unsubscribe(`${payload.user}:${target!.id}`);
-        console.log(`[WS] ${payload.user} disconnected from ${username}`);
+        connectedSockets.set(`${payload.user}:${target.id}`, ws);
       },
     };
   })
 );
 
-Bun.serve({
+const server = serve({
   fetch: app.fetch,
   port: 3000,
-  websocket,
 });
+injectWebSocket(server);
