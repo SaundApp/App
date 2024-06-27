@@ -1,10 +1,10 @@
 import type { Message } from "@repo/backend-common/types";
-import { format } from "date-fns";
 import { useTranslation } from "react-i18next";
 import { ContextMenu, ContextMenuTrigger } from "../ui/context-menu";
 import Attachment from "./Attachment";
 import Menu from "./Menu";
 import Song from "./Song";
+import { useDate } from "@/lib/dates";
 
 export default function MessageComponent({
   message,
@@ -22,6 +22,7 @@ export default function MessageComponent({
   reply: Message | undefined;
 }) {
   const { t } = useTranslation();
+  const { format } = useDate();
 
   if (message.text.startsWith(`${import.meta.env.VITE_APP_URL}/?attachment=`))
     return (
@@ -85,7 +86,7 @@ export default function MessageComponent({
             {message.text}
           </div>
           <time className="muted daisy-chat-footer">
-            {format(message.createdAt, "hh:mm")}
+            {format(message.createdAt, "kk:mm")}
           </time>
         </div>
       </ContextMenuTrigger>

@@ -3,7 +3,6 @@ import type { ExtendedComment } from "@/types/prisma";
 import type { Post } from "@repo/backend-common/types";
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { Link } from "@tanstack/react-router";
-import { formatDistance } from "date-fns";
 import { useRef, useState } from "react";
 import { useTranslation } from "react-i18next";
 import { FaComment } from "react-icons/fa";
@@ -12,10 +11,12 @@ import Avatar from "../account/Avatar";
 import Mentions from "../dropdown/Mentions";
 import { Drawer, DrawerContent, DrawerTrigger } from "../ui/drawer";
 import { Input } from "../ui/input";
+import { useDate } from "@/lib/dates";
 
 export default function Comments({ post }: { post: Post }) {
   const { t } = useTranslation();
   const session = useSession();
+  const { formatDistance } = useDate();
   const queryClient = useQueryClient();
   const [message, setMessage] = useState("");
   const input = useRef<HTMLInputElement>(null);
@@ -65,9 +66,7 @@ export default function Comments({ post }: { post: Post }) {
                   <Link to={`/account/${comment.user.username}`}>
                     <h5 className="max-w-40 truncate">{comment.user.name}</h5>
                   </Link>
-                  <p className="muted">
-                    {formatDistance(comment.createdAt, new Date())}
-                  </p>
+                  <p className="muted">{formatDistance(comment.createdAt)}</p>
                 </div>
 
                 <div className="flex max-w-72 gap-1 break-all">

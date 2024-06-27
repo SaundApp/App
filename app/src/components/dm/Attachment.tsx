@@ -4,10 +4,10 @@ import type {
   Message,
 } from "@repo/backend-common/types";
 import { useQuery } from "@tanstack/react-query";
-import { format } from "date-fns";
 import { ContextMenu, ContextMenuTrigger } from "../ui/context-menu";
 import AudioPlayer from "./AudioPlayer";
 import Menu from "./Menu";
+import { useDate } from "@/lib/dates";
 
 export default function Attachment({
   postId,
@@ -24,6 +24,7 @@ export default function Attachment({
   setEditing: (messageId: string) => void;
   setReplying: (messageId: string) => void;
 }) {
+  const { format } = useDate();
   const { data } = useQuery<AttachmentType>({
     queryKey: ["attachments", postId],
     queryFn: async () =>
@@ -60,7 +61,7 @@ export default function Attachment({
             </video>
           </div>
           <time className="muted daisy-chat-footer">
-            {format(message.createdAt, "hh:mm")}
+            {format(message.createdAt, "kk:mm")}
           </time>
         </div>
       );
@@ -87,7 +88,7 @@ export default function Attachment({
             />
           </div>
           <time className="muted daisy-chat-footer">
-            {format(message.createdAt, "hh:mm")}
+            {format(message.createdAt, "kk:mm")}
           </time>
         </div>
       );

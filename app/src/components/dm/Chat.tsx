@@ -5,7 +5,7 @@ import { useTranslation } from "react-i18next";
 import SwipeToRevealActions from "react-swipe-to-reveal-actions";
 import Avatar from "../account/Avatar";
 import type { PublicUser } from "@/types/prisma";
-import { formatDistance } from "date-fns";
+import { useDate } from "@/lib/dates";
 
 export default function Chat({
   user,
@@ -20,6 +20,7 @@ export default function Chat({
 }) {
   const { t } = useTranslation();
   const queryClient = useQueryClient();
+  const { formatDistance } = useDate();
 
   const { data: mutedChats } = useQuery<string[]>({
     queryKey: ["mute"],
@@ -94,7 +95,7 @@ export default function Chat({
                 </p>
                 <p className="muted"> • </p>
                 <p className="muted">
-                  {timestamp && formatDistance(timestamp, new Date())}
+                  {timestamp && formatDistance(timestamp)}
                 </p>
               </>
             )) || (

@@ -2,10 +2,10 @@ import { axiosClient } from "@/lib/axios";
 import type { NotificationButton } from "@repo/backend-common/types";
 import { useQueryClient } from "@tanstack/react-query";
 import { Link } from "@tanstack/react-router";
-import { formatDistance } from "date-fns";
 import React from "react";
 import Avatar from "./account/Avatar";
 import { Button } from "./ui/button";
+import { useDate } from "@/lib/dates";
 
 export default function Notification({
   imageId,
@@ -21,6 +21,7 @@ export default function Notification({
   href?: string;
 }) {
   const queryClient = useQueryClient();
+  const { formatDistance } = useDate();
 
   return (
     <div className="flex w-full flex-row items-start gap-3">
@@ -28,7 +29,7 @@ export default function Notification({
 
       <Link to={href} className="break-all">
         <p className="max-w-56 truncate text-left">{text}</p>
-        <p className="muted">{formatDistance(timestamp, new Date())}</p>
+        <p className="muted">{formatDistance(timestamp)}</p>
       </Link>
 
       {button && (

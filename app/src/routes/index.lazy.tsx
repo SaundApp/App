@@ -15,6 +15,7 @@ import {
 } from "@/components/NotificationHandler";
 import type { ExtendedPost } from "@/types/prisma";
 import { useSession } from "@/components/SessionContext";
+import PullToRefresh from "react-simple-pull-to-refresh";
 
 export const Route = createLazyFileRoute("/")({
   component: Index,
@@ -24,23 +25,22 @@ function Index() {
   const { ref, inView } = useInView();
   const session = useSession();
   const [ads, setAds] = useState<AdResult[]>([]);
-  const { data, fetchNextPage, hasNextPage, isLoading } = useInfiniteQuery<
-    ExtendedPost[]
-  >({
-    queryKey: ["posts"],
-    queryFn: ({ pageParam }) =>
-      axiosClient.get("/posts?offset=" + pageParam).then((res) => res.data),
-    initialPageParam: 0,
-    getNextPageParam: (lastResult, _, lastOffset) => {
-      if (lastResult.length < 10) return undefined;
-      return (lastOffset as number) + 10;
-    },
-    staleTime: 1000 * 60 * 5,
-    refetchOnMount: false,
-    refetchOnWindowFocus: false,
-    refetchOnReconnect: false,
-    refetchInterval: false,
-  });
+  const { data, fetchNextPage, hasNextPage, isLoading, refetch } =
+    useInfiniteQuery<ExtendedPost[]>({
+      queryKey: ["posts"],
+      queryFn: ({ pageParam }) =>
+        axiosClient.get("/posts?offset=" + pageParam).then((res) => res.data),
+      initialPageParam: 0,
+      getNextPageParam: (lastResult, _, lastOffset) => {
+        if (lastResult.length < 10) return undefined;
+        return (lastOffset as number) + 10;
+      },
+      staleTime: 1000 * 60 * 5,
+      refetchOnMount: false,
+      refetchOnWindowFocus: false,
+      refetchOnReconnect: false,
+      refetchInterval: false,
+    });
 
   useEffect(() => {
     if (inView && hasNextPage && !isLoading) {
@@ -80,17 +80,23 @@ function Index() {
 
       {isLoading && <Spinner className="m-auto" />}
 
-      <div className="flex flex-col gap-6">
-        {data?.pages.map((group, i) => (
-          <Fragment key={i}>
-            {group.map((post) => (
-              <Post key={post.id} post={post} />
-            ))}
-            {i + 1 !== data?.pages.length &&
-              ads.map((ad) => <PostAd key={ad.id} ad={ad} />)}
-          </Fragment>
-        ))}
-      </div>
+      <PullToRefresh
+        onRefresh={refetch}
+        pullingContent={<br />}
+        refreshingContent={<Spinner />}
+      >
+        <div className="flex flex-col gap-6">
+          {data?.pages.map((group, i) => (
+            <Fragment key={i}>
+              {group.map((post) => (
+                <Post key={post.id} post={post} />
+              ))}
+              {i + 1 !== data?.pages.length &&
+                ads.map((ad) => <PostAd key={ad.id} ad={ad} />)}
+            </Fragment>
+          ))}
+        </div>
+      </PullToRefresh>
 
       <div ref={ref}></div>
     </div>

@@ -3,10 +3,10 @@ import type { ExtendedPost } from "@/types/prisma";
 import type { Message } from "@repo/backend-common/types";
 import { useQuery } from "@tanstack/react-query";
 import { Link } from "@tanstack/react-router";
-import { format } from "date-fns";
 import { SiSpotify } from "react-icons/si";
 import { ContextMenu, ContextMenuTrigger } from "../ui/context-menu";
 import Menu from "./Menu";
+import { useDate } from "@/lib/dates";
 
 export default function Song({
   postId,
@@ -23,6 +23,7 @@ export default function Song({
   setEditing: (messageId: string) => void;
   setReplying: (messageId: string) => void;
 }) {
+  const { format } = useDate();
   const { data: post } = useQuery<ExtendedPost>({
     queryKey: ["posts", postId],
     queryFn: () => axiosClient.get(`/posts/${postId}`).then((res) => res.data),
@@ -71,7 +72,7 @@ export default function Song({
             </div>
           </div>
           <time className="muted daisy-chat-footer">
-            {format(message.createdAt, "hh:mm")}
+            {format(message.createdAt, "kk:mm")}
           </time>
         </div>
       </ContextMenuTrigger>

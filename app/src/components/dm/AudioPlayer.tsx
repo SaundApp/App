@@ -1,5 +1,5 @@
+import { useDate } from "@/lib/dates";
 import type { Message } from "@repo/backend-common/types";
-import { format } from "date-fns";
 import { useEffect, useRef, useState } from "react";
 import { FaCirclePause, FaCirclePlay } from "react-icons/fa6";
 
@@ -12,6 +12,7 @@ export default function AudioPlayer({
 }) {
   const ref = useRef<HTMLAudioElement>(null);
   const [playing, setPlaying] = useState(false);
+  const { format } = useDate();
 
   useEffect(() => {
     if (!ref.current) return;
@@ -58,7 +59,7 @@ export default function AudioPlayer({
           </div>
         </div>
         <time className="muted daisy-chat-footer">
-          {format(message.createdAt, "hh:mm")}
+          {format(message.createdAt, "kk:mm")}
         </time>
       </div>
 
