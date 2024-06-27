@@ -15,7 +15,7 @@
     "axios": "^1.7.2",
     "@repo/backend-common": "0.0.0",
     "@repo/form-types": "0.0.0",
-    "hono": "^4.4.8",
+    "hono": "^4.4.9",
     "jimp": "^0.22.12",
     "spotify-web-api-node": "^5.0.2",
     "stripe": "^16.0.0"

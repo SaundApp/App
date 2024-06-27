@@ -7,19 +7,24 @@ import Unfonts from "unplugin-fonts/vite";
 
 // https://vitejs.dev/config/
 export default defineConfig({
-  plugins: [react(), TanStackRouterVite(), Unfonts({
-    custom: {
-      families: [
-        {
-          name: "Geist",
-          src: "./node_modules/geist/dist/fonts/geist-*/*.woff2",
-        },
-      ],
-    },
-  }), sentryVitePlugin({
-    org: "saund",
-    project: "app"
-  })],
+  plugins: [
+    react(),
+    TanStackRouterVite(),
+    Unfonts({
+      custom: {
+        families: [
+          {
+            name: "Geist",
+            src: "./node_modules/geist/dist/fonts/geist-*/*.woff2",
+          },
+        ],
+      },
+    }),
+    sentryVitePlugin({
+      org: "saund",
+      project: "app",
+    }),
+  ],
 
   resolve: {
     alias: {
@@ -28,6 +33,6 @@ export default defineConfig({
   },
 
   build: {
-    sourcemap: true
-  }
+    sourcemap: true,
+  },
 });

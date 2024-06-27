@@ -1,5 +1,8 @@
 import { axiosClient } from "@/lib/axios";
-import { AudioRecorder } from "@repo/react-audio-voice-recorder";
+import {
+  AudioRecorder,
+  type recorderControls,
+} from "@repo/react-audio-voice-recorder";
 import { useTranslation } from "react-i18next";
 import { useToast } from "../ui/use-toast";
 
@@ -7,7 +10,7 @@ export default function VoiceRecorder({
   controls,
   websocket,
 }: {
-  controls: any;
+  controls: recorderControls;
   websocket: WebSocket | null;
 }) {
   const { t } = useTranslation();

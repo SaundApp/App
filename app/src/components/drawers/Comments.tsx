@@ -70,7 +70,7 @@ export default function Comments({ post }: { post: Post }) {
                   </p>
                 </div>
 
-                <div>
+                <div className="flex max-w-72 gap-1 break-all">
                   {comment.text.split(" ").map((word, index) => {
                     if (word.startsWith("@")) {
                       return (
@@ -83,11 +83,7 @@ export default function Comments({ post }: { post: Post }) {
                         </Link>
                       );
                     }
-                    return (
-                      <p key={index} className="max-w-72 break-all">
-                        {word}
-                      </p>
-                    );
+                    return word + " ";
                   })}
                 </div>
               </div>

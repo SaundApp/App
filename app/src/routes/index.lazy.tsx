@@ -62,10 +62,10 @@ function Index() {
   }, [data]);
 
   useEffect(() => {
-    if (Capacitor.getPlatform() === "web") return;
+    if (!session || Capacitor.getPlatform() === "web") return;
 
     registerNotifications().then(() => addListeners());
-  }, []);
+  }, [session]);
 
   if (!session) return null;
 

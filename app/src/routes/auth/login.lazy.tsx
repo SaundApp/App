@@ -1,4 +1,3 @@
-import BackIcon from "@/components/BackIcon";
 import Divider from "@/components/Divider";
 import { Button } from "@/components/ui/button";
 import { Form, FormControl, FormField, FormItem } from "@/components/ui/form";
@@ -23,7 +22,6 @@ function Login() {
   const { token } = Route.useSearch<{
     token: string | undefined;
   }>();
-  const tokens = JSON.parse(localStorage.getItem("tokens") || "[]");
   const form = useForm<z.infer<typeof loginSchema>>({
     resolver: zodResolver(loginSchema),
     defaultValues: {
@@ -46,12 +44,6 @@ function Login() {
 
   return (
     <div className="m-auto flex w-full flex-col justify-center gap-3">
-      {tokens.length > 0 && (
-        <div className="absolute left-4 top-8">
-          <BackIcon />
-        </div>
-      )}
-
       <div>
         <h1>Login</h1>
         <p className="muted">{t("auth.login_description")}</p>

@@ -169,28 +169,33 @@ export default function Post({ post }: { post: ExtendedPost }) {
         <div className="absolute top-1/2 flex h-1/2 w-full flex-col justify-between p-3">
           {post.type !== "SONG" && (
             <div className="flex justify-between" style={{ color }}>
-              <button
-                onClick={() => {
-                  if (currentTrack > 0) {
-                    setPlaying(false);
-                    setCurrentTrack((track) => track - 1);
-                    player.current?.load();
-                  }
-                }}
-              >
-                <FaCircleArrowLeft fontSize={25} />
-              </button>
-              <button
-                onClick={() => {
-                  if (currentTrack < (song?.tracks.items.length || 0) - 1) {
-                    setPlaying(false);
-                    setCurrentTrack((track) => track + 1);
-                    player.current?.load();
-                  }
-                }}
-              >
-                <FaCircleArrowRight fontSize={25} />
-              </button>
+              {currentTrack > 0 && (
+                <button
+                  onClick={() => {
+                    if (currentTrack > 0) {
+                      setPlaying(false);
+                      setCurrentTrack((track) => track - 1);
+                      player.current?.load();
+                    }
+                  }}
+                >
+                  <FaCircleArrowLeft fontSize={25} />
+                </button>
+              )}
+              {currentTrack < (song?.tracks.items.length || 0) - 1 && (
+                <button
+                  onClick={() => {
+                    if (currentTrack < (song?.tracks.items.length || 0) - 1) {
+                      setPlaying(false);
+                      setCurrentTrack((track) => track + 1);
+                      player.current?.load();
+                    }
+                  }}
+                  className="ml-auto"
+                >
+                  <FaCircleArrowRight fontSize={25} />
+                </button>
+              )}
             </div>
           )}
 
