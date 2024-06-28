@@ -1,5 +1,6 @@
 import daisyui from "daisyui";
 import tailwindAnimate from "tailwindcss-animate";
+import capacitorSafeArea from "tailwindcss-safe-area-capacitor";
 
 /** @type {import('tailwindcss').Config} */
 export default {
@@ -77,13 +78,13 @@ export default {
       },
     },
   },
-  plugins: [daisyui, tailwindAnimate],
+  plugins: [daisyui, capacitorSafeArea, tailwindAnimate],
   daisyui: {
     themes: false,
     darkTheme: "dark",
     base: false,
     styled: true,
     prefix: "daisy-",
-    logs: false
+    logs: false,
   },
 };

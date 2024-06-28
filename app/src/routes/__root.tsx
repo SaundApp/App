@@ -74,12 +74,13 @@ function App() {
     <ThemeProvider defaultTheme="system" storageKey="vite-ui-theme">
       <SessionContext.Provider value={session}>
         <main
-          className={`flex h-screen min-h-screen flex-col bg-background px-3 py-6 font-geist text-foreground`}
+          className={`py-safe flex h-screen min-h-screen flex-col bg-background px-3 font-geist text-foreground`}
         >
           <Outlet />
-          {session && router.location.pathname.match(/^(?!(\/dm\/\w+|\/auth)).*/g) && (
-            <Navbar />
-          )}
+          {session &&
+            router.location.pathname.match(/^(?!(\/dm\/\w+|\/auth)).*/g) && (
+              <Navbar />
+            )}
           <Toaster />
           <AppUrlListener />
         </main>

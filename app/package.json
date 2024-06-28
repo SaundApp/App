@@ -38,6 +38,7 @@
     "@tanstack/react-router": "^1.40.0",
     "axios": "^1.7.2",
     "capacitor-admob-ads": "^5.0.0",
+    "capacitor-plugin-safe-area": "^3.0.1",
     "class-variance-authority": "^0.7.0",
     "clsx": "^2.1.1",
     "date-fns": "^3.6.0",
@@ -84,6 +85,7 @@
     "postcss": "^8.4.38",
     "prettier-plugin-tailwindcss": "^0.6.5",
     "tailwindcss": "^3.4.4",
+    "tailwindcss-safe-area-capacitor": "^0.5.1",
     "typescript": "^5.5.2",
     "unplugin-fonts": "^1.1.1",
     "vite": "^5.3.1"
