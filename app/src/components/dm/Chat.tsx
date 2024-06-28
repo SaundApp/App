@@ -30,24 +30,23 @@ export default function Chat({
 
   const deleteChat = useMutation({
     mutationFn: () => axiosClient.delete(`/dm/${user.username}`),
-    onSuccess: () => {
-      queryClient.invalidateQueries({ queryKey: ["dm"] });
-    },
+    onSettled: async () =>
+      await queryClient.invalidateQueries({ queryKey: ["dm"] }),
   });
 
   const muteChat = useMutation({
     mutationFn: () => axiosClient.post(`/notifications/mute/${user.id}`),
-    onSuccess: () => {
-      queryClient.invalidateQueries({ queryKey: ["mute"] });
-    },
+    onSettled: async () =>
+      await queryClient.invalidateQueries({ queryKey: ["mute"] }),
   });
 
   const unmuteChat = useMutation({
     mutationFn: () => axiosClient.delete(`/notifications/mute/${user.id}`),
-    onSuccess: () => {
-      queryClient.invalidateQueries({ queryKey: ["mute"] });
-    },
+    onSettled: async () =>
+      await queryClient.invalidateQueries({ queryKey: ["mute"] }),
   });
+
+  if (deleteChat.isPending) return null;
 
   return (
     <SwipeToRevealActions

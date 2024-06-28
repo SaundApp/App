@@ -27,14 +27,40 @@ export default function Comments({ post }: { post: Post }) {
       axiosClient.get(`/posts/${post.id}/comments`).then((res) => res.data),
   });
   const comment = useMutation({
-    mutationFn: () =>
-      axiosClient.post(`/posts/${post.id}/comment`, { text: message }),
-    onSuccess: () => {
+    mutationFn: async (text: string) => {
       setMessage("");
-      queryClient.invalidateQueries({
+      return await axiosClient.post(`/posts/${post.id}/comment`, { text });
+    },
+    onMutate: async (text: string) => {
+      await queryClient.cancelQueries({
         queryKey: ["posts", post.id, "comments"],
       });
+
+      const previousTodos = queryClient.getQueryData([
+        "posts",
+        post.id,
+        "comments",
+      ]);
+
+      queryClient.setQueryData(
+        ["posts", post.id, "comments"],
+        (old: ExtendedComment[]) => [
+          {
+            id: Math.random(),
+            text,
+            user: session,
+            createdAt: new Date().toISOString(),
+          },
+          ...old,
+        ],
+      );
+
+      return { previousTodos };
     },
+    onSettled: async () =>
+      await queryClient.invalidateQueries({
+        queryKey: ["posts", post.id, "comments"],
+      }),
   });
 
   return (
@@ -103,7 +129,7 @@ export default function Comments({ post }: { post: Post }) {
           <form
             onSubmit={(e) => {
               e.preventDefault();
-              comment.mutate();
+              comment.mutate(message.trim());
             }}
             className="w-full"
           >
