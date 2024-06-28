@@ -6,7 +6,8 @@
     "request_sent": "Anfrage gesendet",
     "empty": "Noch keine Daten",
     "empty_description": "Hier gibt es vorerst nichts zu sehen...",
-    "or": "ODER"
+    "or": "ODER",
+    "remove_follower": "Follower entfernen"
   },
   "input": {
     "name": "Name",

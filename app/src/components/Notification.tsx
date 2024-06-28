@@ -27,8 +27,8 @@ export default function Notification({
     <div className="flex w-full flex-row items-start gap-3">
       {imageId && <Avatar imageId={imageId} width={40} height={40} />}
 
-      <Link to={href} className="break-all">
-        <p className="max-w-56 truncate text-left">{text}</p>
+      <Link to={href} className="break-words">
+        <p className="text-left leading-5">{text}</p>
         <p className="muted">{formatDistance(timestamp)}</p>
       </Link>
 

@@ -135,7 +135,7 @@ function Chat() {
     <div
       className="flex flex-col justify-between gap-3"
       style={{
-        height: "calc(100vh - 3.75rem)",
+        height: "calc(100vh - 5rem)",
       }}
     >
       <div className="flex items-center gap-3">

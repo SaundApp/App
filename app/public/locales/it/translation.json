@@ -6,7 +6,8 @@
     "request_sent": "Richiesta inviata",
     "empty": "Ancora nessun dato",
     "empty_description": "Non c'è ancora nulla da vedere qui...",
-    "or": "O"
+    "or": "O",
+    "remove_follower": "Rimuovi follower"
   },
   "input": {
     "name": "Nome",
@@ -53,7 +54,7 @@
   },
   "dm": {
     "title": "Messaggi Diretti",
-    "mute": "Disattiva audio",
+    "mute": "Muta",
     "unmute": "Riattiva audio",
     "delete": "Elimina",
     "attachment": "Allegato",

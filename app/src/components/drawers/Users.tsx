@@ -16,11 +16,13 @@ export default function Users({
   open,
   onOpenChange,
   title,
+  isFollowers,
 }: {
   users: PublicUser[];
   open: boolean;
   onOpenChange: (open: boolean) => void;
   title: string;
+  isFollowers?: boolean;
 }) {
   const { t } = useTranslation();
   const { toast } = useToast();
@@ -46,6 +48,14 @@ export default function Users({
   const unfollow = useMutation({
     mutationFn: (user: string) => axiosClient.delete(`/users/${user}/unfollow`),
     onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ["me"] });
+    },
+  });
+  const removeFollower = useMutation({
+    mutationFn: (user: string) =>
+      axiosClient.delete(`/users/${user}/follower`),
+    onSuccess: () => {
+      // TODO
       queryClient.invalidateQueries({ queryKey: ["me"] });
     },
   });
@@ -90,16 +100,14 @@ export default function Users({
                 >
                   <Avatar user={user} width={40} height={40} />
                   <div className="flex flex-col">
-                    <h5 className="max-w-40 truncate text-left">
-                      {user.name}
-                    </h5>
+                    <h5 className="max-w-40 truncate text-left">{user.name}</h5>
                     <p className="muted max-w-40 truncate text-left">
                       @{user.username}
                     </p>
                   </div>
                 </Link>
 
-                {session?.username !== user.username && (
+                {(!isFollowers && session?.username !== user.username) && (
                   <Button
                     onClick={() => {
                       if (
@@ -119,6 +127,17 @@ export default function Users({
                     {!session?.following.find((u) => u.followingId === user.id)
                       ? t("general.follow")
                       : t("general.unfollow")}
+                  </Button>
+                )}
+
+                {(isFollowers && session?.username !== user.username) && (
+                  <Button
+                    onClick={() => {
+                      removeFollower.mutate(user.id);
+                    }}
+                    variant="secondary"
+                  >
+                    {t("general.remove_follower")}
                   </Button>
                 )}
               </div>

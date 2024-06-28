@@ -230,10 +230,7 @@ function EditProfile() {
               {t("account.save")}
             </Button>
 
-            <Button
-              variant="link"
-              className="w-full bg-transparent text-primary"
-            >
+            <Button variant="secondary" className="w-full">
               {t("account.change_password")}
             </Button>
           </div>

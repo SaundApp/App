@@ -33,7 +33,7 @@ export default function AudioPlayer({
       >
         <div
           className={
-            "daisy-chat-bubble flex max-w-72 items-center gap-3 break-all text-white " +
+            "daisy-chat-bubble flex max-w-72 items-center gap-3 break-words text-white " +
             (self ? "bg-primary" : "bg-secondary")
           }
         >

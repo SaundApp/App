@@ -79,7 +79,7 @@ export default function MessageComponent({
         >
           <div
             className={
-              "daisy-chat-bubble max-w-72 break-all !p-3 !dark:text-white " +
+              "daisy-chat-bubble max-w-72 break-words !p-3 !dark:text-white " +
               (self ? "bg-primary text-white" : "bg-secondary text-foreground")
             }
           >

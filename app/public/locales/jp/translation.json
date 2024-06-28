@@ -6,7 +6,8 @@
     "request_sent": "リクエストが送信されました",
     "empty": "まだデータがありません",
     "empty_description": "今のところ見るものがありません...",
-    "or": "または"
+    "or": "または",
+    "remove_follower": "フォロワーを削除"
   },
   "input": {
     "name": "名前",

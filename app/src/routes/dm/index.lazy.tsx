@@ -54,6 +54,7 @@ function DmList() {
               user={dm.user}
               message={dm.lastMessage.text}
               read={dm.read}
+              timestamp={dm.lastMessage.createdAt}
             />
           ))}
         {users?.map((user) => <Chat key={user.id} user={user} read={true} />)}

@@ -6,7 +6,8 @@
     "request_sent": "请求已发送",
     "empty": "暂无数据",
     "empty_description": "目前这里没有任何内容...",
-    "or": "或"
+    "or": "或",
+    "remove_follower": "删除关注者"
   },
   "input": {
     "name": "名称",
