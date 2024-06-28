@@ -12,12 +12,22 @@ import {
   createRootRoute,
   useRouterState,
 } from "@tanstack/react-router";
-import { SafeArea } from "capacitor-plugin-safe-area";
+import { SafeArea, type SafeAreaInsets } from "capacitor-plugin-safe-area";
 import { useEffect, useState } from "react";
 
 export const Route = createRootRoute({
   component: App,
 });
+
+function calculateSafeArea(data: SafeAreaInsets) {
+  const { insets } = data;
+  for (const [key, value] of Object.entries(insets)) {
+    document.documentElement.style.setProperty(
+      `--safe-area-inset-${key}`,
+      `${value}px`,
+    );
+  }
+}
 
 function App() {
   const router = useRouterState();
@@ -72,15 +82,13 @@ function App() {
   }, [token, router.location.pathname, queryClient]);
 
   useEffect(() => {
-    (async function () {
+    (async () => {
       const safeAreaData = await SafeArea.getSafeAreaInsets();
-      const { insets } = safeAreaData;
-      for (const [key, value] of Object.entries(insets)) {
-        document.documentElement.style.setProperty(
-          `--safe-area-inset-${key}`,
-          `${value}px`,
-        );
-      }
+      calculateSafeArea(safeAreaData);
+
+      await SafeArea.addListener("safeAreaChanged", (data) => {
+        calculateSafeArea(data);
+      });
     })();
   }, []);
 
