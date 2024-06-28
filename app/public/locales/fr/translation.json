@@ -116,7 +116,7 @@
   "auth": {
     "register": "S'inscrire",
     "login": "Connexion",
-    "login_description": "Content de te revoir! Prêt à revenir?",
+    "login_description": "Bienvenue ! Nous sommes ravis de vous revoir !",
     "register_description": "Créez un compte maintenant et commencez à découvrir de nouveaux artistes!",
     "forgot_password": "Mot de passe oublié?"
   },

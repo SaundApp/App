@@ -116,7 +116,7 @@
   "auth": {
     "register": "注册",
     "login": "登录",
-    "login_description": "欢迎回来！准备回来了吗？",
+    "login_description": "欢迎回来 我们很高兴再次相见！",
     "register_description": "立即创建帐户，开始发现新艺术家！",
     "forgot_password": "忘记密码？"
   },

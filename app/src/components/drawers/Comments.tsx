@@ -76,7 +76,7 @@ export default function Comments({ post }: { post: Post }) {
                         <Link
                           key={index}
                           to={`/account/${word}`}
-                          className="text-blue-400"
+                          className="text-primary"
                         >
                           {word}{" "}
                         </Link>

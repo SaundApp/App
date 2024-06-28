@@ -116,7 +116,7 @@
   "auth": {
     "register": "Registrati",
     "login": "Accedi",
-    "login_description": "Bentornato! Pronto a tornare?",
+    "login_description": "Bentornati! Siamo entusiasti di rivedervi!",
     "register_description": "Crea un account ora e inizia a scoprire nuovi artisti!",
     "forgot_password": "Password dimenticata?"
   },

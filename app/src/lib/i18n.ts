@@ -24,7 +24,7 @@ i18n
       "ru",
       "sa",
     ],
-    debug: true,
+    debug: import.meta.env.DEV,
 
     interpolation: {
       escapeValue: false,

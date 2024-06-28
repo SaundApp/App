@@ -116,7 +116,7 @@
   "auth": {
     "register": "登録",
     "login": "ログイン",
-    "login_description": "お帰りなさい! 戻る準備はできましたか?",
+    "login_description": "おかえりなさい！また会えるのを楽しみにしている！",
     "register_description": "今すぐアカウントを作成して、新しいアーティストを発見し始めましょう!",
     "forgot_password": "パスワードをお忘れですか?"
   },
