@@ -100,16 +100,18 @@ function Account() {
   });
   const cancelRequest = useMutation({
     mutationFn: (user: string) => axiosClient.delete(`/users/${user}/request`),
-    onSuccess: () => {
-      queryClient.invalidateQueries({ queryKey: ["me"] });
-      queryClient.invalidateQueries({ queryKey: ["user", username] });
+    onSettled: async () => {
+      await queryClient.invalidateQueries({ queryKey: ["me"] });
+      return await queryClient.invalidateQueries({
+        queryKey: ["user", username],
+      });
     },
   });
   const unfollow = useMutation({
     mutationFn: (user: string) => axiosClient.delete(`/users/${user}/unfollow`),
-    onSuccess: () => {
-      queryClient.invalidateQueries({ queryKey: ["user", username] });
-      queryClient.invalidateQueries({ queryKey: ["me"] });
+    onSuccess: async () => {
+      await queryClient.invalidateQueries({ queryKey: ["user", username] });
+      return await queryClient.invalidateQueries({ queryKey: ["me"] });
     },
   });
 
@@ -231,20 +233,30 @@ function Account() {
               else unfollow.mutate(data.id);
             }}
             className={
-              data.requestSent
+              data.requestSent && !cancelRequest.isPending
                 ? "w-full bg-secondary"
-                : !session?.following.find(
-                      (user) => user.followingId === data.id,
-                    )
-                  ? "w-full"
-                  : "w-full bg-secondary"
+                : follow.isPending
+                  ? "w-full bg-secondary"
+                  : unfollow.isPending
+                    ? "w-full"
+                    : !session?.following.find(
+                          (user) => user.followingId === data.id,
+                        )
+                      ? "w-full"
+                      : "w-full bg-secondary"
             }
           >
-            {data.requestSent
+            {data.requestSent && !cancelRequest.isPending
               ? t("general.request_sent")
-              : !session?.following.find((user) => user.followingId === data.id)
-                ? t("general.follow")
-                : t("general.unfollow")}
+              : follow.isPending
+                ? t("general.unfollow")
+                : unfollow.isPending
+                  ? t("general.follow")
+                  : !session?.following.find(
+                        (user) => user.followingId === data.id,
+                      )
+                    ? t("general.follow")
+                    : t("general.unfollow")}
           </Button>
           {data.subscriptionSettings &&
             data.verified &&

@@ -69,11 +69,10 @@ function EditProfile() {
               variant: "destructive",
             });
         }),
-    onSuccess: () => {
-      queryClient.invalidateQueries({
+    onSettled: async () =>
+      await queryClient.invalidateQueries({
         queryKey: ["me"],
-      });
-    },
+      }),
   });
 
   if (!session) return null;
@@ -209,7 +208,11 @@ function EditProfile() {
                 onValueChange={(values: NotificationMethod[]) => {
                   changeSettings.mutate(values);
                 }}
-                value={session.notificationSettings[activeTab]}
+                value={
+                  changeSettings.isPending
+                    ? changeSettings.variables
+                    : session.notificationSettings[activeTab]
+                }
               >
                 <ToggleGroupItem
                   value="PUSH"
