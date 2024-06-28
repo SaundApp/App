@@ -1,4 +1,5 @@
 import "dotenv/config";
+import "./patcher";
 import {
   NotificationType,
   prisma,
@@ -183,12 +184,11 @@ app.get(
           return;
         }
 
-        (ws.raw as WebSocket).onclose = () => {
-          console.log(`[WS] ${payload.user} disconnected from ${username}`);
-          connectedSockets.delete(`${payload.user}:${target.id}`);
-        };
-
         connectedSockets.set(`${payload.user}:${target.id}`, ws);
+      },
+      async onClose(_, ws) {
+        console.log(`[WS] ${payload.user} disconnected from ${username}`);
+        connectedSockets.delete(`${payload.user}:${target!.id}`);
       },
     };
   })
