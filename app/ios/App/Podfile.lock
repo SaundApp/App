@@ -1,0 +1,81 @@
+PODS:
+  - Capacitor (6.1.0):
+    - CapacitorCordova
+  - CapacitorAdmobAds (5.0.0):
+    - Capacitor
+  - CapacitorApp (6.0.0):
+    - Capacitor
+  - CapacitorCordova (6.1.0)
+  - CapacitorHaptics (6.0.0):
+    - Capacitor
+  - CapacitorKeyboard (6.0.1):
+    - Capacitor
+  - CapacitorPluginSafeArea (3.0.1):
+    - Capacitor
+  - CapacitorPushNotifications (6.0.1):
+    - Capacitor
+  - CapacitorStatusBar (6.0.0):
+    - Capacitor
+  - Sentry/HybridSDK (8.21.0):
+    - SentryPrivate (= 8.21.0)
+  - SentryCapacitor (0.18.0):
+    - Capacitor
+    - Sentry/HybridSDK (= 8.21.0)
+  - SentryPrivate (8.21.0)
+
+DEPENDENCIES:
+  - "Capacitor (from `../../../node_modules/@capacitor/ios`)"
+  - CapacitorAdmobAds (from `../../../node_modules/capacitor-admob-ads`)
+  - "CapacitorApp (from `../../../node_modules/@capacitor/app`)"
+  - "CapacitorCordova (from `../../../node_modules/@capacitor/ios`)"
+  - "CapacitorHaptics (from `../../../node_modules/@capacitor/haptics`)"
+  - "CapacitorKeyboard (from `../../../node_modules/@capacitor/keyboard`)"
+  - CapacitorPluginSafeArea (from `../../../node_modules/capacitor-plugin-safe-area`)
+  - "CapacitorPushNotifications (from `../../../node_modules/@capacitor/push-notifications`)"
+  - "CapacitorStatusBar (from `../../../node_modules/@capacitor/status-bar`)"
+  - "SentryCapacitor (from `../../../node_modules/@sentry/capacitor`)"
+
+SPEC REPOS:
+  trunk:
+    - Sentry
+    - SentryPrivate
+
+EXTERNAL SOURCES:
+  Capacitor:
+    :path: "../../../node_modules/@capacitor/ios"
+  CapacitorAdmobAds:
+    :path: "../../../node_modules/capacitor-admob-ads"
+  CapacitorApp:
+    :path: "../../../node_modules/@capacitor/app"
+  CapacitorCordova:
+    :path: "../../../node_modules/@capacitor/ios"
+  CapacitorHaptics:
+    :path: "../../../node_modules/@capacitor/haptics"
+  CapacitorKeyboard:
+    :path: "../../../node_modules/@capacitor/keyboard"
+  CapacitorPluginSafeArea:
+    :path: "../../../node_modules/capacitor-plugin-safe-area"
+  CapacitorPushNotifications:
+    :path: "../../../node_modules/@capacitor/push-notifications"
+  CapacitorStatusBar:
+    :path: "../../../node_modules/@capacitor/status-bar"
+  SentryCapacitor:
+    :path: "../../../node_modules/@sentry/capacitor"
+
+SPEC CHECKSUMS:
+  Capacitor: 187bd7847b6f71467015a20200a1a071be3e5f14
+  CapacitorAdmobAds: 28832a94a5c7465fc2ce3e31be13442b87425944
+  CapacitorApp: 9d53aec7101f7b030a950c5bdc4df8612576b279
+  CapacitorCordova: be703980ca797f847c3356f78fa175d21c8330c2
+  CapacitorHaptics: 9ebc9363f0e9b8eb4295088a0b474530acf1859b
+  CapacitorKeyboard: 5f32a712adf41e07a61caafb82cf29fb6d8ba123
+  CapacitorPluginSafeArea: b99681e1d9986ae1c059ca0e1b5e7025916e5e04
+  CapacitorPushNotifications: 293fabe42c7229756078e81f2d3a60394ba4e5d8
+  CapacitorStatusBar: 2e4369f99166125435641b1908d05f561eaba6f6
+  Sentry: ebc12276bd17613a114ab359074096b6b3725203
+  SentryCapacitor: 170d8b96ba195cead4dc60eaf5c42aacf97ff1d3
+  SentryPrivate: d651efb234cf385ec9a1cdd3eff94b5e78a0e0fe
+
+PODFILE CHECKSUM: 4df628698a15eb9e02cbedf57683d41b5d9109aa
+
+COCOAPODS: 1.15.2
