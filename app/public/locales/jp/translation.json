@@ -60,6 +60,7 @@
     "attachment": "添付ファイル",
     "placeholder": "メッセージを入力...",
     "reply": "返信",
+    "replying": "{{message}}に返信",
     "edit": "編集",
     "copy": "コピー"
   },

@@ -60,6 +60,7 @@
     "attachment": "Adjunto",
     "placeholder": "Escribe un mensaje...",
     "reply": "Responder",
+    "replying": "Respondiendo a {{message}}",
     "edit": "Editar",
     "copy": "Copiar"
   },

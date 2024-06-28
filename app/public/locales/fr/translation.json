@@ -60,6 +60,7 @@
     "attachment": "Pièce jointe",
     "placeholder": "Tapez un message...",
     "reply": "Répondre",
+    "replying": "Répondre à {{message}}",
     "edit": "Modifier",
     "copy": "Copier"
   },

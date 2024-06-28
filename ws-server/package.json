@@ -6,12 +6,12 @@
     "build": "tsc"
   },
   "dependencies": {
-    "@hono/node-server": "^1.11.4",
-    "@hono/node-ws": "^1.0.1",
     "@repo/backend-common": "0.0.0",
-    "hono": "^4.4.9"
+    "jsonwebtoken": "^9.0.2",
+    "ws": "^8.17.1"
   },
   "devDependencies": {
+    "@types/ws": "^8.5.10",
     "dotenv": "^16.4.5",
     "tsx": "^4.15.7",
     "typescript": "^5.5.2"

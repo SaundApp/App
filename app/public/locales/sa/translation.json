@@ -60,6 +60,7 @@
     "attachment": "مرفق",
     "placeholder": "اكتب رسالة...",
     "reply": "الرد",
+    "replying": "الرد على {{message}}",
     "edit": "تعديل",
     "copy": "نسخ"
   },

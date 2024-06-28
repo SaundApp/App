@@ -50,6 +50,7 @@ function Chat() {
 
   useEffect(() => {
     const timeout = setTimeout(() => {
+      console.log("Connecting to websocket...");
       const webSocket = new WebSocket(
         `${import.meta.env.VITE_WS_URL}/${username}?token=${localStorage.getItem("token")}`,
       );
