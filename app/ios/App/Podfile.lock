@@ -10,8 +10,6 @@ PODS:
     - Capacitor
   - CapacitorKeyboard (6.0.1):
     - Capacitor
-  - CapacitorPluginSafeArea (3.0.1):
-    - Capacitor
   - CapacitorPushNotifications (6.0.1):
     - Capacitor
   - CapacitorStatusBar (6.0.0):
@@ -30,7 +28,6 @@ DEPENDENCIES:
   - "CapacitorCordova (from `../../../node_modules/@capacitor/ios`)"
   - "CapacitorHaptics (from `../../../node_modules/@capacitor/haptics`)"
   - "CapacitorKeyboard (from `../../../node_modules/@capacitor/keyboard`)"
-  - CapacitorPluginSafeArea (from `../../../node_modules/capacitor-plugin-safe-area`)
   - "CapacitorPushNotifications (from `../../../node_modules/@capacitor/push-notifications`)"
   - "CapacitorStatusBar (from `../../../node_modules/@capacitor/status-bar`)"
   - "SentryCapacitor (from `../../../node_modules/@sentry/capacitor`)"
@@ -53,8 +50,6 @@ EXTERNAL SOURCES:
     :path: "../../../node_modules/@capacitor/haptics"
   CapacitorKeyboard:
     :path: "../../../node_modules/@capacitor/keyboard"
-  CapacitorPluginSafeArea:
-    :path: "../../../node_modules/capacitor-plugin-safe-area"
   CapacitorPushNotifications:
     :path: "../../../node_modules/@capacitor/push-notifications"
   CapacitorStatusBar:
@@ -69,13 +64,12 @@ SPEC CHECKSUMS:
   CapacitorCordova: be703980ca797f847c3356f78fa175d21c8330c2
   CapacitorHaptics: 9ebc9363f0e9b8eb4295088a0b474530acf1859b
   CapacitorKeyboard: 5f32a712adf41e07a61caafb82cf29fb6d8ba123
-  CapacitorPluginSafeArea: b99681e1d9986ae1c059ca0e1b5e7025916e5e04
   CapacitorPushNotifications: 293fabe42c7229756078e81f2d3a60394ba4e5d8
   CapacitorStatusBar: 2e4369f99166125435641b1908d05f561eaba6f6
   Sentry: ebc12276bd17613a114ab359074096b6b3725203
   SentryCapacitor: 170d8b96ba195cead4dc60eaf5c42aacf97ff1d3
   SentryPrivate: d651efb234cf385ec9a1cdd3eff94b5e78a0e0fe
 
-PODFILE CHECKSUM: 4df628698a15eb9e02cbedf57683d41b5d9109aa
+PODFILE CHECKSUM: 6607b7b38b5a00b4a38808a9f2499a52cdc09d1b
 
 COCOAPODS: 1.15.2

@@ -22,6 +22,3 @@ project(':sentry-capacitor').projectDir = new File('../../node_modules/@sentry/c
 
 include ':capacitor-admob-ads'
 project(':capacitor-admob-ads').projectDir = new File('../../node_modules/capacitor-admob-ads/android')
-
-include ':capacitor-plugin-safe-area'
-project(':capacitor-plugin-safe-area').projectDir = new File('../../node_modules/capacitor-plugin-safe-area/android')
