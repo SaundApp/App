@@ -12,6 +12,7 @@ import {
   createRootRoute,
   useRouterState,
 } from "@tanstack/react-router";
+import { SafeArea } from "capacitor-plugin-safe-area";
 import { useEffect, useState } from "react";
 
 export const Route = createRootRoute({
@@ -70,11 +71,24 @@ function App() {
     }
   }, [token, router.location.pathname, queryClient]);
 
+  useEffect(() => {
+    (async function () {
+      const safeAreaData = await SafeArea.getSafeAreaInsets();
+      const { insets } = safeAreaData;
+      for (const [key, value] of Object.entries(insets)) {
+        document.documentElement.style.setProperty(
+          `--safe-area-inset-${key}`,
+          `${value}px`,
+        );
+      }
+    })();
+  }, []);
+
   return (
     <ThemeProvider defaultTheme="system" storageKey="vite-ui-theme">
       <SessionContext.Provider value={session}>
         <main
-          className={`py-safe flex h-screen min-h-screen flex-col bg-background px-3 font-geist text-foreground`}
+          className={`my-safe flex h-screen min-h-screen flex-col bg-background px-3 font-geist text-foreground`}
         >
           <Outlet />
           {session &&
