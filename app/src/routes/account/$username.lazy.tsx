@@ -93,9 +93,9 @@ function Account() {
             });
           }
         }),
-    onSuccess: () => {
-      queryClient.invalidateQueries({ queryKey: ["user", username] });
-      queryClient.invalidateQueries({ queryKey: ["me"] });
+    onSettled: async () => {
+      await queryClient.invalidateQueries({ queryKey: ["user", username] });
+      return await queryClient.invalidateQueries({ queryKey: ["me"] });
     },
   });
   const cancelRequest = useMutation({

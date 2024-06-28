@@ -83,10 +83,12 @@ export default function Post({ post }: { post: ExtendedPost }) {
         }),
   });
   const like = useMutation({
-    mutationFn: () => axiosClient.post(`/posts/${post.id}/like`),
-    onSuccess: () => {
-      queryClient.invalidateQueries({ queryKey: ["posts", post.id, "likes"] });
-    },
+    mutationFn: (isLike: boolean) =>
+      axiosClient.post(`/posts/${post.id}/like`, { isLike }),
+    onSettled: async () =>
+      await queryClient.invalidateQueries({
+        queryKey: ["posts", post.id, "likes"],
+      }),
   });
 
   useEffect(() => {
@@ -206,8 +208,17 @@ export default function Post({ post }: { post: ExtendedPost }) {
             }
           >
             <div className="flex items-center gap-3" style={{ color }}>
-              <button {...bind()} onClick={() => like.mutate()}>
-                {data?.find((user) => user.id === session?.id) ? (
+              <button
+                {...bind()}
+                onClick={() =>
+                  like.mutate(!data?.find((user) => user.id === session?.id))
+                }
+              >
+                {(
+                  like.isPending
+                    ? like.variables
+                    : data?.find((user) => user.id === session?.id)
+                ) ? (
                   <FaHeart fontSize={25} />
                 ) : (
                   <FaRegHeart fontSize={25} />
