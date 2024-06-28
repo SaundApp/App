@@ -69,7 +69,7 @@ export default function Comments({ post }: { post: Post }) {
                   <p className="muted">{formatDistance(comment.createdAt)}</p>
                 </div>
 
-                <div className="flex max-w-72 gap-1 break-all">
+                <div className="flex max-w-72 gap-1 break-all leading-5">
                   {comment.text.split(" ").map((word, index) => {
                     if (word.startsWith("@")) {
                       return (

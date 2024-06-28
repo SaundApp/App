@@ -178,10 +178,11 @@ function Account() {
             <p className="muted">post</p>
           </div>
 
-          <div className="flex flex-col items-center">
-            <h5 onClick={() => !profileUnavailable && setFollowersOpen(true)}>
-              {data.followers}
-            </h5>
+          <div
+            className="flex flex-col items-center"
+            onClick={() => !profileUnavailable && setFollowersOpen(true)}
+          >
+            <h5>{data.followers}</h5>
             <p className="muted">{t("account.follower")}</p>
 
             {followers && (
@@ -190,14 +191,16 @@ function Account() {
                 users={followers}
                 open={followersOpen}
                 onOpenChange={setFollowersOpen}
+                isFollowers
               />
             )}
           </div>
 
-          <div className="flex flex-col items-center">
-            <h5 onClick={() => !profileUnavailable && setFollowingsOpen(true)}>
-              {data.following}
-            </h5>
+          <div
+            className="flex flex-col items-center"
+            onClick={() => !profileUnavailable && setFollowingsOpen(true)}
+          >
+            <h5>{data.following}</h5>
             <p className="muted">{t("account.following")}</p>
 
             {following && (

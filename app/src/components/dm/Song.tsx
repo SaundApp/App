@@ -42,7 +42,7 @@ export default function Song({
         >
           <div
             className={
-              "daisy-chat-bubble max-w-72 break-all !p-3 text-white " +
+              "daisy-chat-bubble max-w-72 break-words !p-3 text-white " +
               (self ? "bg-primary" : "bg-secondary")
             }
           >

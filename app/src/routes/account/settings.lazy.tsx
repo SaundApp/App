@@ -156,7 +156,7 @@ function EditProfile() {
         </Select>
       </div>
 
-      <div className="flex w-full flex-col gap-1">
+      <div className="flex w-full flex-col">
         <p>{t("account.notifications.title")}</p>
 
         <div className="mt-3">
@@ -262,8 +262,8 @@ function EditProfile() {
         </Button>
 
         <Button
-          variant="link"
-          className="w-full bg-transparent text-destructive"
+          variant="secondary"
+          className="w-full"
           onClick={() => {
             const token = localStorage.getItem("token");
             localStorage.clear();
