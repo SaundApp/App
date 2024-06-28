@@ -6,28 +6,18 @@ import { ThemeProvider } from "@/components/ThemeProvider";
 import { Toaster } from "@/components/ui/toaster";
 import { axiosClient } from "@/lib/axios";
 import type { MeUser } from "@/types/prisma";
+import { Capacitor } from "@capacitor/core";
 import { useQuery, useQueryClient } from "@tanstack/react-query";
 import {
   Outlet,
   createRootRoute,
   useRouterState,
 } from "@tanstack/react-router";
-import { SafeArea, type SafeAreaInsets } from "capacitor-plugin-safe-area";
 import { useEffect, useState } from "react";
 
 export const Route = createRootRoute({
   component: App,
 });
-
-function calculateSafeArea(data: SafeAreaInsets) {
-  const { insets } = data;
-  for (const [key, value] of Object.entries(insets)) {
-    document.documentElement.style.setProperty(
-      `--safe-area-inset-${key}`,
-      `${value}px`,
-    );
-  }
-}
 
 function App() {
   const router = useRouterState();
@@ -81,22 +71,14 @@ function App() {
     }
   }, [token, router.location.pathname, queryClient]);
 
-  useEffect(() => {
-    (async () => {
-      const safeAreaData = await SafeArea.getSafeAreaInsets();
-      calculateSafeArea(safeAreaData);
-
-      await SafeArea.addListener("safeAreaChanged", (data) => {
-        calculateSafeArea(data);
-      });
-    })();
-  }, []);
-
   return (
     <ThemeProvider defaultTheme="system" storageKey="vite-ui-theme">
       <SessionContext.Provider value={session}>
         <main
-          className={`my-safe flex h-screen min-h-screen flex-col bg-background px-3 font-geist text-foreground`}
+          className={
+            "flex h-screen min-h-screen flex-col bg-background px-3 py-6 font-geist text-foreground" +
+            (Capacitor.getPlatform() === "ios" ? " !py-16" : "")
+          }
         >
           <Outlet />
           {session &&

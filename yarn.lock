@@ -4486,11 +4486,6 @@ capacitor-admob-ads@^5.0.0:
     capacitor-admob-ads "^0.0.2"
     glob "^7.2.0"
 
-capacitor-plugin-safe-area@^3.0.1:
-  version "3.0.1"
-  resolved "https://registry.yarnpkg.com/capacitor-plugin-safe-area/-/capacitor-plugin-safe-area-3.0.1.tgz#c8f58234b6dafa32b24d8a9aa840249e63f77f77"
-  integrity sha512-M0Kek/JhSEFv05DixvoRKu3dKeavb3pdwi6MdkblZerDVk6CaGLWuGt0T2MXob6ofnG1VVNq0mJzEfx0qacoIQ==
-
 chalk@2.4.2, chalk@^2.4.2:
   version "2.4.2"
   resolved "https://registry.yarnpkg.com/chalk/-/chalk-2.4.2.tgz#cd42541677a54333cf541a49108c1432b44c9424"
@@ -9077,11 +9072,6 @@ tailwindcss-animate@^1.0.7:
   version "1.0.7"
   resolved "https://registry.yarnpkg.com/tailwindcss-animate/-/tailwindcss-animate-1.0.7.tgz#318b692c4c42676cc9e67b19b78775742388bef4"
   integrity sha512-bl6mpH3T7I3UFxuvDEXLxy/VuFxBk5bbzplh7tXI68mwMokNYd1t9qPBHlnyTwfa4JGC4zP516I1hYYtQ/vspA==
-
-tailwindcss-safe-area-capacitor@^0.5.1:
-  version "0.5.1"
-  resolved "https://registry.yarnpkg.com/tailwindcss-safe-area-capacitor/-/tailwindcss-safe-area-capacitor-0.5.1.tgz#80e6da10067a9d6fca9d7f82e8a698f29cf04d4f"
-  integrity sha512-ieyA7odik1IKff+0QRVdKnCdmJl+XS6yXY70ALstBC87g5eNgSkCrsKyRVAatuX6jTyeRryHzaOFkqzFI/ZbTA==
 
 tailwindcss@3.4.0:
   version "3.4.0"

@@ -85,7 +85,7 @@ function Index() {
         pullingContent={<br />}
         refreshingContent={<Spinner />}
       >
-        <div className="bg-background flex flex-col gap-6">
+        <div className="flex flex-col gap-6 bg-background">
           {data?.pages.map((group, i) => (
             <Fragment key={i}>
               {group.map((post) => (
