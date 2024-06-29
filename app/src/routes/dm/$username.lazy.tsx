@@ -14,6 +14,7 @@ import { useTranslation } from "react-i18next";
 import { FaCamera, FaChevronLeft } from "react-icons/fa";
 import { FaXmark } from "react-icons/fa6";
 import VoiceRecorder from "../../components/dm/VoiceRecorder";
+import { Capacitor } from "@capacitor/core";
 
 export const Route = createLazyFileRoute("/dm/$username")({
   component: Chat,
@@ -163,7 +164,14 @@ function Chat() {
         className="flex h-full flex-col-reverse gap-3 overflow-y-auto"
         id="chat"
         style={{
-          maxHeight: !replying ? "83vh" : "76vh",
+          maxHeight:
+            Capacitor.getPlatform() === "ios"
+              ? !replying
+                ? "70vh"
+                : "65vh"
+              : !replying
+                ? "83vh"
+                : "76vh",
         }}
       >
         {messages.map((message) => (
@@ -190,7 +198,10 @@ function Chat() {
         }}
       >
         <div
-          className="absolute bottom-4 left-2 flex items-end justify-center gap-3"
+          className={
+            "absolute bottom-4 left-2 flex items-end justify-center gap-3" +
+            (Capacitor.getPlatform() === "ios" ? " bottom-8" : "")
+          }
           style={{
             width: "calc(100% - 1rem)",
           }}

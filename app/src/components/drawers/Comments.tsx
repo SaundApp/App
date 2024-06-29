@@ -12,6 +12,7 @@ import Mentions from "../dropdown/Mentions";
 import { Drawer, DrawerContent, DrawerTrigger } from "../ui/drawer";
 import { Input } from "../ui/input";
 import { useDate } from "@/lib/dates";
+import { Capacitor } from "@capacitor/core";
 
 export default function Comments({ post }: { post: Post }) {
   const { t } = useTranslation();
@@ -116,7 +117,12 @@ export default function Comments({ post }: { post: Post }) {
           ))}
         </div>
 
-        <div className="mt-auto flex gap-3">
+        <div
+          className={
+            "mt-auto flex gap-3" +
+            (Capacitor.getPlatform() === "ios" ? " pb-4" : "")
+          }
+        >
           {session && (
             <Link
               to={`/account/${session?.username}`}
