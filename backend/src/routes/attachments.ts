@@ -2,6 +2,7 @@ import { AttachmentType, prisma } from "@repo/backend-common";
 import { Hono } from "hono";
 import { jwt } from "hono/jwt";
 import { stream } from "hono/streaming";
+import { compressImage } from "../lib/images";
 
 const hono = new Hono();
 
@@ -23,7 +24,21 @@ hono.post("/upload", jwt({ secret: process.env.JWT_SECRET! }), async (ctx) => {
     return ctx.json({ error: "File too large" }, 400);
 
   const arrbuf = await file.arrayBuffer();
-  const buffer = Buffer.from(arrbuf);
+  let buffer;
+
+  if (type.toLowerCase() === "image") buffer = await compressImage(arrbuf);
+  else buffer = Buffer.from(arrbuf);
+
+  const existing = await prisma.attachment.findFirst({
+    where: {
+      data: buffer,
+      userId: payload.user,
+    },
+  });
+
+  if (existing)
+    return ctx.json({ success: true, id: existing.id, cache: true });
+
   const attachment = await prisma.attachment.create({
     data: {
       name: file.name,
@@ -52,7 +67,7 @@ hono.get("/:id", async (ctx) => {
 
   switch (attachment.type) {
     case AttachmentType.IMAGE:
-      type = "image/png";
+      type = "image/webp";
       break;
     case AttachmentType.AUDIO:
       type = "audio/wav";

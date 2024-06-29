@@ -12,7 +12,7 @@ import { deleteCookie, getCookie, setCookie } from "hono/cookie";
 import { JwtVariables, jwt, verify } from "hono/jwt";
 import SpotifyWebApi from "spotify-web-api-node";
 import { isLanguageSupported } from "../../../backend-common/src/translations";
-import { createAvatar } from "../lib/avatar";
+import { createAvatar } from "../lib/images";
 import { signToken } from "../lib/jwt";
 import { spotifyCredentials, syncUser } from "../lib/spotify";
 
@@ -23,7 +23,7 @@ async function generateAvatar(id: string, username: string) {
     data: {
       userId: id,
       type: AttachmentType.IMAGE,
-      data: await createAvatar(username),
+      data: createAvatar(username),
       name: "avatar",
     },
   });
