@@ -218,7 +218,7 @@ function Chat() {
                 .catch(() => {
                   toast({
                     variant: "destructive",
-                    description: t("dm.message.attachment_error"),
+                    description: t("toast.error.base"),
                   });
                 });
 
@@ -240,21 +240,23 @@ function Chat() {
                 {replying && (
                   <div className="flex justify-between">
                     <div className="flex w-fit gap-1 py-2">
-                      <span className="muted">{t("dm.message.reply")}</span>
-
                       <span
-                        className="muted max-w-12 truncate !text-primary"
+                        className="muted"
                         onClick={() => {
                           document
                             .querySelector(`[data-message="${replying}"]`)
                             ?.scrollIntoView({ behavior: "smooth" });
                         }}
                       >
-                        {messages
-                          .find((msg) => msg.id === replying)
-                          ?.text.startsWith(`${import.meta.env.VITE_APP_URL}/`)
-                          ? t("dm.message.attachment")
-                          : messages.find((msg) => msg.id === replying)?.text}
+                        {t("dm.replying", {
+                          message: messages
+                            .find((msg) => msg.id === replying)
+                            ?.text.startsWith(
+                              `${import.meta.env.VITE_APP_URL}/`,
+                            )
+                            ? t("dm.attachment")
+                            : messages.find((msg) => msg.id === replying)?.text,
+                        })}
                       </span>
                     </div>
 

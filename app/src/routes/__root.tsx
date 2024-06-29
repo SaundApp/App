@@ -14,6 +14,7 @@ import {
   useRouterState,
 } from "@tanstack/react-router";
 import { useEffect, useState } from "react";
+import { SplashScreen } from "@capacitor/splash-screen";
 
 export const Route = createRootRoute({
   component: App,
@@ -70,6 +71,10 @@ function App() {
       location.href = "/auth/login";
     }
   }, [token, router.location.pathname, queryClient]);
+
+  useEffect(() => {
+    SplashScreen.hide();
+  }, []);
 
   return (
     <ThemeProvider defaultTheme="system" storageKey="vite-ui-theme">

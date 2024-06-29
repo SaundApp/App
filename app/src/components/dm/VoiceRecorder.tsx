@@ -28,7 +28,7 @@ export default function VoiceRecorder({
     } catch (_) {
       toast({
         variant: "destructive",
-        description: t("dm.message.attachment_error"),
+        description: t("toast.error.base"),
       });
     }
   };

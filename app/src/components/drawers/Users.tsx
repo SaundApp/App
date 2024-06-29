@@ -17,12 +17,14 @@ export default function Users({
   onOpenChange,
   title,
   isFollowers,
+  userId,
 }: {
   users: PublicUser[];
   open: boolean;
   onOpenChange: (open: boolean) => void;
   title: string;
   isFollowers?: boolean;
+  userId?: string;
 }) {
   const { t } = useTranslation();
   const { toast } = useToast();
@@ -41,22 +43,44 @@ export default function Users({
             });
           }
         }),
-    onSuccess: () => {
-      queryClient.invalidateQueries({ queryKey: ["me"] });
+    onSettled: async () => {
+      await queryClient.invalidateQueries({ queryKey: ["me"] });
+      if (!userId) return;
+
+      await queryClient.invalidateQueries({
+        queryKey: ["following", userId],
+      });
+      return await queryClient.invalidateQueries({
+        queryKey: ["followers", userId],
+      });
     },
   });
   const unfollow = useMutation({
     mutationFn: (user: string) => axiosClient.delete(`/users/${user}/unfollow`),
-    onSuccess: () => {
-      queryClient.invalidateQueries({ queryKey: ["me"] });
+    onSettled: async () => {
+      await queryClient.invalidateQueries({ queryKey: ["me"] });
+      if (!userId) return;
+
+      await queryClient.invalidateQueries({
+        queryKey: ["following", userId],
+      });
+      return await queryClient.invalidateQueries({
+        queryKey: ["followers", userId],
+      });
     },
   });
   const removeFollower = useMutation({
-    mutationFn: (user: string) =>
-      axiosClient.delete(`/users/${user}/follower`),
-    onSuccess: () => {
-      // TODO
-      queryClient.invalidateQueries({ queryKey: ["me"] });
+    mutationFn: (user: string) => axiosClient.delete(`/users/${user}/follower`),
+    onSettled: async () => {
+      await queryClient.invalidateQueries({ queryKey: ["me"] });
+      if (!userId) return;
+
+      await queryClient.invalidateQueries({
+        queryKey: ["following", userId],
+      });
+      return await queryClient.invalidateQueries({
+        queryKey: ["followers", userId],
+      });
     },
   });
 
@@ -107,7 +131,7 @@ export default function Users({
                   </div>
                 </Link>
 
-                {(!isFollowers && session?.username !== user.username) && (
+                {!isFollowers && session?.username !== user.username && (
                   <Button
                     onClick={() => {
                       if (
@@ -119,27 +143,42 @@ export default function Users({
                       else unfollow.mutate(user.id);
                     }}
                     variant={
-                      !session?.following.find((u) => u.followingId === user.id)
-                        ? "default"
-                        : "secondary"
+                      follow.isPending
+                        ? "secondary"
+                        : unfollow.isPending
+                          ? "default"
+                          : !session?.following.find(
+                                (u) => u.followingId === user.id,
+                              )
+                            ? "default"
+                            : "secondary"
                     }
                   >
-                    {!session?.following.find((u) => u.followingId === user.id)
-                      ? t("general.follow")
-                      : t("general.unfollow")}
+                    {follow.isPending
+                      ? t("general.unfollow")
+                      : unfollow.isPending
+                        ? t("general.follow")
+                        : !session?.following.find(
+                              (u) => u.followingId === user.id,
+                            )
+                          ? t("general.follow")
+                          : t("general.unfollow")}
                   </Button>
                 )}
 
-                {(isFollowers && session?.username !== user.username) && (
-                  <Button
-                    onClick={() => {
-                      removeFollower.mutate(user.id);
-                    }}
-                    variant="secondary"
-                  >
-                    {t("general.remove_follower")}
-                  </Button>
-                )}
+                {!removeFollower.isPending &&
+                  isFollowers &&
+                  session?.username !== user.username &&
+                  session?.private && (
+                    <Button
+                      onClick={() => {
+                        removeFollower.mutate(user.id);
+                      }}
+                      variant="secondary"
+                    >
+                      {t("general.remove_follower")}
+                    </Button>
+                  )}
               </div>
             ))}
         </div>

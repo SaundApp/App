@@ -194,6 +194,7 @@ function Account() {
                 open={followersOpen}
                 onOpenChange={setFollowersOpen}
                 isFollowers
+                userId={data.id}
               />
             )}
           </div>
@@ -211,6 +212,7 @@ function Account() {
                 users={following}
                 open={followingsOpen}
                 onOpenChange={setFollowingsOpen}
+                userId={data.id}
               />
             )}
           </div>

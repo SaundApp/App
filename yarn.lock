@@ -463,6 +463,11 @@
   resolved "https://registry.yarnpkg.com/@capacitor/push-notifications/-/push-notifications-6.0.1.tgz#d1cd1d2a42cb9e7bd16124100fad2c3bd42325c8"
   integrity sha512-NFVAnmBsyuTFScTMUrgOr3EKnCl9etGeXignC2Y5QsOoqjT+fhVhIUco9BR7Bi48JGdvK/evqzwt36LMF82bBw==
 
+"@capacitor/splash-screen@^6.0.1":
+  version "6.0.1"
+  resolved "https://registry.yarnpkg.com/@capacitor/splash-screen/-/splash-screen-6.0.1.tgz#562213f375a200a89cf8f33addf1f69ca882c1df"
+  integrity sha512-ndsqq335Mb6NxDrcXsT0PVwomo/UrDN4ykqpu8wY8F3HT4vbr8Hojh5PLqtlTy6TCIIIen58fkEgIoyGPsPSaw==
+
 "@capacitor/status-bar@6.0.0":
   version "6.0.0"
   resolved "https://registry.yarnpkg.com/@capacitor/status-bar/-/status-bar-6.0.0.tgz#dd487b1e5fc7c5717de85f2ec8fcdfe1c9a6962c"

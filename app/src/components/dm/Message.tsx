@@ -1,10 +1,10 @@
+import { useDate } from "@/lib/dates";
 import type { Message } from "@repo/backend-common/types";
 import { useTranslation } from "react-i18next";
 import { ContextMenu, ContextMenuTrigger } from "../ui/context-menu";
 import Attachment from "./Attachment";
 import Menu from "./Menu";
 import Song from "./Song";
-import { useDate } from "@/lib/dates";
 
 export default function MessageComponent({
   message,
@@ -53,21 +53,23 @@ export default function MessageComponent({
         {reply && (
           <div className={"flex w-fit gap-1 " + (self ? "ml-auto" : "")}>
             <div className="flex items-center gap-1">
-              <span className="muted">{t("dm.message.reply")}</span>
+              <span
+                className="muted"
+                onClick={() => {
+                  document
+                    .querySelector(`[data-message="${reply.id}"]`)
+                    ?.scrollIntoView({ behavior: "smooth" });
+                }}
+              >
+                {t("dm.replying", {
+                  message: reply.text.startsWith(
+                    `${import.meta.env.VITE_APP_URL}/`,
+                  )
+                    ? t("dm.attachment")
+                    : reply.text,
+                })}
+              </span>
             </div>
-
-            <span
-              className="muted max-w-12 truncate !text-primary"
-              onClick={() => {
-                document
-                  .querySelector(`[data-message="${reply.id}"]`)
-                  ?.scrollIntoView({ behavior: "smooth" });
-              }}
-            >
-              {reply.text.startsWith(`${import.meta.env.VITE_APP_URL}/`)
-                ? t("dm.message.attachment")
-                : reply.text}
-            </span>
           </div>
         )}
 
@@ -79,7 +81,7 @@ export default function MessageComponent({
         >
           <div
             className={
-              "daisy-chat-bubble max-w-72 break-words !p-3 !dark:text-white " +
+              "!dark:text-white daisy-chat-bubble max-w-72 break-words !p-3 " +
               (self ? "bg-primary text-white" : "bg-secondary text-foreground")
             }
           >
