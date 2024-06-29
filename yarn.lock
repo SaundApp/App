@@ -1664,6 +1664,11 @@
   resolved "https://registry.yarnpkg.com/@microsoft/tsdoc/-/tsdoc-0.15.0.tgz#f29a55df17cb6e87cfbabce33ff6a14a9f85076d"
   integrity sha512-HZpPoABogPvjeJOdzCOSJsXeL/SMCBgBZMVC3X3d7YYp2gf31MfxhUoYUNwf1ERPJOnQc0wkFn9trqI6ZEdZuA==
 
+"@mozartec/capacitor-microphone@^6.0.0":
+  version "6.0.0"
+  resolved "https://registry.yarnpkg.com/@mozartec/capacitor-microphone/-/capacitor-microphone-6.0.0.tgz#4fbf2972f676d0b614b426812b0033ab5df95b4c"
+  integrity sha512-bx2Dcp84C9/crmBc3yRAg4tDAJYUIzjnRTZX2CluNBNrFRpPrXkRuwNGPNBy3pXP8fjhGM8NqSZ/7eMYfKRuNg==
+
 "@napi-rs/wasm-runtime@^0.2.3":
   version "0.2.4"
   resolved "https://registry.yarnpkg.com/@napi-rs/wasm-runtime/-/wasm-runtime-0.2.4.tgz#d27788176f250d86e498081e3c5ff48a17606918"

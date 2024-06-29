@@ -15,6 +15,7 @@ import { FaCamera, FaChevronLeft } from "react-icons/fa";
 import { FaXmark } from "react-icons/fa6";
 import VoiceRecorder from "../../components/dm/VoiceRecorder";
 import { Capacitor } from "@capacitor/core";
+import { Microphone } from "@mozartec/capacitor-microphone";
 
 export const Route = createLazyFileRoute("/dm/$username")({
   component: Chat,
@@ -294,7 +295,10 @@ function Chat() {
               </div>
             </>
           )}
-          <button className="flex h-full items-center justify-center">
+          <button className="flex h-full items-center justify-center" onClick={async () => {
+            await Microphone.requestPermissions();
+          }
+          }>
             <VoiceRecorder controls={recorderControls} websocket={webSocket} />
           </button>
         </div>

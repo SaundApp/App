@@ -17,6 +17,7 @@ def capacitor_pods
   pod 'CapacitorPushNotifications', :path => '../../../node_modules/@capacitor/push-notifications'
   pod 'CapacitorSplashScreen', :path => '../../../node_modules/@capacitor/splash-screen'
   pod 'CapacitorStatusBar', :path => '../../../node_modules/@capacitor/status-bar'
+  pod 'MozartecCapacitorMicrophone', :path => '../../../node_modules/@mozartec/capacitor-microphone'
   pod 'SentryCapacitor', :path => '../../../node_modules/@sentry/capacitor'
   pod 'CapacitorAdmobAds', :path => '../../../node_modules/capacitor-admob-ads'
 end
