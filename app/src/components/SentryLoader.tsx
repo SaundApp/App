@@ -4,6 +4,8 @@ import * as SentryReact from "@sentry/react";
 Sentry.init(
   {
     dsn: "https://a5efb0d219a4a18ef3294c855dda3b6c@o4507493410340864.ingest.de.sentry.io/4507493412044880",
+    environment: import.meta.env.DEV ? "development" : "production",
+
     integrations: [
       SentryReact.browserTracingIntegration(),
       SentryReact.replayIntegration(),

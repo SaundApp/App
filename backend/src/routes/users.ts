@@ -787,8 +787,8 @@ hono.post(
           quantity: 1,
         },
       ],
-      success_url: process.env.FRONTEND_URL,
-      cancel_url: process.env.FRONTEND_URL,
+      success_url: process.env.APP_URL + "/",
+      cancel_url: process.env.APP_URL + "/",
       metadata: {
         user: payload.user,
         target: id,

@@ -28,6 +28,14 @@ export async function getDominantColor(image: HTMLImageElement) {
   context.drawImage(image, 0, 0);
 
   const data = context.getImageData(0, 0, 1, 1).data;
-  
+
   return [data[0], data[1], data[2]];
+}
+
+export async function getImageUrl(image: File) {
+  return new Promise<string>((resolve) => {
+    const reader = new FileReader();
+    reader.onload = () => resolve(reader.result as string);
+    reader.readAsDataURL(image);
+  });
 }

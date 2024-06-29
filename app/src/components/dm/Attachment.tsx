@@ -8,6 +8,7 @@ import { ContextMenu, ContextMenuTrigger } from "../ui/context-menu";
 import AudioPlayer from "./AudioPlayer";
 import Menu from "./Menu";
 import { useDate } from "@/lib/dates";
+import { Spinner } from "../ui/spinner";
 
 export default function Attachment({
   postId,
@@ -20,29 +21,34 @@ export default function Attachment({
   postId: string;
   self: boolean;
   websocket: WebSocket | null;
-  message: Message;
+  message?: Message;
   setEditing: (messageId: string) => void;
   setReplying: (messageId: string) => void;
 }) {
   const { format } = useDate();
   const { data } = useQuery<AttachmentType>({
     queryKey: ["attachments", postId],
-    queryFn: async () =>
-      axiosClient
+    queryFn: async () => {
+      if (postId.startsWith("local-")) return null;
+
+      return await axiosClient
         .get("/attachments/" + postId + "/metadata")
-        .then((res) => res.data),
+        .then((res) => res.data);
+    },
   });
 
   const renderItem = () => {
-    if (!data) return null;
+    if (!data && message) return null;
 
-    if (data.type === "VIDEO")
+    if (data?.type === "VIDEO")
       return (
         <div
           className={
-            "daisy-chat " + (self ? "daisy-chat-end" : "daisy-chat-start")
+            "daisy-chat " +
+            (self ? "daisy-chat-end" : "daisy-chat-start") +
+            (!message ? " animate-pulse opacity-50" : "")
           }
-          data-message={message.id}
+          data-message={message?.id}
         >
           <div
             className={
@@ -56,23 +62,31 @@ export default function Attachment({
               controls
             >
               <source
-                src={`${import.meta.env.VITE_API_URL}/attachments/` + postId}
+                src={
+                  postId.startsWith("local-")
+                    ? postId.split("-")[2]
+                    : `${import.meta.env.VITE_API_URL}/attachments/` + postId
+                }
               />
             </video>
           </div>
-          <time className="muted daisy-chat-footer">
-            {format(message.createdAt, "kk:mm")}
-          </time>
+          {message && (
+            <time className="muted daisy-chat-footer">
+              {format(message.createdAt, "kk:mm")}
+            </time>
+          )}
         </div>
       );
 
-    if (data.type === "IMAGE")
+    if (!data || data.type === "IMAGE")
       return (
         <div
           className={
-            "daisy-chat " + (self ? "daisy-chat-end" : "daisy-chat-start")
+            "daisy-chat " +
+            (self ? "daisy-chat-end" : "daisy-chat-start") +
+            (!message ? " relative opacity-50" : "")
           }
-          data-message={message.id}
+          data-message={message?.id}
         >
           <div
             className={
@@ -82,16 +96,27 @@ export default function Attachment({
           >
             <img
               className="max-h-64 max-w-64 rounded-2xl"
-              src={`${import.meta.env.VITE_API_URL}/attachments/` + postId}
+              src={
+                postId.startsWith("local-")
+                  ? postId.split("-")[2]
+                  : `${import.meta.env.VITE_API_URL}/attachments/` + postId
+              }
               alt="Attachment"
               draggable={false}
             />
           </div>
-          <time className="muted daisy-chat-footer">
-            {format(message.createdAt, "kk:mm")}
-          </time>
+          {message && (
+            <time className="muted daisy-chat-footer">
+              {format(message.createdAt, "kk:mm")}
+            </time>
+          )}
+          {!data && (
+            <Spinner className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2" />
+          )}
         </div>
       );
+
+    if (!message) return null;
 
     return (
       <AudioPlayer
@@ -101,19 +126,23 @@ export default function Attachment({
     );
   };
 
+  if (!message) return <div className="ml-auto">{renderItem()}</div>;
+
   return (
     <ContextMenu>
       <ContextMenuTrigger className={self ? "ml-auto" : ""} disabled={!self}>
-        <div data-message={message.id}>{renderItem()}</div>
+        <div data-message={message?.id}>{renderItem()}</div>
       </ContextMenuTrigger>
 
-      <Menu
-        websocket={websocket}
-        message={message}
-        setEditing={setEditing}
-        setReplying={setReplying}
-        song
-      />
+      {message && (
+        <Menu
+          websocket={websocket}
+          message={message}
+          setEditing={setEditing}
+          setReplying={setReplying}
+          song
+        />
+      )}
     </ContextMenu>
   );
 }

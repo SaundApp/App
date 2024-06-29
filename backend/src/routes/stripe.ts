@@ -30,8 +30,8 @@ hono.post(
 
     const accountLink = await stripe.accountLinks.create({
       account: account.id,
-      refresh_url: process.env.FRONTEND_URL,
-      return_url: process.env.FRONTEND_URL,
+      refresh_url: process.env.APP_URL + "/app",
+      return_url: process.env.APP_URL + "/app",
       type: "account_onboarding",
       collection_options: {
         fields: "eventually_due",
@@ -133,7 +133,7 @@ hono.post(
 
     const portal = await stripe.billingPortal.sessions.create({
       customer: user!.stripeCustomerId,
-      return_url: process.env.FRONTEND_URL,
+      return_url: process.env.APP_URL + "/app",
     });
 
     return ctx.json({ url: portal.url });

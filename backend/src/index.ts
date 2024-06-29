@@ -11,6 +11,8 @@ export const app = new Hono();
 app.use(
   sentry({
     dsn: process.env.SENTRY_DSN!,
+    environment:
+      process.env.NODE_ENV === "production" ? "production" : "development",
   })
 );
 app.use(
@@ -27,6 +29,10 @@ app.use(
     maxAge: 600,
   })
 );
+
+app.get("/app", (ctx) => {
+  return ctx.redirect(process.env.FRONTEND_URL + "/");
+});
 
 readdirSync(path.join(__dirname, "routes")).forEach((file) => {
   if (file.endsWith(".ts") || file.endsWith(".js")) {

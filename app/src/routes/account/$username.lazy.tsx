@@ -16,9 +16,10 @@ import type { Post, SubscriptionSettings } from "@repo/backend-common/types";
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { Link, createLazyFileRoute } from "@tanstack/react-router";
 import { LucideHeartHandshake } from "lucide-react";
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { useTranslation } from "react-i18next";
 import { FaGear } from "react-icons/fa6";
+import Hammer from "hammerjs";
 
 export const Route = createLazyFileRoute("/account/$username")({
   component: Account,
@@ -36,6 +37,7 @@ function Account() {
   const [followersOpen, setFollowersOpen] = useState(false);
   const [followingsOpen, setFollowingsOpen] = useState(false);
   const [subscribeOpen, setSubscribeOpen] = useState(false);
+  const tabRef = useRef<HTMLDivElement>(null);
   const { data, isLoading } = useQuery<
     PublicUser & {
       bio: string;
@@ -133,6 +135,25 @@ function Account() {
   useEffect(() => {
     if (activeTab === "listeners" && !listeners?.length) setActiveTab("posts");
   }, [listeners, activeTab]);
+
+  useEffect(() => {
+    if (!tabRef.current) return;
+
+    const hammer = new Hammer(tabRef.current);
+
+    hammer.on("panleft panright", (ev) => {
+      if (ev.type === "panleft") {
+        if (activeTab === "posts") setActiveTab("playlists");
+        if (activeTab === "playlists") setActiveTab("listeners");
+      } else {
+        if (activeTab === "playlists") setActiveTab("posts");
+        if (activeTab === "listeners") setActiveTab("playlists");
+      }
+    });
+
+    return () => hammer.destroy();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [tabRef.current, activeTab]);
 
   if (isLoading) return <Spinner className="m-auto" />;
   if (!data) return null;
@@ -308,7 +329,9 @@ function Account() {
             active={activeTab}
             listeners={(listeners?.length || 0) > 0}
           />
-          {renderTab()}
+          <div ref={tabRef} className="flex size-full flex-col">
+            {renderTab()}
+          </div>
         </>
       )}
 

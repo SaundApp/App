@@ -217,7 +217,7 @@ function EditProfile() {
                 <ToggleGroupItem
                   value="PUSH"
                   aria-label="Push toggle"
-                  className="flex gap-2 hover:bg-transparent hover:text-foreground"
+                  className="flex gap-2 rounded-2xl hover:bg-transparent hover:text-foreground"
                 >
                   <FaBell className="size-4" />
                   Push
@@ -225,7 +225,7 @@ function EditProfile() {
                 <ToggleGroupItem
                   value="EMAIL"
                   aria-label="Email toggle"
-                  className="flex gap-2 hover:bg-transparent hover:text-foreground"
+                  className="flex gap-2 rounded-2xl hover:bg-transparent hover:text-foreground"
                 >
                   <FaEnvelope className="size-4" />
                   Email
@@ -233,7 +233,7 @@ function EditProfile() {
                 <ToggleGroupItem
                   value="APP"
                   aria-label="App toggle"
-                  className="flex gap-2 hover:bg-transparent hover:text-foreground"
+                  className="flex gap-2 rounded-2xl hover:bg-transparent hover:text-foreground"
                 >
                   <FaMobile className="size-4" />
                   In App

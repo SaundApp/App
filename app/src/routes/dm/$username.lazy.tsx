@@ -7,7 +7,7 @@ import { axiosClient } from "@/lib/axios";
 import type { PublicUser } from "@/types/prisma";
 import type { Message as MessageType } from "@repo/backend-common/types";
 import { useAudioRecorder } from "@repo/react-audio-voice-recorder";
-import { useQuery } from "@tanstack/react-query";
+import { useMutation, useQuery } from "@tanstack/react-query";
 import { createLazyFileRoute, Link } from "@tanstack/react-router";
 import { useEffect, useRef, useState } from "react";
 import { useTranslation } from "react-i18next";
@@ -16,6 +16,9 @@ import { FaXmark } from "react-icons/fa6";
 import VoiceRecorder from "../../components/dm/VoiceRecorder";
 import { Capacitor } from "@capacitor/core";
 import { Microphone } from "@mozartec/capacitor-microphone";
+import Attachment from "@/components/dm/Attachment";
+import { getImageUrl } from "@/lib/utils";
+import Await from "@/components/Await";
 
 export const Route = createLazyFileRoute("/dm/$username")({
   component: Chat,
@@ -47,6 +50,28 @@ function Chat() {
     queryKey: ["user", username],
     queryFn: async () =>
       axiosClient.get(`/users/${username}`).then((res) => res.data),
+  });
+  const uploadAttachment = useMutation({
+    mutationKey: ["attachment"],
+    mutationFn: async (file: File) => {
+      const formData = new FormData();
+      formData.append("file", file);
+      formData.append("type", file.type.split("/")[0]);
+
+      const { data } = await axiosClient.post("/attachments/upload", formData);
+
+      webSocket?.send(
+        "+" + `${import.meta.env.VITE_APP_URL}/?attachment=${data.id}`,
+      );
+
+      if (image.current) image.current.value = "";
+    },
+    onError: () => {
+      toast({
+        variant: "destructive",
+        description: t("toast.error.base"),
+      });
+    },
   });
   const recorderControls = useAudioRecorder();
 
@@ -175,6 +200,24 @@ function Chat() {
                 : "76vh",
         }}
       >
+        {uploadAttachment.isPending && (
+          <Await promise={getImageUrl(uploadAttachment.variables)}>
+            {(imageUrl) => (
+              <Attachment
+                postId={`local-${
+                  uploadAttachment.variables.type.startsWith("image")
+                    ? "IMAGE"
+                    : "VIDEO"
+                }-${imageUrl}`}
+                self={true}
+                websocket={webSocket}
+                setEditing={() => {}}
+                setReplying={() => {}}
+              />
+            )}
+          </Await>
+        )}
+
         {messages.map((message) => (
           <Message
             key={message.id}
@@ -214,27 +257,7 @@ function Chat() {
             accept="image/png,video/mp4"
             ref={image}
             onChange={(e) => {
-              const formData = new FormData();
-              formData.append("file", e.target.files![0]);
-              formData.append("type", e.target.files![0].type.split("/")[0]);
-
-              axiosClient
-                .post("/attachments/upload", formData)
-                .then((res) => res.data)
-                .then((data) => {
-                  webSocket?.send(
-                    "+" +
-                      `${import.meta.env.VITE_APP_URL}/?attachment=${data.id}`,
-                  );
-                })
-                .catch(() => {
-                  toast({
-                    variant: "destructive",
-                    description: t("toast.error.base"),
-                  });
-                });
-
-              e.target.value = "";
+              if (e.target.files) uploadAttachment.mutate(e.target.files[0]);
             }}
           />
           {!recorderControls.isRecording && !recorderControls.isPaused && (
@@ -295,10 +318,12 @@ function Chat() {
               </div>
             </>
           )}
-          <button className="flex h-full items-center justify-center" onClick={async () => {
-            await Microphone.requestPermissions();
-          }
-          }>
+          <button
+            className="flex h-full items-center justify-center"
+            onClick={async () => {
+              await Microphone.requestPermissions();
+            }}
+          >
             <VoiceRecorder controls={recorderControls} websocket={webSocket} />
           </button>
         </div>
