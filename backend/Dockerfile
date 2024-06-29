@@ -25,6 +25,7 @@ COPY --from=builder /app/out/json/ .
 COPY --from=builder /app/out/full/backend-common/prisma ./backend-common/prisma
 COPY --from=builder /app/out/yarn.lock ./yarn.lock
 RUN --mount=type=cache,target=/root/.yarn YARN_CACHE_FOLDER=/root/.yarn yarn install
+RUN --mount=type=cache,target=/root/.yarn YARN_CACHE_FOLDER=/root/.yarn yarn add sharp --ignore-engines
 
 # Build the project and its dependencies
 COPY --from=builder /app/out/full/ .
