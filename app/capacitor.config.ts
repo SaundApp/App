@@ -5,7 +5,7 @@ const config: CapacitorConfig = {
   appName: "Saund",
   webDir: "dist",
   server: {
-    allowNavigation: ["10.0.2.2:8000", "10.0.2.2"],
+    allowNavigation: ["api.saund.app", "ws.saund.app"],
   },
   plugins: {
     PushNotifications: {
@@ -14,6 +14,9 @@ const config: CapacitorConfig = {
     SplashScreen: {
       launchAutoHide: false,
     },
+    Keyboard: {
+      resize: "body"
+    }
   },
 };
 

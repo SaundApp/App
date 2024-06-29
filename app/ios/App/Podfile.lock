@@ -12,6 +12,8 @@ PODS:
     - Capacitor
   - CapacitorPushNotifications (6.0.1):
     - Capacitor
+  - CapacitorSplashScreen (6.0.1):
+    - Capacitor
   - CapacitorStatusBar (6.0.0):
     - Capacitor
   - Sentry/HybridSDK (8.21.0):
@@ -29,6 +31,7 @@ DEPENDENCIES:
   - "CapacitorHaptics (from `../../../node_modules/@capacitor/haptics`)"
   - "CapacitorKeyboard (from `../../../node_modules/@capacitor/keyboard`)"
   - "CapacitorPushNotifications (from `../../../node_modules/@capacitor/push-notifications`)"
+  - "CapacitorSplashScreen (from `../../../node_modules/@capacitor/splash-screen`)"
   - "CapacitorStatusBar (from `../../../node_modules/@capacitor/status-bar`)"
   - "SentryCapacitor (from `../../../node_modules/@sentry/capacitor`)"
 
@@ -52,6 +55,8 @@ EXTERNAL SOURCES:
     :path: "../../../node_modules/@capacitor/keyboard"
   CapacitorPushNotifications:
     :path: "../../../node_modules/@capacitor/push-notifications"
+  CapacitorSplashScreen:
+    :path: "../../../node_modules/@capacitor/splash-screen"
   CapacitorStatusBar:
     :path: "../../../node_modules/@capacitor/status-bar"
   SentryCapacitor:
@@ -65,11 +70,12 @@ SPEC CHECKSUMS:
   CapacitorHaptics: 9ebc9363f0e9b8eb4295088a0b474530acf1859b
   CapacitorKeyboard: 5f32a712adf41e07a61caafb82cf29fb6d8ba123
   CapacitorPushNotifications: 293fabe42c7229756078e81f2d3a60394ba4e5d8
+  CapacitorSplashScreen: 61645214e8f955ff2b80f16a6a3648960fe4c89f
   CapacitorStatusBar: 2e4369f99166125435641b1908d05f561eaba6f6
   Sentry: ebc12276bd17613a114ab359074096b6b3725203
   SentryCapacitor: 170d8b96ba195cead4dc60eaf5c42aacf97ff1d3
   SentryPrivate: d651efb234cf385ec9a1cdd3eff94b5e78a0e0fe
 
-PODFILE CHECKSUM: 6607b7b38b5a00b4a38808a9f2499a52cdc09d1b
+PODFILE CHECKSUM: f518050d088c27dc18c65a94f0e0148b64a28a40
 
 COCOAPODS: 1.15.2
