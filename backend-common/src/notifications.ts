@@ -46,6 +46,13 @@ export async function sendNotification(
     )?.id;
   }
 
+  if (
+    type === NotificationType.DM &&
+    data.message?.startsWith(process.env.FRONTEND_URL!)
+  ) {
+    message = getMessage("attachment", user?.language);
+  }
+
   if (settings.includes("APP")) {
     const notification = await prisma.notification.create({
       data: {

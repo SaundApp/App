@@ -77,8 +77,6 @@ hono.patch(
     const payload = ctx.get("jwtPayload");
     const body = ctx.req.valid("json");
 
-    console.log(body);
-
     await prisma.user.update({
       where: { id: payload.user },
       data: {

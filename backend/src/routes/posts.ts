@@ -183,6 +183,7 @@ hono.get(
       posts.push(...newPosts);
     }
 
+    let contOld = 0;
     if (posts.length < 10) {
       const newPosts = await prisma.post.findMany({
         where: {
@@ -194,30 +195,37 @@ hono.get(
         take: 10 - posts.length,
       });
 
+      contOld = newPosts.length;
       posts.push(...newPosts);
     }
 
-    posts.sort((a, b) => {
-      const aIsFollowed = user.following.some(
-        (u) => u.followingId === a.userId
-      );
-      const bIsFollowed = user.following.some(
-        (u) => u.followingId === b.userId
-      );
-      const aIsLiked = a.likes.some((u) =>
-        user.following.some((f) => f.followingId === u)
-      );
-      const bIsLiked = b.likes.some((u) =>
-        user.following.some((f) => f.followingId === u)
-      );
+    if (contOld < 10)
+      posts.sort((a, b) => {
+        const aIsFollowed = user.following.some(
+          (u) => u.followingId === a.userId
+        );
+        const bIsFollowed = user.following.some(
+          (u) => u.followingId === b.userId
+        );
+        const aIsLiked = a.likes.some((u) =>
+          user.following.some((f) => f.followingId === u)
+        );
+        const bIsLiked = b.likes.some((u) =>
+          user.following.some((f) => f.followingId === u)
+        );
+        const aIsUnseen = !a.seen.includes(user.id);
+        const bIsUnseen = !b.seen.includes(user.id);
 
-      if (aIsFollowed && !bIsFollowed) return -1;
-      if (!aIsFollowed && bIsFollowed) return 1;
-      if (aIsLiked && !bIsLiked) return -1;
-      if (!aIsLiked && bIsLiked) return 1;
+        if (aIsUnseen && !bIsUnseen) return -1;
+        if (!aIsUnseen && bIsUnseen) return 1;
+        if (aIsFollowed && !bIsFollowed) return -1;
+        if (!aIsFollowed && bIsFollowed) return 1;
+        if (aIsLiked && !bIsLiked) return -1;
+        if (!aIsLiked && bIsLiked) return 1;
 
-      return 0;
-    });
+        return 0;
+      });
+    else posts.sort(() => Math.random() - 0.5);
 
     return ctx.json(
       posts.map((post) => ({

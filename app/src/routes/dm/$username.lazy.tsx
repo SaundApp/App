@@ -77,7 +77,6 @@ function Chat() {
 
   useEffect(() => {
     const timeout = setTimeout(() => {
-      console.log("Connecting to websocket...");
       const webSocket = new WebSocket(
         `${import.meta.env.VITE_WS_URL}/${username}?token=${localStorage.getItem("token")}`,
       );
@@ -161,7 +160,7 @@ function Chat() {
 
   return (
     <div
-      className="flex flex-col justify-between gap-3"
+      className="flex flex-col justify-start gap-3"
       style={{
         height: "calc(100vh - 5rem)",
       }}
@@ -193,8 +192,8 @@ function Chat() {
           maxHeight:
             Capacitor.getPlatform() === "ios"
               ? !replying
-                ? "70vh"
-                : "65vh"
+                ? "75vh"
+                : "72vh"
               : !replying
                 ? "83vh"
                 : "76vh",

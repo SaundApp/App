@@ -8,6 +8,7 @@
     "dm": "{message}",
     "leaderboard": "Le classement mensuel a été mis à jour ! Consultez-le.",
     "post": "{user} vient de publier {cont} nouveaux posts",
-    "accept": "Accepter"
+    "accept": "Accepter",
+    "attachment": "Pièce jointe"
   }
 }

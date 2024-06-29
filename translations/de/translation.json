@@ -8,6 +8,7 @@
     "dm": "{message}",
     "leaderboard": "Die monatliche Rangliste wurde aktualisiert! Schau sie dir an.",
     "post": "{user} hat gerade {cont} neue Beiträge veröffentlicht",
-    "accept": "Akzeptieren"
+    "accept": "Akzeptieren",
+    "attachment": "Anhang+"
   }
 }

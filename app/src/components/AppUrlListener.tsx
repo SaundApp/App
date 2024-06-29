@@ -6,7 +6,6 @@ export default function AppUrlListener() {
   const navigate = useNavigate();
   useEffect(() => {
     App.addListener("appUrlOpen", (event: URLOpenListenerEvent) => {
-      console.log(event.url);
       const split = event.url.split("://");
       if (split.length > 1) {
         const path = split[1];

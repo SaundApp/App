@@ -91,7 +91,6 @@ function EditSubscriptionSettings() {
                 });
             },
             (values) => {
-              console.log(values);
               let error = (values.perks || values.price) as
                 | FieldError
                 | FieldError[]

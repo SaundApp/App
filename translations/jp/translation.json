@@ -8,6 +8,7 @@
     "dm": "{message}",
     "leaderboard": "月間ランキングが更新されました！ご確認ください。",
     "post": "{user} が {cont} 件の新しい投稿を行いました",
-    "accept": "承認する"
+    "accept": "承認する",
+    "attachment": "添付ファイル"
   }
 }

@@ -8,6 +8,7 @@
     "dm": "{message}",
     "leaderboard": "The monthly leaderboard has been updated! Check it out.",
     "post": "{user} just posted {cont} new posts",
-    "accept": "Accept"
+    "accept": "Accept",
+    "attachment": "Attachment"
   }
 }

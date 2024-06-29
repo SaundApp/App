@@ -8,6 +8,7 @@
     "dm": "{message}",
     "leaderboard": "La classifica mensile è stata aggiornata! Dai un'occhiata.",
     "post": "{user} ha appena pubblicato {cont} nuovi post",
-    "accept": "Accetta"
+    "accept": "Accetta",
+    "attachment": "Allegato"
   }
 }
