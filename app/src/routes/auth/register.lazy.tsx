@@ -84,7 +84,7 @@ function Register() {
               name="username"
               control={form.control}
               render={({ field }) => (
-                <FormItem>
+                <FormItem className="w-full">
                   <FormControl>
                     <Input
                       {...field}
@@ -99,7 +99,7 @@ function Register() {
               name="name"
               control={form.control}
               render={({ field }) => (
-                <FormItem>
+                <FormItem className="w-full">
                   <FormControl>
                     <Input
                       {...field}
