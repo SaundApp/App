@@ -68,7 +68,7 @@
     @apply border-border;
   }
   body {
-    @apply bg-background text-foreground select-none;
+    @apply select-none bg-background text-foreground;
   }
 }
 
@@ -126,4 +126,9 @@ input:focus-visible {
 button:focus-visible,
 button:focus {
   box-shadow: none !important;
+}
+
+img {
+  pointer-events: none;
+  -webkit-user-drag: none;
 }
