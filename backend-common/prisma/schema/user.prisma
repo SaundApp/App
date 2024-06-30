@@ -1,0 +1,71 @@
+model User {
+  id                   String                @id @default(auto()) @map("_id") @db.ObjectId
+  username             String                @unique
+  bio                  String?
+  name                 String
+  email                String                @unique
+  avatarId             String?               @db.ObjectId
+  password             String?
+  private              Boolean               @default(false)
+  streams              Int?
+  nationality          String?
+  language             String                @default("en")
+  genres               String[]
+  spotifyId            String?
+  stripeId             String?
+  stripeCustomerId     String?
+  notificationToken    String?
+  verified             Boolean               @default(false)
+  subscriptionSettings SubscriptionSettings?
+  notificationSettings NotificationSettings
+
+  listeners  Listener[] @relation("artist")
+  listenerOf Listener[] @relation("listener")
+
+  followers        Follows[]       @relation("following")
+  following        Follows[]       @relation("follower")
+  requestsReceived FollowRequest[] @relation("receiver")
+  requestsSent     FollowRequest[] @relation("sender")
+  posts            Post[]
+  comments         Comment[]
+  messagesSent     Message[]       @relation("sender")
+  subscriptions    Subscription[]  @relation("subscriber")
+  subscribers      Subscription[]  @relation("subscribedTo")
+  notifications    Notification[]
+  attachments      Attachment[]
+  spotifyToken     SpotifyToken?
+
+  chatIds String[] @default([]) @db.ObjectId
+  chats   Chat[]   @relation(references: [id], fields: [chatIds])
+}
+
+model SpotifyToken {
+  id           String   @id @default(auto()) @map("_id") @db.ObjectId
+  accessToken  String
+  refreshToken String
+  expiration   DateTime
+
+  user   User   @relation(fields: [userId], references: [id], onDelete: Cascade)
+  userId String @unique @db.ObjectId
+}
+
+model Listener {
+  id        String   @id @default(auto()) @map("_id") @db.ObjectId
+  count     Int
+  updatedAt DateTime @default(now())
+  artist    User     @relation("artist", fields: [artistId], references: [id], onDelete: Cascade)
+  artistId  String   @db.ObjectId
+
+  listener   User   @relation("listener", fields: [listenerId], references: [id], onDelete: Cascade)
+  listenerId String @db.ObjectId
+
+  @@unique([artistId, listenerId])
+}
+
+model Follows {
+  id          String @id @default(auto()) @map("_id") @db.ObjectId
+  follower    User   @relation("follower", fields: [followerId], references: [id], onDelete: Cascade)
+  followerId  String @db.ObjectId
+  following   User   @relation("following", fields: [followingId], references: [id], onDelete: Cascade)
+  followingId String @db.ObjectId
+}

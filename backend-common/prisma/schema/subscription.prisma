@@ -1,0 +1,17 @@
+type SubscriptionSettings {
+  perks String[] @default([])
+  price Float
+}
+
+model Subscription {
+  id        String   @id @default(auto()) @map("_id") @db.ObjectId
+  createdAt DateTime @default(now())
+  amount    Float
+
+  user   User   @relation("subscriber", fields: [userId], references: [id], onDelete: Cascade)
+  userId String @db.ObjectId
+
+  subscribedTo   User   @relation("subscribedTo", fields: [subscribedToId], references: [id], onDelete: Cascade)
+  subscribedToId String @db.ObjectId
+}
+

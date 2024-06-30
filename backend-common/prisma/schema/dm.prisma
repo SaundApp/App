@@ -1,0 +1,32 @@
+model Chat {
+    id      String   @id @default(auto()) @map("_id") @db.ObjectId
+    private Boolean  @default(true)
+    type    ChatType
+
+    name    String?
+    imageId String? @db.ObjectId
+
+    userIds String[] @db.ObjectId
+    users   User[]   @relation(references: [id], fields: [userIds])
+
+    messages Message[]
+}
+
+model Message {
+    id        String   @id @default(auto()) @map("_id") @db.ObjectId
+    text      String
+    read      Boolean  @default(false)
+    createdAt DateTime @default(now())
+
+    sender   User   @relation("sender", fields: [senderId], references: [id], onDelete: Cascade)
+    senderId String @db.ObjectId
+    chat     Chat   @relation(fields: [chatId], references: [id])
+    chatId   String @db.ObjectId
+
+    replyId String? @db.ObjectId
+}
+
+enum ChatType {
+    SINGLE
+    GROUP
+}
