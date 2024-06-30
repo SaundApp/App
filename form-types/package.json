@@ -6,10 +6,6 @@
   "exports": {
     ".": {
       "import": "./index.ts",
-      "require": "./index.ts"
-    },
-    "./dist": {
-      "import": "./dist/index.js",
       "require": "./dist/index.js"
     }
   },

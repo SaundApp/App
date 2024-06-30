@@ -4113,6 +4113,7 @@ __metadata:
     "@types/react-dom": "npm:18.2.14"
     react: "npm:^18.2.0"
     react-email: "npm:2.1.4"
+    typescript: "npm:^5.5.2"
   languageName: unknown
   linkType: soft
 

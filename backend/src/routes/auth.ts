@@ -10,7 +10,7 @@ import {
   registerSchema,
   updateSchema,
   updateSubscriptionSchema,
-} from "@repo/form-types/dist";
+} from "@repo/form-types";
 import { Hono } from "hono";
 import { deleteCookie, getCookie, setCookie } from "hono/cookie";
 import { JwtVariables, jwt, verify } from "hono/jwt";
