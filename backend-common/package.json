@@ -14,11 +14,14 @@
     "postinstall": "prisma generate"
   },
   "devDependencies": {
+    "@types/nodemailer": "^6",
     "prisma": "^5.16.1",
     "typescript": "^5.5.2"
   },
   "dependencies": {
     "@prisma/client": "^5.16.1",
-    "firebase-admin": "^12.2.0"
+    "@repo/email": "0.0.0",
+    "firebase-admin": "^12.2.0",
+    "nodemailer": "^6.9.14"
   }
 }

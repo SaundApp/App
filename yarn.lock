@@ -4052,7 +4052,10 @@ __metadata:
   resolution: "@repo/backend-common@workspace:backend-common"
   dependencies:
     "@prisma/client": "npm:^5.16.1"
+    "@repo/email": "npm:0.0.0"
+    "@types/nodemailer": "npm:^6"
     firebase-admin: "npm:^12.2.0"
+    nodemailer: "npm:^6.9.14"
     prisma: "npm:^5.16.1"
     typescript: "npm:^5.5.2"
   languageName: unknown
@@ -4080,6 +4083,19 @@ __metadata:
     stripe: "npm:^16.1.0"
     tsx: "npm:^4.16.0"
     typescript: "npm:^5.5.2"
+  languageName: unknown
+  linkType: soft
+
+"@repo/email@npm:0.0.0, @repo/email@workspace:email":
+  version: 0.0.0-use.local
+  resolution: "@repo/email@workspace:email"
+  dependencies:
+    "@react-email/components": "npm:0.0.18"
+    "@types/node": "npm:^20.14.9"
+    "@types/react": "npm:18.2.33"
+    "@types/react-dom": "npm:18.2.14"
+    react: "npm:^18.2.0"
+    react-email: "npm:2.1.4"
   languageName: unknown
   linkType: soft
 
@@ -5252,6 +5268,15 @@ __metadata:
   dependencies:
     undici-types: "npm:~5.26.4"
   checksum: 10c0/911ffa444dc032897f4a23ed580c67903bd38ea1c5ec99b1d00fa10b83537a3adddef8e1f29710cbdd8e556a61407ed008e06537d834e48caf449ce59f87d387
+  languageName: node
+  linkType: hard
+
+"@types/nodemailer@npm:^6":
+  version: 6.4.15
+  resolution: "@types/nodemailer@npm:6.4.15"
+  dependencies:
+    "@types/node": "npm:*"
+  checksum: 10c0/553e613fe08fd663bff1fb3647a8ebbcc4ca297a6249296a43f3c92499158acad5955689be2096ff3fe72f145e80d749c1fc66d5549fe665d7ceb6d0946f2a26
   languageName: node
   linkType: hard
 
@@ -7588,19 +7613,6 @@ __metadata:
   checksum: 10c0/669e56d5092382ceaaa2022f3c391b0f6702e47876095b0e00a790181b7f6b5f49fe6e67ebe8339fd6b1b1b66ffe53c87dd47f1e550661ea55722279bf24cad3
   languageName: node
   linkType: hard
-
-"emails@workspace:email":
-  version: 0.0.0-use.local
-  resolution: "emails@workspace:email"
-  dependencies:
-    "@react-email/components": "npm:0.0.18"
-    "@types/node": "npm:^20.14.9"
-    "@types/react": "npm:18.2.33"
-    "@types/react-dom": "npm:18.2.14"
-    react: "npm:^18.2.0"
-    react-email: "npm:2.1.4"
-  languageName: unknown
-  linkType: soft
 
 "emoji-regex@npm:^8.0.0":
   version: 8.0.0
@@ -10770,6 +10782,13 @@ __metadata:
   version: 2.0.14
   resolution: "node-releases@npm:2.0.14"
   checksum: 10c0/199fc93773ae70ec9969bc6d5ac5b2bbd6eb986ed1907d751f411fef3ede0e4bfdb45ceb43711f8078bea237b6036db8b1bf208f6ff2b70c7d615afd157f3ab9
+  languageName: node
+  linkType: hard
+
+"nodemailer@npm:^6.9.14":
+  version: 6.9.14
+  resolution: "nodemailer@npm:6.9.14"
+  checksum: 10c0/2542986849bc6ec2bf12fb7b72226da0ce9c6a0946216dea020d9eedee3ac1a4eb2413f59772a3ddd4bb9188d5ce859167a030c065719473f71319e052a319dc
   languageName: node
   linkType: hard
 

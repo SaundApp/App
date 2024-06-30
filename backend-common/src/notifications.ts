@@ -1,4 +1,6 @@
 import { firebase, getMessage, prisma } from ".";
+import nodemailer from "nodemailer";
+import { render, WithText } from "@repo/email";
 
 export enum NotificationType {
   LIKE = "like",
@@ -10,6 +12,16 @@ export enum NotificationType {
   LEADERBOARD = "leaderboard",
   POST = "post",
 }
+
+const transporter = nodemailer.createTransport({
+  host: process.env.EMAIL_HOST,
+  port: 465,
+  secure: true,
+  auth: {
+    user: process.env.EMAIL_USER,
+    pass: process.env.EMAIL_PASS,
+  },
+});
 
 export async function sendNotification(
   userId: string,
@@ -24,6 +36,7 @@ export async function sendNotification(
       notificationToken: true,
       notificationSettings: true,
       language: true,
+      email: true,
     },
   });
 
@@ -80,8 +93,22 @@ export async function sendNotification(
     }
   }
 
-  if (settings.includes("EMAIL")) {
-    // TODO: send email
+  if (settings.includes("EMAIL") && user?.email) {
+    const newNotification = getMessage("new-notification", user?.language);
+    const html = render(
+      WithText({
+        preview: newNotification,
+        heading: newNotification,
+        text: message,
+      })
+    );
+
+    await transporter.sendMail({
+      from: '"Saund" <team@saund.app>',
+      to: user.email,
+      subject: newNotification,
+      html,
+    });
   }
 
   if (!user?.notificationToken || !settings.includes("PUSH")) return;
