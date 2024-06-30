@@ -1,6 +1,7 @@
 import { useDate } from "@/lib/dates";
 import type { Message } from "@repo/backend-common/types";
 import { useTranslation } from "react-i18next";
+import type { Socket } from "socket.io-client";
 import { ContextMenu, ContextMenuTrigger } from "../ui/context-menu";
 import Attachment from "./Attachment";
 import Menu from "./Menu";
@@ -9,14 +10,14 @@ import Song from "./Song";
 export default function MessageComponent({
   message,
   self,
-  websocket,
+  socket,
   setEditing,
   setReplying,
   reply,
 }: {
   message: Message;
   self: boolean;
-  websocket: WebSocket | null;
+  socket: Socket | null;
   setEditing: (messageId: string) => void;
   setReplying: (messageId: string) => void;
   reply: Message | undefined;
@@ -29,7 +30,7 @@ export default function MessageComponent({
       <Attachment
         postId={message.text.split("=")[1]}
         self={self}
-        websocket={websocket}
+        socket={socket}
         message={message}
         setEditing={setEditing}
         setReplying={setReplying}
@@ -40,7 +41,7 @@ export default function MessageComponent({
       <Song
         postId={message.text.split("=")[1]}
         self={self}
-        websocket={websocket}
+        socket={socket}
         message={message}
         setEditing={setEditing}
         setReplying={setReplying}
@@ -94,7 +95,7 @@ export default function MessageComponent({
       </ContextMenuTrigger>
 
       <Menu
-        websocket={websocket}
+        socket={socket}
         message={message}
         setEditing={setEditing}
         setReplying={setReplying}

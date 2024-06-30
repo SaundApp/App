@@ -1,24 +1,25 @@
 import { axiosClient } from "@/lib/axios";
+import { useDate } from "@/lib/dates";
 import type { ExtendedPost } from "@/types/prisma";
 import type { Message } from "@repo/backend-common/types";
 import { useQuery } from "@tanstack/react-query";
 import { Link } from "@tanstack/react-router";
 import { SiSpotify } from "react-icons/si";
+import type { Socket } from "socket.io-client";
 import { ContextMenu, ContextMenuTrigger } from "../ui/context-menu";
 import Menu from "./Menu";
-import { useDate } from "@/lib/dates";
 
 export default function Song({
   postId,
   self,
-  websocket,
+  socket,
   message,
   setEditing,
   setReplying,
 }: {
   postId: string;
   self: boolean;
-  websocket: WebSocket | null;
+  socket: Socket | null;
   message: Message;
   setEditing: (messageId: string) => void;
   setReplying: (messageId: string) => void;
@@ -78,7 +79,7 @@ export default function Song({
       </ContextMenuTrigger>
 
       <Menu
-        websocket={websocket}
+        socket={socket}
         message={message}
         setEditing={setEditing}
         setReplying={setReplying}

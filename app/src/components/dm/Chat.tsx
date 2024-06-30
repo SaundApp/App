@@ -1,19 +1,19 @@
 import { axiosClient } from "@/lib/axios";
+import { useDate } from "@/lib/dates";
+import type { Chat } from "@repo/backend-common/types";
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { Link } from "@tanstack/react-router";
 import { useTranslation } from "react-i18next";
 import SwipeToRevealActions from "react-swipe-to-reveal-actions";
 import Avatar from "../account/Avatar";
-import type { PublicUser } from "@/types/prisma";
-import { useDate } from "@/lib/dates";
 
 export default function Chat({
-  user,
+  chat,
   message,
   read,
   timestamp,
 }: {
-  user: PublicUser;
+  chat: Chat;
   message?: string;
   read: boolean;
   timestamp?: Date;
@@ -29,19 +29,19 @@ export default function Chat({
   });
 
   const deleteChat = useMutation({
-    mutationFn: () => axiosClient.delete(`/dm/${user.username}`),
+    mutationFn: () => axiosClient.delete(`/dm/${chat.id}`),
     onSettled: async () =>
       await queryClient.invalidateQueries({ queryKey: ["dm"] }),
   });
 
   const muteChat = useMutation({
-    mutationFn: () => axiosClient.post(`/notifications/mute/${user.id}`),
+    mutationFn: () => axiosClient.post(`/notifications/mute/${chat.id}`),
     onSettled: async () =>
       await queryClient.invalidateQueries({ queryKey: ["mute"] }),
   });
 
   const unmuteChat = useMutation({
-    mutationFn: () => axiosClient.delete(`/notifications/mute/${user.id}`),
+    mutationFn: () => axiosClient.delete(`/notifications/mute/${chat.id}`),
     onSettled: async () =>
       await queryClient.invalidateQueries({ queryKey: ["mute"] }),
   });
@@ -58,11 +58,11 @@ export default function Chat({
         {
           content: (
             <div className="flex size-full items-center justify-center bg-secondary">
-              {mutedChats?.includes(user.id) ? t("dm.unmute") : t("dm.mute")}
+              {mutedChats?.includes(chat.id) ? t("dm.unmute") : t("dm.mute")}
             </div>
           ),
           onClick: () => {
-            if (mutedChats?.includes(user.id)) unmuteChat.mutate();
+            if (mutedChats?.includes(chat.id)) unmuteChat.mutate();
             else muteChat.mutate();
           },
         },
@@ -78,14 +78,14 @@ export default function Chat({
       actionButtonMinWidth={70}
     >
       <Link
-        to={`/dm/${user.username}`}
+        to={`/dm/${chat.id}`}
         className="flex w-full flex-row items-center gap-3"
       >
-        <Avatar user={user} width={40} height={40} />
+        <Avatar imageId={chat.imageId} width={40} height={40} />
         <div>
-          <h5 className="max-w-40 truncate text-left">{user.name}</h5>
+          <h5 className="max-w-40 truncate text-left">{chat.name}</h5>
           <div className="flex items-center gap-1">
-            {(message && (
+            {message ? (
               <>
                 <p className="max-w-40 truncate text-left">
                   {message.startsWith(`${import.meta.env.VITE_APP_URL}/`)
@@ -97,10 +97,8 @@ export default function Chat({
                   {timestamp && formatDistance(timestamp)}
                 </p>
               </>
-            )) || (
-              <p className="muted max-w-40 truncate text-left">
-                @{user.username}
-              </p>
+            ) : (
+              <p className="muted max-w-40 truncate text-left">@{chat.name}</p>
             )}
           </div>
         </div>
