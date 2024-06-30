@@ -5,7 +5,7 @@ import { useToast } from "@/components/ui/use-toast";
 import { axiosClient } from "@/lib/axios";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { resetPasswordSchema } from "@repo/form-types";
-import { Link, createLazyFileRoute } from "@tanstack/react-router";
+import { createLazyFileRoute } from "@tanstack/react-router";
 import { useForm } from "react-hook-form";
 import { useTranslation } from "react-i18next";
 import type { z } from "zod";
@@ -108,12 +108,6 @@ function ResetPassword() {
               </FormItem>
             )}
           />
-
-          <div className="flex items-center justify-between">
-            <Link to="/auth/login" className="flex items-center gap-1">
-              <p className="muted">Login</p>
-            </Link>
-          </div>
 
           <Button type="submit">{t("auth.reset_password")}</Button>
         </form>
