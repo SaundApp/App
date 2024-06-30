@@ -1,0 +1,47 @@
+type NotificationSettings {
+    like           NotificationMethod[] @default([APP, PUSH])
+    comment        NotificationMethod[] @default([APP, PUSH])
+    follow         NotificationMethod[] @default([APP, PUSH])
+    follow_request NotificationMethod[] @default([APP, PUSH]) @map("followRequest")
+    mention        NotificationMethod[] @default([APP, PUSH])
+    dm             NotificationMethod[] @default([APP, PUSH])
+    leaderboard    NotificationMethod[] @default([APP, PUSH, EMAIL])
+    post           NotificationMethod[] @default([APP, PUSH])
+    mutedChats     String[]             @default([])
+}
+
+model FollowRequest {
+    id        String   @id @default(auto()) @map("_id") @db.ObjectId
+    createdAt DateTime @default(now())
+
+    sender         User    @relation("sender", fields: [senderId], references: [id], onDelete: Cascade)
+    senderId       String  @db.ObjectId
+    receiver       User    @relation("receiver", fields: [receiverId], references: [id], onDelete: Cascade)
+    receiverId     String  @db.ObjectId
+    notificationId String? @db.ObjectId
+
+    @@unique([senderId, receiverId])
+}
+
+model Notification {
+    id           String              @id @default(auto()) @map("_id") @db.ObjectId
+    text         String
+    read         Boolean             @default(false)
+    createdAt    DateTime            @default(now())
+    involvedUser String?             @db.ObjectId
+    button       NotificationButton?
+
+    user   User   @relation(fields: [userId], references: [id], onDelete: Cascade)
+    userId String @db.ObjectId
+}
+
+type NotificationButton {
+    text String
+    href String
+}
+
+enum NotificationMethod {
+    EMAIL
+    PUSH
+    APP
+}
