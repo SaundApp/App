@@ -22,7 +22,9 @@
       "edit": "Les modifications ont été enregistrées avec succès",
       "cache_cleared": "Le cache a été vidé avec succès",
       "edit_image": "L'image a été mise à jour avec succès",
-      "follow_request": "Demande de suivi envoyée avec succès"
+      "follow_request": "Demande de suivi envoyée avec succès",
+      "forgot_password": "Un e-mail a été envoyé pour réinitialiser votre mot de passe",
+      "reset_password": "Le mot de passe a été réinitialisé avec succès"
     },
     "error": {
       "login": "Nom d'utilisateur ou mot de passe invalide",
@@ -120,7 +122,10 @@
     "login": "Connexion",
     "login_description": "Bienvenue ! Nous sommes ravis de vous revoir !",
     "register_description": "Créez un compte maintenant et commencez à découvrir de nouveaux artistes!",
-    "forgot_password": "Mot de passe oublié?"
+    "forgot_password": "Mot de passe oublié?",
+    "forgot_password_description": "Entrez votre adresse e-mail pour réinitialiser votre mot de passe",
+    "reset_password": "Réinitialiser le mot de passe",
+    "reset_password_description": "Entrez votre nouveau mot de passe"
   },
   "notification": {
     "title": "Notifications"

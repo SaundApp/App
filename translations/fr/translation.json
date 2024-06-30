@@ -9,6 +9,11 @@
     "leaderboard": "Le classement mensuel a été mis à jour ! Consultez-le.",
     "post": "{user} vient de publier {cont} nouveaux posts",
     "accept": "Accepter",
-    "attachment": "Pièce jointe"
+    "attachment": "Pièce jointe",
+    "new-notification": "Nouvelle notification",
+    "forgot-password": {
+      "heading": "Réinitialiser votre mot de passe",
+      "button": "Cliquez pour réinitialiser"
+    }
   }
 }

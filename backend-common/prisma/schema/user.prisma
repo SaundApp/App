@@ -16,6 +16,7 @@ model User {
   stripeCustomerId     String?
   notificationToken    String?
   verified             Boolean               @default(false)
+  resetToken           String?
   subscriptionSettings SubscriptionSettings?
   notificationSettings NotificationSettings
 

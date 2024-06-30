@@ -32,6 +32,32 @@ export const loginSchema = z.object({
   password: z.string(),
 });
 
+export const forgotPasswordSchema = z.object({
+  email: z.string().email("invalid_email"),
+});
+
+export const resetPasswordSchema = z
+  .object({
+    email: z.string().email("invalid_email"),
+    token: z.string(),
+    password: z
+      .string()
+      .regex(
+        /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@#$%^&+=!]).{8,}$/,
+        "invalid_password"
+      ),
+    confirmPassword: z.string(),
+  })
+  .superRefine(({ confirmPassword, password }, ctx) => {
+    if (confirmPassword !== password) {
+      ctx.addIssue({
+        code: "custom",
+        message: "match_passwords",
+        path: ["confirmPassword"],
+      });
+    }
+  });
+
 export const updateSchema = z.object({
   avatar: z.string().optional(),
   name: z.string().min(3, "min_name"),

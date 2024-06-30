@@ -22,7 +22,9 @@
       "edit": "Alterações salvas com sucesso",
       "cache_cleared": "Cache limpo com sucesso",
       "edit_image": "Imagem atualizada com sucesso",
-      "follow_request": "Pedido de seguimento enviado com sucesso"
+      "follow_request": "Pedido de seguimento enviado com sucesso",
+      "forgot_password": "Um e-mail foi enviado para redefinir sua senha",
+      "reset_password": "Senha redefinida com sucesso"
     },
     "error": {
       "login": "Nome de usuário ou senha inválidos",
@@ -120,7 +122,10 @@
     "login": "Entrar",
     "login_description": "Bem-vindo de volta! Estamos entusiasmados por o voltar a ver!",
     "register_description": "Crie uma conta agora e comece a descobrir novos artistas!",
-    "forgot_password": "Esqueceu a senha?"
+    "forgot_password": "Esqueceu a senha?",
+    "forgot_password_description": "Digite seu e-mail e enviaremos instruções para redefinir sua senha",
+    "reset_password": "Redefinir senha",
+    "reset_password_description": "Escolha uma nova senha para sua conta"
   },
   "notification": {
     "title": "Notificações"

@@ -22,7 +22,9 @@
       "edit": "変更が正常に保存されました",
       "cache_cleared": "キャッシュが正常にクリアされました",
       "edit_image": "画像が正常に更新されました",
-      "follow_request": "フォローリクエストが正常に送信されました"
+      "follow_request": "フォローリクエストが正常に送信されました",
+      "forgot_password": "パスワードをリセットするためのメールが送信されました",
+      "reset_password": "パスワードが正常にリセットされました"
     },
     "error": {
       "login": "無効なユーザー名またはパスワード",
@@ -120,7 +122,10 @@
     "login": "ログイン",
     "login_description": "おかえりなさい！また会えるのを楽しみにしている！",
     "register_description": "今すぐアカウントを作成して、新しいアーティストを発見し始めましょう!",
-    "forgot_password": "パスワードをお忘れですか?"
+    "forgot_password": "パスワードをお忘れですか?",
+    "forgot_password_description": "メールアドレスを入力してください。パスワードをリセットするためのリンクが送信されます。",
+    "reset_password": "パスワードをリセット",
+    "reset_password_description": "新しいパスワードを入力してください。"
   },
   "notification": {
     "title": "通知"

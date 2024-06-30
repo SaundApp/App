@@ -9,6 +9,11 @@
     "leaderboard": "月度排行榜已更新！赶快查看。",
     "post": "{user} 刚刚发布了 {cont} 条新帖子",
     "accept": "接受",
-    "attachment": "附件"
+    "attachment": "附件",
+    "new-notification": "新通知",
+    "forgot-password": {
+      "heading": "重置密码",
+      "button": "点击重置"
+    }
   }
 }

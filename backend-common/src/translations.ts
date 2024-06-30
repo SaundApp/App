@@ -20,5 +20,12 @@ export function isLanguageSupported(language: string) {
 }
 
 export function getMessage(message: string, language: string = "en") {
-  return locales.get(language)["notifications"][message] || message;
+  const parts = message.split(".");
+
+  let result = locales.get(language)["notifications"];
+  for (const part of parts) {
+    result = result[part];
+  }
+
+  return result || message;
 }

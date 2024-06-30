@@ -22,7 +22,9 @@
       "edit": "Los cambios se han guardado correctamente",
       "cache_cleared": "La caché se ha limpiado correctamente",
       "edit_image": "La imagen se ha actualizado correctamente",
-      "follow_request": "Solicitud de seguimiento enviada correctamente"
+      "follow_request": "Solicitud de seguimiento enviada correctamente",
+      "forgot_password": "Se ha enviado un correo electrónico para restablecer su contraseña",
+      "reset_password": "La contraseña se ha restablecido correctamente"
     },
     "error": {
       "login": "Nombre de usuario o contraseña inválidos",
@@ -120,7 +122,10 @@
     "login": "Iniciar sesión",
     "login_description": "¡Bienvenidos de nuevo! ¡Estamos emocionados de ver de nuevo!",
     "register_description": "¡Crea una cuenta ahora y empieza a descubrir nuevos artistas!",
-    "forgot_password": "¿Olvidaste tu contraseña?"
+    "forgot_password": "¿Olvidaste tu contraseña?",
+    "forgot_password_description": "Introduce tu correo electrónico y te enviaremos un enlace para restablecer tu contraseña",
+    "reset_password": "Restablecer contraseña",
+    "reset_password_description": "Introduce tu nueva contraseña"
   },
   "notification": {
     "title": "Notificaciones"

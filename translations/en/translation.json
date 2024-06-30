@@ -9,6 +9,11 @@
     "leaderboard": "The monthly leaderboard has been updated! Check it out.",
     "post": "{user} just posted {cont} new posts",
     "accept": "Accept",
-    "attachment": "Attachment"
+    "attachment": "Attachment",
+    "new-notification": "New Notification",
+    "forgot-password": {
+      "heading": "Reset your password",
+      "button": "Click to reset"
+    }
   }
 }

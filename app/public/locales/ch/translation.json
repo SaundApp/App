@@ -22,7 +22,9 @@
       "edit": "更改已成功保存",
       "cache_cleared": "缓存已成功清除",
       "edit_image": "图片已成功更新",
-      "follow_request": "关注请求已成功发送"
+      "follow_request": "关注请求已成功发送",
+      "forgot_password": "已发送电子邮件以重置密码",
+      "reset_password": "密码已成功重置"
     },
     "error": {
       "login": "用户名或密码无效",
@@ -120,7 +122,10 @@
     "login": "登录",
     "login_description": "欢迎回来 我们很高兴再次相见！",
     "register_description": "立即创建帐户，开始发现新艺术家！",
-    "forgot_password": "忘记密码？"
+    "forgot_password": "忘记密码？",
+    "forgot_password_description": "输入您的电子邮件以重置密码",
+    "reset_password": "重置密码",
+    "reset_password_description": "输入您的新密码"
   },
   "notification": {
     "title": "通知"

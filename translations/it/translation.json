@@ -9,6 +9,11 @@
     "leaderboard": "La classifica mensile è stata aggiornata! Dai un'occhiata.",
     "post": "{user} ha appena pubblicato {cont} nuovi post",
     "accept": "Accetta",
-    "attachment": "Allegato"
+    "attachment": "Allegato",
+    "new-notification": "Nuova notifica",
+    "forgot-password": {
+      "heading": "Reimposta la tua password",
+      "button": "Clicca per reimpostare"
+    }
   }
 }

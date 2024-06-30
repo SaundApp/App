@@ -30,6 +30,8 @@ const AccountEditSubscriptionLazyImport = createFileRoute(
 )()
 const AccountEditLazyImport = createFileRoute('/account/edit')()
 const AccountUsernameLazyImport = createFileRoute('/account/$username')()
+const AuthPasswordResetLazyImport = createFileRoute('/auth/password/reset')()
+const AuthPasswordForgotLazyImport = createFileRoute('/auth/password/forgot')()
 
 // Create/Update Routes
 
@@ -100,6 +102,20 @@ const AccountUsernameLazyRoute = AccountUsernameLazyImport.update({
   getParentRoute: () => rootRoute,
 } as any).lazy(() =>
   import('./routes/account/$username.lazy').then((d) => d.Route),
+)
+
+const AuthPasswordResetLazyRoute = AuthPasswordResetLazyImport.update({
+  path: '/auth/password/reset',
+  getParentRoute: () => rootRoute,
+} as any).lazy(() =>
+  import('./routes/auth/password/reset.lazy').then((d) => d.Route),
+)
+
+const AuthPasswordForgotLazyRoute = AuthPasswordForgotLazyImport.update({
+  path: '/auth/password/forgot',
+  getParentRoute: () => rootRoute,
+} as any).lazy(() =>
+  import('./routes/auth/password/forgot.lazy').then((d) => d.Route),
 )
 
 // Populate the FileRoutesByPath interface
@@ -190,6 +206,20 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof DmIndexLazyImport
       parentRoute: typeof rootRoute
     }
+    '/auth/password/forgot': {
+      id: '/auth/password/forgot'
+      path: '/auth/password/forgot'
+      fullPath: '/auth/password/forgot'
+      preLoaderRoute: typeof AuthPasswordForgotLazyImport
+      parentRoute: typeof rootRoute
+    }
+    '/auth/password/reset': {
+      id: '/auth/password/reset'
+      path: '/auth/password/reset'
+      fullPath: '/auth/password/reset'
+      preLoaderRoute: typeof AuthPasswordResetLazyImport
+      parentRoute: typeof rootRoute
+    }
   }
 }
 
@@ -208,6 +238,8 @@ export const routeTree = rootRoute.addChildren({
   DmIdLazyRoute,
   LeaderboardArtistsLazyRoute,
   DmIndexLazyRoute,
+  AuthPasswordForgotLazyRoute,
+  AuthPasswordResetLazyRoute,
 })
 
 /* prettier-ignore-end */
@@ -229,7 +261,9 @@ export const routeTree = rootRoute.addChildren({
         "/auth/register",
         "/dm/$id",
         "/leaderboard/artists",
-        "/dm/"
+        "/dm/",
+        "/auth/password/forgot",
+        "/auth/password/reset"
       ]
     },
     "/": {
@@ -267,6 +301,12 @@ export const routeTree = rootRoute.addChildren({
     },
     "/dm/": {
       "filePath": "dm/index.lazy.tsx"
+    },
+    "/auth/password/forgot": {
+      "filePath": "auth/password/forgot.lazy.tsx"
+    },
+    "/auth/password/reset": {
+      "filePath": "auth/password/reset.lazy.tsx"
     }
   }
 }

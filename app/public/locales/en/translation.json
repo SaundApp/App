@@ -22,7 +22,9 @@
       "edit": "Changes have been saved successfully",
       "cache_cleared": "Cache has been cleared successfully",
       "edit_image": "Image has been updated successfully",
-      "follow_request": "Follow request sent successfully"
+      "follow_request": "Follow request sent successfully",
+      "forgot_password": "An email has been sent to reset your password",
+      "reset_password": "Password has been reset successfully"
     },
     "error": {
       "login": "Invalid username or password",
@@ -120,7 +122,10 @@
     "login": "Login",
     "login_description": "Welcome back! We are excited to see again!",
     "register_description": "Create an account now and start discovering new artists!",
-    "forgot_password": "Forgot password?"
+    "forgot_password": "Forgot password?",
+    "forgot_password_description": "Enter your email to receive a link to reset your password",
+    "reset_password": "Reset Password",
+    "reset_password_description": "Choose a new password for your account"
   },
   "notification": {
     "title": "Notifications"

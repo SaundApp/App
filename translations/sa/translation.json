@@ -9,6 +9,11 @@
     "leaderboard": "تم تحديث قائمة المتصدرين الشهرية! تحقق من ذلك.",
     "post": "{user} قام للتو بنشر {cont} مشاركات جديدة",
     "accept": "قبول",
-    "attachment": "مرفق"
+    "attachment": "مرفق",
+    "new-notification": "إشعار جديد",
+    "forgot-password": {
+      "heading": "إعادة تعيين كلمة المرور",
+      "button": "انقر لإعادة تعيين"
+    }
   }
 }

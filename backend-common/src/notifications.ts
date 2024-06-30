@@ -1,6 +1,6 @@
 import { firebase, getMessage, prisma } from ".";
 import nodemailer from "nodemailer";
-import { render, WithText } from "@repo/email";
+import { render, WithButton, WithText } from "@repo/email";
 
 export enum NotificationType {
   LIKE = "like",
@@ -22,6 +22,15 @@ const transporter = nodemailer.createTransport({
     pass: process.env.EMAIL_PASS,
   },
 });
+
+export async function sendMail(email: string, subject: string, html: string) {
+  return await transporter.sendMail({
+    from: '"Saund" <team@saund.app>',
+    to: email,
+    subject,
+    html,
+  });
+}
 
 export async function sendNotification(
   userId: string,
@@ -103,12 +112,7 @@ export async function sendNotification(
       })
     );
 
-    await transporter.sendMail({
-      from: '"Saund" <team@saund.app>',
-      to: user.email,
-      subject: newNotification,
-      html,
-    });
+    sendMail(user.email, newNotification, html).catch();
   }
 
   if (!user?.notificationToken || !settings.includes("PUSH")) return;
@@ -123,4 +127,24 @@ export async function sendNotification(
       },
     })
     .catch();
+}
+
+export async function sendForgotPassword(
+  email: string,
+  token: string,
+  language?: string
+) {
+  const heading = getMessage("forgot-password.heading", language);
+  const button = getMessage("forgot-password.button", language);
+
+  const html = render(
+    WithButton({
+      preview: heading,
+      heading: heading,
+      button,
+      href: `${process.env.FRONTEND_URL}/password/reset?token=${token}&email=${email}`,
+    })
+  );
+
+  return await sendMail(email, heading, html);
 }

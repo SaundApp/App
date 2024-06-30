@@ -9,6 +9,11 @@
     "leaderboard": "¡El leaderboard mensual ha sido actualizado! Échale un vistazo.",
     "post": "{user} acaba de publicar {cont} nuevas publicaciones",
     "accept": "Aceptar",
-    "attachment": "Adjunto"
+    "attachment": "Adjunto",
+    "new-notification": "Nueva notificación",
+    "forgot-password": {
+      "heading": "Restablecer tu contraseña",
+      "button": "Haz clic para restablecer"
+    }
   }
 }

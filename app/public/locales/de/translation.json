@@ -22,7 +22,9 @@
       "edit": "Änderungen wurden erfolgreich gespeichert",
       "cache_cleared": "Cache wurde erfolgreich geleert",
       "edit_image": "Bild wurde erfolgreich aktualisiert",
-      "follow_request": "Folgeanfrage wurde erfolgreich gesendet"
+      "follow_request": "Folgeanfrage wurde erfolgreich gesendet",
+      "forgot_password": "Eine E-Mail wurde gesendet, um Ihr Passwort zurückzusetzen",
+      "reset_password": "Passwort wurde erfolgreich zurückgesetzt"
     },
     "error": {
       "login": "Ungültiger Benutzername oder Passwort",
@@ -120,7 +122,10 @@
     "login": "Anmelden",
     "login_description": "Willkommen zurück! Wir freuen uns auf ein Wiedersehen!",
     "register_description": "Erstellen Sie jetzt ein Konto und entdecken Sie neue Künstler!",
-    "forgot_password": "Passwort vergessen?"
+    "forgot_password": "Passwort vergessen?",
+    "forgot_password_description": "Geben Sie Ihre E-Mail-Adresse ein, um Ihr Passwort zurückzusetzen",
+    "reset_password": "Passwort zurücksetzen",
+    "reset_password_description": "Geben Sie Ihr neues Passwort ein"
   },
   "notification": {
     "title": "Benachrichtigungen"

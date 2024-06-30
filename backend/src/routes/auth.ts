@@ -1,6 +1,10 @@
 import { zValidator } from "@hono/zod-validator";
 import { compareSync, hashSync } from "@node-rs/bcrypt";
-import { AttachmentType, prisma } from "@repo/backend-common";
+import {
+  AttachmentType,
+  prisma,
+  sendForgotPassword,
+} from "@repo/backend-common";
 import {
   loginSchema,
   registerSchema,
@@ -15,6 +19,8 @@ import { isLanguageSupported } from "../../../backend-common/src/translations";
 import { createAvatar } from "../lib/images";
 import { signToken } from "../lib/jwt";
 import { spotifyCredentials, syncUser } from "../lib/spotify";
+import { createId } from "@paralleldrive/cuid2";
+import { forgotPasswordSchema, resetPasswordSchema } from "@repo/form-types";
 
 const hono = new Hono<{ Variables: JwtVariables }>();
 
@@ -541,6 +547,66 @@ hono.patch(
     return ctx.json({
       success: true,
     });
+  }
+);
+
+hono.post(
+  "/password/forgot",
+  zValidator("json", forgotPasswordSchema),
+  async (ctx) => {
+    const body = ctx.req.valid("json");
+
+    const user = await prisma.user.findFirst({
+      where: {
+        email: body.email,
+      },
+      select: {
+        email: true,
+        language: true,
+        id: true,
+      },
+    });
+
+    if (!user) return ctx.json({ success: true });
+
+    const token = createId();
+
+    await prisma.user.update({
+      where: { id: user.id },
+      data: { resetToken: token },
+    });
+
+    sendForgotPassword(user.email, token, user.language);
+
+    return ctx.json({ success: true });
+  }
+);
+
+hono.post(
+  "/password/reset",
+  zValidator("json", resetPasswordSchema),
+  async (ctx) => {
+    const body = ctx.req.valid("json");
+    const user = await prisma.user.findFirst({
+      where: {
+        resetToken: body.token,
+        email: body.email,
+      },
+    });
+
+    if (!user) return ctx.json({ error: "Invalid token" }, 400);
+
+    const hashedPassword = hashSync(body.password);
+
+    await prisma.user.update({
+      where: { id: user.id },
+      data: {
+        password: hashedPassword,
+        resetToken: null,
+      },
+    });
+
+    return ctx.json({ success: true });
   }
 );
 
