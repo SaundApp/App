@@ -44,10 +44,10 @@ function attachListeners(socket: Socket, userId: string, chatId: string) {
   });
   socket.on("reply", async (messageId: string, originId: string) => {
     const res = await handleReply(messageId, userId, chatId, originId);
-    if (res) io.to(chatId).emit("send", JSON.stringify(res));
+    if (res) io.to(chatId).emit("send", res);
   });
   socket.on("send", async (text: string) => {
-    const res = handleSend(text, userId, chatId);
-    if (res) io.to(chatId).emit("send", JSON.stringify(res));
+    const res = await handleSend(text, userId, chatId);
+    if (res) io.to(chatId).emit("send", res);
   });
 }

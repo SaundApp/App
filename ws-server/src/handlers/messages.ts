@@ -100,6 +100,7 @@ export async function handleSend(
       user: sender!.username,
       userId: senderId,
       message,
+      chatId
     });
   }
 

@@ -29,7 +29,7 @@ export async function sendNotification(
 
   const settings = user?.notificationSettings[type];
   if (!settings?.length) return;
-  if (user?.notificationSettings.mutedChats.includes(data.userId)) return;
+  if (user?.notificationSettings.mutedChats.includes(data.chatId)) return;
 
   let message = getMessage(type, user?.language);
   for (const key in data) {
