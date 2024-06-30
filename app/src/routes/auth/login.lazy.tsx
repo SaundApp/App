@@ -124,8 +124,10 @@ function Login() {
             <Link to="/auth/register" className="flex items-center gap-1">
               <p className="muted">{t("auth.register")}</p>
             </Link>
-            {/*TODO: Add forgot password route*/}
-            <Link className="flex items-center gap-1">
+            <Link
+              to="/auth/password/forgot"
+              className="flex items-center gap-1"
+            >
               <p className="muted">{t("auth.forgot_password")}</p>
             </Link>
           </div>

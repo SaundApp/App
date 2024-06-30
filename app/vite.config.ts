@@ -23,6 +23,7 @@ export default defineConfig({
     sentryVitePlugin({
       org: "saund",
       project: "app",
+      telemetry: false,
     }),
   ],
 

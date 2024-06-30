@@ -12,7 +12,11 @@ import { Spinner } from "@/components/ui/spinner";
 import { useToast } from "@/components/ui/use-toast";
 import { axiosClient } from "@/lib/axios";
 import type { PublicUser } from "@/types/prisma";
-import type { Post, SubscriptionSettings } from "@repo/backend-common/types";
+import type {
+  Chat,
+  Post,
+  SubscriptionSettings,
+} from "@repo/backend-common/types";
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { Link, createLazyFileRoute } from "@tanstack/react-router";
 import { LucideHeartHandshake } from "lucide-react";
@@ -20,6 +24,7 @@ import { useEffect, useRef, useState } from "react";
 import { useTranslation } from "react-i18next";
 import { FaGear } from "react-icons/fa6";
 import Hammer from "hammerjs";
+import Chats from "@/components/account/Chats";
 
 export const Route = createLazyFileRoute("/account/$username")({
   component: Account,
@@ -31,9 +36,9 @@ function Account() {
   const queryClient = useQueryClient();
   const { username } = Route.useParams();
   const session = useSession();
-  const [activeTab, setActiveTab] = useState<
-    "posts" | "playlists" | "listeners"
-  >("posts");
+  const [activeTab, setActiveTab] = useState<"posts" | "chats" | "listeners">(
+    "posts",
+  );
   const [followersOpen, setFollowersOpen] = useState(false);
   const [followingsOpen, setFollowingsOpen] = useState(false);
   const [subscribeOpen, setSubscribeOpen] = useState(false);
@@ -74,6 +79,13 @@ function Account() {
     queryFn: () =>
       data
         ? axiosClient.get(`/users/${data.id}/posts`).then((res) => res.data)
+        : [],
+  });
+  const { data: chats } = useQuery<Chat[]>({
+    queryKey: ["chats", data?.id],
+    queryFn: () =>
+      data
+        ? axiosClient.get(`/users/${data.id}/chats`).then((res) => res.data)
         : [],
   });
   const { data: listeners } = useQuery<PublicUser[]>({
@@ -120,13 +132,9 @@ function Account() {
   const renderTab = () => {
     switch (activeTab) {
       case "posts":
-        return (
-          <Posts posts={posts?.filter((post) => post.type !== "PLAYLIST")} />
-        );
-      case "playlists":
-        return (
-          <Posts posts={posts?.filter((post) => post.type === "PLAYLIST")} />
-        );
+        return <Posts posts={posts} />;
+      case "chats":
+        return <Chats chats={chats || []} />;
       case "listeners":
         return <Listeners listeners={listeners || []} />;
     }
@@ -143,11 +151,11 @@ function Account() {
 
     hammer.on("panleft panright", (ev) => {
       if (ev.type === "panleft") {
-        if (activeTab === "posts") setActiveTab("playlists");
-        if (activeTab === "playlists") setActiveTab("listeners");
+        if (activeTab === "posts") setActiveTab("chats");
+        if (activeTab === "chats") setActiveTab("listeners");
       } else {
-        if (activeTab === "playlists") setActiveTab("posts");
-        if (activeTab === "listeners") setActiveTab("playlists");
+        if (activeTab === "chats") setActiveTab("posts");
+        if (activeTab === "listeners") setActiveTab("chats");
       }
     });
 

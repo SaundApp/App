@@ -35,9 +35,6 @@ model User {
   notifications    Notification[]
   attachments      Attachment[]
   spotifyToken     SpotifyToken?
-
-  chatIds String[] @default([]) @db.ObjectId
-  chats   Chat[]   @relation(references: [id], fields: [chatIds])
 }
 
 model SpotifyToken {

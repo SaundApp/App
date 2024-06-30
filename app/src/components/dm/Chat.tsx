@@ -6,6 +6,7 @@ import { Link, useNavigate } from "@tanstack/react-router";
 import { useTranslation } from "react-i18next";
 import SwipeToRevealActions from "react-swipe-to-reveal-actions";
 import Avatar from "../account/Avatar";
+import { Button } from "../ui/button";
 
 export default function Chat({
   chat,
@@ -13,12 +14,14 @@ export default function Chat({
   read,
   timestamp,
   create,
+  join,
 }: {
   chat: Chat;
   message?: string;
   read: boolean;
   timestamp?: Date;
   create?: boolean;
+  join?: boolean;
 }) {
   const { t } = useTranslation();
   const navigate = useNavigate();
@@ -114,13 +117,32 @@ export default function Chat({
                   {timestamp && formatDistance(timestamp)}
                 </p>
               </>
-            ) : (
+            ) : create ? (
               <p className="muted max-w-40 truncate text-left">@{chat.name}</p>
+            ) : (
+              // todo: translate
+              <p className="muted max-w-40 truncate text-left">
+                {chat.userIds.length} members
+              </p>
             )}
           </div>
         </div>
         {!read && (
           <span className="ml-auto block size-2 rounded-full bg-primary"></span>
+        )}
+        {join && (
+          <Button
+            onClick={() => {
+              axiosClient.post(`/dm/${chat.id}/join`).then(() => {
+                navigate({
+                  to: "/dm/" + chat.id,
+                });
+              });
+            }}
+            className="ml-auto px-8"
+          >
+            {t("general.follow")}
+          </Button>
         )}
       </Link>
     </SwipeToRevealActions>

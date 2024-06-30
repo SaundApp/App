@@ -242,4 +242,71 @@ hono.post(
   }
 );
 
+hono.post(
+  "/:id/join",
+  jwt({ secret: process.env.JWT_SECRET! }),
+  async (ctx) => {
+    const id = ctx.req.param("id");
+    const payload = ctx.get("jwtPayload");
+
+    let chat = await prisma.chat.findUnique({
+      where: {
+        id,
+      },
+    });
+
+    if (!chat || chat.private)
+      return ctx.json({ error: "Chat not found" }, 404);
+
+    if (!chat.userIds.includes(payload.user))
+      chat = await prisma.chat.update({
+        where: {
+          id,
+        },
+        data: {
+          userIds: {
+            push: payload.user,
+          },
+        },
+      });
+
+    return ctx.json(chat);
+  }
+);
+
+hono.get(
+  "/:id/members",
+  jwt({ secret: process.env.JWT_SECRET! }),
+  async (ctx) => {
+    const id = ctx.req.param("id");
+    const payload = ctx.get("jwtPayload");
+
+    const chat = await prisma.chat.findFirst({
+      where: {
+        id,
+        userIds: {
+          has: payload.user,
+        },
+      },
+    });
+    if (!chat) return ctx.json({ error: "Chat not found" }, 404);
+
+    const users = await prisma.user.findMany({
+      where: {
+        id: {
+          in: chat.userIds,
+        },
+      },
+      select: {
+        id: true,
+        username: true,
+        avatarId: true,
+        name: true,
+      },
+    });
+
+    return ctx.json(users);
+  }
+);
+
 export default hono;

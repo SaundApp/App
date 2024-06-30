@@ -1,8 +1,9 @@
 import Await from "@/components/Await";
 import { useSession } from "@/components/SessionContext";
-import Avatar from "@/components/account/Avatar";
 import Attachment from "@/components/dm/Attachment";
+import ChatNavbar from "@/components/dm/ChatNavbar";
 import Message from "@/components/dm/Message";
+import VoiceRecorder from "@/components/dm/VoiceRecorder";
 import { Spinner } from "@/components/ui/spinner";
 import { Textarea } from "@/components/ui/textarea";
 import { useToast } from "@/components/ui/use-toast";
@@ -12,15 +13,14 @@ import { Capacitor } from "@capacitor/core";
 import type { Chat, Message as MessageType } from "@repo/backend-common/types";
 import { useAudioRecorder } from "@repo/react-audio-voice-recorder";
 import { useMutation, useQuery } from "@tanstack/react-query";
-import { Link, createLazyFileRoute } from "@tanstack/react-router";
+import { createLazyFileRoute } from "@tanstack/react-router";
 import { useEffect, useRef, useState } from "react";
 import { useTranslation } from "react-i18next";
-import { FaCamera, FaChevronLeft } from "react-icons/fa";
+import { FaCamera } from "react-icons/fa";
 import { FaXmark } from "react-icons/fa6";
 import { io, type Socket } from "socket.io-client";
-import VoiceRecorder from "../../components/dm/VoiceRecorder";
 
-export const Route = createLazyFileRoute("/dm/$id")({
+export const Route = createLazyFileRoute("/dm/$id/")({
   component: Chat,
 });
 
@@ -164,17 +164,7 @@ function Chat() {
         height: "calc(100vh - 5rem)",
       }}
     >
-      <div className="flex items-center gap-3">
-        <Link to="/dm">
-          <FaChevronLeft fontSize={25} />
-        </Link>
-
-        {chat && <Avatar imageId={chat.imageId} width={40} height={40} />}
-
-        <div>
-          <h5 className="max-w-40 truncate text-left">{chat?.name}</h5>
-        </div>
-      </div>
+      <ChatNavbar chat={chat} />
 
       <div
         className="flex h-full flex-col-reverse gap-3 overflow-y-auto"

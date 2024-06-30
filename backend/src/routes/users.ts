@@ -579,6 +579,7 @@ hono.get(
   jwt({ secret: process.env.JWT_SECRET! }),
   async (ctx) => {
     const id = ctx.req.param("id");
+    const payload = ctx.get("jwtPayload");
 
     const user = await prisma.user.findUnique({
       where: {
@@ -591,13 +592,16 @@ hono.get(
             followerId: true,
           },
           where: {
-            followerId: ctx.get("jwtPayload").user,
+            followerId: payload.user,
           },
         },
       },
     });
 
-    if (!user || (user.private && !user.followers.length)) {
+    if (
+      !user ||
+      (user.private && !user.followers.length && id !== payload.user)
+    ) {
       return ctx.json([]);
     }
 
@@ -611,6 +615,50 @@ hono.get(
     });
 
     return ctx.json(posts);
+  }
+);
+
+hono.get(
+  "/:id/chats",
+  jwt({ secret: process.env.JWT_SECRET! }),
+  async (ctx) => {
+    const id = ctx.req.param("id");
+    const payload = ctx.get("jwtPayload");
+
+    const user = await prisma.user.findUnique({
+      where: {
+        id,
+      },
+      select: {
+        private: true,
+        followers: {
+          select: {
+            followerId: true,
+          },
+          where: {
+            followerId: payload.user,
+          },
+        },
+      },
+    });
+
+    if (
+      !user ||
+      (user.private && !user.followers.length && id !== payload.user)
+    ) {
+      return ctx.json([]);
+    }
+
+    const chats = await prisma.chat.findMany({
+      where: {
+        userIds: {
+          has: id,
+        },
+        private: false,
+      },
+    });
+
+    return ctx.json(chats);
   }
 );
 

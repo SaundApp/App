@@ -5,8 +5,8 @@ export default function AccountNavbar({
   active,
   listeners,
 }: {
-  setActiveTab: (tab: "posts" | "playlists" | "listeners") => void;
-  active: "posts" | "playlists" | "listeners";
+  setActiveTab: (tab: "posts" | "chats" | "listeners") => void;
+  active: "posts" | "chats" | "listeners";
   listeners: boolean;
 }) {
   const { t } = useTranslation();
@@ -25,15 +25,15 @@ export default function AccountNavbar({
         Post
       </button>
       <button
-        onClick={() => setActiveTab("playlists")}
+        onClick={() => setActiveTab("chats")}
         className={
           "w-full " +
-          (active === "playlists"
+          (active === "chats"
             ? "border-b-2 border-b-foreground font-semibold"
             : undefined)
         }
       >
-        Playlist
+        Chats
       </button>
       {listeners && (
         <button
