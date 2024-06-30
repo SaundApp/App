@@ -1,26 +1,26 @@
+import Await from "@/components/Await";
+import { useSession } from "@/components/SessionContext";
 import Avatar from "@/components/account/Avatar";
+import Attachment from "@/components/dm/Attachment";
 import Message from "@/components/dm/Message";
 import { Spinner } from "@/components/ui/spinner";
 import { Textarea } from "@/components/ui/textarea";
 import { useToast } from "@/components/ui/use-toast";
 import { axiosClient } from "@/lib/axios";
-import type { PublicUser } from "@/types/prisma";
-import type { Message as MessageType } from "@repo/backend-common/types";
+import { getImageUrl } from "@/lib/utils";
+import { Capacitor } from "@capacitor/core";
+import type { Chat, Message as MessageType } from "@repo/backend-common/types";
 import { useAudioRecorder } from "@repo/react-audio-voice-recorder";
 import { useMutation, useQuery } from "@tanstack/react-query";
-import { createLazyFileRoute, Link } from "@tanstack/react-router";
+import { Link, createLazyFileRoute } from "@tanstack/react-router";
 import { useEffect, useRef, useState } from "react";
 import { useTranslation } from "react-i18next";
 import { FaCamera, FaChevronLeft } from "react-icons/fa";
 import { FaXmark } from "react-icons/fa6";
+import { io, type Socket } from "socket.io-client";
 import VoiceRecorder from "../../components/dm/VoiceRecorder";
-import { Capacitor } from "@capacitor/core";
-import { Microphone } from "@mozartec/capacitor-microphone";
-import Attachment from "@/components/dm/Attachment";
-import { getImageUrl } from "@/lib/utils";
-import Await from "@/components/Await";
 
-export const Route = createLazyFileRoute("/dm/$username")({
+export const Route = createLazyFileRoute("/dm/$id")({
   component: Chat,
 });
 
@@ -30,26 +30,26 @@ function Chat() {
     text: string | undefined;
     submit: boolean;
   }>();
+  const session = useSession();
   const navigate = Route.useNavigate();
   const [message, setMessage] = useState(
     !text?.startsWith(import.meta.env.VITE_APP_URL) ? text : "" || "",
   );
   const [messages, setMessages] = useState<MessageType[]>([]);
-  const [webSocket, setWebSocket] = useState<WebSocket | null>(null);
+  const [socket, setSocket] = useState<Socket | null>(null);
   const [editing, setEditing] = useState<string | null>(null);
   const [replying, setReplying] = useState<string | null>(null);
-  const { username } = Route.useParams();
+  const { id } = Route.useParams();
   const { toast } = useToast();
   const image = useRef<HTMLInputElement>(null);
-  const { data } = useQuery<MessageType[]>({
-    queryKey: ["dm", username],
-    queryFn: async () =>
-      axiosClient.get(`/dm/${username}`).then((res) => res.data),
+  const { data: chat, isLoading } = useQuery<Chat>({
+    queryKey: ["dm", id],
+    queryFn: async () => axiosClient.get(`/dm/${id}`).then((res) => res.data),
   });
-  const { data: user, isLoading } = useQuery<PublicUser>({
-    queryKey: ["user", username],
+  const { data: history } = useQuery<MessageType[]>({
+    queryKey: ["dm", id, "messages"],
     queryFn: async () =>
-      axiosClient.get(`/users/${username}`).then((res) => res.data),
+      axiosClient.get(`/dm/${id}/messages`).then((res) => res.data),
   });
   const uploadAttachment = useMutation({
     mutationKey: ["attachment"],
@@ -60,8 +60,9 @@ function Chat() {
 
       const { data } = await axiosClient.post("/attachments/upload", formData);
 
-      webSocket?.send(
-        "+" + `${import.meta.env.VITE_APP_URL}/?attachment=${data.id}`,
+      socket?.emit(
+        "send",
+        `${import.meta.env.VITE_APP_URL}/?attachment=${data.id}`,
       );
 
       if (image.current) image.current.value = "";
@@ -77,67 +78,63 @@ function Chat() {
 
   useEffect(() => {
     const timeout = setTimeout(() => {
-      const webSocket = new WebSocket(
-        `${import.meta.env.VITE_WS_URL}/${username}?token=${localStorage.getItem("token")}`,
-      );
+      const socket = io(import.meta.env.VITE_WS_URL!, {
+        auth: {
+          token: localStorage.getItem("token"),
+        },
+        query: {
+          chat: id,
+        },
+      });
 
-      webSocket.onopen = () => {
+      socket.on("connect", () => {
         if (
           submit &&
           text &&
           text.startsWith(`${import.meta.env.VITE_APP_URL}/?post=`)
         ) {
-          webSocket?.send("+" + text);
+          socket.emit("send", text);
           setMessage("");
           navigate({ search: "" });
         }
-      };
+      });
 
-      webSocket.onmessage = (event) => {
-        const action = event.data[0];
-        const message = event.data.slice(1);
+      socket.on("send", (message: MessageType) => {
+        setMessages((prev) => [message, ...prev]);
+        setTimeout(() => {
+          const chat = document.getElementById("chat");
+          chat?.scrollTo({
+            top: chat.scrollHeight,
+            behavior: "smooth",
+          });
 
-        switch (action) {
-          case "+":
-            setMessages((prev) => [JSON.parse(message), ...prev]);
-            setTimeout(() => {
-              const chat = document.getElementById("chat");
-              chat?.scrollTo({
-                top: chat.scrollHeight,
-                behavior: "smooth",
-              });
+          axiosClient.post(`/dm/${id}/read`).catch(() => {});
+        }, 100);
+      });
 
-              axiosClient.post(`/dm/${username}/read`).catch(() => {});
-            }, 100);
-            break;
-          case "-":
-            setMessages((prev) => prev.filter((msg) => msg.id !== message));
-            break;
-          case "!":
-            setMessages((prev) =>
-              prev.map((msg) =>
-                msg.id === message.slice(0, 24)
-                  ? { ...msg, text: message.slice(24) }
-                  : msg,
-              ),
-            );
-            break;
-        }
-      };
+      socket.on("delete", (messageId: string) => {
+        setMessages((prev) => prev.filter((msg) => msg.id !== messageId));
+      });
 
-      setWebSocket(webSocket);
+      socket.on("edit", (messageId: string, text: string) => {
+        setMessages((prev) =>
+          prev.map((msg) => (msg.id === messageId ? { ...msg, text } : msg)),
+        );
+      });
+
+      setSocket(socket);
     }, 200);
 
     return () => {
       clearTimeout(timeout);
-      webSocket?.close();
-      setWebSocket(null);
+      socket?.close();
+      setSocket(null);
     };
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [username]);
+  }, [id]);
   useEffect(() => {
-    setMessages(data || []);
-  }, [data]);
+    setMessages(history || []);
+  }, [history]);
   useEffect(() => {
     if (editing) {
       setMessage(messages.find((msg) => msg.id === editing)?.text || "");
@@ -147,9 +144,9 @@ function Chat() {
 
   const handleSubmit = () => {
     if (!message || !message.length) return;
-    if (editing) webSocket?.send(`!${editing}${message}`);
-    else if (replying) webSocket?.send("@" + replying + message);
-    else webSocket?.send("+" + message);
+    if (editing) socket?.emit("edit", editing, message);
+    else if (replying) socket?.emit("reply", replying, message);
+    else socket?.emit("send", message);
 
     setMessage("");
     setEditing(null);
@@ -170,19 +167,11 @@ function Chat() {
           <FaChevronLeft fontSize={25} />
         </Link>
 
-        <Link
-          className="flex items-center gap-3"
-          to={`/account/${user?.username}`}
-        >
-          {user && <Avatar user={user} width={40} height={40} />}
+        {chat && <Avatar imageId={chat.imageId} width={40} height={40} />}
 
-          <div>
-            <h5 className="max-w-40 truncate text-left">{user?.name}</h5>
-            <p className="muted max-w-40 truncate text-left">
-              @{user?.username}
-            </p>
-          </div>
-        </Link>
+        <div>
+          <h5 className="max-w-40 truncate text-left">{chat?.name}</h5>
+        </div>
       </div>
 
       <div
@@ -209,7 +198,7 @@ function Chat() {
                     : "VIDEO"
                 }-${imageUrl}`}
                 self={true}
-                websocket={webSocket}
+                socket={socket}
                 setEditing={() => {}}
                 setReplying={() => {}}
               />
@@ -221,8 +210,8 @@ function Chat() {
           <Message
             key={message.id}
             message={message}
-            self={message.senderId !== user?.id}
-            websocket={webSocket}
+            self={message.senderId === session?.id}
+            socket={socket}
             setEditing={setEditing}
             setReplying={setReplying}
             reply={
@@ -317,13 +306,8 @@ function Chat() {
               </div>
             </>
           )}
-          <button
-            className="flex h-full items-center justify-center"
-            onClick={async () => {
-              await Microphone.requestPermissions();
-            }}
-          >
-            <VoiceRecorder controls={recorderControls} websocket={webSocket} />
+          <button className="flex h-full items-center justify-center">
+            <VoiceRecorder controls={recorderControls} socket={socket} />
           </button>
         </div>
       </form>

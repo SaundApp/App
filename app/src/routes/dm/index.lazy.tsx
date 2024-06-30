@@ -1,8 +1,11 @@
 import Chat from "@/components/dm/Chat";
 import { Input } from "@/components/ui/input";
 import { axiosClient } from "@/lib/axios";
-import type { PublicUser } from "@/types/prisma";
-import type { Message, User } from "@repo/backend-common/types";
+import type {
+  Chat as ChatType,
+  Message,
+  User,
+} from "@repo/backend-common/types";
 import { useQuery } from "@tanstack/react-query";
 import { createLazyFileRoute } from "@tanstack/react-router";
 import { useState } from "react";
@@ -16,7 +19,7 @@ function DmList() {
   const { t } = useTranslation();
   const [search, setSearch] = useState("");
   const { data } = useQuery<
-    { user: PublicUser; lastMessage: Message; read: boolean }[]
+    (ChatType & { lastMessage: Message; read: boolean })[]
   >({
     queryKey: ["dm"],
     queryFn: async () => axiosClient.get("/dm/list").then((res) => res.data),
@@ -50,14 +53,26 @@ function DmList() {
         {!search &&
           data?.map((dm) => (
             <Chat
-              key={dm.user.id}
-              user={dm.user}
+              key={dm.id}
+              chat={dm}
               message={dm.lastMessage.text}
               read={dm.read}
               timestamp={dm.lastMessage.createdAt}
             />
           ))}
-        {users?.map((user) => <Chat key={user.id} user={user} read={true} />)}
+        {users?.map((user) => (
+          <Chat
+            key={user.id}
+            chat={{
+              id: user.id,
+              name: user.username,
+              imageId: user.avatarId!,
+              private: true,
+              userIds: [user.id],
+            }}
+            read={true}
+          />
+        ))}
       </div>
     </div>
   );

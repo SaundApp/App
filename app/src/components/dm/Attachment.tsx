@@ -1,26 +1,27 @@
 import { axiosClient } from "@/lib/axios";
+import { useDate } from "@/lib/dates";
 import type {
   Attachment as AttachmentType,
   Message,
 } from "@repo/backend-common/types";
 import { useQuery } from "@tanstack/react-query";
+import type { Socket } from "socket.io-client";
 import { ContextMenu, ContextMenuTrigger } from "../ui/context-menu";
+import { Spinner } from "../ui/spinner";
 import AudioPlayer from "./AudioPlayer";
 import Menu from "./Menu";
-import { useDate } from "@/lib/dates";
-import { Spinner } from "../ui/spinner";
 
 export default function Attachment({
   postId,
   self,
-  websocket,
+  socket,
   message,
   setEditing,
   setReplying,
 }: {
   postId: string;
   self: boolean;
-  websocket: WebSocket | null;
+  socket: Socket | null;
   message?: Message;
   setEditing: (messageId: string) => void;
   setReplying: (messageId: string) => void;
@@ -136,7 +137,7 @@ export default function Attachment({
 
       {message && (
         <Menu
-          websocket={websocket}
+          socket={socket}
           message={message}
           setEditing={setEditing}
           setReplying={setReplying}

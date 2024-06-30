@@ -1,15 +1,16 @@
 import type { Message } from "@repo/backend-common/types";
 import { useTranslation } from "react-i18next";
+import type { Socket } from "socket.io-client";
 import { ContextMenuContent, ContextMenuItem } from "../ui/context-menu";
 
 export default function Menu({
-  websocket,
+  socket,
   message,
   setEditing,
   setReplying,
   song,
 }: {
-  websocket: WebSocket | null;
+  socket: Socket | null;
   message: Message;
   setEditing: (messageId: string) => void;
   setReplying: (messageId: string) => void;
@@ -43,7 +44,7 @@ export default function Menu({
       <ContextMenuItem
         className="!rounded-2xl bg-destructive"
         onClick={() => {
-          websocket?.send("-" + message.id);
+          socket?.emit("delete", message.id);
         }}
       >
         {t("dm.delete")}

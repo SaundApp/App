@@ -43,6 +43,7 @@ export default function Share({ postId }: { postId: string }) {
             )
             .map((user) => (
               <Link
+              // todo: update with chats
                 to={`/dm/${user.username}`}
                 search={{
                   text: `${import.meta.env.VITE_APP_URL}/?post=${postId}`,

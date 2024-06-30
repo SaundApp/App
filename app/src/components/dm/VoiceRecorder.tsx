@@ -4,14 +4,15 @@ import {
   type recorderControls,
 } from "@repo/react-audio-voice-recorder";
 import { useTranslation } from "react-i18next";
+import type { Socket } from "socket.io-client";
 import { useToast } from "../ui/use-toast";
 
 export default function VoiceRecorder({
   controls,
-  websocket,
+  socket,
 }: {
   controls: recorderControls;
-  websocket: WebSocket | null;
+  socket: Socket | null;
 }) {
   const { t } = useTranslation();
   const { toast } = useToast();
@@ -22,8 +23,9 @@ export default function VoiceRecorder({
 
     try {
       const { data } = await axiosClient.post("/attachments/upload", formData);
-      websocket?.send(
-        "+" + `${import.meta.env.VITE_APP_URL}/?attachment=${data.id}`,
+      socket?.emit(
+        "send",
+        `${import.meta.env.VITE_APP_URL}/?attachment=${data.id}`,
       );
     } catch (_) {
       toast({
