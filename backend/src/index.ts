@@ -22,7 +22,8 @@ app.use(
       "Authorization",
       "Content-Type",
       "User-Agent",
-      "ngrok-skip-browser-warning",
+      "Sentry-Trace",
+      "Baggage"
     ],
     allowMethods: ["POST", "GET", "OPTIONS", "PUT", "DELETE", "PATCH"],
     exposeHeaders: ["Content-Length", "Content-Type", "Content-Disposition"],
