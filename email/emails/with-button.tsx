@@ -14,18 +14,16 @@ import {
   Text,
 } from "@react-email/components";
 
-export default function WithButton({
+export function WithButton({
   preview,
   heading,
   button,
   href,
-  text,
 }: {
   preview: string;
   heading: string;
   button: string;
   href: string;
-  text: string;
 }) {
   return (
     <Tailwind
@@ -70,7 +68,6 @@ export default function WithButton({
               >
                 {button}
               </Button>
-              <Text className="text-base">{text}</Text>
             </Section>
 
             <Text className="text-base">

@@ -13,7 +13,7 @@ import {
   Text,
 } from "@react-email/components";
 
-export default function WithText({
+export function WithText({
   preview,
   heading,
   text,

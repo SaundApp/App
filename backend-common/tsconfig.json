@@ -8,6 +8,10 @@
     "sourceMap": false,
     "strict": true,
     "skipLibCheck": true,
-    "outDir": "dist",
-  },
+    "types": [
+      "node"
+    ],
+    "jsx": "react-jsx",
+    "outDir": "dist"
+  }
 }

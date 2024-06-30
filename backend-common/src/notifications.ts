@@ -1,6 +1,6 @@
-import { firebase, getMessage, prisma } from ".";
+import { WithButton, WithText, render } from "@repo/email";
 import nodemailer from "nodemailer";
-import { render, WithButton, WithText } from "@repo/email";
+import { firebase, getMessage, prisma } from ".";
 
 export enum NotificationType {
   LIKE = "like",
