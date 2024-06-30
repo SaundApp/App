@@ -19,7 +19,7 @@ function DmList() {
   const { t } = useTranslation();
   const [search, setSearch] = useState("");
   const { data } = useQuery<
-    (ChatType & { lastMessage: Message; read: boolean })[]
+    (ChatType & { lastMessage?: Message; read: boolean })[]
   >({
     queryKey: ["dm"],
     queryFn: async () => axiosClient.get("/dm/list").then((res) => res.data),
@@ -55,9 +55,9 @@ function DmList() {
             <Chat
               key={dm.id}
               chat={dm}
-              message={dm.lastMessage.text}
+              message={dm.lastMessage?.text}
               read={dm.read}
-              timestamp={dm.lastMessage.createdAt}
+              timestamp={dm.lastMessage?.createdAt}
             />
           ))}
         {users?.map((user) => (
@@ -71,6 +71,7 @@ function DmList() {
               userIds: [user.id],
             }}
             read={true}
+            create
           />
         ))}
       </div>

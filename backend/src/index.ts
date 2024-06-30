@@ -11,8 +11,7 @@ export const app = new Hono();
 app.use(
   sentry({
     dsn: process.env.SENTRY_DSN!,
-    environment:
-      process.env.NODE_ENV === "production" ? "production" : "development",
+    enabled: process.env.NODE_ENV === "production",
   })
 );
 app.use(
@@ -23,7 +22,7 @@ app.use(
       "Content-Type",
       "User-Agent",
       "Sentry-Trace",
-      "Baggage"
+      "Baggage",
     ],
     allowMethods: ["POST", "GET", "OPTIONS", "PUT", "DELETE", "PATCH"],
     exposeHeaders: ["Content-Length", "Content-Type", "Content-Disposition"],

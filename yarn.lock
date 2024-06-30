@@ -343,7 +343,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@capacitor/android@npm:^6.1.0":
+"@capacitor/android@npm:latest":
   version: 6.1.0
   resolution: "@capacitor/android@npm:6.1.0"
   peerDependencies:
@@ -352,7 +352,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@capacitor/app@npm:6.0.0":
+"@capacitor/app@npm:latest":
   version: 6.0.0
   resolution: "@capacitor/app@npm:6.0.0"
   peerDependencies:
@@ -361,7 +361,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@capacitor/assets@npm:^3.0.5":
+"@capacitor/assets@npm:latest":
   version: 3.0.5
   resolution: "@capacitor/assets@npm:3.0.5"
   dependencies:
@@ -380,35 +380,6 @@ __metadata:
   bin:
     capacitor-assets: bin/capacitor-assets
   checksum: 10c0/d43838d3c16c5476bf76537859be452f919723f828d748e4cbd6263803102312e0e8fa3651bf795e4a7b744a0d5ec4c26c01a277edb5f1396f584028bca45f56
-  languageName: node
-  linkType: hard
-
-"@capacitor/cli@npm:6.1.0":
-  version: 6.1.0
-  resolution: "@capacitor/cli@npm:6.1.0"
-  dependencies:
-    "@ionic/cli-framework-output": "npm:^2.2.5"
-    "@ionic/utils-fs": "npm:^3.1.6"
-    "@ionic/utils-process": "npm:^2.1.11"
-    "@ionic/utils-subprocess": "npm:2.1.11"
-    "@ionic/utils-terminal": "npm:^2.3.3"
-    commander: "npm:^9.3.0"
-    debug: "npm:^4.3.4"
-    env-paths: "npm:^2.2.0"
-    kleur: "npm:^4.1.4"
-    native-run: "npm:^2.0.0"
-    open: "npm:^8.4.0"
-    plist: "npm:^3.0.5"
-    prompts: "npm:^2.4.2"
-    rimraf: "npm:^4.4.1"
-    semver: "npm:^7.3.7"
-    tar: "npm:^6.1.11"
-    tslib: "npm:^2.4.0"
-    xml2js: "npm:^0.5.0"
-  bin:
-    cap: bin/capacitor
-    capacitor: bin/capacitor
-  checksum: 10c0/bd7707a549e81b0c6dce89f7d93956a98a5782daaabb2ce2c5a62f8927307c3d16d8232ce0e32746b985f14a1181a10eaf5fab773a9cc0dad859267feb9b68a6
   languageName: node
   linkType: hard
 
@@ -467,7 +438,36 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@capacitor/core@npm:6.1.0":
+"@capacitor/cli@npm:latest":
+  version: 6.1.0
+  resolution: "@capacitor/cli@npm:6.1.0"
+  dependencies:
+    "@ionic/cli-framework-output": "npm:^2.2.5"
+    "@ionic/utils-fs": "npm:^3.1.6"
+    "@ionic/utils-process": "npm:^2.1.11"
+    "@ionic/utils-subprocess": "npm:2.1.11"
+    "@ionic/utils-terminal": "npm:^2.3.3"
+    commander: "npm:^9.3.0"
+    debug: "npm:^4.3.4"
+    env-paths: "npm:^2.2.0"
+    kleur: "npm:^4.1.4"
+    native-run: "npm:^2.0.0"
+    open: "npm:^8.4.0"
+    plist: "npm:^3.0.5"
+    prompts: "npm:^2.4.2"
+    rimraf: "npm:^4.4.1"
+    semver: "npm:^7.3.7"
+    tar: "npm:^6.1.11"
+    tslib: "npm:^2.4.0"
+    xml2js: "npm:^0.5.0"
+  bin:
+    cap: bin/capacitor
+    capacitor: bin/capacitor
+  checksum: 10c0/bd7707a549e81b0c6dce89f7d93956a98a5782daaabb2ce2c5a62f8927307c3d16d8232ce0e32746b985f14a1181a10eaf5fab773a9cc0dad859267feb9b68a6
+  languageName: node
+  linkType: hard
+
+"@capacitor/core@npm:latest":
   version: 6.1.0
   resolution: "@capacitor/core@npm:6.1.0"
   dependencies:
@@ -476,16 +476,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@capacitor/haptics@npm:6.0.0":
-  version: 6.0.0
-  resolution: "@capacitor/haptics@npm:6.0.0"
-  peerDependencies:
-    "@capacitor/core": ^6.0.0
-  checksum: 10c0/a23f2d0504a29887faf49f02c3c660794fc6d1b2cfffbcbb254b7a7bf294d53c95e05be549e8178e011cddc8a970dda57b6414604b6d0d80be136b63e0994cb4
-  languageName: node
-  linkType: hard
-
-"@capacitor/ios@npm:^6.1.0":
+"@capacitor/ios@npm:latest":
   version: 6.1.0
   resolution: "@capacitor/ios@npm:6.1.0"
   peerDependencies:
@@ -494,7 +485,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@capacitor/keyboard@npm:6.0.1":
+"@capacitor/keyboard@npm:latest":
   version: 6.0.1
   resolution: "@capacitor/keyboard@npm:6.0.1"
   peerDependencies:
@@ -503,7 +494,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@capacitor/push-notifications@npm:^6.0.1":
+"@capacitor/push-notifications@npm:latest":
   version: 6.0.1
   resolution: "@capacitor/push-notifications@npm:6.0.1"
   peerDependencies:
@@ -512,21 +503,12 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@capacitor/splash-screen@npm:^6.0.1":
+"@capacitor/splash-screen@npm:latest":
   version: 6.0.1
   resolution: "@capacitor/splash-screen@npm:6.0.1"
   peerDependencies:
     "@capacitor/core": ^6.0.0
   checksum: 10c0/4425c9a9926efa193f04ad6f1363857c4026b3895ad11c07a5dffc1e81e095c539aa1bdc73244de61620329d74f9335388975d3d81f37880b4ce174d67205e7f
-  languageName: node
-  linkType: hard
-
-"@capacitor/status-bar@npm:6.0.0":
-  version: 6.0.0
-  resolution: "@capacitor/status-bar@npm:6.0.0"
-  peerDependencies:
-    "@capacitor/core": ^6.0.0
-  checksum: 10c0/54f86f4685d85b8a05cc7557534306c9145e8f46ffc8741458eb7c9690ad9b9ea8de95373705fb45d9286cf1fe9d26f367f64459c748e4ddfeea48cd36b02f27
   languageName: node
   linkType: hard
 
@@ -3985,17 +3967,15 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "@repo/app@workspace:app"
   dependencies:
-    "@capacitor/android": "npm:^6.1.0"
-    "@capacitor/app": "npm:6.0.0"
-    "@capacitor/assets": "npm:^3.0.5"
-    "@capacitor/cli": "npm:6.1.0"
-    "@capacitor/core": "npm:6.1.0"
-    "@capacitor/haptics": "npm:6.0.0"
-    "@capacitor/ios": "npm:^6.1.0"
-    "@capacitor/keyboard": "npm:6.0.1"
-    "@capacitor/push-notifications": "npm:^6.0.1"
-    "@capacitor/splash-screen": "npm:^6.0.1"
-    "@capacitor/status-bar": "npm:6.0.0"
+    "@capacitor/android": "npm:latest"
+    "@capacitor/app": "npm:latest"
+    "@capacitor/assets": "npm:latest"
+    "@capacitor/cli": "npm:latest"
+    "@capacitor/core": "npm:latest"
+    "@capacitor/ios": "npm:latest"
+    "@capacitor/keyboard": "npm:latest"
+    "@capacitor/push-notifications": "npm:latest"
+    "@capacitor/splash-screen": "npm:latest"
     "@hookform/resolvers": "npm:^3.6.0"
     "@radix-ui/react-context-menu": "npm:^2.2.1"
     "@radix-ui/react-dropdown-menu": "npm:^2.1.1"
@@ -4014,9 +3994,9 @@ __metadata:
     "@sentry/react": "npm:7.114.0"
     "@sentry/vite-plugin": "npm:^2.20.1"
     "@spotify/web-api-ts-sdk": "npm:^1.2.0"
-    "@tanstack/eslint-plugin-query": "npm:^5.49.0"
-    "@tanstack/react-query": "npm:^5.49.0"
-    "@tanstack/react-router": "npm:^1.43.2"
+    "@tanstack/eslint-plugin-query": "npm:^5.49.1"
+    "@tanstack/react-query": "npm:^5.49.2"
+    "@tanstack/react-router": "npm:^1.43.3"
     "@tanstack/router-vite-plugin": "npm:^1.43.1"
     "@types/hammerjs": "npm:^2.0.45"
     "@types/node": "npm:^20.14.9"
@@ -4043,7 +4023,7 @@ __metadata:
     i18next-browser-languagedetector: "npm:^8.0.0"
     i18next-http-backend: "npm:^2.5.2"
     lucide-react: "npm:^0.399.0"
-    postcss: "npm:^8.4.38"
+    postcss: "npm:^8.4.39"
     prettier-plugin-tailwindcss: "npm:^0.6.5"
     react: "npm:^18.3.1"
     react-dom: "npm:^18.3.1"
@@ -4845,14 +4825,14 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@tanstack/eslint-plugin-query@npm:^5.49.0":
-  version: 5.49.0
-  resolution: "@tanstack/eslint-plugin-query@npm:5.49.0"
+"@tanstack/eslint-plugin-query@npm:^5.49.1":
+  version: 5.49.1
+  resolution: "@tanstack/eslint-plugin-query@npm:5.49.1"
   dependencies:
     "@typescript-eslint/utils": "npm:8.0.0-alpha.30"
   peerDependencies:
     eslint: ^8 || ^9
-  checksum: 10c0/396a8218fb3931269685ebd27bcfd5cac002d87beb4ea902d56b7ef8422facde58740569769491035bcd60cc1794bc76ec1171a44098b3b08f565e3d447fd91f
+  checksum: 10c0/d5032a865a2e4a888140bf9b9fcc94b77585a6f818839ec445bfac21e3bdabfa25ab605b32a88bc3aa53a6bd23f9f43d14dc91453edaa978345b4f2e74e753dc
   languageName: node
   linkType: hard
 
@@ -4863,27 +4843,27 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@tanstack/query-core@npm:5.49.0":
-  version: 5.49.0
-  resolution: "@tanstack/query-core@npm:5.49.0"
-  checksum: 10c0/146eff5b503906074fd27d043f232b69e577a2529d73d59f6ee70e068794796b6cf5dc164ce0cd07ea713b3f48b4ff5ef794f05ec4ff71b556d72ac1cb8ba3c9
+"@tanstack/query-core@npm:5.49.1":
+  version: 5.49.1
+  resolution: "@tanstack/query-core@npm:5.49.1"
+  checksum: 10c0/96cd7a22f16f9014083d60b136d430714b84cb06cbd8de863a787ca4e3bd58d3ddfa06fa6390e78fabf62878fdf593e342b9c0210ab443c329e5460134dfa90b
   languageName: node
   linkType: hard
 
-"@tanstack/react-query@npm:^5.49.0":
-  version: 5.49.0
-  resolution: "@tanstack/react-query@npm:5.49.0"
+"@tanstack/react-query@npm:^5.49.2":
+  version: 5.49.2
+  resolution: "@tanstack/react-query@npm:5.49.2"
   dependencies:
-    "@tanstack/query-core": "npm:5.49.0"
+    "@tanstack/query-core": "npm:5.49.1"
   peerDependencies:
     react: ^18.0.0
-  checksum: 10c0/a2259ce739a813407a2314e32efa3f6e3f4d3ae283651559f84dbb477585cbe808a43ce8dad161c8b1858e0f66447a11d3a9a6da807e1e6bb31141a04ce5a313
+  checksum: 10c0/c69702487e5e1c0a9758b96c21a7ce3bace1336a61c01f260d7927724a441f01c7d8074d89d317c8001480ac65e7b5762327ff3b3c9fe6d568186488f0dad430
   languageName: node
   linkType: hard
 
-"@tanstack/react-router@npm:^1.43.2":
-  version: 1.43.2
-  resolution: "@tanstack/react-router@npm:1.43.2"
+"@tanstack/react-router@npm:^1.43.3":
+  version: 1.43.3
+  resolution: "@tanstack/react-router@npm:1.43.3"
   dependencies:
     "@tanstack/history": "npm:1.41.0"
     "@tanstack/react-store": "npm:^0.2.1"
@@ -4892,7 +4872,7 @@ __metadata:
   peerDependencies:
     react: ">=18"
     react-dom: ">=18"
-  checksum: 10c0/06105be8a46b757dbc0e69949749d49d5993ddc521a973d2fffa9d4b59698ebd1590b01eea62e6fcfba320af1231f976aa433837f25a65877f639b2bd01862a4
+  checksum: 10c0/fde29aad8ae0ac3ba3934982012c23721165c6cd75058c417fae8bf42bceb593f18c8210796290d4e316a2eef78466cc51b3071a34ac0c46636f08d4457548eb
   languageName: node
   linkType: hard
 
@@ -11316,6 +11296,17 @@ __metadata:
     picocolors: "npm:^1.0.0"
     source-map-js: "npm:^1.2.0"
   checksum: 10c0/955407b8f70cf0c14acf35dab3615899a2a60a26718a63c848cf3c29f2467b0533991b985a2b994430d890bd7ec2b1963e36352b0774a19143b5f591540f7c06
+  languageName: node
+  linkType: hard
+
+"postcss@npm:^8.4.39":
+  version: 8.4.39
+  resolution: "postcss@npm:8.4.39"
+  dependencies:
+    nanoid: "npm:^3.3.7"
+    picocolors: "npm:^1.0.1"
+    source-map-js: "npm:^1.2.0"
+  checksum: 10c0/16f5ac3c4e32ee76d1582b3c0dcf1a1fdb91334a45ad755eeb881ccc50318fb8d64047de4f1601ac96e30061df203f0f2e2edbdc0bfc49b9c57bc9fb9bedaea3
   languageName: node
   linkType: hard
 

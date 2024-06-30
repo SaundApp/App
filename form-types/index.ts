@@ -105,3 +105,9 @@ export const notificationSettingsSchema = z.object({
     })
     .optional(),
 });
+
+export const createChatSchema = z.object({
+  name: z.string(),
+  imageId: z.string().optional(),
+  userIds: z.array(z.string()).nonempty(),
+});
