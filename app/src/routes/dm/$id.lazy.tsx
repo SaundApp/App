@@ -88,15 +88,17 @@ function Chat() {
       });
 
       socket.on("connect", () => {
-        if (
-          submit &&
-          text &&
-          text.startsWith(`${import.meta.env.VITE_APP_URL}/?post=`)
-        ) {
-          socket.emit("send", text);
-          setMessage("");
-          navigate({ search: "" });
-        }
+        setTimeout(() => {
+          if (
+            submit &&
+            text &&
+            text.startsWith(`${import.meta.env.VITE_APP_URL}/?post=`)
+          ) {
+            socket.emit("send", text);
+            setMessage("");
+            navigate({ search: "" });
+          }
+        }, 500);
       });
 
       socket.on("send", (message: MessageType) => {

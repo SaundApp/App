@@ -2,7 +2,7 @@ import { axiosClient } from "@/lib/axios";
 import { useDate } from "@/lib/dates";
 import type { Chat } from "@repo/backend-common/types";
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
-import { Link } from "@tanstack/react-router";
+import { Link, useNavigate } from "@tanstack/react-router";
 import { useTranslation } from "react-i18next";
 import SwipeToRevealActions from "react-swipe-to-reveal-actions";
 import Avatar from "../account/Avatar";
@@ -12,13 +12,16 @@ export default function Chat({
   message,
   read,
   timestamp,
+  create,
 }: {
   chat: Chat;
   message?: string;
   read: boolean;
   timestamp?: Date;
+  create?: boolean;
 }) {
   const { t } = useTranslation();
+  const navigate = useNavigate();
   const queryClient = useQueryClient();
   const { formatDistance } = useDate();
 
@@ -78,8 +81,22 @@ export default function Chat({
       actionButtonMinWidth={70}
     >
       <Link
-        to={`/dm/${chat.id}`}
+        to={create ? undefined : `/dm/${chat.id}`}
         className="flex w-full flex-row items-center gap-3"
+        onClick={() => {
+          if (create) {
+            axiosClient
+              .post("/dm/create?upsert=true", {
+                name: chat.name,
+                userIds: [chat.id],
+              })
+              .then((res) =>
+                navigate({
+                  to: "/dm/" + res.data.id,
+                }),
+              );
+          }
+        }}
       >
         <Avatar imageId={chat.imageId} width={40} height={40} />
         <div>
