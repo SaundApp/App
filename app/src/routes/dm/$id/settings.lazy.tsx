@@ -4,6 +4,7 @@ import FindUser from "@/components/drawers/FindUser";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Spinner } from "@/components/ui/spinner";
+import { Switch } from "@/components/ui/switch";
 import { useToast } from "@/components/ui/use-toast";
 import { axiosClient } from "@/lib/axios";
 import type { PublicUser } from "@/types/prisma";
@@ -60,7 +61,6 @@ function ChatSettings() {
               .then((res) => res.data)
               .then((data) => {
                 axiosClient
-                  // todo
                   .patch(`/dm/${chat.id}/update`, {
                     imageId: data.id,
                   })
@@ -90,16 +90,45 @@ function ChatSettings() {
           }}
         />
       </div>
+      <form
+        className="my-3 flex flex-col gap-3"
+        onSubmit={(e) => {
+          e.preventDefault();
+          const formData = new FormData(e.target as HTMLFormElement);
+          axiosClient
+            .patch(`/dm/${chat.id}/update`, {
+              name: formData.get("name"),
+              private: formData.get("private") === "on",
+            })
+            .then(() => {
+              toast({
+                description: t("toast.success.edit"),
+              });
 
-      <div className="flex flex-col gap-3">
-        <h2>Members</h2>
+              queryClient.invalidateQueries({
+                queryKey: ["dm", id],
+              });
+            });
+        }}
+      >
         <Input
           type="text"
-          placeholder={t("Search members")}
-          value={search}
-          onChange={(e) => setSearch(e.target.value)}
-          className="bg-secondary"
+          name="name"
+          defaultValue={chat.name}
+          placeholder={t("input.name")}
+          className="w-full bg-secondary"
         />
+        <div className="flex items-center gap-2">
+          <Switch name="private" defaultChecked={chat.private} />
+          <p className="muted">{t("account.private")}</p>
+        </div>
+        <Button className="w-full" type="submit">
+          {t("account.save")}
+        </Button>
+      </form>
+
+      <div className="flex flex-col gap-3">
+        <h2>{t("dm.members")}</h2>
         <FindUser
           filter={(user) => !members?.some((member) => member.id === user.id)}
           onClick={async (user) => {
@@ -115,9 +144,19 @@ function ChatSettings() {
             return true;
           }}
         >
-          <Button className="w-full">Add member</Button>
+          <Button className="w-full">
+            {t("dm.add_member")}
+          </Button>
         </FindUser>
-        <div className="flex flex-col">
+        <Input
+          type="text"
+          placeholder={t("general.search")}
+          value={search}
+          onChange={(e) => setSearch(e.target.value)}
+          className="bg-secondary"
+        />
+
+        <div className="flex max-h-[30rem] flex-col overflow-y-auto">
           {members
             ?.filter((member) =>
               member.username.toLowerCase().includes(search.toLowerCase()),
@@ -125,6 +164,9 @@ function ChatSettings() {
             .map((member) => (
               <SwipeToRevealActions
                 hideDotsButton={true}
+                containerStyle={{
+                  minHeight: 50,
+                }}
                 actionButtons={[
                   {
                     content: (
@@ -166,7 +208,7 @@ function ChatSettings() {
           });
         }}
       >
-        Delete chat
+        {t("dm.delete")}
       </Button>
     </div>
   );

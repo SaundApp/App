@@ -1,13 +1,20 @@
-import { Drawer, DrawerContent, DrawerTrigger } from "@/components/ui/drawer";
+import {
+  Drawer,
+  DrawerContent,
+  DrawerDescription,
+  DrawerTitle,
+  DrawerTrigger,
+} from "@/components/ui/drawer";
 import { axiosClient } from "@/lib/axios";
+import type { PublicUser } from "@/types/prisma";
 import { useQuery, useQueryClient } from "@tanstack/react-query";
+import { useEffect } from "react";
 import { useTranslation } from "react-i18next";
 import { FaCheckCircle, FaChevronDown } from "react-icons/fa";
-import Avatar from "../account/Avatar";
 import { useSession } from "../SessionContext";
+import Avatar from "../account/Avatar";
 import { Button } from "../ui/button";
-import { useEffect } from "react";
-import type { PublicUser } from "@/types/prisma";
+import VisuallyHidden from "../ui/visually-hidden";
 
 export default function Accounts() {
   const { t } = useTranslation();
@@ -54,6 +61,11 @@ export default function Accounts() {
         <FaChevronDown fontSize={20} />
       </DrawerTrigger>
       <DrawerContent className="flex flex-col gap-3 p-3">
+        <VisuallyHidden>
+          <DrawerTitle>Accounts</DrawerTitle>
+          <DrawerDescription>Accounts</DrawerDescription>
+        </VisuallyHidden>
+
         <div className="relative">
           <div className="flex h-[33vh] max-h-[33vh] flex-col gap-3 overflow-y-auto">
             {data?.map((user) => (

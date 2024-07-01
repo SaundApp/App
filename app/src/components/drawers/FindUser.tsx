@@ -1,11 +1,18 @@
-import { Drawer, DrawerContent, DrawerTrigger } from "@/components/ui/drawer";
+import Avatar from "@/components/account/Avatar";
+import {
+  Drawer,
+  DrawerContent,
+  DrawerDescription,
+  DrawerTitle,
+  DrawerTrigger,
+} from "@/components/ui/drawer";
+import { Input } from "@/components/ui/input";
+import VisuallyHidden from "@/components/ui/visually-hidden";
 import { axiosClient } from "@/lib/axios";
 import type { PublicUser } from "@/types/prisma";
 import { useQuery } from "@tanstack/react-query";
 import { useState } from "react";
 import { useTranslation } from "react-i18next";
-import Avatar from "../account/Avatar";
-import { Input } from "../ui/input";
 
 export default function FindUser({
   onClick,
@@ -32,6 +39,11 @@ export default function FindUser({
     <Drawer open={open} onOpenChange={setOpen}>
       <DrawerTrigger asChild>{children}</DrawerTrigger>
       <DrawerContent className="flex flex-col gap-3 p-3">
+        <VisuallyHidden>
+          <DrawerTitle>{t("dm.members")}</DrawerTitle>
+          <DrawerDescription>{t("dm.members")}</DrawerDescription>
+        </VisuallyHidden>
+
         <Input
           placeholder={t("general.search")}
           className="bg-secondary"

@@ -64,7 +64,9 @@
     "reply": "返信",
     "replying": "{{message}}に返信",
     "edit": "編集",
-    "copy": "コピー"
+    "copy": "コピー",
+    "members": "メンバー",
+    "add_member": "メンバー追加"
   },
   "leaderboard": {
     "title": "トップアーティスト",

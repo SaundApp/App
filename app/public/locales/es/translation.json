@@ -64,7 +64,9 @@
     "reply": "Responder",
     "replying": "Respondiendo a {{message}}",
     "edit": "Editar",
-    "copy": "Copiar"
+    "copy": "Copiar",
+    "members": "Miembros",
+    "add_member": "Agregar miembro"
   },
   "leaderboard": {
     "title": "Artistas principales",

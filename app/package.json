@@ -28,6 +28,7 @@
     "@radix-ui/react-toast": "^1.2.1",
     "@radix-ui/react-toggle": "^1.1.0",
     "@radix-ui/react-toggle-group": "^1.1.0",
+    "@radix-ui/react-visually-hidden": "^1.1.0",
     "@repo/form-types": "0.0.0",
     "@repo/react-audio-voice-recorder": "0.0.0",
     "@sentry/capacitor": "^0.18.0",

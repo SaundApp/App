@@ -64,7 +64,9 @@
     "reply": "回复",
     "replying": "回复{{message}}",
     "edit": "编辑",
-    "copy": "复制"
+    "copy": "复制",
+    "members": "成员",
+    "add_member": "添加成员"
   },
   "leaderboard": {
     "title": "顶级艺术家",

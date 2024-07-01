@@ -9,10 +9,11 @@ import { FaComment } from "react-icons/fa";
 import { useSession } from "../SessionContext";
 import Avatar from "../account/Avatar";
 import Mentions from "../dropdown/Mentions";
-import { Drawer, DrawerContent, DrawerTrigger } from "../ui/drawer";
+import { Drawer, DrawerContent, DrawerDescription, DrawerTitle, DrawerTrigger } from "../ui/drawer";
 import { Input } from "../ui/input";
 import { useDate } from "@/lib/dates";
 import { Capacitor } from "@capacitor/core";
+import VisuallyHidden from "../ui/visually-hidden";
 
 export default function Comments({ post }: { post: Post }) {
   const { t } = useTranslation();
@@ -37,7 +38,7 @@ export default function Comments({ post }: { post: Post }) {
         queryKey: ["posts", post.id, "comments"],
       });
 
-      const previousTodos = queryClient.getQueryData([
+      const previousComments = queryClient.getQueryData([
         "posts",
         post.id,
         "comments",
@@ -56,7 +57,7 @@ export default function Comments({ post }: { post: Post }) {
         ],
       );
 
-      return { previousTodos };
+      return { previousComments };
     },
     onSettled: async () =>
       await queryClient.invalidateQueries({
@@ -70,7 +71,13 @@ export default function Comments({ post }: { post: Post }) {
         <FaComment fontSize={25} />
       </DrawerTrigger>
       <DrawerContent className="flex flex-col gap-3 p-3">
-        <h5 className="text-center">{t("index.comments.title")}</h5>
+        <DrawerTitle className="text-center">{t("index.comments.title")}</DrawerTitle>
+        
+        <VisuallyHidden>
+          <DrawerDescription>{t("index.comments.title")}</DrawerDescription>
+        </VisuallyHidden>
+
+        <h5 className="text-center"></h5>
 
         <div className="flex h-[33vh] max-h-[33vh] flex-col gap-3 overflow-y-auto">
           {data?.length === 0 && (

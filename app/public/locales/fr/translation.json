@@ -64,7 +64,9 @@
     "reply": "Répondre",
     "replying": "Répondre à {{message}}",
     "edit": "Modifier",
-    "copy": "Copier"
+    "copy": "Copier",
+    "members": "Membres",
+    "add_member": "Ajouter un membre"
   },
   "leaderboard": {
     "title": "Meilleurs artistes",

@@ -7,6 +7,7 @@ import { useTranslation } from "react-i18next";
 import SwipeToRevealActions from "react-swipe-to-reveal-actions";
 import Avatar from "../account/Avatar";
 import { Button } from "../ui/button";
+import { useSession } from "../SessionContext";
 
 export default function Chat({
   chat,
@@ -26,6 +27,7 @@ export default function Chat({
   const { t } = useTranslation();
   const navigate = useNavigate();
   const queryClient = useQueryClient();
+  const session = useSession();
   const { formatDistance } = useDate();
 
   const { data: mutedChats } = useQuery<string[]>({
@@ -35,7 +37,7 @@ export default function Chat({
   });
 
   const deleteChat = useMutation({
-    mutationFn: () => axiosClient.delete(`/dm/${chat.id}`),
+    mutationFn: () => axiosClient.delete(`/dm/${chat.id}/${session?.id}`),
     onSettled: async () =>
       await queryClient.invalidateQueries({ queryKey: ["dm"] }),
   });
@@ -120,9 +122,8 @@ export default function Chat({
             ) : create ? (
               <p className="muted max-w-40 truncate text-left">@{chat.name}</p>
             ) : (
-              // todo: translate
               <p className="muted max-w-40 truncate text-left">
-                {chat.userIds.length} members
+                {chat.userIds.length} {t("dm.members").toLowerCase()}
               </p>
             )}
           </div>

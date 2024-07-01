@@ -21,7 +21,7 @@ export default function Chats({ chats }: { chats: ChatType[] }) {
           key={chat.id}
           chat={chat}
           read
-          join={session?.id ? chat.userIds.includes(session.id) : false}
+          join={session?.id ? !chat.userIds.includes(session.id) : false}
         />
       ))}
     </div>

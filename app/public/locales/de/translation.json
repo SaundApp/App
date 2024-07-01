@@ -64,7 +64,9 @@
     "reply": "Antworten",
     "replying": "Antworten auf {{message}}",
     "edit": "Bearbeiten",
-    "copy": "Kopieren"
+    "copy": "Kopieren",
+    "members": "Mitglieder",
+    "add_member": "Mitglied hinzufügen"
   },
   "leaderboard": {
     "title": "Top-Künstler",

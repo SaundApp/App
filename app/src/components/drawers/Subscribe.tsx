@@ -1,4 +1,9 @@
-import { Drawer, DrawerContent } from "@/components/ui/drawer";
+import {
+  Drawer,
+  DrawerContent,
+  DrawerDescription,
+  DrawerTitle,
+} from "@/components/ui/drawer";
 import { axiosClient } from "@/lib/axios";
 import type { PublicUser } from "@/types/prisma";
 import type { SubscriptionSettings } from "@repo/backend-common/types";
@@ -24,14 +29,14 @@ export default function Subscribe({
   return (
     <Drawer open={open} onOpenChange={onOpenChange}>
       <DrawerContent className="no-focus flex flex-col justify-center gap-3 p-3 px-5">
-        <h5 className="text-center">
+        <DrawerTitle className="text-center">
           {t("account.subscription.title", { username: user.username })}
-        </h5>
-        <p className="muted text-center">
+        </DrawerTitle>
+        <DrawerDescription className="muted text-center">
           {t("account.subscription.description", {
             price: user.subscriptionSettings.price / 100,
           })}
-        </p>
+        </DrawerDescription>
 
         <ul className="h-[33vh] max-h-[33vh] overflow-y-auto">
           {user.subscriptionSettings.perks.map((perk, index) => (

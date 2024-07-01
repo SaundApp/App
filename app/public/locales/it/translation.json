@@ -64,7 +64,9 @@
     "reply": "Rispondi",
     "replying": "Rispondi a {{message}}",
     "edit": "Modifica",
-    "copy": "Copia"
+    "copy": "Copia",
+    "members": "Membri",
+    "add_member": "Aggiungi membro"
   },
   "leaderboard": {
     "title": "Top Artisti",

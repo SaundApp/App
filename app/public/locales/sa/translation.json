@@ -64,7 +64,9 @@
     "reply": "الرد",
     "replying": "الرد على {{message}}",
     "edit": "تعديل",
-    "copy": "نسخ"
+    "copy": "نسخ",
+    "members": "الأعضاء",
+    "add_member": "إضافة عضو"
   },
   "leaderboard": {
     "title": "أفضل الفنانين",

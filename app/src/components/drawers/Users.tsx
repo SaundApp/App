@@ -1,4 +1,9 @@
-import { Drawer, DrawerContent } from "@/components/ui/drawer";
+import {
+  Drawer,
+  DrawerContent,
+  DrawerDescription,
+  DrawerTitle,
+} from "@/components/ui/drawer";
 import { axiosClient } from "@/lib/axios";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { Link } from "@tanstack/react-router";
@@ -10,6 +15,7 @@ import { Button } from "../ui/button";
 import { Input } from "../ui/input";
 import type { PublicUser } from "@/types/prisma";
 import { useToast } from "../ui/use-toast";
+import VisuallyHidden from "../ui/visually-hidden";
 
 export default function Users({
   users,
@@ -87,7 +93,11 @@ export default function Users({
   return (
     <Drawer open={open} onOpenChange={onOpenChange}>
       <DrawerContent className="no-focus flex flex-col gap-3 p-3">
-        <h5 className="text-center">{title}</h5>
+        <DrawerTitle className="text-center">{title}</DrawerTitle>
+
+        <VisuallyHidden>
+          <DrawerDescription>{t("dm.members")}</DrawerDescription>
+        </VisuallyHidden>
 
         <Input
           placeholder={t("general.search")}

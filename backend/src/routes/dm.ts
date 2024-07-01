@@ -277,6 +277,17 @@ hono.patch(
       });
     }
 
+    if (body.private !== undefined) {
+      await prisma.chat.update({
+        where: {
+          id,
+        },
+        data: {
+          private: body.private,
+        },
+      });
+    }
+
     return ctx.json({ success: true });
   }
 );
