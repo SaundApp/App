@@ -6,17 +6,11 @@ PODS:
   - CapacitorApp (6.0.0):
     - Capacitor
   - CapacitorCordova (6.1.0)
-  - CapacitorHaptics (6.0.0):
-    - Capacitor
   - CapacitorKeyboard (6.0.1):
     - Capacitor
   - CapacitorPushNotifications (6.0.1):
     - Capacitor
   - CapacitorSplashScreen (6.0.1):
-    - Capacitor
-  - CapacitorStatusBar (6.0.0):
-    - Capacitor
-  - MozartecCapacitorMicrophone (6.0.0):
     - Capacitor
   - Sentry/HybridSDK (8.21.0):
     - SentryPrivate (= 8.21.0)
@@ -30,12 +24,9 @@ DEPENDENCIES:
   - CapacitorAdmobAds (from `../../../node_modules/capacitor-admob-ads`)
   - "CapacitorApp (from `../../../node_modules/@capacitor/app`)"
   - "CapacitorCordova (from `../../../node_modules/@capacitor/ios`)"
-  - "CapacitorHaptics (from `../../../node_modules/@capacitor/haptics`)"
   - "CapacitorKeyboard (from `../../../node_modules/@capacitor/keyboard`)"
   - "CapacitorPushNotifications (from `../../../node_modules/@capacitor/push-notifications`)"
   - "CapacitorSplashScreen (from `../../../node_modules/@capacitor/splash-screen`)"
-  - "CapacitorStatusBar (from `../../../node_modules/@capacitor/status-bar`)"
-  - "MozartecCapacitorMicrophone (from `../../../node_modules/@mozartec/capacitor-microphone`)"
   - "SentryCapacitor (from `../../../node_modules/@sentry/capacitor`)"
 
 SPEC REPOS:
@@ -52,18 +43,12 @@ EXTERNAL SOURCES:
     :path: "../../../node_modules/@capacitor/app"
   CapacitorCordova:
     :path: "../../../node_modules/@capacitor/ios"
-  CapacitorHaptics:
-    :path: "../../../node_modules/@capacitor/haptics"
   CapacitorKeyboard:
     :path: "../../../node_modules/@capacitor/keyboard"
   CapacitorPushNotifications:
     :path: "../../../node_modules/@capacitor/push-notifications"
   CapacitorSplashScreen:
     :path: "../../../node_modules/@capacitor/splash-screen"
-  CapacitorStatusBar:
-    :path: "../../../node_modules/@capacitor/status-bar"
-  MozartecCapacitorMicrophone:
-    :path: "../../../node_modules/@mozartec/capacitor-microphone"
   SentryCapacitor:
     :path: "../../../node_modules/@sentry/capacitor"
 
@@ -72,16 +57,13 @@ SPEC CHECKSUMS:
   CapacitorAdmobAds: 28832a94a5c7465fc2ce3e31be13442b87425944
   CapacitorApp: 9d53aec7101f7b030a950c5bdc4df8612576b279
   CapacitorCordova: be703980ca797f847c3356f78fa175d21c8330c2
-  CapacitorHaptics: 9ebc9363f0e9b8eb4295088a0b474530acf1859b
   CapacitorKeyboard: 5f32a712adf41e07a61caafb82cf29fb6d8ba123
   CapacitorPushNotifications: 293fabe42c7229756078e81f2d3a60394ba4e5d8
   CapacitorSplashScreen: 61645214e8f955ff2b80f16a6a3648960fe4c89f
-  CapacitorStatusBar: 2e4369f99166125435641b1908d05f561eaba6f6
-  MozartecCapacitorMicrophone: 43dd3a517756bbf909a5c47623b862fc518d92c4
   Sentry: ebc12276bd17613a114ab359074096b6b3725203
   SentryCapacitor: 170d8b96ba195cead4dc60eaf5c42aacf97ff1d3
   SentryPrivate: d651efb234cf385ec9a1cdd3eff94b5e78a0e0fe
 
-PODFILE CHECKSUM: ea0c90e30d3aede8e34e571f7eb5439ba074f8b8
+PODFILE CHECKSUM: 0d95f9d94cf6bec76b696878b849bd300f6c1a50
 
 COCOAPODS: 1.15.2
