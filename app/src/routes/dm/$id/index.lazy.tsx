@@ -240,7 +240,7 @@ function Chat() {
               if (e.target.files) uploadAttachment.mutate(e.target.files[0]);
             }}
           />
-          {!recorderControls.isRecording && !recorderControls.isPaused && (
+          {!recorderControls.isRecording && (
             <>
               <button
                 className="mt-auto flex size-10 items-center justify-center"

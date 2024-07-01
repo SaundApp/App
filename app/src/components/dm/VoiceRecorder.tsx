@@ -52,10 +52,9 @@ export default function VoiceRecorder({
       classes={{
         AudioRecorderClass:
           "!shadow-none !bg-primary !rounded-2xl" +
-          (controls.isRecording || controls.isPaused ? " w-semifull" : ""),
+          (controls.isRecording ? " w-semifull" : ""),
         AudioRecorderStartSaveClass:
-          "black-to-white" +
-          (controls.isRecording || controls.isPaused ? " hidden" : ""),
+          "black-to-white" + (controls.isRecording ? " hidden" : ""),
         AudioRecorderDiscardClass: "black-to-white",
         AudioRecorderPauseResumeClass: "black-to-white",
         AudioRecorderStatusClass: "black-to-white",
