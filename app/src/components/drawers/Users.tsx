@@ -153,9 +153,9 @@ export default function Users({
                       else unfollow.mutate(user.id);
                     }}
                     variant={
-                      follow.isPending
+                      follow.isPending && follow.variables === user.id
                         ? "secondary"
-                        : unfollow.isPending
+                        : unfollow.isPending && unfollow.variables === user.id
                           ? "default"
                           : !session?.following.find(
                                 (u) => u.followingId === user.id,
@@ -164,9 +164,9 @@ export default function Users({
                             : "secondary"
                     }
                   >
-                    {follow.isPending
+                    {follow.isPending && follow.variables === user.id
                       ? t("general.unfollow")
-                      : unfollow.isPending
+                      : unfollow.isPending && unfollow.variables === user.id
                         ? t("general.follow")
                         : !session?.following.find(
                               (u) => u.followingId === user.id,

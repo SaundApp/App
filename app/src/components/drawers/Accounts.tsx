@@ -7,6 +7,7 @@ import {
 } from "@/components/ui/drawer";
 import { axiosClient } from "@/lib/axios";
 import type { PublicUser } from "@/types/prisma";
+import { Capacitor } from "@capacitor/core";
 import { useQuery, useQueryClient } from "@tanstack/react-query";
 import { useEffect } from "react";
 import { useTranslation } from "react-i18next";
@@ -96,7 +97,12 @@ export default function Accounts() {
             ))}
           </div>
 
-          <div className="absolute bottom-0 w-full bg-background pt-3">
+          <div
+            className={
+              "absolute bottom-0 w-full bg-background pt-3" +
+              (Capacitor.getPlatform() === "ios" ? " pb-8" : "")
+            }
+          >
             <Button
               variant="secondary"
               className="mt-auto w-full"

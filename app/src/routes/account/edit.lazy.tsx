@@ -230,7 +230,20 @@ function EditProfile() {
               {t("account.save")}
             </Button>
 
-            <Button variant="secondary" className="w-full">
+            <Button
+              variant="secondary"
+              className="w-full"
+              type="button"
+              onClick={() => {
+                axiosClient
+                  .post("/auth/password/forgot", { email: session.email })
+                  .then(() => {
+                    toast({
+                      description: t("toast.success.forgot_password"),
+                    });
+                  });
+              }}
+            >
               {t("account.change_password")}
             </Button>
           </div>
@@ -256,6 +269,9 @@ function EditProfile() {
               try {
                 if (session.spotifyId) {
                   await axiosClient.post("/auth/sync/spotify");
+                  toast({
+                    description: t("toast.success.edit"),
+                  });
                   return;
                 }
               } catch (_) {

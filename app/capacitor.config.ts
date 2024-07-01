@@ -1,4 +1,5 @@
 import type { CapacitorConfig } from "@capacitor/cli";
+import { KeyboardResize } from "@capacitor/keyboard";
 
 const config: CapacitorConfig = {
   appId: "app.saund",
@@ -15,8 +16,8 @@ const config: CapacitorConfig = {
       launchAutoHide: false,
     },
     Keyboard: {
-      resize: "body"
-    }
+      resize: KeyboardResize.Native,
+    },
   },
 };
 

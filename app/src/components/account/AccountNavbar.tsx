@@ -33,7 +33,7 @@ export default function AccountNavbar({
             : undefined)
         }
       >
-        Chats
+        Chat
       </button>
       {listeners && (
         <button
