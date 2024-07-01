@@ -1,3 +1,4 @@
+import { useSession } from "@/components/SessionContext";
 import Avatar from "@/components/account/Avatar";
 import ChatNavbar from "@/components/dm/ChatNavbar";
 import FindUser from "@/components/drawers/FindUser";
@@ -24,6 +25,7 @@ function ChatSettings() {
   const { id } = Route.useParams();
   const navigate = Route.useNavigate();
   const { toast } = useToast();
+  const session = useSession();
   const input = useRef<HTMLInputElement>(null);
   const [search, setSearch] = useState("");
   const queryClient = useQueryClient();
@@ -40,6 +42,7 @@ function ChatSettings() {
   });
 
   if (isLoading || !chat) return <Spinner className="m-auto" />;
+  if (chat.ownerId !== session?.id) return null;
 
   return (
     <div className="flex h-full flex-col gap-3">
@@ -144,9 +147,7 @@ function ChatSettings() {
             return true;
           }}
         >
-          <Button className="w-full">
-            {t("dm.add_member")}
-          </Button>
+          <Button className="w-full">{t("dm.add_member")}</Button>
         </FindUser>
         <Input
           type="text"

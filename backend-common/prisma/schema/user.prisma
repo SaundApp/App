@@ -30,6 +30,7 @@ model User {
   posts            Post[]
   comments         Comment[]
   messagesSent     Message[]       @relation("sender")
+  ownedChats       Chat[]          @relation("owner")
   subscriptions    Subscription[]  @relation("subscriber")
   subscribers      Subscription[]  @relation("subscribedTo")
   notifications    Notification[]

@@ -69,6 +69,7 @@ function DmList() {
               imageId: user.avatarId!,
               private: true,
               userIds: [user.id],
+              ownerId: user.id,
             }}
             read={true}
             create

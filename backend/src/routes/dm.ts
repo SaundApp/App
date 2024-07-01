@@ -195,6 +195,7 @@ hono.post(
           userIds: {
             set: [payload.user, ...body.userIds],
           },
+          ownerId: payload.user,
         },
       });
 
@@ -217,9 +218,14 @@ hono.delete("/:id", jwt({ secret: process.env.JWT_SECRET! }), async (ctx) => {
         has: payload.user,
       },
     },
+    select: {
+      ownerId: true,
+    },
   });
 
   if (!chat) return ctx.json({ error: "Chat not found" }, 404);
+  if (chat.ownerId !== payload.user)
+    return ctx.json({ error: "Not the owner" }, 403);
 
   await prisma.message.deleteMany({
     where: {
@@ -251,9 +257,14 @@ hono.patch(
           has: payload.user,
         },
       },
+      select: {
+        ownerId: true,
+      },
     });
 
     if (!chat) return ctx.json({ error: "Chat not found" }, 404);
+    if (chat.ownerId !== payload.user)
+      return ctx.json({ error: "Not the owner" }, 403);
 
     if (body.name) {
       await prisma.chat.update({
@@ -377,8 +388,15 @@ hono.put(
           has: payload.user,
         },
       },
+      select: {
+        ownerId: true,
+        userIds: true,
+      },
     });
+
     if (!chat) return ctx.json({ error: "Chat not found" }, 404);
+    if (chat.ownerId !== payload.user)
+      return ctx.json({ error: "Not the owner" }, 403);
 
     const user = await prisma.user.findUnique({
       where: {
@@ -423,6 +441,8 @@ hono.delete(
       },
     });
     if (!chat) return ctx.json({ error: "Chat not found" }, 404);
+    if (chat.ownerId !== payload.user && userId !== payload.user)
+      return ctx.json({ error: "Not the owner" }, 403);
 
     const result = await prisma.chat.update({
       where: {
