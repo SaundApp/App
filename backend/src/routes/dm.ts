@@ -120,42 +120,6 @@ hono.get(
   }
 );
 
-hono.delete("/:id", jwt({ secret: process.env.JWT_SECRET! }), async (ctx) => {
-  const id = ctx.req.param("id");
-  const payload = ctx.get("jwtPayload");
-
-  const chat = await prisma.chat.findFirst({
-    where: {
-      id,
-      userIds: {
-        has: payload.user,
-      },
-    },
-  });
-  if (!chat) return ctx.json({ error: "Chat not found" }, 404);
-
-  const result = await prisma.chat.update({
-    where: {
-      id,
-    },
-    data: {
-      userIds: {
-        set: chat.userIds.filter((userId) => userId !== payload.user),
-      },
-    },
-  });
-
-  if (result.userIds.length === 0) {
-    await prisma.chat.delete({
-      where: {
-        id,
-      },
-    });
-  }
-
-  return ctx.json(result);
-});
-
 hono.post(
   "/:id/read",
   jwt({ secret: process.env.JWT_SECRET! }),
@@ -242,6 +206,81 @@ hono.post(
   }
 );
 
+hono.delete("/:id", jwt({ secret: process.env.JWT_SECRET! }), async (ctx) => {
+  const id = ctx.req.param("id");
+  const payload = ctx.get("jwtPayload");
+
+  const chat = await prisma.chat.findFirst({
+    where: {
+      id,
+      userIds: {
+        has: payload.user,
+      },
+    },
+  });
+
+  if (!chat) return ctx.json({ error: "Chat not found" }, 404);
+
+  await prisma.message.deleteMany({
+    where: {
+      chatId: id,
+    },
+  });
+
+  await prisma.chat.delete({
+    where: {
+      id,
+    },
+  });
+
+  return ctx.json({ success: true });
+});
+
+hono.patch(
+  "/:id/update",
+  jwt({ secret: process.env.JWT_SECRET! }),
+  async (ctx) => {
+    const id = ctx.req.param("id");
+    const payload = ctx.get("jwtPayload");
+    const body = await ctx.req.json();
+
+    const chat = await prisma.chat.findFirst({
+      where: {
+        id,
+        userIds: {
+          has: payload.user,
+        },
+      },
+    });
+
+    if (!chat) return ctx.json({ error: "Chat not found" }, 404);
+
+    if (body.name) {
+      await prisma.chat.update({
+        where: {
+          id,
+        },
+        data: {
+          name: body.name,
+        },
+      });
+    }
+
+    if (body.imageId) {
+      await prisma.chat.update({
+        where: {
+          id,
+        },
+        data: {
+          imageId: body.imageId,
+        },
+      });
+    }
+
+    return ctx.json({ success: true });
+  }
+);
+
 hono.post(
   "/:id/join",
   jwt({ secret: process.env.JWT_SECRET! }),
@@ -306,6 +345,100 @@ hono.get(
     });
 
     return ctx.json(users);
+  }
+);
+
+hono.put(
+  "/:id/members",
+  jwt({ secret: process.env.JWT_SECRET! }),
+  async (ctx) => {
+    const id = ctx.req.param("id");
+    const payload = ctx.get("jwtPayload");
+    const body = await ctx.req.json();
+
+    if (!body.userId || typeof body.userId !== "string")
+      return ctx.json({ error: "Invalid user id" }, 400);
+
+    const chat = await prisma.chat.findFirst({
+      where: {
+        id,
+        userIds: {
+          has: payload.user,
+        },
+      },
+    });
+    if (!chat) return ctx.json({ error: "Chat not found" }, 404);
+
+    const user = await prisma.user.findUnique({
+      where: {
+        id: body.userId,
+      },
+    });
+    if (!user) return ctx.json({ error: "User not found" }, 404);
+
+    if (!chat.userIds.includes(user.id))
+      await prisma.chat.update({
+        where: {
+          id,
+        },
+        data: {
+          userIds: {
+            push: user.id,
+          },
+        },
+      });
+
+    return ctx.json({ success: true });
+  }
+);
+
+hono.delete(
+  "/:id/members",
+  jwt({ secret: process.env.JWT_SECRET! }),
+  async (ctx) => {
+    const id = ctx.req.param("id");
+    const payload = ctx.get("jwtPayload");
+    const userId = ctx.req.query("userId");
+
+    if (!userId || typeof userId !== "string")
+      return ctx.json({ error: "Invalid user id" }, 400);
+
+    const chat = await prisma.chat.findFirst({
+      where: {
+        id,
+        userIds: {
+          has: payload.user,
+        },
+      },
+    });
+    if (!chat) return ctx.json({ error: "Chat not found" }, 404);
+
+    const result = await prisma.chat.update({
+      where: {
+        id,
+      },
+      data: {
+        userIds: {
+          set: chat.userIds.filter((u) => u !== userId),
+        },
+      },
+    });
+
+    if (result.userIds.length === 0) {
+      await prisma.message.deleteMany({
+        where: {
+          chatId: id,
+        },
+      });
+
+      await prisma.chat.delete({
+        where: {
+          id,
+        },
+      });
+    }
+
+    return ctx.json(result);
   }
 );
 

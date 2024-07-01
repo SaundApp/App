@@ -12,11 +12,11 @@ export default function Avatar({
   imageId?: string;
   width: number;
   height: number;
-  onClick?: MouseEventHandler<HTMLImageElement>;
+  className?: string;
+  onClick?: MouseEventHandler<HTMLButtonElement>;
 }) {
-  return (
+  const image = (
     <img
-      onClick={onClick}
       src={
         import.meta.env.VITE_API_URL +
         "/attachments/" +
@@ -34,4 +34,8 @@ export default function Avatar({
       className="aspect-square rounded-full"
     />
   );
+
+  if (onClick) return <button onClick={onClick}>{image}</button>;
+
+  return image;
 }

@@ -1,7 +1,7 @@
 import { axiosClient } from "@/lib/axios";
 import { getDominantColor } from "@/lib/utils";
 import type { ExtendedPost } from "@/types/prisma";
-import type { User } from "@repo/backend-common/types";
+import type { Chat, User } from "@repo/backend-common/types";
 import type {
   Album,
   Playlist,
@@ -10,11 +10,10 @@ import type {
   TrackItem,
 } from "@spotify/web-api-ts-sdk";
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
-import { Link } from "@tanstack/react-router";
-
+import { Link, useNavigate } from "@tanstack/react-router";
 import { useEffect, useRef, useState } from "react";
 import { useTranslation } from "react-i18next";
-import { FaHeart, FaRegHeart, FaSpotify } from "react-icons/fa";
+import { FaHeart, FaPaperPlane, FaRegHeart, FaSpotify } from "react-icons/fa";
 import {
   FaCircleArrowLeft,
   FaCircleArrowRight,
@@ -26,7 +25,7 @@ import { useLongPress } from "use-long-press";
 import { useSession } from "./SessionContext";
 import Avatar from "./account/Avatar";
 import Comments from "./drawers/Comments";
-import Share from "./drawers/Share";
+import Share from "./drawers/FindUser";
 import Users from "./drawers/Users";
 import { useToast } from "./ui/use-toast";
 
@@ -43,6 +42,7 @@ function getTrack(
 export default function Post({ post }: { post: ExtendedPost }) {
   const { t } = useTranslation();
   const { toast } = useToast();
+  const navigate = useNavigate();
   const [saw, setSaw] = useState(false);
   const [open, setOpen] = useState(false);
   const [color, setColor] = useState<"black" | "white">("black");
@@ -225,7 +225,32 @@ export default function Post({ post }: { post: ExtendedPost }) {
                 )}
               </button>
               <Comments post={post} />
-              <Share postId={post.id} />
+              <Share
+                onClick={async (user) => {
+                  const { data } = await axiosClient.post<Chat>(
+                    "/dm/create?upsert=true",
+                    {
+                      name: user.username,
+                      userIds: [user.id],
+                    },
+                  );
+
+                  if (data)
+                    navigate({
+                      to: "/dm/" + data.id,
+                      search: {
+                        text: `${import.meta.env.VITE_APP_URL}/?post=${post.id}`,
+                        submit: true,
+                      },
+                    });
+
+                  return true;
+                }}
+              >
+                <button>
+                  <FaPaperPlane fontSize={25} />
+                </button>
+              </Share>
             </div>
 
             <div

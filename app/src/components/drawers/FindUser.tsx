@@ -1,17 +1,22 @@
 import { Drawer, DrawerContent, DrawerTrigger } from "@/components/ui/drawer";
 import { axiosClient } from "@/lib/axios";
 import type { PublicUser } from "@/types/prisma";
-import type { Chat } from "@repo/backend-common/types";
 import { useQuery } from "@tanstack/react-query";
-import { useNavigate } from "@tanstack/react-router";
 import { useState } from "react";
 import { useTranslation } from "react-i18next";
-import { FaPaperPlane } from "react-icons/fa";
 import Avatar from "../account/Avatar";
 import { Input } from "../ui/input";
 
-export default function Share({ postId }: { postId: string }) {
-  const navigate = useNavigate();
+export default function FindUser({
+  onClick,
+  filter,
+  children,
+}: {
+  onClick?: (user: PublicUser) => Promise<boolean>;
+  filter?: (user: PublicUser) => boolean;
+  children: React.ReactNode;
+}) {
+  const [open, setOpen] = useState(false);
   const [search, setSearch] = useState("");
   const { t } = useTranslation();
 
@@ -24,10 +29,8 @@ export default function Share({ postId }: { postId: string }) {
   });
 
   return (
-    <Drawer>
-      <DrawerTrigger>
-        <FaPaperPlane fontSize={25} />
-      </DrawerTrigger>
+    <Drawer open={open} onOpenChange={setOpen}>
+      <DrawerTrigger asChild>{children}</DrawerTrigger>
       <DrawerContent className="flex flex-col gap-3 p-3">
         <Input
           placeholder={t("general.search")}
@@ -43,27 +46,13 @@ export default function Share({ postId }: { postId: string }) {
                 user.name.toLowerCase().includes(search.toLowerCase()) ||
                 user.username.toLowerCase().includes(search.toLowerCase()),
             )
+            .filter(filter || (() => true))
             .map((user) => (
               <button
                 key={user.id}
                 className="flex items-center justify-between"
                 onClick={async () => {
-                  const { data } = await axiosClient.post<Chat>(
-                    "/dm/create?upsert=true",
-                    {
-                      name: user.username,
-                      userIds: [user.id],
-                    },
-                  );
-
-                  if (data)
-                    navigate({
-                      to: "/dm/" + data.id,
-                      search: {
-                        text: `${import.meta.env.VITE_APP_URL}/?post=${postId}`,
-                        submit: true,
-                      },
-                    });
+                  if (onClick && (await onClick(user))) setOpen(false);
                 }}
               >
                 <div className="flex items-center gap-3">
