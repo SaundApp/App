@@ -48,7 +48,7 @@ function Index() {
     }
   }, [fetchNextPage, inView, hasNextPage, isLoading]);
   useEffect(() => {
-    if (Capacitor.getPlatform() === "web") return;
+    if (Capacitor.getPlatform() !== "android") return;
 
     if (data?.pages) {
       AdmobAds.loadNativeAd({

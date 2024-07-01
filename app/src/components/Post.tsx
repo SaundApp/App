@@ -232,6 +232,7 @@ export default function Post({ post }: { post: ExtendedPost }) {
                     {
                       name: user.username,
                       userIds: [user.id],
+                      imageId: user.avatarId
                     },
                   );
 

@@ -94,6 +94,7 @@ export default function Chat({
               .post("/dm/create?upsert=true", {
                 name: chat.name,
                 userIds: [chat.id],
+                imageId: chat.imageId
               })
               .then((res) =>
                 navigate({
