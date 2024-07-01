@@ -165,6 +165,7 @@ hono.post(
             userIds: {
               hasEvery: allUsers,
             },
+            ownerId: payload.user
           },
         });
 
