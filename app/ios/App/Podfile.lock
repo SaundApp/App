@@ -12,6 +12,8 @@ PODS:
     - Capacitor
   - CapacitorSplashScreen (6.0.1):
     - Capacitor
+  - MozartecCapacitorMicrophone (6.0.0):
+    - Capacitor
   - Sentry/HybridSDK (8.21.0):
     - SentryPrivate (= 8.21.0)
   - SentryCapacitor (0.18.0):
@@ -27,6 +29,7 @@ DEPENDENCIES:
   - "CapacitorKeyboard (from `../../../node_modules/@capacitor/keyboard`)"
   - "CapacitorPushNotifications (from `../../../node_modules/@capacitor/push-notifications`)"
   - "CapacitorSplashScreen (from `../../../node_modules/@capacitor/splash-screen`)"
+  - "MozartecCapacitorMicrophone (from `../../../node_modules/@mozartec/capacitor-microphone`)"
   - "SentryCapacitor (from `../../../node_modules/@sentry/capacitor`)"
 
 SPEC REPOS:
@@ -49,6 +52,8 @@ EXTERNAL SOURCES:
     :path: "../../../node_modules/@capacitor/push-notifications"
   CapacitorSplashScreen:
     :path: "../../../node_modules/@capacitor/splash-screen"
+  MozartecCapacitorMicrophone:
+    :path: "../../../node_modules/@mozartec/capacitor-microphone"
   SentryCapacitor:
     :path: "../../../node_modules/@sentry/capacitor"
 
@@ -60,10 +65,11 @@ SPEC CHECKSUMS:
   CapacitorKeyboard: 5f32a712adf41e07a61caafb82cf29fb6d8ba123
   CapacitorPushNotifications: 293fabe42c7229756078e81f2d3a60394ba4e5d8
   CapacitorSplashScreen: 61645214e8f955ff2b80f16a6a3648960fe4c89f
+  MozartecCapacitorMicrophone: 43dd3a517756bbf909a5c47623b862fc518d92c4
   Sentry: ebc12276bd17613a114ab359074096b6b3725203
   SentryCapacitor: 170d8b96ba195cead4dc60eaf5c42aacf97ff1d3
   SentryPrivate: d651efb234cf385ec9a1cdd3eff94b5e78a0e0fe
 
-PODFILE CHECKSUM: 0d95f9d94cf6bec76b696878b849bd300f6c1a50
+PODFILE CHECKSUM: 9880705ae94995d93e1c0ec599683477ad22929f
 
 COCOAPODS: 1.15.2

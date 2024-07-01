@@ -13,6 +13,7 @@ dependencies {
     implementation project(':capacitor-keyboard')
     implementation project(':capacitor-push-notifications')
     implementation project(':capacitor-splash-screen')
+    implementation project(':mozartec-capacitor-microphone')
     implementation project(':sentry-capacitor')
     implementation project(':capacitor-admob-ads')
 

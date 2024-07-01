@@ -14,6 +14,9 @@ project(':capacitor-push-notifications').projectDir = new File('../../node_modul
 include ':capacitor-splash-screen'
 project(':capacitor-splash-screen').projectDir = new File('../../node_modules/@capacitor/splash-screen/android')
 
+include ':mozartec-capacitor-microphone'
+project(':mozartec-capacitor-microphone').projectDir = new File('../../node_modules/@mozartec/capacitor-microphone/android')
+
 include ':sentry-capacitor'
 project(':sentry-capacitor').projectDir = new File('../../node_modules/@sentry/capacitor/android')
 
