@@ -267,7 +267,8 @@ function Account() {
               else unfollow.mutate(data.id);
             }}
             className={
-              data.requestSent && !cancelRequest.isPending
+              "text-foreground " +
+              (data.requestSent && !cancelRequest.isPending
                 ? "w-full bg-secondary"
                 : follow.isPending
                   ? "w-full bg-secondary"
@@ -277,7 +278,7 @@ function Account() {
                           (user) => user.followingId === data.id,
                         )
                       ? "w-full"
-                      : "w-full bg-secondary"
+                      : "w-full bg-secondary")
             }
           >
             {data.requestSent && !cancelRequest.isPending
