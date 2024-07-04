@@ -19,6 +19,7 @@ export const useDate = () => {
     formatDistance: (date: DateType) =>
       formatDistanceToNow(date, {
         locale,
+        addSuffix: true,
       }),
     format: (date: DateType, pattern: string) =>
       format(date, pattern, {
