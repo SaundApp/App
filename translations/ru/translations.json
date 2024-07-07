@@ -131,5 +131,22 @@
   },
   "notification": {
     "title": "Уведомления"
+  },
+  "backend": {
+    "like": "{user} лайкнул ваш пост {post}",
+    "comment": "{user} прокомментировал ваш пост {post}",
+    "follow": "{user} подписался на вас",
+    "follow_request": "{user} запросил подписку на вас",
+    "mention": "{user} упомянул вас в посте {post}",
+    "dm": "{message}",
+    "leaderboard": "Ежемесячный рейтинг обновлен! Проверьте его.",
+    "post": "{user} только что опубликовал {cont} новых постов",
+    "accept": "Принять",
+    "attachment": "Вложение",
+    "new-notification": "Новое уведомление",
+    "forgot-password": {
+      "heading": "Сбросить пароль",
+      "button": "Нажмите, чтобы сбросить"
+    }
   }
 }

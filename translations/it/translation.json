@@ -1,5 +1,138 @@
 {
-  "notifications": {
+  "general": {
+    "search": "Cerca",
+    "follow": "Segui",
+    "unfollow": "Smetti di seguire",
+    "request_sent": "Richiesta inviata",
+    "empty": "Ancora nessun dato",
+    "empty_description": "Non c'è ancora nulla da vedere qui...",
+    "or": "O",
+    "remove_follower": "Rimuovi follower"
+  },
+  "input": {
+    "name": "Nome",
+    "username": "Nome utente",
+    "bio": "Bio",
+    "email": "Email",
+    "password": "Password",
+    "password_confirm": "Conferma password"
+  },
+  "toast": {
+    "success": {
+      "edit": "Le modifiche sono state salvate con successo",
+      "cache_cleared": "La cache è stata svuotata con successo",
+      "edit_image": "L'immagine è stata aggiornata con successo",
+      "follow_request": "Richiesta di follow inviata con successo",
+      "forgot_password": "È stata inviata un'email per reimpostare la password",
+      "reset_password": "La password è stata reimpostata con successo"
+    },
+    "error": {
+      "login": "Nome utente o password non validi",
+      "register": "Si è verificato un errore durante la creazione dell'account",
+      "match_passwords": "Le password non corrispondono",
+      "base": "Si è verificato un errore",
+      "min_name": "Il nome deve essere di almeno 3 caratteri",
+      "min_username": "Il nome utente deve essere di almeno 3 caratteri",
+      "max_username": "Il nome utente deve essere di massimo 20 caratteri",
+      "invalid_email": "Email non valida",
+      "invalid_password": "La password deve essere lunga almeno 8 caratteri e contenere almeno una lettera maiuscola, una minuscola, un numero e un carattere speciale",
+      "empty_perks": "Devi aggiungere almeno un vantaggio",
+      "min_price": "Devi aggiungere un prezzo superiore a 0,5",
+      "no_preview": "Anteprima non disponibile",
+      "app_required": "Le notifiche in-app devono essere abilitate per attivare questa funzione"
+    }
+  },
+  "index": {
+    "song": "Canzone",
+    "album": "Album",
+    "playlist": "Playlist",
+    "likes": {
+      "title": "Mi piace"
+    },
+    "comments": {
+      "title": "Commenti",
+      "placeholder": "Scrivi un commento..."
+    }
+  },
+  "dm": {
+    "title": "Messaggi Diretti",
+    "mute": "Muta",
+    "unmute": "Riattiva audio",
+    "delete": "Elimina",
+    "attachment": "Allegato",
+    "placeholder": "Scrivi un messaggio...",
+    "reply": "Rispondi",
+    "replying": "Rispondi a {{message}}",
+    "edit": "Modifica",
+    "copy": "Copia",
+    "members": "Membri",
+    "add_member": "Aggiungi membro"
+  },
+  "leaderboard": {
+    "title": "Top Artisti",
+    "streams": "ascolti"
+  },
+  "account": {
+    "private": "Privato",
+    "private_description": "Invia una richiesta di follow per vedere il contenuto di questo account",
+    "public": "Pubblico",
+    "follower": "Follower",
+    "following": "Seguiti",
+    "edit_profile": "Modifica profilo",
+    "edit_subscription": "Modifica abbonamento",
+    "listener": "Ascoltatore",
+    "settings": "Impostazioni",
+    "theme": {
+      "title": "Tema",
+      "light": "Chiaro",
+      "dark": "Scuro",
+      "system": "Sistema"
+    },
+    "language": "Lingua",
+    "actions": {
+      "title": "Azioni",
+      "logout": "Logout",
+      "cache_cleared": "Svuota cache"
+    },
+    "notifications": {
+      "title": "Notifiche",
+      "likes": "Mi piace",
+      "comments": "Commenti",
+      "follows": "Follow",
+      "follow_requests": "Richieste di follow",
+      "mentions": "Menzioni",
+      "dms": "Messaggi Diretti",
+      "leaderboard": "Classifica",
+      "new_posts": "Nuovo post"
+    },
+    "save": "Salva",
+    "change_password": "Cambia password",
+    "manage": "Gestisci account",
+    "new": "Aggiungi nuovo account",
+    "subscribe": "Abbonati",
+    "subscribers": "Abbonati",
+    "subscription": {
+      "title": "Abbonati a {{username}}!",
+      "description": "Completa l'abbonamento per €{{price}} per ottenere i seguenti vantaggi:"
+    },
+    "price": "Prezzo",
+    "add_perk": "Aggiungi vantaggio",
+    "perk": "Vantaggio"
+  },
+  "auth": {
+    "register": "Registrati",
+    "login": "Accedi",
+    "login_description": "Bentornati! Siamo entusiasti di rivedervi!",
+    "register_description": "Crea un account ora e inizia a scoprire nuovi artisti!",
+    "forgot_password": "Password dimenticata?",
+    "forgot_password_description": "Inserisci il tuo indirizzo email e ti invieremo un link per reimpostare la password",
+    "reset_password": "Reimposta password",
+    "reset_password_description": "Inserisci la tua nuova password"
+  },
+  "notification": {
+    "title": "Notifiche"
+  },
+  "backend": {
     "like": "{user} ha messo mi piace a {post}",
     "comment": "{user} ha commentato su {post}",
     "follow": "{user} ti ha seguito",

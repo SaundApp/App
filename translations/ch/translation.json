@@ -1,5 +1,138 @@
 {
-  "notifications": {
+  "general": {
+    "search": "搜索",
+    "follow": "关注",
+    "unfollow": "取消关注",
+    "request_sent": "请求已发送",
+    "empty": "暂无数据",
+    "empty_description": "目前这里没有任何内容...",
+    "or": "或",
+    "remove_follower": "删除关注者"
+  },
+  "input": {
+    "name": "名称",
+    "username": "用户名",
+    "bio": "简介",
+    "email": "电子邮件",
+    "password": "密码",
+    "password_confirm": "确认密码"
+  },
+  "toast": {
+    "success": {
+      "edit": "更改已成功保存",
+      "cache_cleared": "缓存已成功清除",
+      "edit_image": "图片已成功更新",
+      "follow_request": "关注请求已成功发送",
+      "forgot_password": "已发送电子邮件以重置密码",
+      "reset_password": "密码已成功重置"
+    },
+    "error": {
+      "login": "用户名或密码无效",
+      "register": "创建帐户时发生错误",
+      "match_passwords": "密码不匹配",
+      "base": "发生错误",
+      "min_name": "名称必须至少包含3个字符",
+      "min_username": "用户名必须至少包含3个字符",
+      "max_username": "用户名最多只能包含20个字符",
+      "invalid_email": "电子邮件无效",
+      "invalid_password": "密码必须至少包含8个字符，并且包含至少一个大写字母，一个小写字母，一个数字和一个特殊字符",
+      "empty_perks": "您必须添加至少一个特权",
+      "min_price": "您必须添加一个大于0.5的价格",
+      "no_preview": "没有可用预览",
+      "app_required": "必须启用应用内通知才能激活此功能"
+    }
+  },
+  "index": {
+    "song": "歌曲",
+    "album": "专辑",
+    "playlist": "播放列表",
+    "likes": {
+      "title": "喜欢"
+    },
+    "comments": {
+      "title": "评论",
+      "placeholder": "写评论..."
+    }
+  },
+  "dm": {
+    "title": "私信",
+    "mute": "静音",
+    "unmute": "取消静音",
+    "delete": "删除",
+    "attachment": "附件",
+    "placeholder": "输入消息...",
+    "reply": "回复",
+    "replying": "回复{{message}}",
+    "edit": "编辑",
+    "copy": "复制",
+    "members": "成员",
+    "add_member": "添加成员"
+  },
+  "leaderboard": {
+    "title": "顶级艺术家",
+    "streams": "流"
+  },
+  "account": {
+    "private": "私人",
+    "private_description": "发送关注请求以查看此帐户的内容",
+    "public": "公开",
+    "follower": "关注者",
+    "following": "正在关注",
+    "edit_profile": "编辑资料",
+    "edit_subscription": "编辑订阅",
+    "listener": "听众",
+    "settings": "设置",
+    "theme": {
+      "title": "主题",
+      "light": "亮",
+      "dark": "暗",
+      "system": "系统"
+    },
+    "language": "语言",
+    "actions": {
+      "title": "动作",
+      "logout": "登出",
+      "cache_cleared": "清除缓存"
+    },
+    "notifications": {
+      "title": "通知",
+      "likes": "喜欢",
+      "comments": "评论",
+      "follows": "关注",
+      "follow_requests": "关注请求",
+      "mentions": "提及",
+      "dms": "私信",
+      "leaderboard": "排行榜",
+      "new_posts": "新帖子"
+    },
+    "save": "保存",
+    "change_password": "更改密码",
+    "manage": "管理帐户",
+    "new": "添加新帐户",
+    "subscribe": "订阅",
+    "subscribers": "订阅者",
+    "subscription": {
+      "title": "订阅{{username}}!",
+      "description": "完成订阅以€{{price}}获得以下特权:"
+    },
+    "price": "价格",
+    "add_perk": "添加特权",
+    "perk": "特权"
+  },
+  "auth": {
+    "register": "注册",
+    "login": "登录",
+    "login_description": "欢迎回来 我们很高兴再次相见！",
+    "register_description": "立即创建帐户，开始发现新艺术家！",
+    "forgot_password": "忘记密码？",
+    "forgot_password_description": "输入您的电子邮件以重置密码",
+    "reset_password": "重置密码",
+    "reset_password_description": "输入您的新密码"
+  },
+  "notification": {
+    "title": "通知"
+  },
+  "backend": {
     "like": "{user} 给你的帖子 {post} 点了赞",
     "comment": "{user} 在你的帖子 {post} 发表了评论",
     "follow": "{user} 关注了你",
