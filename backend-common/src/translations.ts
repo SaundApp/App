@@ -30,7 +30,7 @@ export function isLanguageSupported(language: string) {
 export function getMessage(message: string, language: string = "en") {
   const parts = message.split(".");
 
-  let result = locales.get(language)["notifications"];
+  let result = locales.get(language)["backend"];
   for (const part of parts) {
     result = result[part];
   }
