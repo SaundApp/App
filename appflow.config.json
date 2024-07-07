@@ -1,0 +1,10 @@
+{
+  "apps": [
+    {
+      "appId": "app.saund",
+      "root": "app",
+      "dependencyInstallCommand": "cd .. && yarn install",
+      "webBuildCommand": "cd .. && yarn build"
+    }
+  ]
+}
