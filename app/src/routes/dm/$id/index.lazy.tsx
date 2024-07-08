@@ -161,7 +161,10 @@ function Chat() {
     <div
       className="flex flex-col justify-start gap-3"
       style={{
-        height: "calc(100vh - 5rem)",
+        height:
+          Capacitor.getPlatform() === "ios"
+            ? "calc(100vh - 8rem)"
+            : "calc(100vh - 5rem)",
       }}
     >
       <ChatNavbar chat={chat} />
