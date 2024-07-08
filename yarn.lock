@@ -485,15 +485,6 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@capacitor/keyboard@npm:latest":
-  version: 6.0.1
-  resolution: "@capacitor/keyboard@npm:6.0.1"
-  peerDependencies:
-    "@capacitor/core": ^6.0.0
-  checksum: 10c0/479f5ca00ee3d3cd1cad134f32a0f2a942b2a0c5ea8f6acb45d96853c72ff6256d488f493ca0d4d3e266299cfc897919d3e4ddb94ed43b6f0bca71740d191ede
-  languageName: node
-  linkType: hard
-
 "@capacitor/push-notifications@npm:latest":
   version: 6.0.1
   resolution: "@capacitor/push-notifications@npm:6.0.1"
@@ -3989,7 +3980,6 @@ __metadata:
     "@capacitor/cli": "npm:latest"
     "@capacitor/core": "npm:latest"
     "@capacitor/ios": "npm:latest"
-    "@capacitor/keyboard": "npm:latest"
     "@capacitor/push-notifications": "npm:latest"
     "@capacitor/splash-screen": "npm:latest"
     "@hookform/resolvers": "npm:^3.9.0"
@@ -4007,6 +3997,7 @@ __metadata:
     "@repo/backend-common": "npm:0.0.0"
     "@repo/form-types": "npm:0.0.0"
     "@repo/react-audio-voice-recorder": "npm:0.0.0"
+    "@saundapp/keyboard": "npm:latest"
     "@sentry/capacitor": "npm:^0.18.0"
     "@sentry/react": "npm:7.114.0"
     "@sentry/vite-plugin": "npm:^2.20.1"
@@ -4371,6 +4362,15 @@ __metadata:
     argparse: "npm:~1.0.9"
     string-argv: "npm:~0.3.1"
   checksum: 10c0/c1a324cc0e8357ea599c5f5a5bbcf15ac40b8ebe029e4743cb9ffbb38c294e02519c1859c2445dc8b4797dad322f4b289e74bacb1b4d6372fc3195485d6e7a1b
+  languageName: node
+  linkType: hard
+
+"@saundapp/keyboard@npm:latest":
+  version: 6.0.1
+  resolution: "@saundapp/keyboard@npm:6.0.1"
+  peerDependencies:
+    "@capacitor/core": ^6.0.0
+  checksum: 10c0/23d166c9ebdd61258f91ee1f435d5ae41cce07b79fc1a2b1a30c8aa36ad38744692c80616955fb0add57c77c54adadf2fd74757bc99c31def5f69aaf7b474095
   languageName: node
   linkType: hard
 
