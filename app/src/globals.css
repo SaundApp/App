@@ -129,6 +129,5 @@ button:focus {
 }
 
 img {
-  pointer-events: none;
   -webkit-user-drag: none;
 }
