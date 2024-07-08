@@ -80,6 +80,8 @@ hono.get("/:id", async (ctx) => {
   ctx.header("Content-Type", type);
   ctx.header("Content-Length", attachment.data.length.toString());
   ctx.header("Content-Disposition", `inline; filename="${attachment.name}"`);
+  ctx.header("Cache-Control", "public, max-age=604800, immutable");
+
   return stream(ctx, async (s) => {
     const buffer = attachment.data;
     await s.write(buffer);
@@ -97,6 +99,8 @@ hono.get("/:id/metadata", async (ctx) => {
   });
 
   if (!attachment) return ctx.json({ error: "Attachment not found" }, 404);
+
+  ctx.header("Cache-Control", "public, max-age=604800, immutable");
 
   return ctx.json({
     id: attachment.id,
