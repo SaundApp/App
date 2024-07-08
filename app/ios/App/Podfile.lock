@@ -6,11 +6,11 @@ PODS:
   - CapacitorApp (6.0.0):
     - Capacitor
   - CapacitorCordova (6.1.0)
-  - CapacitorKeyboard (6.0.1):
-    - Capacitor
   - CapacitorPushNotifications (6.0.1):
     - Capacitor
   - CapacitorSplashScreen (6.0.1):
+    - Capacitor
+  - SaundappKeyboard (6.0.3):
     - Capacitor
   - Sentry/HybridSDK (8.21.0):
     - SentryPrivate (= 8.21.0)
@@ -24,9 +24,9 @@ DEPENDENCIES:
   - CapacitorAdmobAds (from `../../../node_modules/capacitor-admob-ads`)
   - "CapacitorApp (from `../../../node_modules/@capacitor/app`)"
   - "CapacitorCordova (from `../../../node_modules/@capacitor/ios`)"
-  - "CapacitorKeyboard (from `../../../node_modules/@capacitor/keyboard`)"
   - "CapacitorPushNotifications (from `../../../node_modules/@capacitor/push-notifications`)"
   - "CapacitorSplashScreen (from `../../../node_modules/@capacitor/splash-screen`)"
+  - "SaundappKeyboard (from `../../../node_modules/@saundapp/keyboard`)"
   - "SentryCapacitor (from `../../../node_modules/@sentry/capacitor`)"
 
 SPEC REPOS:
@@ -43,12 +43,12 @@ EXTERNAL SOURCES:
     :path: "../../../node_modules/@capacitor/app"
   CapacitorCordova:
     :path: "../../../node_modules/@capacitor/ios"
-  CapacitorKeyboard:
-    :path: "../../../node_modules/@capacitor/keyboard"
   CapacitorPushNotifications:
     :path: "../../../node_modules/@capacitor/push-notifications"
   CapacitorSplashScreen:
     :path: "../../../node_modules/@capacitor/splash-screen"
+  SaundappKeyboard:
+    :path: "../../../node_modules/@saundapp/keyboard"
   SentryCapacitor:
     :path: "../../../node_modules/@sentry/capacitor"
 
@@ -57,13 +57,13 @@ SPEC CHECKSUMS:
   CapacitorAdmobAds: 28832a94a5c7465fc2ce3e31be13442b87425944
   CapacitorApp: 9d53aec7101f7b030a950c5bdc4df8612576b279
   CapacitorCordova: be703980ca797f847c3356f78fa175d21c8330c2
-  CapacitorKeyboard: 5f32a712adf41e07a61caafb82cf29fb6d8ba123
   CapacitorPushNotifications: 293fabe42c7229756078e81f2d3a60394ba4e5d8
   CapacitorSplashScreen: 61645214e8f955ff2b80f16a6a3648960fe4c89f
+  SaundappKeyboard: 0f4c315fb914ffcd3ca27b96da78d8221c0a5d0e
   Sentry: ebc12276bd17613a114ab359074096b6b3725203
   SentryCapacitor: 170d8b96ba195cead4dc60eaf5c42aacf97ff1d3
   SentryPrivate: d651efb234cf385ec9a1cdd3eff94b5e78a0e0fe
 
-PODFILE CHECKSUM: 0d95f9d94cf6bec76b696878b849bd300f6c1a50
+PODFILE CHECKSUM: 466b804d66c039a2a164a2212e4d50ddd77ff62d
 
 COCOAPODS: 1.15.2

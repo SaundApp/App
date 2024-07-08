@@ -3997,7 +3997,7 @@ __metadata:
     "@repo/backend-common": "npm:0.0.0"
     "@repo/form-types": "npm:0.0.0"
     "@repo/react-audio-voice-recorder": "npm:0.0.0"
-    "@saundapp/keyboard": "npm:latest"
+    "@saundapp/keyboard": "npm:6.0.3"
     "@sentry/capacitor": "npm:^0.18.0"
     "@sentry/react": "npm:7.114.0"
     "@sentry/vite-plugin": "npm:^2.20.1"
@@ -4365,12 +4365,12 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@saundapp/keyboard@npm:latest":
-  version: 6.0.1
-  resolution: "@saundapp/keyboard@npm:6.0.1"
+"@saundapp/keyboard@npm:6.0.3":
+  version: 6.0.3
+  resolution: "@saundapp/keyboard@npm:6.0.3"
   peerDependencies:
     "@capacitor/core": ^6.0.0
-  checksum: 10c0/23d166c9ebdd61258f91ee1f435d5ae41cce07b79fc1a2b1a30c8aa36ad38744692c80616955fb0add57c77c54adadf2fd74757bc99c31def5f69aaf7b474095
+  checksum: 10c0/ec7df79e6b8cafb708425c21f887575182f5b2faf78d988cde16536a1e8f421db23589688b7bc3feb7825b04c223522a947ca4b89b13afe16e207a075e3f87a1
   languageName: node
   linkType: hard
 
