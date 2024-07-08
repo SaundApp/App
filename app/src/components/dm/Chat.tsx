@@ -92,7 +92,7 @@ export default function Chat({
           if (create) {
             axiosClient
               .post("/dm/create?upsert=true", {
-                name: chat.name,
+                name: `${chat.name}, ${session?.username}`,
                 userIds: [chat.id],
                 imageId: chat.imageId
               })
