@@ -132,6 +132,14 @@ hono.post("/cleanup", admin, async (ctx) => {
     }
 
     if (!used) {
+      used = await prisma.chat.findFirst({
+        where: {
+          imageId: attachment.id,
+        },
+      });
+    }
+
+    if (!used) {
       toDelete.push(
         prisma.attachment.delete({
           where: {
