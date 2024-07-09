@@ -19,6 +19,7 @@ import { useTranslation } from "react-i18next";
 import { FaCamera } from "react-icons/fa";
 import { FaXmark } from "react-icons/fa6";
 import { io, type Socket } from "socket.io-client";
+import { Keyboard } from "@saundapp/keyboard";
 
 export const Route = createLazyFileRoute("/dm/$id/")({
   component: Chat,
@@ -39,6 +40,7 @@ function Chat() {
   const [socket, setSocket] = useState<Socket | null>(null);
   const [editing, setEditing] = useState<string | null>(null);
   const [replying, setReplying] = useState<string | null>(null);
+  const [keyboard, isKeyboard] = useState(false);
   const { id } = Route.useParams();
   const { toast } = useToast();
   const image = useRef<HTMLInputElement>(null);
@@ -143,6 +145,10 @@ function Chat() {
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [editing]);
+  useEffect(() => {
+    Keyboard.addListener("keyboardWillShow", () => isKeyboard(true));
+    Keyboard.addListener("keyboardWillHide", () => isKeyboard(false));
+  }, []);
 
   const handleSubmit = () => {
     if (!message || !message.length) return;
@@ -175,9 +181,13 @@ function Chat() {
         style={{
           maxHeight:
             Capacitor.getPlatform() === "ios"
-              ? !replying
-                ? "75vh"
-                : "72vh"
+              ? keyboard
+                ? !replying
+                  ? "65vh"
+                  : "55vh"
+                : !replying
+                  ? "75vh"
+                  : "72vh"
               : !replying
                 ? "83vh"
                 : "76vh",

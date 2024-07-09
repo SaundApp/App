@@ -46,7 +46,7 @@ function ChatSettings() {
 
   return (
     <div className="flex h-full flex-col gap-3">
-      <ChatNavbar chat={chat} />
+      <ChatNavbar chat={chat} hideLogo />
 
       <div className="flex items-center justify-center">
         <input
@@ -131,7 +131,7 @@ function ChatSettings() {
       </form>
 
       <div className="flex flex-col gap-3">
-        <h2>{t("dm.members")}</h2>
+        <p>{t("dm.members")}</p>
         <FindUser
           filter={(user) => !members?.some((member) => member.id === user.id)}
           onClick={async (user) => {
@@ -191,7 +191,12 @@ function ChatSettings() {
               >
                 <div className="flex items-center gap-3">
                   <Avatar user={member} width={40} height={40} />
-                  <div>{member.username}</div>
+                  <div className="flex flex-col">
+                    <h5 className="max-w-40 truncate text-left">{member.name}</h5>
+                    <p className="muted max-w-40 truncate text-left">
+                      @{member.username}
+                    </p>
+                  </div>
                 </div>
               </SwipeToRevealActions>
             ))}

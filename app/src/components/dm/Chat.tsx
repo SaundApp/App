@@ -37,7 +37,8 @@ export default function Chat({
   });
 
   const deleteChat = useMutation({
-    mutationFn: () => axiosClient.delete(`/dm/${chat.id}/${session?.id}`),
+    mutationFn: () =>
+      axiosClient.delete(`/dm/${chat.id}/members?userId=${session?.id}`),
     onSettled: async () =>
       await queryClient.invalidateQueries({ queryKey: ["dm"] }),
   });
@@ -86,7 +87,7 @@ export default function Chat({
       actionButtonMinWidth={70}
     >
       <Link
-        to={create ? undefined : `/dm/${chat.id}`}
+        to={create || join ? undefined : `/dm/${chat.id}`}
         className="flex w-full flex-row items-center gap-3"
         onClick={() => {
           if (create) {
@@ -94,7 +95,7 @@ export default function Chat({
               .post("/dm/create?upsert=true", {
                 name: `${chat.name}, ${session?.username}`,
                 userIds: [chat.id],
-                imageId: chat.imageId
+                imageId: chat.imageId,
               })
               .then((res) =>
                 navigate({

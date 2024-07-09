@@ -4,9 +4,20 @@ import { SiGoogleanalytics } from "react-icons/si";
 import { useSession } from "./SessionContext";
 import Avatar from "./account/Avatar";
 import { Capacitor } from "@capacitor/core";
+import { useEffect, useState } from "react";
+import { Keyboard } from "@saundapp/keyboard";
 
 export default function Navbar() {
   const session = useSession();
+  const [keyboard, setKeyboard] = useState(false);
+
+  useEffect(() => {
+    Keyboard.addListener("keyboardWillShow", () => setKeyboard(true));
+    Keyboard.addListener("keyboardWillHide", () => setKeyboard(false));
+  }, []);
+
+  if (keyboard) return null;
+
   return (
     <nav
       className={

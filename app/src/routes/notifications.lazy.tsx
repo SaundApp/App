@@ -2,6 +2,7 @@ import Notification from "@/components/Notification";
 import { Spinner } from "@/components/ui/spinner";
 import { axiosClient } from "@/lib/axios";
 import type { PublicUser } from "@/types/prisma";
+import { Capacitor } from "@capacitor/core";
 import type { Notification as NotificationModel } from "@repo/backend-common/types";
 import { useQuery } from "@tanstack/react-query";
 import { createLazyFileRoute } from "@tanstack/react-router";
@@ -36,7 +37,14 @@ function Notifications() {
       )}
 
       {(data?.length || 0) > 0 && (
-        <div className="flex h-[84vh] max-h-[84vh] flex-col gap-3 overflow-y-auto">
+        <div
+          className={
+            "flex flex-col gap-3 overflow-y-auto " +
+            (Capacitor.getPlatform() === "ios"
+              ? "h-[77vh] max-h-[77vh]"
+              : "h-[84vh] max-h-[84vh]")
+          }
+        >
           {data?.map((item) => (
             <Notification
               key={item.id}
