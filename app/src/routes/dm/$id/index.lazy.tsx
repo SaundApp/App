@@ -163,7 +163,7 @@ function Chat() {
       style={{
         height:
           Capacitor.getPlatform() === "ios"
-            ? "calc(100vh - 8rem)"
+            ? "calc(100vh - 9rem)"
             : "calc(100vh - 5rem)",
       }}
     >

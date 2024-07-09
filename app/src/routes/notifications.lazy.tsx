@@ -36,7 +36,7 @@ function Notifications() {
       )}
 
       {(data?.length || 0) > 0 && (
-        <div className="flex h-[85vh] max-h-[85vh] flex-col gap-3 overflow-y-auto">
+        <div className="flex h-[84vh] max-h-[84vh] flex-col gap-3 overflow-y-auto">
           {data?.map((item) => (
             <Notification
               key={item.id}

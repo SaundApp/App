@@ -3,6 +3,7 @@ import { Hono } from "hono";
 import { jwt } from "hono/jwt";
 import { stream } from "hono/streaming";
 import { compressImage } from "../lib/images";
+import admin from "../middlewares/admin";
 
 const hono = new Hono();
 
@@ -107,6 +108,46 @@ hono.get("/:id/metadata", async (ctx) => {
     name: attachment.name,
     type: attachment.type,
   });
+});
+
+hono.post("/cleanup", admin, async (ctx) => {
+  const attachments = await prisma.attachment.findMany();
+  const toDelete = [];
+
+  for (const attachment of attachments) {
+    let used: unknown = await prisma.message.findFirst({
+      where: {
+        text: {
+          contains: attachment.id,
+        },
+      },
+    });
+
+    if (!used) {
+      used = await prisma.user.findFirst({
+        where: {
+          avatarId: attachment.id,
+        },
+      });
+    }
+
+    if (!used) {
+      toDelete.push(
+        prisma.attachment.delete({
+          where: {
+            id: attachment.id,
+          },
+        })
+      );
+    }
+  }
+
+  await prisma.$transaction(toDelete);
+
+  console.log(
+    `[Attachments] Cleaned up ${toDelete.length} attachments out of ${attachments.length}`
+  );
+  return ctx.json(toDelete.length);
 });
 
 export default hono;
