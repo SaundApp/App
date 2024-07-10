@@ -21,6 +21,7 @@ export const Route = createRootRoute({
 });
 
 function App() {
+  const navigate = Route.useNavigate();
   const router = useRouterState();
   const queryClient = useQueryClient();
   const { data } = useQuery<MeUser | null>({
@@ -57,20 +58,22 @@ function App() {
   useEffect(() => {
     if (token) {
       queryClient.invalidateQueries({ queryKey: ["me"] });
-    } else if (
-      router.location.pathname !== "/auth/login" &&
-      router.location.pathname !== "/auth/register"
-    ) {
+    } else if (!router.location.pathname.startsWith("/auth")) {
       const tokens = localStorage.getItem("tokens");
       if (tokens) {
         localStorage.setItem("token", JSON.parse(tokens)[0]);
-        location.reload();
+        navigate({
+          to: router.location.pathname,
+          replace: true,
+        });
         return;
       }
 
-      location.href = "/auth/login";
+      navigate({
+        to: "/auth/login",
+      });
     }
-  }, [token, router.location.pathname, queryClient]);
+  }, [token, router.location.pathname, queryClient, navigate]);
 
   useEffect(() => {
     SplashScreen.hide();

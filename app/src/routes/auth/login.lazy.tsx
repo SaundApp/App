@@ -19,6 +19,7 @@ export const Route = createLazyFileRoute("/auth/login")({
 function Login() {
   const { t } = useTranslation();
   const { toast } = useToast();
+  const navigate = Route.useNavigate();
   const { token } = Route.useSearch<{
     token: string | undefined;
   }>();
@@ -38,9 +39,11 @@ function Login() {
       localStorage.setItem("token", token);
       localStorage.setItem("tokens", JSON.stringify(tokens));
 
-      location.href = "/";
+      navigate({
+        to: "/",
+      });
     }
-  }, [token]);
+  }, [token, navigate]);
 
   return (
     <div className="m-auto flex w-full flex-col justify-center gap-3">
@@ -68,7 +71,9 @@ function Login() {
 
                     localStorage.setItem("token", res.data.token);
 
-                    location.href = "/";
+                    navigate({
+                      to: "/",
+                    });
                   }
                 })
                 .catch(() =>

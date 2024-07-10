@@ -1,3 +1,4 @@
+import BackIcon from "@/components/BackIcon";
 import { Button } from "@/components/ui/button";
 import { Form, FormControl, FormField, FormItem } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
@@ -26,6 +27,8 @@ function ForgotPassword() {
 
   return (
     <div className="m-auto flex flex-col justify-center gap-3">
+      <BackIcon className="absolute left-3 top-6" />
+
       <div>
         <h1>{t("auth.forgot_password")}</h1>
         <p className="muted">{t("auth.forgot_password_description")}</p>

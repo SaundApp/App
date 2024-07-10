@@ -7,6 +7,7 @@ import { Input } from "@/components/ui/input";
 import { Switch } from "@/components/ui/switch";
 import { useToast } from "@/components/ui/use-toast";
 import { axiosClient } from "@/lib/axios";
+import { Browser } from "@capacitor/browser";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { updateSchema } from "@repo/form-types";
 import { useQueryClient } from "@tanstack/react-query";
@@ -256,8 +257,8 @@ function EditProfile() {
           <Button
             className="w-fit"
             onClick={() => {
-              axiosClient.post("/stripe/artist/connect").then((res) => {
-                window.location.href = res.data.url;
+              axiosClient.post("/stripe/artist/connect").then(async (res) => {
+                await Browser.open({ url: res.data.url });
               });
             }}
           >
@@ -278,12 +279,12 @@ function EditProfile() {
                 /* empty */
               }
 
-              window.open(
-                import.meta.env.VITE_API_URL +
+              await Browser.open({
+                url:
+                  import.meta.env.VITE_API_URL +
                   "/auth/login/spotify?token=" +
                   localStorage.getItem("token"),
-                "_blank",
-              );
+              });
             }}
           >
             <FaSpotify fontSize={20} />

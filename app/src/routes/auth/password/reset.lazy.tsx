@@ -21,6 +21,7 @@ function ResetPassword() {
     token: string | undefined;
   }>();
   const { toast } = useToast();
+  const navigate = Route.useNavigate();
   const form = useForm<z.infer<typeof resetPasswordSchema>>({
     resolver: zodResolver(resetPasswordSchema),
     defaultValues: {
@@ -51,7 +52,9 @@ function ResetPassword() {
                     description: t("toast.success.reset_password"),
                   });
 
-                  location.href = "/auth/login";
+                  navigate({
+                    to: "/auth/login",
+                  });
                 })
                 .catch(() =>
                   toast({

@@ -11,6 +11,7 @@ import type { SubscriptionSettings } from "@repo/backend-common/types";
 import { useTranslation } from "react-i18next";
 import { MdVerified } from "react-icons/md";
 import { Button } from "../ui/button";
+import { Browser } from "@capacitor/browser";
 
 export default function Subscribe({
   user,
@@ -54,8 +55,8 @@ export default function Subscribe({
             axiosClient
               .post(`/users/${user.id}/subscribe`)
               .then((res) => res.data)
-              .then((data: { url: string }) => {
-                window.open(data.url, "_blank");
+              .then(async (data: { url: string }) => {
+                await Browser.open({ url: data.url });
               });
           }}
         >

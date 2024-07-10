@@ -12,6 +12,7 @@
   "dependencies": {
     "@capacitor/android": "latest",
     "@capacitor/app": "latest",
+    "@capacitor/browser": "^6.0.1",
     "@capacitor/core": "latest",
     "@capacitor/ios": "latest",
     "@capacitor/push-notifications": "latest",

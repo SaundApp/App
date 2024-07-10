@@ -11,7 +11,7 @@ import { axiosClient } from "@/lib/axios";
 import type { PublicUser } from "@/types/prisma";
 import type { Chat } from "@repo/backend-common/types";
 import { useQuery, useQueryClient } from "@tanstack/react-query";
-import { createLazyFileRoute } from "@tanstack/react-router";
+import { createLazyFileRoute, Link } from "@tanstack/react-router";
 import { useRef, useState } from "react";
 import { useTranslation } from "react-i18next";
 import SwipeToRevealActions from "react-swipe-to-reveal-actions";
@@ -189,15 +189,19 @@ function ChatSettings() {
                 key={member.id}
                 actionButtonMinWidth={70}
               >
-                <div className="flex items-center gap-3">
-                  <Avatar user={member} width={40} height={40} />
-                  <div className="flex flex-col">
-                    <h5 className="max-w-40 truncate text-left">{member.name}</h5>
-                    <p className="muted max-w-40 truncate text-left">
-                      @{member.username}
-                    </p>
+                <Link to={`/account/${member.username}`} className="w-full">
+                  <div className="flex items-center gap-3">
+                    <Avatar user={member} width={40} height={40} />
+                    <div className="flex flex-col">
+                      <h5 className="max-w-40 truncate text-left">
+                        {member.name}
+                      </h5>
+                      <p className="muted max-w-40 truncate text-left">
+                        @{member.username}
+                      </p>
+                    </div>
                   </div>
-                </div>
+                </Link>
               </SwipeToRevealActions>
             ))}
         </div>

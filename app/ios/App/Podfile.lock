@@ -5,6 +5,8 @@ PODS:
     - Capacitor
   - CapacitorApp (6.0.0):
     - Capacitor
+  - CapacitorBrowser (6.0.1):
+    - Capacitor
   - CapacitorCordova (6.1.0)
   - CapacitorPushNotifications (6.0.1):
     - Capacitor
@@ -23,6 +25,7 @@ DEPENDENCIES:
   - "Capacitor (from `../../../node_modules/@capacitor/ios`)"
   - CapacitorAdmobAds (from `../../../node_modules/capacitor-admob-ads`)
   - "CapacitorApp (from `../../../node_modules/@capacitor/app`)"
+  - "CapacitorBrowser (from `../../../node_modules/@capacitor/browser`)"
   - "CapacitorCordova (from `../../../node_modules/@capacitor/ios`)"
   - "CapacitorPushNotifications (from `../../../node_modules/@capacitor/push-notifications`)"
   - "CapacitorSplashScreen (from `../../../node_modules/@capacitor/splash-screen`)"
@@ -41,6 +44,8 @@ EXTERNAL SOURCES:
     :path: "../../../node_modules/capacitor-admob-ads"
   CapacitorApp:
     :path: "../../../node_modules/@capacitor/app"
+  CapacitorBrowser:
+    :path: "../../../node_modules/@capacitor/browser"
   CapacitorCordova:
     :path: "../../../node_modules/@capacitor/ios"
   CapacitorPushNotifications:
@@ -56,6 +61,7 @@ SPEC CHECKSUMS:
   Capacitor: 187bd7847b6f71467015a20200a1a071be3e5f14
   CapacitorAdmobAds: 28832a94a5c7465fc2ce3e31be13442b87425944
   CapacitorApp: 9d53aec7101f7b030a950c5bdc4df8612576b279
+  CapacitorBrowser: 473c7fd70ddbe541608ff09ec1be14da0078279e
   CapacitorCordova: be703980ca797f847c3356f78fa175d21c8330c2
   CapacitorPushNotifications: 293fabe42c7229756078e81f2d3a60394ba4e5d8
   CapacitorSplashScreen: 61645214e8f955ff2b80f16a6a3648960fe4c89f
@@ -64,6 +70,6 @@ SPEC CHECKSUMS:
   SentryCapacitor: 170d8b96ba195cead4dc60eaf5c42aacf97ff1d3
   SentryPrivate: d651efb234cf385ec9a1cdd3eff94b5e78a0e0fe
 
-PODFILE CHECKSUM: 466b804d66c039a2a164a2212e4d50ddd77ff62d
+PODFILE CHECKSUM: 87ae23c43a43bad9b8f5e8e2bb8f9add90183e0f
 
 COCOAPODS: 1.15.2

@@ -25,6 +25,7 @@ import { useTranslation } from "react-i18next";
 import { FaGear } from "react-icons/fa6";
 import Hammer from "hammerjs";
 import Chats from "@/components/account/Chats";
+import { Browser } from "@capacitor/browser";
 
 export const Route = createLazyFileRoute("/account/$username")({
   component: Account,
@@ -302,7 +303,9 @@ function Account() {
                     axiosClient
                       .post("/stripe/client/dashboard")
                       .then((res) => res.data)
-                      .then((data) => window.open(data.url, "_blank"));
+                      .then(
+                        async (data) => await Browser.open({ url: data.url }),
+                      );
                   } else setSubscribeOpen(true);
                 }}
                 className={!data.subscribed ? "w-full" : "w-full bg-secondary"}

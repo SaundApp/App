@@ -40,6 +40,7 @@ function EditProfile() {
   const { t, i18n } = useTranslation();
   const { toast } = useToast();
   const session = useSession();
+  const navigate = Route.useNavigate();
   const queryClient = useQueryClient();
   const { setTheme, theme } = useTheme();
   const [activeTab, setActiveTab] =
@@ -258,7 +259,9 @@ function EditProfile() {
             localStorage.setItem("tokens", JSON.stringify(tokens));
             if (tokens.length > 0) localStorage.setItem("token", tokens[0]);
             else localStorage.removeItem("token");
-            window.location.href = "/auth/login";
+            navigate({
+              to: "/auth/login",
+            });
           }}
         >
           {t("account.actions.logout")}

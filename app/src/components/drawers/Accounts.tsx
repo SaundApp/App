@@ -16,11 +16,13 @@ import { useSession } from "../SessionContext";
 import Avatar from "../account/Avatar";
 import { Button } from "../ui/button";
 import VisuallyHidden from "../ui/visually-hidden";
+import { useNavigate } from "@tanstack/react-router";
 
 export default function Accounts() {
   const { t } = useTranslation();
   const session = useSession();
   const queryClient = useQueryClient();
+  const navigate = useNavigate();
   const { data } = useQuery<
     (PublicUser & {
       token: string;
@@ -78,7 +80,9 @@ export default function Accounts() {
                   className="flex items-center gap-3"
                   onClick={() => {
                     localStorage.setItem("token", user.token);
-                    window.location.href = "/";
+                    navigate({
+                      to: "/",
+                    });
                   }}
                 >
                   <Avatar user={user} width={40} height={40} />
@@ -108,7 +112,9 @@ export default function Accounts() {
               className="mt-auto w-full"
               onClick={() => {
                 localStorage.removeItem("token");
-                window.location.href = "/auth/login";
+                navigate({
+                  to: "/auth/login",
+                });
               }}
             >
               {t("account.new")}
