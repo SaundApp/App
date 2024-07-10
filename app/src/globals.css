@@ -27,7 +27,7 @@
 
     --border: #e5e5e5;
     --input: #e5e5e5;
-    --ring: #0a0a0a;
+    --ring: transparent;
 
     --radius: 0.5rem;
   }
@@ -59,13 +59,13 @@
 
     --border: #262626;
     --input: #262626;
-    --ring: #d4d4d4;
+    --ring: transparent;
   }
 }
 
 @layer base {
   * {
-    @apply border-border;
+    @apply border-border focus:outline-none focus:ring-0;
   }
   body {
     @apply select-none bg-background text-foreground;
