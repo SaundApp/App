@@ -10,8 +10,9 @@ i18n
   .use(initReactI18next)
   .init<HttpBackendOptions>({
     backend: {
-      loadPath:
-        `${import.meta.env.VITE_TRANSLATIONS_URL}/api/download/{{lng}}`,
+      loadPath: import.meta.env.DEV
+        ? `${import.meta.env.VITE_TRANSLATIONS_URL}/api/download/{{lng}}`
+        : "/locales/{{lng}}.json",
     },
 
     fallbackLng: "en",

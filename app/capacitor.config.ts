@@ -14,6 +14,7 @@ const config: CapacitorConfig = {
     },
     SplashScreen: {
       launchAutoHide: false,
+      androidScaleType: "CENTER_CROP",
     },
     Keyboard: {
       resize: KeyboardResize.Native,

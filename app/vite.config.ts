@@ -1,39 +1,67 @@
 import { sentryVitePlugin } from "@sentry/vite-plugin";
 import { TanStackRouterVite } from "@tanstack/router-vite-plugin";
 import react from "@vitejs/plugin-react";
+import { mkdirSync, unlinkSync, writeFileSync } from "fs";
 import path from "path";
-import { defineConfig } from "vite";
 import Unfonts from "unplugin-fonts/vite";
+import { defineConfig, loadEnv } from "vite";
 
-// https://vitejs.dev/config/
-export default defineConfig({
-  plugins: [
-    react(),
-    TanStackRouterVite(),
-    Unfonts({
-      custom: {
-        families: [
-          {
-            name: "Geist",
-            src: "./node_modules/geist/dist/fonts/geist-*/*.woff2",
-          },
-        ],
+export default ({ mode }: { mode: string }) => {
+  process.env = { ...process.env, ...loadEnv(mode, process.cwd()) };
+
+  return defineConfig({
+    plugins: [
+      react(),
+      TanStackRouterVite(),
+      Unfonts({
+        custom: {
+          families: [
+            {
+              name: "Geist",
+              src: "./node_modules/geist/dist/fonts/geist-*/*.woff2",
+            },
+          ],
+        },
+      }),
+      sentryVitePlugin({
+        org: "saund",
+        project: "app",
+        telemetry: false,
+      }),
+      {
+        name: "i18n-bundler",
+        async closeBundle() {
+          unlinkSync("dist/locales");
+          mkdirSync("dist/locales", { recursive: true });
+
+          const data: string[] = await fetch(
+            `${process.env.VITE_TRANSLATIONS_URL}/api/list`,
+          ).then((res) => res.json());
+
+          for (const locale of data) {
+            const localeData = await fetch(
+              `${process.env.VITE_TRANSLATIONS_URL}/api/download/${locale}`,
+            ).then((res) => res.json());
+
+            writeFileSync(
+              `dist/locales/${locale}.json`,
+              JSON.stringify(localeData),
+            );
+          }
+
+          console.log(`i18n-bundler: Bundled ${data.length} translations`);
+        },
       },
-    }),
-    sentryVitePlugin({
-      org: "saund",
-      project: "app",
-      telemetry: false,
-    }),
-  ],
+    ],
 
-  resolve: {
-    alias: {
-      "@": path.resolve(__dirname, "./src"),
+    resolve: {
+      alias: {
+        "@": path.resolve(__dirname, "./src"),
+      },
     },
-  },
 
-  build: {
-    sourcemap: true,
-  },
-});
+    build: {
+      sourcemap: true,
+    },
+  });
+};
