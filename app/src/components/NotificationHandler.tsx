@@ -24,3 +24,6 @@ export const registerNotifications = async () => {
 
   await PushNotifications.register();
 };
+
+export const clearNotifications = async () =>
+  await PushNotifications.removeAllDeliveredNotifications();

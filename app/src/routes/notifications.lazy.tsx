@@ -1,10 +1,12 @@
 import Notification from "@/components/Notification";
+import { clearNotifications } from "@/components/NotificationHandler";
 import { Spinner } from "@/components/ui/spinner";
 import { axiosClient } from "@/lib/axios";
 import type { PublicUser } from "@/types/prisma";
 import type { Notification as NotificationModel } from "@repo/backend-common/types";
 import { useQuery } from "@tanstack/react-query";
 import { createLazyFileRoute } from "@tanstack/react-router";
+import { useEffect } from "react";
 import { useTranslation } from "react-i18next";
 
 export const Route = createLazyFileRoute("/notifications")({
@@ -21,6 +23,10 @@ function Notifications() {
     queryKey: ["notifications"],
     queryFn: () => axiosClient.get("/notifications").then((res) => res.data),
   });
+
+  useEffect(() => {
+    clearNotifications();
+  }, []);
 
   return (
     <div className="flex h-full flex-col gap-3">

@@ -96,11 +96,13 @@ export async function handleSend(
 
   const chat = await prisma.chat.findUnique({ where: { id: chatId } });
   for (const member of chat!.userIds) {
+    if (member === senderId) continue;
+
     sendNotification(member, NotificationType.DM, {
       user: sender!.username,
       userId: senderId,
       message,
-      chatId
+      chatId,
     });
   }
 
