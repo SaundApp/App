@@ -24,7 +24,7 @@ function App() {
   const navigate = Route.useNavigate();
   const router = useRouterState();
   const queryClient = useQueryClient();
-  const { data } = useQuery<MeUser | null>({
+  const { data, error } = useQuery<MeUser | null>({
     queryKey: ["me"],
     queryFn: () =>
       localStorage.getItem("token")
@@ -53,7 +53,13 @@ function App() {
         localStorage.setItem("tokens", JSON.stringify(tokens));
       }
     }
-  }, [data]);
+
+    if (error) {
+      localStorage.removeItem("token");
+      localStorage.removeItem("tokens");
+      setSession(null);
+    }
+  }, [data, error]);
 
   useEffect(() => {
     if (token) {

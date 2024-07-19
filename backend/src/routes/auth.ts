@@ -146,7 +146,7 @@ hono.get("/me", jwt({ secret: process.env.JWT_SECRET! }), async (ctx) => {
 
   let token;
 
-  if (user && payload.exp - Math.floor(Date.now() / 1000) < 60 * 60 * 24 * 2) {
+  if (user && payload.exp - Date.now() / 1000 < 60 * 60 * 24 * 15) {
     token = await signToken(user.id);
   }
 
