@@ -17,45 +17,54 @@ import Avatar from "../account/Avatar";
 import { Button } from "../ui/button";
 import VisuallyHidden from "../ui/visually-hidden";
 import { useNavigate } from "@tanstack/react-router";
+import { useStorageState } from "../storage/StorageProvider";
+import { SecureStoragePlugin } from "capacitor-secure-storage-plugin";
 
 export default function Accounts() {
   const { t } = useTranslation();
   const session = useSession();
   const queryClient = useQueryClient();
   const navigate = useNavigate();
+  const [[isLoading, tokens], setTokens] = useStorageState(
+    "tokens",
+    SecureStoragePlugin,
+  );
+  const [, setToken] = useStorageState("token", SecureStoragePlugin);
   const { data } = useQuery<
     (PublicUser & {
       token: string;
     })[]
   >({
-    queryKey: ["accounts"],
+    queryKey: ["accounts", tokens],
     queryFn: () =>
-      axiosClient
-        .get(
-          `/auth/accounts?tokens=${JSON.parse(localStorage.getItem("tokens") || "[]").join(",")}`,
-        )
-        .then((res) => res.data),
+      isLoading || !tokens
+        ? []
+        : axiosClient
+            .get(
+              `/auth/accounts?tokens=${JSON.parse(tokens || "[]").join(",")}`,
+            )
+            .then((res) => res.data),
   });
 
   useEffect(() => {
-    if (data) {
-      let tokens: string[] = JSON.parse(localStorage.getItem("tokens") || "[]");
+    if (data && !isLoading) {
+      let parsedTokens: string[] = JSON.parse(tokens || "[]");
       for (const user of data) {
         const same = data
           .filter((u) => u.username === user.username && u.token !== user.token)
           .map((u) => u.token);
 
         if (same.length) {
-          tokens = tokens.filter((token) => !same.includes(token));
+          parsedTokens = parsedTokens.filter((token) => !same.includes(token));
         }
       }
 
-      localStorage.setItem("tokens", JSON.stringify(tokens));
+      setTokens(JSON.stringify(parsedTokens));
       queryClient.invalidateQueries({
-        queryKey: ["accounts"],
+        queryKey: ["accounts", parsedTokens],
       });
     }
-  }, [data, queryClient]);
+  }, [data, tokens, isLoading, setTokens, queryClient]);
 
   return (
     <Drawer>
@@ -79,7 +88,7 @@ export default function Accounts() {
                 <div
                   className="flex items-center gap-3"
                   onClick={() => {
-                    localStorage.setItem("token", user.token);
+                    setToken(user.token);
                     navigate({
                       to: "/",
                     });
@@ -111,7 +120,7 @@ export default function Accounts() {
               variant="secondary"
               className="mt-auto w-full"
               onClick={() => {
-                localStorage.removeItem("token");
+                setToken(null);
                 navigate({
                   to: "/auth/login",
                 });

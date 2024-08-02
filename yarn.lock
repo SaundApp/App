@@ -494,6 +494,15 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@capacitor/preferences@npm:^6.0.1":
+  version: 6.0.1
+  resolution: "@capacitor/preferences@npm:6.0.1"
+  peerDependencies:
+    "@capacitor/core": ^6.0.0
+  checksum: 10c0/01ef4d73f7c7605a6ce3811bae5e4028d760f0090cf56cad155a1ff4e74c4f9ac3c4c30838a2d0033cd89823b38370aa66357ea9de377afc5467dd571da0c8d8
+  languageName: node
+  linkType: hard
+
 "@capacitor/push-notifications@npm:latest":
   version: 6.0.1
   resolution: "@capacitor/push-notifications@npm:6.0.1"
@@ -3990,6 +3999,7 @@ __metadata:
     "@capacitor/cli": "npm:latest"
     "@capacitor/core": "npm:latest"
     "@capacitor/ios": "npm:latest"
+    "@capacitor/preferences": "npm:^6.0.1"
     "@capacitor/push-notifications": "npm:latest"
     "@capacitor/splash-screen": "npm:latest"
     "@hookform/resolvers": "npm:^3.9.0"
@@ -4027,6 +4037,7 @@ __metadata:
     autoprefixer: "npm:^10.4.19"
     axios: "npm:^1.7.2"
     capacitor-admob-ads: "npm:^5.0.0"
+    capacitor-secure-storage-plugin: "npm:^0.10.0"
     class-variance-authority: "npm:^0.7.0"
     clsx: "npm:^2.1.1"
     daisyui: "npm:^4.12.10"
@@ -6689,6 +6700,15 @@ __metadata:
   peerDependencies:
     "@capacitor/core": "*"
   checksum: 10c0/a3b380405000dbb50c114b9b3a05ea04b70223e4a50ac75f4bb1334bbf8f5aa10b6090d31f4c875d0f75e650bb1822ec5c19b770af4eacb2f85de4772b073c4f
+  languageName: node
+  linkType: hard
+
+"capacitor-secure-storage-plugin@npm:^0.10.0":
+  version: 0.10.0
+  resolution: "capacitor-secure-storage-plugin@npm:0.10.0"
+  peerDependencies:
+    "@capacitor/core": ^6.0.0
+  checksum: 10c0/a6596e2c71369f8fb0059fb149cfaf2d4f82b7396a996ae6be8afe39eed9d67c81abbad24718985f620106477ab50e4df8ca5d005fff2dcdb195d9f5f919dc3f
   languageName: node
   linkType: hard
 
