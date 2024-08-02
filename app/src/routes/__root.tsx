@@ -7,6 +7,7 @@ import { Toaster } from "@/components/ui/toaster";
 import { axiosClient } from "@/lib/axios";
 import type { MeUser } from "@/types/prisma";
 import { Capacitor } from "@capacitor/core";
+import { SplashScreen } from "@capacitor/splash-screen";
 import { useQuery, useQueryClient } from "@tanstack/react-query";
 import {
   Outlet,
@@ -14,7 +15,6 @@ import {
   useRouterState,
 } from "@tanstack/react-router";
 import { useEffect, useState } from "react";
-import { SplashScreen } from "@capacitor/splash-screen";
 
 export const Route = createRootRoute({
   component: App,
@@ -24,12 +24,14 @@ function App() {
   const navigate = Route.useNavigate();
   const router = useRouterState();
   const queryClient = useQueryClient();
-  const { data, error } = useQuery<MeUser | null>({
+  const { data, error, failureCount } = useQuery<MeUser | null>({
     queryKey: ["me"],
     queryFn: () =>
       localStorage.getItem("token")
         ? axiosClient.get("/auth/me").then((res) => res.data)
         : null,
+    retry: 4,
+    retryDelay: () => 500,
   });
   const [session, setSession] = useState<MeUser | null>(null);
   const token = localStorage.getItem("token");
@@ -54,12 +56,12 @@ function App() {
       }
     }
 
-    if (error) {
+    if (error && failureCount > 4) {
       localStorage.removeItem("token");
       localStorage.removeItem("tokens");
       setSession(null);
     }
-  }, [data, error]);
+  }, [data, failureCount, error]);
 
   useEffect(() => {
     if (token) {
