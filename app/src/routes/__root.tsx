@@ -2,6 +2,7 @@ import AppUrlListener from "@/components/AppUrlListener";
 import Navbar from "@/components/Navbar";
 import "@/components/SentryLoader";
 import { SessionContext } from "@/components/SessionContext";
+import { useStorageState } from "@/components/storage/StorageProvider";
 import { ThemeProvider } from "@/components/ThemeProvider";
 import { Toaster } from "@/components/ui/toaster";
 import { axiosClient } from "@/lib/axios";
@@ -14,6 +15,7 @@ import {
   createRootRoute,
   useRouterState,
 } from "@tanstack/react-router";
+import { SecureStoragePlugin } from "capacitor-secure-storage-plugin";
 import { useEffect, useState } from "react";
 
 export const Route = createRootRoute({
@@ -34,7 +36,17 @@ function App() {
     retryDelay: () => 500,
   });
   const [session, setSession] = useState<MeUser | null>(null);
-  const token = localStorage.getItem("token");
+  const [[isTokenLoading, storedToken], setStoredToken] = useStorageState(
+    "token",
+    SecureStoragePlugin,
+  );
+  const localToken = localStorage.getItem("token");
+  const [token, setToken] = useState(localToken);
+  const [[, storedTokens], setStoredTokens] = useStorageState(
+    "tokens",
+    SecureStoragePlugin,
+  );
+  const localTokens = localStorage.getItem("tokens");
 
   useEffect(() => {
     if (data) {
@@ -82,6 +94,24 @@ function App() {
       });
     }
   }, [token, router.location.pathname, queryClient, navigate]);
+
+  useEffect(() => {
+    if (storedToken !== token) setStoredToken(token);
+  }, [token, setStoredToken, storedToken]);
+
+  useEffect(() => {
+    if (!isTokenLoading && storedToken && !token) {
+      setToken(storedToken);
+    }
+  }, [isTokenLoading, storedToken, token]);
+
+  useEffect(() => {
+    setToken(localToken);
+  }, [localToken]);
+
+  useEffect(() => {
+    if (storedTokens !== localTokens) setStoredTokens(localTokens);
+  }, [localTokens, setStoredTokens, storedTokens]);
 
   useEffect(() => {
     SplashScreen.hide();

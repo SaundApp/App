@@ -28,7 +28,7 @@ export function ThemeProvider({
   storageKey = "vite-ui-theme",
   ...props
 }: ThemeProviderProps) {
-  const [[isLoading, storageTheme], setStorageTheme] = useStorageState(
+  const [[isLoading, storageTheme], setStorageTheme] = useStorageState<Theme>(
     storageKey,
     Preferences,
   );
@@ -36,7 +36,7 @@ export function ThemeProvider({
 
   useEffect(() => {
     if (!isLoading && storageTheme) {
-      setTheme(storageTheme as Theme);
+      setTheme(storageTheme);
     }
   }, [isLoading, storageTheme]);
 

@@ -30,22 +30,22 @@ export async function setStorageItemAsync(
   }
 }
 
-export function useStorageState(
+export function useStorageState<T = string>(
   key: string,
   storage: StorageSystem,
-): UseStateHook<string> {
-  const [state, setState] = useAsyncState<string>();
+): UseStateHook<T> {
+  const [state, setState] = useAsyncState<T>();
 
   useEffect(() => {
     storage.get({ key }).then(({ value }) => {
-      setState(value);
+      setState(value as T);
     });
   }, [key, setState, storage]);
 
   const setValue = useCallback(
-    (value: string | null) => {
-      setState(value);
-      setStorageItemAsync(key, value, storage);
+    (value: T | null) => {
+      setState(value as T);
+      setStorageItemAsync(key, value as string, storage);
     },
     [key, setState, storage],
   );
