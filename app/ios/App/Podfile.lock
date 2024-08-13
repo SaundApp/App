@@ -5,7 +5,7 @@ PODS:
     - Capacitor
   - CapacitorApp (6.0.0):
     - Capacitor
-  - CapacitorBrowser (6.0.1):
+  - CapacitorBrowser (6.0.2):
     - Capacitor
   - CapacitorCordova (6.1.0)
   - CapacitorPushNotifications (6.0.1):
@@ -131,7 +131,7 @@ SPEC CHECKSUMS:
   Capacitor: 187bd7847b6f71467015a20200a1a071be3e5f14
   CapacitorAdmobAds: 28832a94a5c7465fc2ce3e31be13442b87425944
   CapacitorApp: 9d53aec7101f7b030a950c5bdc4df8612576b279
-  CapacitorBrowser: 473c7fd70ddbe541608ff09ec1be14da0078279e
+  CapacitorBrowser: 83ec661a9ccd56c28a6851e4dd1ac33b181227ec
   CapacitorCordova: be703980ca797f847c3356f78fa175d21c8330c2
   CapacitorPushNotifications: 293fabe42c7229756078e81f2d3a60394ba4e5d8
   CapacitorSplashScreen: 61645214e8f955ff2b80f16a6a3648960fe4c89f

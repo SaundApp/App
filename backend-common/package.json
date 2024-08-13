@@ -15,14 +15,14 @@
   },
   "devDependencies": {
     "@types/nodemailer": "^6",
-    "prisma": "^5.17.0",
+    "prisma": "^5.18.0",
     "typescript": "^5.5.4"
   },
   "dependencies": {
-    "@prisma/client": "^5.17.0",
+    "@prisma/client": "^5.18.0",
     "@repo/email": "0.0.0",
     "axios": "^1.7.3",
-    "firebase-admin": "^12.3.0",
+    "firebase-admin": "^12.3.1",
     "nodemailer": "^6.9.14"
   }
 }
