@@ -13,7 +13,6 @@ import { useQuery, useQueryClient } from "@tanstack/react-query";
 import {
   Outlet,
   createRootRoute,
-  useRouter,
   useRouterState,
 } from "@tanstack/react-router";
 import { useEffect, useState } from "react";
@@ -25,7 +24,6 @@ export const Route = createRootRoute({
 function App() {
   const navigate = Route.useNavigate();
   const routerState = useRouterState();
-  const router = useRouter();
   const queryClient = useQueryClient();
   const { data, error, failureCount } = useQuery<MeUser | null>({
     queryKey: ["me"],
@@ -37,7 +35,6 @@ function App() {
     retryDelay: () => 500,
   });
   const [session, setSession] = useState<MeUser | null>(null);
-  const [lastRoute, setLastRoute] = useState<string>("");
   const token = localStorage.getItem("token");
 
   useEffect(() => {
@@ -92,25 +89,17 @@ function App() {
   }, []);
 
   useEffect(() => {
-    if (lastRoute === routerState.location.pathname) return;
-
     const allow =
       routerState.location.pathname.startsWith("/dm") ||
       (routerState.location.pathname.startsWith("/account") &&
-        !routerState.location.pathname.endsWith(session?.username ?? "."));
+        !routerState.location.pathname.endsWith(session?.username ?? ".")) ||
+      routerState.location.pathname === "/" ||
+      routerState.location.pathname === "/search";
 
-    if (allow) {
-      router
-        .preloadRoute({
-          to: lastRoute,
-        })
-        .catch(() => {});
-    }
-
-    setLastRoute(routerState.location.pathname);
-
-    SwipeBack.setAllowsBackForwardNavigationGestures({ allow });
-  }, [lastRoute, router, routerState.location.pathname, session?.username]);
+    SwipeBack.setAllowsBackForwardNavigationGestures({
+      allow,
+    });
+  }, [routerState.location.pathname, session?.username]);
 
   return (
     <ThemeProvider defaultTheme="system" storageKey="vite-ui-theme">

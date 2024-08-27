@@ -5,6 +5,7 @@ class SaundViewController: CAPBridgeViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
+        webView!.allowsBackForwardNavigationGestures = true
     }
 
 }
