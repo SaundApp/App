@@ -8,14 +8,15 @@ import { axiosClient } from "@/lib/axios";
 import type { MeUser } from "@/types/prisma";
 import { Capacitor } from "@capacitor/core";
 import { SplashScreen } from "@capacitor/splash-screen";
+import { SwipeBack } from "@saundapp/swipeback";
 import { useQuery, useQueryClient } from "@tanstack/react-query";
 import {
   Outlet,
   createRootRoute,
+  useRouter,
   useRouterState,
 } from "@tanstack/react-router";
 import { useEffect, useState } from "react";
-import { SwipeBack } from "@saundapp/swipeback";
 
 export const Route = createRootRoute({
   component: App,
@@ -23,7 +24,8 @@ export const Route = createRootRoute({
 
 function App() {
   const navigate = Route.useNavigate();
-  const router = useRouterState();
+  const routerState = useRouterState();
+  const router = useRouter();
   const queryClient = useQueryClient();
   const { data, error, failureCount } = useQuery<MeUser | null>({
     queryKey: ["me"],
@@ -35,6 +37,7 @@ function App() {
     retryDelay: () => 500,
   });
   const [session, setSession] = useState<MeUser | null>(null);
+  const [lastRoute, setLastRoute] = useState<string>("");
   const token = localStorage.getItem("token");
 
   useEffect(() => {
@@ -67,12 +70,12 @@ function App() {
   useEffect(() => {
     if (token) {
       queryClient.invalidateQueries({ queryKey: ["me"] });
-    } else if (!router.location.pathname.startsWith("/auth")) {
+    } else if (!routerState.location.pathname.startsWith("/auth")) {
       const tokens = localStorage.getItem("tokens");
       if (tokens) {
         localStorage.setItem("token", JSON.parse(tokens)[0]);
         navigate({
-          to: router.location.pathname,
+          to: routerState.location.pathname,
           replace: true,
         });
         return;
@@ -82,17 +85,32 @@ function App() {
         to: "/auth/login",
       });
     }
-  }, [token, router.location.pathname, queryClient, navigate]);
+  }, [token, routerState.location.pathname, queryClient, navigate]);
 
   useEffect(() => {
     SplashScreen.hide();
   }, []);
 
   useEffect(() => {
-    SwipeBack.setAllowsBackForwardNavigationGestures({
-      allow: router.location.pathname.startsWith("/dm"),
-    });
-  }, [router.location.pathname]);
+    if (lastRoute === routerState.location.pathname) return;
+
+    const allow =
+      routerState.location.pathname.startsWith("/dm") ||
+      (routerState.location.pathname.startsWith("/account") &&
+        !routerState.location.pathname.endsWith(session?.username ?? "."));
+
+    if (allow) {
+      router
+        .preloadRoute({
+          to: lastRoute,
+        })
+        .catch(() => {});
+    }
+
+    setLastRoute(routerState.location.pathname);
+
+    SwipeBack.setAllowsBackForwardNavigationGestures({ allow });
+  }, [lastRoute, router, routerState.location.pathname, session?.username]);
 
   return (
     <ThemeProvider defaultTheme="system" storageKey="vite-ui-theme">
@@ -105,9 +123,9 @@ function App() {
         >
           <Outlet />
           {session &&
-            router.location.pathname.match(/^(?!(\/dm\/\w+|\/auth)).*/g) && (
-              <Navbar />
-            )}
+            routerState.location.pathname.match(
+              /^(?!(\/dm\/\w+|\/auth)).*/g,
+            ) && <Navbar />}
           <Toaster />
           <AppUrlListener />
         </main>
