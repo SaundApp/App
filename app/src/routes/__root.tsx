@@ -93,7 +93,6 @@ function App() {
       routerState.location.pathname.startsWith("/dm") ||
       (routerState.location.pathname.startsWith("/account") &&
         !routerState.location.pathname.endsWith(session?.username ?? ".")) ||
-      routerState.location.pathname === "/" ||
       routerState.location.pathname === "/search";
 
     SwipeBack.setAllowsBackForwardNavigationGestures({
