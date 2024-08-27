@@ -74,6 +74,8 @@ PODS:
   - PromisesObjC (2.4.0)
   - SaundappKeyboard (6.0.3):
     - Capacitor
+  - SaundappSwipeback (1.0.0):
+    - Capacitor
   - Sentry/HybridSDK (8.21.0):
     - SentryPrivate (= 8.21.0)
   - SentryCapacitor (0.18.0):
@@ -91,6 +93,7 @@ DEPENDENCIES:
   - "CapacitorSplashScreen (from `../../../node_modules/@capacitor/splash-screen`)"
   - Firebase/Messaging
   - "SaundappKeyboard (from `../../../node_modules/@saundapp/keyboard`)"
+  - "SaundappSwipeback (from `../../../node_modules/@saundapp/swipeback`)"
   - "SentryCapacitor (from `../../node_modules/@sentry/capacitor`)"
 
 SPEC REPOS:
@@ -124,6 +127,8 @@ EXTERNAL SOURCES:
     :path: "../../../node_modules/@capacitor/splash-screen"
   SaundappKeyboard:
     :path: "../../../node_modules/@saundapp/keyboard"
+  SaundappSwipeback:
+    :path: "../../../node_modules/@saundapp/swipeback"
   SentryCapacitor:
     :path: "../../node_modules/@sentry/capacitor"
 
@@ -145,10 +150,11 @@ SPEC CHECKSUMS:
   nanopb: 438bc412db1928dac798aa6fd75726007be04262
   PromisesObjC: f5707f49cb48b9636751c5b2e7d227e43fba9f47
   SaundappKeyboard: 0f4c315fb914ffcd3ca27b96da78d8221c0a5d0e
+  SaundappSwipeback: 0bee57f13dc45632277f9b91a2d95911c2d99863
   Sentry: ebc12276bd17613a114ab359074096b6b3725203
   SentryCapacitor: 170d8b96ba195cead4dc60eaf5c42aacf97ff1d3
   SentryPrivate: d651efb234cf385ec9a1cdd3eff94b5e78a0e0fe
 
-PODFILE CHECKSUM: afa698d88349391097746d8afab94f9c15be568d
+PODFILE CHECKSUM: 09f7f7c45d0c3016ef2c381130db14a3e7bd21c7
 
 COCOAPODS: 1.15.2

@@ -16,6 +16,7 @@ def capacitor_pods
   pod 'CapacitorPushNotifications', :path => '../../../node_modules/@capacitor/push-notifications'
   pod 'CapacitorSplashScreen', :path => '../../../node_modules/@capacitor/splash-screen'
   pod 'SaundappKeyboard', :path => '../../../node_modules/@saundapp/keyboard'
+  pod 'SaundappSwipeback', :path => '../../../node_modules/@saundapp/swipeback'
   pod 'SentryCapacitor', :path => '../../node_modules/@sentry/capacitor'
   pod 'CapacitorAdmobAds', :path => '../../../node_modules/capacitor-admob-ads'
 end

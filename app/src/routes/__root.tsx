@@ -15,6 +15,7 @@ import {
   useRouterState,
 } from "@tanstack/react-router";
 import { useEffect, useState } from "react";
+import { SwipeBack } from "@saundapp/swipeback";
 
 export const Route = createRootRoute({
   component: App,
@@ -86,6 +87,12 @@ function App() {
   useEffect(() => {
     SplashScreen.hide();
   }, []);
+
+  useEffect(() => {
+    SwipeBack.setAllowsBackForwardNavigationGestures({
+      allow: router.location.pathname.startsWith("/dm"),
+    });
+  }, [router.location.pathname]);
 
   return (
     <ThemeProvider defaultTheme="system" storageKey="vite-ui-theme">
