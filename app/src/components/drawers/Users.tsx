@@ -5,16 +5,16 @@ import {
   DrawerTitle,
 } from "@/components/ui/drawer";
 import { axiosClient } from "@/lib/axios";
+import type { PublicUser } from "@/types/prisma";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { Link } from "@tanstack/react-router";
 import { useState } from "react";
 import { useTranslation } from "react-i18next";
 import { useSession } from "../SessionContext";
 import Avatar from "../account/Avatar";
+import FollowButton from "../account/FollowButton";
 import { Button } from "../ui/button";
 import { Input } from "../ui/input";
-import type { PublicUser } from "@/types/prisma";
-import { useToast } from "../ui/use-toast";
 import VisuallyHidden from "../ui/visually-hidden";
 
 export default function Users({
@@ -33,48 +33,9 @@ export default function Users({
   userId?: string;
 }) {
   const { t } = useTranslation();
-  const { toast } = useToast();
   const queryClient = useQueryClient();
   const [search, setSearch] = useState("");
   const session = useSession();
-  const follow = useMutation({
-    mutationFn: (user: string) =>
-      axiosClient
-        .post(`/users/${user}/follow`)
-        .then((res) => res.data)
-        .then((data) => {
-          if (data.request) {
-            toast({
-              description: t("toast.success.follow_request"),
-            });
-          }
-        }),
-    onSettled: async () => {
-      await queryClient.invalidateQueries({ queryKey: ["me"] });
-      if (!userId) return;
-
-      await queryClient.invalidateQueries({
-        queryKey: ["following", userId],
-      });
-      return await queryClient.invalidateQueries({
-        queryKey: ["followers", userId],
-      });
-    },
-  });
-  const unfollow = useMutation({
-    mutationFn: (user: string) => axiosClient.delete(`/users/${user}/unfollow`),
-    onSettled: async () => {
-      await queryClient.invalidateQueries({ queryKey: ["me"] });
-      if (!userId) return;
-
-      await queryClient.invalidateQueries({
-        queryKey: ["following", userId],
-      });
-      return await queryClient.invalidateQueries({
-        queryKey: ["followers", userId],
-      });
-    },
-  });
   const removeFollower = useMutation({
     mutationFn: (user: string) => axiosClient.delete(`/users/${user}/follower`),
     onSettled: async () => {
@@ -142,38 +103,7 @@ export default function Users({
                 </Link>
 
                 {!isFollowers && session?.username !== user.username && (
-                  <Button
-                    onClick={() => {
-                      if (
-                        !session?.following.find(
-                          (u) => u.followingId === user.id,
-                        )
-                      )
-                        follow.mutate(user.id);
-                      else unfollow.mutate(user.id);
-                    }}
-                    variant={
-                      follow.isPending && follow.variables === user.id
-                        ? "secondary"
-                        : unfollow.isPending && unfollow.variables === user.id
-                          ? "default"
-                          : !session?.following.find(
-                                (u) => u.followingId === user.id,
-                              )
-                            ? "default"
-                            : "secondary"
-                    }
-                  >
-                    {follow.isPending && follow.variables === user.id
-                      ? t("general.unfollow")
-                      : unfollow.isPending && unfollow.variables === user.id
-                        ? t("general.follow")
-                        : !session?.following.find(
-                              (u) => u.followingId === user.id,
-                            )
-                          ? t("general.follow")
-                          : t("general.unfollow")}
-                  </Button>
+                  <FollowButton username={user.username} />
                 )}
 
                 {!removeFollower.isPending &&

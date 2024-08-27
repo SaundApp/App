@@ -18,7 +18,7 @@ include ':saundapp-keyboard'
 project(':saundapp-keyboard').projectDir = new File('../../node_modules/@saundapp/keyboard/android')
 
 include ':sentry-capacitor'
-project(':sentry-capacitor').projectDir = new File('../../node_modules/@sentry/capacitor/android')
+project(':sentry-capacitor').projectDir = new File('../node_modules/@sentry/capacitor/android')
 
 include ':capacitor-admob-ads'
 project(':capacitor-admob-ads').projectDir = new File('../../node_modules/capacitor-admob-ads/android')

@@ -2,6 +2,8 @@ import BackIcon from "@/components/BackIcon";
 import { useSession } from "@/components/SessionContext";
 import AccountNavbar from "@/components/account/AccountNavbar";
 import Avatar from "@/components/account/Avatar";
+import Chats from "@/components/account/Chats";
+import FollowButton from "@/components/account/FollowButton";
 import Listeners from "@/components/account/Listeners";
 import Posts from "@/components/account/Posts";
 import Accounts from "@/components/drawers/Accounts";
@@ -9,23 +11,21 @@ import Subscribe from "@/components/drawers/Subscribe";
 import Users from "@/components/drawers/Users";
 import { Button } from "@/components/ui/button";
 import { Spinner } from "@/components/ui/spinner";
-import { useToast } from "@/components/ui/use-toast";
 import { axiosClient } from "@/lib/axios";
 import type { PublicUser } from "@/types/prisma";
+import { Browser } from "@capacitor/browser";
 import type {
   Chat,
   Post,
   SubscriptionSettings,
 } from "@repo/backend-common/types";
-import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
+import { useQuery } from "@tanstack/react-query";
 import { Link, createLazyFileRoute } from "@tanstack/react-router";
+import Hammer from "hammerjs";
 import { LucideHeartHandshake } from "lucide-react";
 import { useEffect, useRef, useState } from "react";
 import { useTranslation } from "react-i18next";
 import { FaGear } from "react-icons/fa6";
-import Hammer from "hammerjs";
-import Chats from "@/components/account/Chats";
-import { Browser } from "@capacitor/browser";
 
 export const Route = createLazyFileRoute("/account/$username")({
   component: Account,
@@ -33,8 +33,6 @@ export const Route = createLazyFileRoute("/account/$username")({
 
 function Account() {
   const { t } = useTranslation();
-  const { toast } = useToast();
-  const queryClient = useQueryClient();
   const { username } = Route.useParams();
   const session = useSession();
   const [activeTab, setActiveTab] = useState<"posts" | "chats" | "listeners">(
@@ -95,39 +93,6 @@ function Account() {
       data
         ? axiosClient.get(`/users/${data.id}/listeners`).then((res) => res.data)
         : [],
-  });
-  const follow = useMutation({
-    mutationFn: (user: string) =>
-      axiosClient
-        .post(`/users/${user}/follow`)
-        .then((res) => res.data)
-        .then((data) => {
-          if (data.request) {
-            toast({
-              description: t("toast.success.follow_request"),
-            });
-          }
-        }),
-    onSettled: async () => {
-      await queryClient.invalidateQueries({ queryKey: ["user", username] });
-      return await queryClient.invalidateQueries({ queryKey: ["me"] });
-    },
-  });
-  const cancelRequest = useMutation({
-    mutationFn: (user: string) => axiosClient.delete(`/users/${user}/request`),
-    onSettled: async () => {
-      await queryClient.invalidateQueries({ queryKey: ["me"] });
-      return await queryClient.invalidateQueries({
-        queryKey: ["user", username],
-      });
-    },
-  });
-  const unfollow = useMutation({
-    mutationFn: (user: string) => axiosClient.delete(`/users/${user}/unfollow`),
-    onSuccess: async () => {
-      await queryClient.invalidateQueries({ queryKey: ["user", username] });
-      return await queryClient.invalidateQueries({ queryKey: ["me"] });
-    },
   });
 
   const renderTab = () => {
@@ -258,42 +223,7 @@ function Account() {
 
       {session?.username !== data.username && (
         <div className="flex w-full gap-3">
-          <Button
-            onClick={() => {
-              if (data.requestSent) return cancelRequest.mutate(data.id);
-              if (
-                !session?.following.find((user) => user.followingId === data.id)
-              )
-                follow.mutate(data.id);
-              else unfollow.mutate(data.id);
-            }}
-            className={
-              "text-foreground " +
-              (data.requestSent && !cancelRequest.isPending
-                ? "w-full bg-secondary"
-                : follow.isPending
-                  ? "w-full bg-secondary"
-                  : unfollow.isPending
-                    ? "w-full"
-                    : !session?.following.find(
-                          (user) => user.followingId === data.id,
-                        )
-                      ? "w-full"
-                      : "w-full bg-secondary")
-            }
-          >
-            {data.requestSent && !cancelRequest.isPending
-              ? t("general.request_sent")
-              : follow.isPending
-                ? t("general.unfollow")
-                : unfollow.isPending
-                  ? t("general.follow")
-                  : !session?.following.find(
-                        (user) => user.followingId === data.id,
-                      )
-                    ? t("general.follow")
-                    : t("general.unfollow")}
-          </Button>
+          <FollowButton className="w-full" username={data.username} />
           {data.subscriptionSettings &&
             data.verified &&
             !profileUnavailable && (

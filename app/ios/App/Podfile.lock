@@ -91,7 +91,7 @@ DEPENDENCIES:
   - "CapacitorSplashScreen (from `../../../node_modules/@capacitor/splash-screen`)"
   - Firebase/Messaging
   - "SaundappKeyboard (from `../../../node_modules/@saundapp/keyboard`)"
-  - "SentryCapacitor (from `../../../node_modules/@sentry/capacitor`)"
+  - "SentryCapacitor (from `../../node_modules/@sentry/capacitor`)"
 
 SPEC REPOS:
   trunk:
@@ -125,7 +125,7 @@ EXTERNAL SOURCES:
   SaundappKeyboard:
     :path: "../../../node_modules/@saundapp/keyboard"
   SentryCapacitor:
-    :path: "../../../node_modules/@sentry/capacitor"
+    :path: "../../node_modules/@sentry/capacitor"
 
 SPEC CHECKSUMS:
   Capacitor: 187bd7847b6f71467015a20200a1a071be3e5f14
@@ -149,6 +149,6 @@ SPEC CHECKSUMS:
   SentryCapacitor: 170d8b96ba195cead4dc60eaf5c42aacf97ff1d3
   SentryPrivate: d651efb234cf385ec9a1cdd3eff94b5e78a0e0fe
 
-PODFILE CHECKSUM: 81218f5d15d966d9923a586c66b3ab071a7e1b0d
+PODFILE CHECKSUM: afa698d88349391097746d8afab94f9c15be568d
 
 COCOAPODS: 1.15.2
