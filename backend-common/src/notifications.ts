@@ -104,7 +104,7 @@ export async function sendNotification(
 
   if (settings.includes("EMAIL") && user?.email) {
     const newNotification = getMessage("new-notification", user?.language);
-    const html = render(
+    const html = await render(
       WithText({
         preview: newNotification,
         heading: newNotification,
@@ -137,7 +137,7 @@ export async function sendForgotPassword(
   const heading = getMessage("forgot-password.heading", language);
   const button = getMessage("forgot-password.button", language);
 
-  const html = render(
+  const html = await render(
     WithButton({
       preview: heading,
       heading: heading,
