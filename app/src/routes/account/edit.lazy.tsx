@@ -275,7 +275,7 @@ function EditProfile() {
                   });
                   return;
                 }
-              } catch (_) {
+              } catch {
                 /* empty */
               }
 

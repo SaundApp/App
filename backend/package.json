@@ -20,7 +20,7 @@
     "hono": "^4.5.11",
     "sharp": "^0.33.5",
     "spotify-web-api-node": "^5.0.2",
-    "stripe": "^16.9.0"
+    "stripe": "^16.10.0"
   },
   "devDependencies": {
     "@types/node": "^22.5.4",

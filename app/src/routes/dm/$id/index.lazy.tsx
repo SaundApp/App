@@ -98,7 +98,7 @@ function Chat() {
           ) {
             socket.emit("send", text);
             setMessage("");
-            navigate({ search: "" });
+            navigate({});
           }
         }, 500);
       });

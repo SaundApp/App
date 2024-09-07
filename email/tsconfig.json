@@ -11,5 +11,6 @@
     "types": ["node"],
     "jsx": "react-jsx",
     "outDir": "dist"
-  }
+  },
+  "include": ["emails", "index.ts"]
 }

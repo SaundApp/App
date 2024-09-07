@@ -240,23 +240,155 @@ declare module '@tanstack/react-router' {
 
 // Create and export the route tree
 
-export const routeTree = rootRoute.addChildren({
-  IndexLazyRoute,
-  NotificationsLazyRoute,
-  SearchLazyRoute,
-  AccountUsernameLazyRoute,
-  AccountEditLazyRoute,
-  AccountEditSubscriptionLazyRoute,
-  AccountSettingsLazyRoute,
-  AuthLoginLazyRoute,
-  AuthRegisterLazyRoute,
-  LeaderboardArtistsLazyRoute,
-  DmIndexLazyRoute,
-  AuthPasswordForgotLazyRoute,
-  AuthPasswordResetLazyRoute,
-  DmIdSettingsLazyRoute,
-  DmIdIndexLazyRoute,
-})
+export interface FileRoutesByFullPath {
+  '/': typeof IndexLazyRoute
+  '/notifications': typeof NotificationsLazyRoute
+  '/search': typeof SearchLazyRoute
+  '/account/$username': typeof AccountUsernameLazyRoute
+  '/account/edit': typeof AccountEditLazyRoute
+  '/account/edit-subscription': typeof AccountEditSubscriptionLazyRoute
+  '/account/settings': typeof AccountSettingsLazyRoute
+  '/auth/login': typeof AuthLoginLazyRoute
+  '/auth/register': typeof AuthRegisterLazyRoute
+  '/leaderboard/artists': typeof LeaderboardArtistsLazyRoute
+  '/dm': typeof DmIndexLazyRoute
+  '/auth/password/forgot': typeof AuthPasswordForgotLazyRoute
+  '/auth/password/reset': typeof AuthPasswordResetLazyRoute
+  '/dm/$id/settings': typeof DmIdSettingsLazyRoute
+  '/dm/$id': typeof DmIdIndexLazyRoute
+}
+
+export interface FileRoutesByTo {
+  '/': typeof IndexLazyRoute
+  '/notifications': typeof NotificationsLazyRoute
+  '/search': typeof SearchLazyRoute
+  '/account/$username': typeof AccountUsernameLazyRoute
+  '/account/edit': typeof AccountEditLazyRoute
+  '/account/edit-subscription': typeof AccountEditSubscriptionLazyRoute
+  '/account/settings': typeof AccountSettingsLazyRoute
+  '/auth/login': typeof AuthLoginLazyRoute
+  '/auth/register': typeof AuthRegisterLazyRoute
+  '/leaderboard/artists': typeof LeaderboardArtistsLazyRoute
+  '/dm': typeof DmIndexLazyRoute
+  '/auth/password/forgot': typeof AuthPasswordForgotLazyRoute
+  '/auth/password/reset': typeof AuthPasswordResetLazyRoute
+  '/dm/$id/settings': typeof DmIdSettingsLazyRoute
+  '/dm/$id': typeof DmIdIndexLazyRoute
+}
+
+export interface FileRoutesById {
+  __root__: typeof rootRoute
+  '/': typeof IndexLazyRoute
+  '/notifications': typeof NotificationsLazyRoute
+  '/search': typeof SearchLazyRoute
+  '/account/$username': typeof AccountUsernameLazyRoute
+  '/account/edit': typeof AccountEditLazyRoute
+  '/account/edit-subscription': typeof AccountEditSubscriptionLazyRoute
+  '/account/settings': typeof AccountSettingsLazyRoute
+  '/auth/login': typeof AuthLoginLazyRoute
+  '/auth/register': typeof AuthRegisterLazyRoute
+  '/leaderboard/artists': typeof LeaderboardArtistsLazyRoute
+  '/dm/': typeof DmIndexLazyRoute
+  '/auth/password/forgot': typeof AuthPasswordForgotLazyRoute
+  '/auth/password/reset': typeof AuthPasswordResetLazyRoute
+  '/dm/$id/settings': typeof DmIdSettingsLazyRoute
+  '/dm/$id/': typeof DmIdIndexLazyRoute
+}
+
+export interface FileRouteTypes {
+  fileRoutesByFullPath: FileRoutesByFullPath
+  fullPaths:
+    | '/'
+    | '/notifications'
+    | '/search'
+    | '/account/$username'
+    | '/account/edit'
+    | '/account/edit-subscription'
+    | '/account/settings'
+    | '/auth/login'
+    | '/auth/register'
+    | '/leaderboard/artists'
+    | '/dm'
+    | '/auth/password/forgot'
+    | '/auth/password/reset'
+    | '/dm/$id/settings'
+    | '/dm/$id'
+  fileRoutesByTo: FileRoutesByTo
+  to:
+    | '/'
+    | '/notifications'
+    | '/search'
+    | '/account/$username'
+    | '/account/edit'
+    | '/account/edit-subscription'
+    | '/account/settings'
+    | '/auth/login'
+    | '/auth/register'
+    | '/leaderboard/artists'
+    | '/dm'
+    | '/auth/password/forgot'
+    | '/auth/password/reset'
+    | '/dm/$id/settings'
+    | '/dm/$id'
+  id:
+    | '__root__'
+    | '/'
+    | '/notifications'
+    | '/search'
+    | '/account/$username'
+    | '/account/edit'
+    | '/account/edit-subscription'
+    | '/account/settings'
+    | '/auth/login'
+    | '/auth/register'
+    | '/leaderboard/artists'
+    | '/dm/'
+    | '/auth/password/forgot'
+    | '/auth/password/reset'
+    | '/dm/$id/settings'
+    | '/dm/$id/'
+  fileRoutesById: FileRoutesById
+}
+
+export interface RootRouteChildren {
+  IndexLazyRoute: typeof IndexLazyRoute
+  NotificationsLazyRoute: typeof NotificationsLazyRoute
+  SearchLazyRoute: typeof SearchLazyRoute
+  AccountUsernameLazyRoute: typeof AccountUsernameLazyRoute
+  AccountEditLazyRoute: typeof AccountEditLazyRoute
+  AccountEditSubscriptionLazyRoute: typeof AccountEditSubscriptionLazyRoute
+  AccountSettingsLazyRoute: typeof AccountSettingsLazyRoute
+  AuthLoginLazyRoute: typeof AuthLoginLazyRoute
+  AuthRegisterLazyRoute: typeof AuthRegisterLazyRoute
+  LeaderboardArtistsLazyRoute: typeof LeaderboardArtistsLazyRoute
+  DmIndexLazyRoute: typeof DmIndexLazyRoute
+  AuthPasswordForgotLazyRoute: typeof AuthPasswordForgotLazyRoute
+  AuthPasswordResetLazyRoute: typeof AuthPasswordResetLazyRoute
+  DmIdSettingsLazyRoute: typeof DmIdSettingsLazyRoute
+  DmIdIndexLazyRoute: typeof DmIdIndexLazyRoute
+}
+
+const rootRouteChildren: RootRouteChildren = {
+  IndexLazyRoute: IndexLazyRoute,
+  NotificationsLazyRoute: NotificationsLazyRoute,
+  SearchLazyRoute: SearchLazyRoute,
+  AccountUsernameLazyRoute: AccountUsernameLazyRoute,
+  AccountEditLazyRoute: AccountEditLazyRoute,
+  AccountEditSubscriptionLazyRoute: AccountEditSubscriptionLazyRoute,
+  AccountSettingsLazyRoute: AccountSettingsLazyRoute,
+  AuthLoginLazyRoute: AuthLoginLazyRoute,
+  AuthRegisterLazyRoute: AuthRegisterLazyRoute,
+  LeaderboardArtistsLazyRoute: LeaderboardArtistsLazyRoute,
+  DmIndexLazyRoute: DmIndexLazyRoute,
+  AuthPasswordForgotLazyRoute: AuthPasswordForgotLazyRoute,
+  AuthPasswordResetLazyRoute: AuthPasswordResetLazyRoute,
+  DmIdSettingsLazyRoute: DmIdSettingsLazyRoute,
+  DmIdIndexLazyRoute: DmIdIndexLazyRoute,
+}
+
+export const routeTree = rootRoute
+  ._addFileChildren(rootRouteChildren)
+  ._addFileTypes<FileRouteTypes>()
 
 /* prettier-ignore-end */
 

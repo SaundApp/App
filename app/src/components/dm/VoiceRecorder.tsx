@@ -27,7 +27,7 @@ export default function VoiceRecorder({
         "send",
         `${import.meta.env.VITE_APP_URL}/?attachment=${data.id}`,
       );
-    } catch (_) {
+    } catch {
       toast({
         variant: "destructive",
         description: t("toast.error.base"),
