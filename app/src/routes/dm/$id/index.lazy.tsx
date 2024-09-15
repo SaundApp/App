@@ -34,7 +34,7 @@ function Chat() {
   const session = useSession();
   const navigate = Route.useNavigate();
   const [message, setMessage] = useState(
-    !text?.startsWith(import.meta.env.VITE_APP_URL) ? text : "" || "",
+    (!text?.startsWith(import.meta.env.VITE_APP_URL) ? text : "") || "",
   );
   const [messages, setMessages] = useState<MessageType[]>([]);
   const [socket, setSocket] = useState<Socket | null>(null);
