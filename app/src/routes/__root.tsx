@@ -91,9 +91,7 @@ function App() {
   useEffect(() => {
     const allow =
       routerState.location.pathname.startsWith("/dm") ||
-      (routerState.location.pathname.startsWith("/account") &&
-        !routerState.location.pathname.endsWith(session?.username ?? ".")) ||
-      routerState.location.pathname === "/search";
+      routerState.location.pathname.startsWith("/account");
 
     SwipeBack.setAllowsBackForwardNavigationGestures({
       allow,
