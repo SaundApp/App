@@ -92,7 +92,7 @@ DEPENDENCIES:
   - Firebase/Messaging
   - "SaundappKeyboard (from `../../../node_modules/@saundapp/keyboard`)"
   - "SaundappSwipeback (from `../../../node_modules/@saundapp/swipeback`)"
-  - "SentryCapacitor (from `../../../node_modules/@sentry/capacitor`)"
+  - "SentryCapacitor (from `../../node_modules/@sentry/capacitor`)"
 
 SPEC REPOS:
   trunk:
@@ -127,7 +127,7 @@ EXTERNAL SOURCES:
   SaundappSwipeback:
     :path: "../../../node_modules/@saundapp/swipeback"
   SentryCapacitor:
-    :path: "../../../node_modules/@sentry/capacitor"
+    :path: "../../node_modules/@sentry/capacitor"
 
 SPEC CHECKSUMS:
   Capacitor: 187bd7847b6f71467015a20200a1a071be3e5f14
@@ -151,6 +151,6 @@ SPEC CHECKSUMS:
   Sentry: f8374b5415bc38dfb5645941b3ae31230fbeae57
   SentryCapacitor: c954e6e5d6bbcdfffd27752102c92d81c1e38178
 
-PODFILE CHECKSUM: 6b8322f74592eb374202e22183aa4bbc9dba6591
+PODFILE CHECKSUM: 09f7f7c45d0c3016ef2c381130db14a3e7bd21c7
 
 COCOAPODS: 1.15.2

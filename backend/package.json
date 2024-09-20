@@ -7,20 +7,20 @@
     "build": "tsc"
   },
   "dependencies": {
-    "@hono/node-server": "^1.12.2",
+    "@hono/node-server": "^1.13.0",
     "@hono/sentry": "^1.2.0",
     "@hono/zod-validator": "^0.2.2",
-    "@napi-rs/canvas": "^0.1.55",
+    "@napi-rs/canvas": "^0.1.56",
     "@node-rs/bcrypt": "^1.10.4",
     "@paralleldrive/cuid2": "^2.2.2",
     "@repo/backend-common": "0.0.0",
     "@repo/form-types": "0.0.0",
     "@spotify/web-api-ts-sdk": "^1.2.0",
     "axios": "^1.7.7",
-    "hono": "^4.6.1",
+    "hono": "^4.6.2",
     "sharp": "^0.33.5",
     "spotify-web-api-node": "^5.0.2",
-    "stripe": "^16.11.0"
+    "stripe": "^16.12.0"
   },
   "devDependencies": {
     "@types/node": "^22.5.5",
