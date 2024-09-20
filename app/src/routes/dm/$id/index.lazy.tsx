@@ -9,9 +9,11 @@ import { Textarea } from "@/components/ui/textarea";
 import { useToast } from "@/components/ui/use-toast";
 import { axiosClient } from "@/lib/axios";
 import { getImageUrl } from "@/lib/utils";
+import type { PublicUser } from "@/types/prisma";
 import { Capacitor } from "@capacitor/core";
 import type { Chat, Message as MessageType } from "@repo/backend-common/types";
 import { useAudioRecorder } from "@repo/react-audio-voice-recorder";
+import { Keyboard } from "@saundapp/keyboard";
 import { useMutation, useQuery } from "@tanstack/react-query";
 import { createLazyFileRoute } from "@tanstack/react-router";
 import { useEffect, useRef, useState } from "react";
@@ -19,7 +21,6 @@ import { useTranslation } from "react-i18next";
 import { FaCamera } from "react-icons/fa";
 import { FaXmark } from "react-icons/fa6";
 import { io, type Socket } from "socket.io-client";
-import { Keyboard } from "@saundapp/keyboard";
 
 export const Route = createLazyFileRoute("/dm/$id/")({
   component: Chat,
@@ -36,7 +37,11 @@ function Chat() {
   const [message, setMessage] = useState(
     (!text?.startsWith(import.meta.env.VITE_APP_URL) ? text : "") || "",
   );
-  const [messages, setMessages] = useState<MessageType[]>([]);
+  const [messages, setMessages] = useState<
+    (MessageType & {
+      sender: PublicUser;
+    })[]
+  >([]);
   const [socket, setSocket] = useState<Socket | null>(null);
   const [editing, setEditing] = useState<string | null>(null);
   const [replying, setReplying] = useState<string | null>(null);
@@ -48,7 +53,11 @@ function Chat() {
     queryKey: ["dm", id],
     queryFn: async () => axiosClient.get(`/dm/${id}`).then((res) => res.data),
   });
-  const { data: history } = useQuery<MessageType[]>({
+  const { data: history } = useQuery<
+    (MessageType & {
+      sender: PublicUser;
+    })[]
+  >({
     queryKey: ["dm", id, "messages"],
     queryFn: async () =>
       axiosClient.get(`/dm/${id}/messages`).then((res) => res.data),
@@ -103,18 +112,25 @@ function Chat() {
         }, 500);
       });
 
-      socket.on("send", (message: MessageType) => {
-        setMessages((prev) => [message, ...prev]);
-        setTimeout(() => {
-          const chat = document.getElementById("chat");
-          chat?.scrollTo({
-            top: chat.scrollHeight,
-            behavior: "smooth",
-          });
+      socket.on(
+        "send",
+        (
+          message: MessageType & {
+            sender: PublicUser;
+          },
+        ) => {
+          setMessages((prev) => [message, ...prev]);
+          setTimeout(() => {
+            const chat = document.getElementById("chat");
+            chat?.scrollTo({
+              top: chat.scrollHeight,
+              behavior: "smooth",
+            });
 
-          axiosClient.post(`/dm/${id}/read`).catch(() => {});
-        }, 100);
-      });
+            axiosClient.post(`/dm/${id}/read`).catch(() => {});
+          }, 100);
+        },
+      );
 
       socket.on("delete", (messageId: string) => {
         setMessages((prev) => prev.filter((msg) => msg.id !== messageId));
@@ -202,6 +218,7 @@ function Chat() {
                     ? "IMAGE"
                     : "VIDEO"
                 }-${imageUrl}`}
+                chatSize={chat?.userIds.length ?? 0}
                 self={true}
                 socket={socket}
                 setEditing={() => {}}
@@ -214,6 +231,7 @@ function Chat() {
         {messages.map((message) => (
           <Message
             key={message.id}
+            chatSize={chat?.userIds.length ?? 0}
             message={message}
             self={message.senderId === session?.id}
             socket={socket}

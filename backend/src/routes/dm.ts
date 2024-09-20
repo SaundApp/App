@@ -110,6 +110,16 @@ hono.get(
       orderBy: {
         createdAt: "desc",
       },
+      include: {
+        sender: {
+          select: {
+            id: true,
+            name: true,
+            username: true,
+            avatarId: true,
+          },
+        },
+      },
       skip: offset,
       take: 50,
     });
@@ -165,7 +175,7 @@ hono.post(
             userIds: {
               hasEvery: allUsers,
             },
-            ownerId: payload.user
+            ownerId: payload.user,
           },
         });
 

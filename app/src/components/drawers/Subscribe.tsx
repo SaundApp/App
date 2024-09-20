@@ -60,7 +60,7 @@ export default function Subscribe({
               });
           }}
         >
-          {t("account.subscribe")}
+          <p className="m-auto">{t("account.subscribe")}</p>
         </Button>
       </DrawerContent>
     </Drawer>

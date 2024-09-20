@@ -1,16 +1,18 @@
 import { axiosClient } from "@/lib/axios";
 import { useDate } from "@/lib/dates";
-import type { ExtendedPost } from "@/types/prisma";
+import type { ExtendedPost, PublicUser } from "@/types/prisma";
 import type { Message } from "@repo/backend-common/types";
 import { useQuery } from "@tanstack/react-query";
 import { Link } from "@tanstack/react-router";
 import { SiSpotify } from "react-icons/si";
 import type { Socket } from "socket.io-client";
+import Avatar from "../account/Avatar";
 import { ContextMenu, ContextMenuTrigger } from "../ui/context-menu";
 import Menu from "./Menu";
 
 export default function Song({
   postId,
+  chatSize,
   self,
   socket,
   message,
@@ -18,9 +20,12 @@ export default function Song({
   setReplying,
 }: {
   postId: string;
+  chatSize: number;
   self: boolean;
   socket: Socket | null;
-  message: Message;
+  message: Message & {
+    sender: PublicUser;
+  };
   setEditing: (messageId: string) => void;
   setReplying: (messageId: string) => void;
 }) {
@@ -41,6 +46,18 @@ export default function Song({
           }
           data-message={message.id}
         >
+          {chatSize > 2 && (
+            <div className="daisy-avatar daisy-chat-image">
+              <div className="w-10 rounded-full">
+                <Avatar
+                  imageId={message.sender.avatarId ?? undefined}
+                  width={40}
+                  height={40}
+                />
+              </div>
+            </div>
+          )}
+
           <div
             className={
               "daisy-chat-bubble max-w-72 break-words !p-3 text-white " +

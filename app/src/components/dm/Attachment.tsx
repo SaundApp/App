@@ -1,11 +1,14 @@
 import { axiosClient } from "@/lib/axios";
 import { useDate } from "@/lib/dates";
+import type { PublicUser } from "@/types/prisma";
 import type {
   Attachment as AttachmentType,
   Message,
 } from "@repo/backend-common/types";
 import { useQuery } from "@tanstack/react-query";
 import type { Socket } from "socket.io-client";
+import Avatar from "../account/Avatar";
+import { useSession } from "../SessionContext";
 import { ContextMenu, ContextMenuTrigger } from "../ui/context-menu";
 import { Spinner } from "../ui/spinner";
 import AudioPlayer from "./AudioPlayer";
@@ -13,6 +16,7 @@ import Menu from "./Menu";
 
 export default function Attachment({
   postId,
+  chatSize,
   self,
   socket,
   message,
@@ -20,12 +24,16 @@ export default function Attachment({
   setReplying,
 }: {
   postId: string;
+  chatSize: number;
   self: boolean;
   socket: Socket | null;
-  message?: Message;
+  message?: Message & {
+    sender: PublicUser;
+  };
   setEditing: (messageId: string) => void;
   setReplying: (messageId: string) => void;
 }) {
+  const session = useSession();
   const { format } = useDate();
   const { data } = useQuery<AttachmentType>({
     queryKey: ["attachments", postId],
@@ -51,6 +59,22 @@ export default function Attachment({
           }
           data-message={message?.id}
         >
+          {chatSize > 2 && (
+            <div className="daisy-avatar daisy-chat-image">
+              <div className="w-10 rounded-full">
+                <Avatar
+                  imageId={
+                    message?.sender.avatarId ??
+                    (self ? session?.avatarId : undefined) ??
+                    undefined
+                  }
+                  width={40}
+                  height={40}
+                />
+              </div>
+            </div>
+          )}
+
           <div
             className={
               "daisy-chat-bubble max-w-72 break-words !p-3 text-white " +
@@ -89,6 +113,22 @@ export default function Attachment({
           }
           data-message={message?.id}
         >
+          {chatSize > 2 && (
+            <div className="daisy-avatar daisy-chat-image">
+              <div className="w-10 rounded-full">
+                <Avatar
+                  imageId={
+                    message?.sender.avatarId ??
+                    (self ? session?.avatarId : undefined) ??
+                    undefined
+                  }
+                  width={40}
+                  height={40}
+                />
+              </div>
+            </div>
+          )}
+
           <div
             className={
               "daisy-chat-bubble max-w-72 break-words !p-3 text-white " +
@@ -123,6 +163,7 @@ export default function Attachment({
       <AudioPlayer
         src={`${import.meta.env.VITE_API_URL}/attachments/` + postId}
         message={message}
+        chatSize={chatSize}
       />
     );
   };

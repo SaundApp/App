@@ -1,7 +1,9 @@
 import { useDate } from "@/lib/dates";
+import type { PublicUser } from "@/types/prisma";
 import type { Message } from "@repo/backend-common/types";
 import { useTranslation } from "react-i18next";
 import type { Socket } from "socket.io-client";
+import Avatar from "../account/Avatar";
 import { ContextMenu, ContextMenuTrigger } from "../ui/context-menu";
 import Attachment from "./Attachment";
 import Menu from "./Menu";
@@ -9,13 +11,17 @@ import Song from "./Song";
 
 export default function MessageComponent({
   message,
+  chatSize,
   self,
   socket,
   setEditing,
   setReplying,
   reply,
 }: {
-  message: Message;
+  message: Message & {
+    sender: PublicUser;
+  };
+  chatSize: number;
   self: boolean;
   socket: Socket | null;
   setEditing: (messageId: string) => void;
@@ -29,6 +35,7 @@ export default function MessageComponent({
     return (
       <Attachment
         postId={message.text.split("=")[1]}
+        chatSize={chatSize}
         self={self}
         socket={socket}
         message={message}
@@ -40,6 +47,7 @@ export default function MessageComponent({
     return (
       <Song
         postId={message.text.split("=")[1]}
+        chatSize={chatSize}
         self={self}
         socket={socket}
         message={message}
@@ -80,6 +88,18 @@ export default function MessageComponent({
           }
           data-message={message.id}
         >
+          {chatSize > 2 && (
+            <div className="daisy-avatar daisy-chat-image">
+              <div className="w-10 rounded-full">
+                <Avatar
+                  imageId={message.sender.avatarId ?? undefined}
+                  width={40}
+                  height={40}
+                />
+              </div>
+            </div>
+          )}
+
           <div
             className={
               "!dark:text-white daisy-chat-bubble max-w-72 break-words !p-3 " +

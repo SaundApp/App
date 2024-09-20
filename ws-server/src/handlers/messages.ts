@@ -83,6 +83,16 @@ export async function handleSend(
       chatId,
       replyId,
     },
+    include: {
+      sender: {
+        select: {
+          id: true,
+          name: true,
+          username: true,
+          avatarId: true,
+        },
+      },
+    },
   });
 
   const sender = await prisma.user.findUnique({

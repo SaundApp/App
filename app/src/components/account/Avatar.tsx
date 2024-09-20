@@ -35,7 +35,12 @@ export default function Avatar({
     />
   );
 
-  if (onClick) return <button onClick={onClick}>{image}</button>;
+  if (onClick)
+    return (
+      <button type="button" onClick={onClick}>
+        {image}
+      </button>
+    );
 
   return image;
 }

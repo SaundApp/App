@@ -1,14 +1,18 @@
 import { useDate } from "@/lib/dates";
+import type { PublicUser } from "@/types/prisma";
 import type { Message } from "@repo/backend-common/types";
 import { useEffect, useRef, useState } from "react";
 import { FaCirclePause, FaCirclePlay } from "react-icons/fa6";
+import Avatar from "../account/Avatar";
 
 export default function AudioPlayer({
   src,
   message,
+  chatSize,
 }: {
   src: string;
-  message: Message;
+  message: Message & { sender: PublicUser };
+  chatSize: number;
 }) {
   const ref = useRef<HTMLAudioElement>(null);
   const [playing, setPlaying] = useState(false);
@@ -31,6 +35,18 @@ export default function AudioPlayer({
           "daisy-chat " + (self ? "daisy-chat-end" : "daisy-chat-start")
         }
       >
+        {chatSize > 2 && (
+          <div className="daisy-avatar daisy-chat-image">
+            <div className="w-10 rounded-full">
+              <Avatar
+                imageId={message?.sender.avatarId ?? undefined}
+                width={40}
+                height={40}
+              />
+            </div>
+          </div>
+        )}
+
         <div
           className={
             "daisy-chat-bubble flex max-w-72 items-center gap-3 break-words text-white " +
