@@ -20,6 +20,9 @@ const config: CapacitorConfig = {
       resize: KeyboardResize.Native,
     },
   },
+  ios: {
+    allowsLinkPreview: false,
+  },
 };
 
 export default config;

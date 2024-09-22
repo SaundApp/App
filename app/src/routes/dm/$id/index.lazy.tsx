@@ -49,6 +49,7 @@ function Chat() {
   const { id } = Route.useParams();
   const { toast } = useToast();
   const image = useRef<HTMLInputElement>(null);
+  const chatContainer = useRef<HTMLDivElement>(null);
   const { data: chat, isLoading } = useQuery<Chat>({
     queryKey: ["dm", id],
     queryFn: async () => axiosClient.get(`/dm/${id}`).then((res) => res.data),
@@ -166,6 +167,21 @@ function Chat() {
     Keyboard.addListener("keyboardWillHide", () => isKeyboard(false));
   }, []);
 
+  useEffect(() => {
+    const container = chatContainer.current;
+    if (!container) return;
+
+    container.addEventListener("scroll", () => {
+      localStorage.setItem(`scroll-[dm/${id}]`, container.scrollTop.toString());
+    });
+
+    const scroll = localStorage.getItem(`scroll-[dm/${id}]`);
+    if (scroll)
+      setTimeout(() => {
+        container.scrollTop = parseInt(scroll);
+      }, 10);
+  }, [chatContainer, id]);
+
   const handleSubmit = () => {
     if (!message || !message.length) return;
     if (editing) socket?.emit("edit", editing, message);
@@ -194,6 +210,7 @@ function Chat() {
       <div
         className="flex h-full flex-col-reverse gap-3 overflow-y-auto"
         id="chat"
+        ref={chatContainer}
         style={{
           maxHeight:
             Capacitor.getPlatform() === "ios"
