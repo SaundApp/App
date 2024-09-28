@@ -10,7 +10,7 @@ import { useToast } from "@/components/ui/use-toast";
 import { axiosClient } from "@/lib/axios";
 import type { PublicUser } from "@/types/prisma";
 import type { Chat } from "@repo/backend-common/types";
-import { useQuery, useQueryClient } from "@tanstack/react-query";
+import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { createLazyFileRoute, Link } from "@tanstack/react-router";
 import { useRef, useState } from "react";
 import { useTranslation } from "react-i18next";
@@ -41,6 +41,31 @@ function ChatSettings() {
       axiosClient.get(`/dm/${id}/members`).then((res) => res.data),
   });
 
+  const updateAvatar = useMutation({
+    mutationFn: async (file: File) => {
+      const formData = new FormData();
+      formData.append("file", file);
+      formData.append("type", "IMAGE");
+
+      const { data } = await axiosClient.post("/attachments/upload", formData);
+
+      await axiosClient.patch(`/dm/${chat?.id}/update`, {
+        imageId: data.id,
+      });
+
+      toast({
+        description: t("toast.success.edit_image"),
+      });
+
+      return true;
+    },
+    onSettled: () => {
+      queryClient.invalidateQueries({
+        queryKey: ["dm", id],
+      });
+    },
+  });
+
   if (isLoading || !chat) return <Spinner className="m-auto" />;
   if (chat.ownerId !== session?.id) return null;
 
@@ -55,43 +80,32 @@ function ChatSettings() {
             const file = e.target.files?.[0];
             if (!file) return;
 
-            const formData = new FormData();
-            formData.append("file", file);
-            formData.append("type", "IMAGE");
-
-            axiosClient
-              .post("/attachments/upload", formData)
-              .then((res) => res.data)
-              .then((data) => {
-                axiosClient
-                  .patch(`/dm/${chat.id}/update`, {
-                    imageId: data.id,
-                  })
-                  .then(() => {
-                    toast({
-                      description: t("toast.success.edit_image"),
-                    });
-
-                    queryClient.invalidateQueries({
-                      queryKey: ["dm", id],
-                    });
-                  });
-              });
+            updateAvatar.mutate(file);
           }}
           hidden
           ref={input}
           type="file"
           accept="image/png"
         />
-        <Avatar
-          imageId={chat.imageId}
-          width={80}
-          height={80}
-          onClick={(e) => {
-            e.preventDefault();
-            input.current?.click();
-          }}
-        />
+        <div className="relative">
+          <Avatar
+            imageId={chat.imageId}
+            width={80}
+            height={80}
+            onClick={(e) => {
+              e.preventDefault();
+              input.current?.click();
+            }}
+          />
+
+          {updateAvatar.isPending && (
+            <Spinner className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2" />
+          )}
+
+          {updateAvatar.isPending && (
+            <div className="absolute left-0 top-0 size-full bg-black/50" />
+          )}
+        </div>
       </div>
       <form
         className="my-3 flex flex-col gap-3"

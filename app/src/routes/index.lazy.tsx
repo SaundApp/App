@@ -1,20 +1,20 @@
+import {
+  addListeners,
+  registerNotifications,
+} from "@/components/capacitor/NotificationHandler";
 import Post from "@/components/Post";
+import PostAd from "@/components/PostAd";
+import { useSession } from "@/components/SessionContext";
 import { Spinner } from "@/components/ui/spinner";
 import { axiosClient } from "@/lib/axios";
+import type { ExtendedPost } from "@/types/prisma";
+import { Capacitor } from "@capacitor/core";
 import { useInfiniteQuery } from "@tanstack/react-query";
 import { Link, createLazyFileRoute } from "@tanstack/react-router";
 import { AdmobAds, type AdResult } from "capacitor-admob-ads";
 import { Fragment, useEffect, useState } from "react";
 import { FaPaperPlane } from "react-icons/fa";
 import { useInView } from "react-intersection-observer";
-import PostAd from "@/components/PostAd";
-import { Capacitor } from "@capacitor/core";
-import {
-  addListeners,
-  registerNotifications,
-} from "@/components/NotificationHandler";
-import type { ExtendedPost } from "@/types/prisma";
-import { useSession } from "@/components/SessionContext";
 import PullToRefresh from "react-simple-pull-to-refresh";
 
 export const Route = createLazyFileRoute("/")({

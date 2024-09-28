@@ -278,7 +278,7 @@ function Account() {
       )}
 
       {profileUnavailable && (
-        <div className="flex size-full flex-col items-center justify-center">
+        <div className="flex size-full flex-col items-center justify-center text-center">
           <h5>{t("account.private")}</h5>
           <p className="muted">{t("account.private_description")}</p>
         </div>

@@ -409,10 +409,6 @@ hono.post(
       },
     });
 
-    await sendNotification(request.receiverId, NotificationType.FOLLOW, {
-      user: request.sender.username,
-    });
-
     await prisma.followRequest.delete({
       where: {
         id,

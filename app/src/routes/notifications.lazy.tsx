@@ -1,5 +1,5 @@
 import Notification from "@/components/Notification";
-import { clearNotifications } from "@/components/NotificationHandler";
+import { clearNotifications } from "@/components/capacitor/NotificationHandler";
 import { Spinner } from "@/components/ui/spinner";
 import { axiosClient } from "@/lib/axios";
 import type { PublicUser } from "@/types/prisma";

@@ -9,6 +9,10 @@ export const addListeners = async () => {
   await PushNotifications.addListener("registrationError", (err) => {
     console.error("Registration error: ", err.error);
   });
+
+  await PushNotifications.addListener("pushNotificationActionPerformed", () => {
+    window.location.href = "/notifications";
+  });
 };
 
 export const registerNotifications = async () => {

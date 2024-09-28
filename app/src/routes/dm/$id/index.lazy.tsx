@@ -4,6 +4,7 @@ import Attachment from "@/components/dm/Attachment";
 import ChatNavbar from "@/components/dm/ChatNavbar";
 import Message from "@/components/dm/Message";
 import VoiceRecorder from "@/components/dm/VoiceRecorder";
+import { Button } from "@/components/ui/button";
 import { Spinner } from "@/components/ui/spinner";
 import { Textarea } from "@/components/ui/textarea";
 import { useToast } from "@/components/ui/use-toast";
@@ -16,6 +17,7 @@ import { useAudioRecorder } from "@repo/react-audio-voice-recorder";
 import { Keyboard } from "@saundapp/keyboard";
 import { useMutation, useQuery } from "@tanstack/react-query";
 import { createLazyFileRoute } from "@tanstack/react-router";
+import { Send } from "lucide-react";
 import { useEffect, useRef, useState } from "react";
 import { useTranslation } from "react-i18next";
 import { FaCamera } from "react-icons/fa";
@@ -346,9 +348,15 @@ function Chat() {
               </div>
             </>
           )}
-          <button className="flex h-full items-center justify-center">
-            <VoiceRecorder controls={recorderControls} socket={socket} />
-          </button>
+          {message.length > 0 ? (
+            <Button type="submit" className="size-10 rounded-2xl p-0">
+              <Send size={15} />
+            </Button>
+          ) : (
+            <button className="flex h-full items-center justify-center">
+              <VoiceRecorder controls={recorderControls} socket={socket} />
+            </button>
+          )}
         </div>
       </form>
     </div>

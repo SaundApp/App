@@ -47,6 +47,8 @@ const DrawerContent = React.forwardRef<
       {...props}
     >
       <div className="mx-auto mt-4 h-2 w-[100px] rounded-full bg-muted" />
+      <input type="text" autoFocus style={{ display: "none" }} />
+
       {children}
     </DrawerPrimitive.Content>
   </DrawerPortal>

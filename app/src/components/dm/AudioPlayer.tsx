@@ -80,7 +80,6 @@ export default function AudioPlayer({
       </div>
 
       <audio
-        hidden
         ref={ref}
         onPause={() => {
           setPlaying(false);

@@ -1,6 +1,6 @@
-import AppUrlListener from "@/components/AppUrlListener";
+import AppUrlListener from "@/components/capacitor/AppUrlListener";
 import Navbar from "@/components/Navbar";
-import "@/components/SentryLoader";
+import "@/components/capacitor/SentryLoader";
 import { SessionContext } from "@/components/SessionContext";
 import { ThemeProvider } from "@/components/ThemeProvider";
 import { Toaster } from "@/components/ui/toaster";
