@@ -77,7 +77,7 @@ PODS:
   - SaundappSwipeback (1.0.1):
     - Capacitor
   - Sentry/HybridSDK (8.36.0)
-  - SentryCapacitor (0.19.0):
+  - SentryCapacitor (1.0.0):
     - Capacitor
     - Sentry/HybridSDK (= 8.36.0)
 
@@ -149,7 +149,7 @@ SPEC CHECKSUMS:
   SaundappKeyboard: 0351acd25343d281351eeff3d2ebea398470aef5
   SaundappSwipeback: a55cf5ddacc1f7725ab3f8d6e4dafe8857d917b3
   Sentry: f8374b5415bc38dfb5645941b3ae31230fbeae57
-  SentryCapacitor: c954e6e5d6bbcdfffd27752102c92d81c1e38178
+  SentryCapacitor: 0af1c6e495aa8a35e54536542dbd4950f3dae839
 
 PODFILE CHECKSUM: 09f7f7c45d0c3016ef2c381130db14a3e7bd21c7
 
