@@ -85,7 +85,7 @@ hono.post("/register", zValidator("json", registerSchema), async (ctx) => {
     },
   });
 
-  await generateAvatar(user.id, user.name);
+  await generateAvatar(user.id, user.name || user.username);
 
   const token = await signToken(user.id);
 
@@ -393,7 +393,7 @@ hono.get("/callback/spotify", async (ctx) => {
           },
         });
 
-        await generateAvatar(user.id, user.name);
+        await generateAvatar(user.id, user.name || user.username);
       }
     }
 
