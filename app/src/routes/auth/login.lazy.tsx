@@ -103,6 +103,7 @@ function Login() {
                     {...field}
                     className="bg-secondary"
                     placeholder={t("input.username")}
+                    autoCapitalize="off"
                   />
                 </FormControl>
               </FormItem>

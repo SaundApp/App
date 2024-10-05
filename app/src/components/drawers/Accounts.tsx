@@ -78,8 +78,10 @@ export default function Accounts() {
               >
                 <div
                   className="flex items-center gap-3"
-                  onClick={() => {
+                  onClick={async () => {
                     localStorage.setItem("token", user.token);
+                    await queryClient.invalidateQueries();
+
                     navigate({
                       to: "/",
                     });

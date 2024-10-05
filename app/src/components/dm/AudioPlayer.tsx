@@ -16,6 +16,7 @@ export default function AudioPlayer({
 }) {
   const ref = useRef<HTMLAudioElement>(null);
   const [playing, setPlaying] = useState(false);
+  const [time, setTime] = useState(0);
   const { format } = useDate();
 
   useEffect(() => {
@@ -65,11 +66,7 @@ export default function AudioPlayer({
             <span
               className="absolute left-0 top-0 h-1 rounded-full bg-white"
               style={{
-                width:
-                  ((ref.current?.currentTime || 0) /
-                    (ref.current?.duration || 1)) *
-                    100 +
-                  "%",
+                width: ((time || 0) / (ref.current?.duration || 1)) * 100 + "%",
               }}
             ></span>
           </div>
@@ -80,9 +77,13 @@ export default function AudioPlayer({
       </div>
 
       <audio
+        preload="audio"
         ref={ref}
         onPause={() => {
           setPlaying(false);
+        }}
+        onTimeUpdate={(e) => {
+          setTime(e.currentTarget.currentTime);
         }}
       >
         <source src={src} />

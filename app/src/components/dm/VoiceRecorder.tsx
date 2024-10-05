@@ -18,7 +18,7 @@ export default function VoiceRecorder({
   const { toast } = useToast();
   const sendAudio = async (blob: Blob) => {
     const formData = new FormData();
-    formData.append("file", blob, "audio.wav");
+    formData.append("file", blob, "audio.mp3");
     formData.append("type", "audio");
 
     try {
@@ -43,7 +43,7 @@ export default function VoiceRecorder({
         echoCancellation: true,
       }}
       onNotAllowedOrFound={(err) => console.table(err)}
-      downloadFileExtension="wav"
+      downloadFileExtension="mp3"
       mediaRecorderOptions={{
         audioBitsPerSecond: 128000,
       }}

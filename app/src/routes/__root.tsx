@@ -98,6 +98,10 @@ function App() {
     SwipeBack.setAllowsBackForwardNavigationGestures({
       allow,
     });
+
+    if (routerState.location.pathname === "/") {
+      SwipeBack.clearHistory();
+    }
   }, [routerState.location.pathname, session?.username]);
 
   return (

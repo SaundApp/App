@@ -71,7 +71,7 @@ hono.get("/:id", async (ctx) => {
       type = "image/webp";
       break;
     case AttachmentType.AUDIO:
-      type = "audio/wav";
+      type = "audio/mp3";
       break;
     case AttachmentType.VIDEO:
       type = "video/mp4";
