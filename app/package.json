@@ -32,7 +32,6 @@
     "@repo/form-types": "0.0.0",
     "@repo/react-audio-voice-recorder": "0.0.0",
     "@saundapp/keyboard": "6.0.5",
-    "@saundapp/swipeback": "^1.0.2",
     "@sentry/capacitor": "^1.0.0",
     "@sentry/react": "8.33.1",
     "@sentry/vite-plugin": "^2.22.5",

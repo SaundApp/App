@@ -17,9 +17,6 @@ project(':capacitor-splash-screen').projectDir = new File('../../node_modules/@c
 include ':saundapp-keyboard'
 project(':saundapp-keyboard').projectDir = new File('../../node_modules/@saundapp/keyboard/android')
 
-include ':saundapp-swipeback'
-project(':saundapp-swipeback').projectDir = new File('../../node_modules/@saundapp/swipeback/android')
-
 include ':sentry-capacitor'
 project(':sentry-capacitor').projectDir = new File('../../node_modules/@sentry/capacitor/android')
 

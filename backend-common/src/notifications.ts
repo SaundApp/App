@@ -70,7 +70,8 @@ export async function sendNotification(
 
   if (
     type === NotificationType.DM &&
-    data.message?.startsWith(process.env.FRONTEND_URL!)
+    (data.message?.startsWith(process.env.FRONTEND_URL!) ||
+      data.message?.startsWith("https://saund.app"))
   ) {
     message = getMessage("attachment", user?.language);
   }

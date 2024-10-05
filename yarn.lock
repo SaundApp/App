@@ -4487,7 +4487,6 @@ __metadata:
     "@repo/form-types": "npm:0.0.0"
     "@repo/react-audio-voice-recorder": "npm:0.0.0"
     "@saundapp/keyboard": "npm:6.0.5"
-    "@saundapp/swipeback": "npm:^1.0.2"
     "@sentry/capacitor": "npm:^1.0.0"
     "@sentry/react": "npm:8.33.1"
     "@sentry/vite-plugin": "npm:^2.22.5"
@@ -4863,15 +4862,6 @@ __metadata:
   peerDependencies:
     "@capacitor/core": ^6.0.0
   checksum: 10c0/3f98f1e491e5a3304f7ddae1810b0a8a3cd6ae459709e119158203c3a6d5f0ca4269413d7fb55b210dd31d81ebdc5f2fc838738e0bedb49d2c7ff3400d6881a0
-  languageName: node
-  linkType: hard
-
-"@saundapp/swipeback@npm:^1.0.2":
-  version: 1.0.2
-  resolution: "@saundapp/swipeback@npm:1.0.2"
-  peerDependencies:
-    "@capacitor/core": ^6.0.0
-  checksum: 10c0/f5b36c86dde472df1c0630134b1171a8087c43eb206499bc0767c0fe96f3359d37116c55b5ff562c4ba17e7992c3a451859ceeb3aebd928e1fce702cea77ace5
   languageName: node
   linkType: hard
 

@@ -1,6 +1,6 @@
 import AppUrlListener from "@/components/capacitor/AppUrlListener";
-import Navbar from "@/components/Navbar";
 import "@/components/capacitor/SentryLoader";
+import Navbar from "@/components/Navbar";
 import { SessionContext } from "@/components/SessionContext";
 import { ThemeProvider } from "@/components/ThemeProvider";
 import { Toaster } from "@/components/ui/toaster";
@@ -8,7 +8,6 @@ import { axiosClient } from "@/lib/axios";
 import type { MeUser } from "@/types/prisma";
 import { Capacitor } from "@capacitor/core";
 import { SplashScreen } from "@capacitor/splash-screen";
-import { SwipeBack } from "@saundapp/swipeback";
 import { useQuery, useQueryClient } from "@tanstack/react-query";
 import {
   Outlet,
@@ -87,22 +86,6 @@ function App() {
   useEffect(() => {
     SplashScreen.hide();
   }, []);
-
-  useEffect(() => {
-    const allow =
-      routerState.location.pathname === "/" ||
-      routerState.location.pathname.startsWith("/dm") ||
-      routerState.location.pathname.startsWith("/account") ||
-      routerState.location.pathname.startsWith("/search");
-
-    SwipeBack.setAllowsBackForwardNavigationGestures({
-      allow,
-    });
-
-    if (routerState.location.pathname === "/") {
-      SwipeBack.clearHistory();
-    }
-  }, [routerState.location.pathname, session?.username]);
 
   return (
     <ThemeProvider defaultTheme="system" storageKey="vite-ui-theme">
