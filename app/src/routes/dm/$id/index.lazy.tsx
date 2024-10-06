@@ -203,7 +203,7 @@ function Chat() {
       style={{
         height:
           Capacitor.getPlatform() === "ios"
-            ? "calc(100vh - 9rem)"
+            ? "calc(100vh - 8rem)"
             : "calc(100vh - 5rem)",
       }}
     >
@@ -219,10 +219,10 @@ function Chat() {
               ? keyboard
                 ? !replying
                   ? "65vh"
-                  : "55vh"
+                  : "60vh"
                 : !replying
-                  ? "75vh"
-                  : "72vh"
+                  ? "100vh"
+                  : "75vh"
               : !replying
                 ? "83vh"
                 : "76vh",

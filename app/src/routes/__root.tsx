@@ -93,7 +93,11 @@ function App() {
         <main
           className={
             "flex h-screen min-h-screen flex-col bg-background px-3 py-6 font-geist text-foreground" +
-            (Capacitor.getPlatform() === "ios" ? " !pt-16" : "")
+            (Capacitor.getPlatform() === "ios"
+              ? routerState.location.pathname.startsWith("/dm")
+                ? " !pt-16"
+                : " !py-16"
+              : "")
           }
         >
           <Outlet />
