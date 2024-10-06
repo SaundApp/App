@@ -80,9 +80,9 @@ function EditProfile() {
 
   return (
     <div className="flex flex-col gap-3">
-      <div className="relative flex items-center justify-center p-4">
+      <div className="relative flex items-center justify-center pb-4">
         <BackIcon />
-        <div className="absolute left-0 top-4 size-full text-center">
+        <div className="absolute left-0 top-0 size-full text-center">
           <h5 className="m-auto">{t("account.settings")}</h5>
         </div>
       </div>

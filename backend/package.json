@@ -9,9 +9,9 @@
   "dependencies": {
     "@hono/node-server": "^1.13.1",
     "@hono/sentry": "^1.2.0",
-    "@hono/zod-validator": "^0.3.0",
+    "@hono/zod-validator": "^0.4.1",
     "@napi-rs/canvas": "^0.1.56",
-    "@node-rs/bcrypt": "^1.10.4",
+    "@node-rs/bcrypt": "^1.10.5",
     "@paralleldrive/cuid2": "^2.2.2",
     "@repo/backend-common": "0.0.0",
     "@repo/form-types": "0.0.0",

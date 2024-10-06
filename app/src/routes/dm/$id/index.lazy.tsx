@@ -273,8 +273,8 @@ function Chat() {
       >
         <div
           className={
-            "absolute bottom-4 left-2 flex items-end justify-center gap-3" +
-            (Capacitor.getPlatform() === "ios" ? " bottom-8" : "")
+            "absolute bottom-6 left-2 flex items-end justify-center gap-3" +
+            (Capacitor.getPlatform() === "ios" ? " bottom-10" : "")
           }
           style={{
             width: "calc(100% - 1rem)",
