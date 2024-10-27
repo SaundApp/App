@@ -24,7 +24,7 @@ jobs:
       - name: Build AAB and Save Android Build ID
         id: ios_build
         run: |
-          IOS_BUILD_ID=$(appflow build ios app-store --app-id=$APP_ID --commit=$GITHUB_SHA --signing-cert=$SIGNING_CERT --environment ".env" --json --token=$IONIC_TOKEN | jq -r ".buildId")
+          IOS_BUILD_ID=$(appflow build ios app-store --app-id=$APP_ID --commit=$GITHUB_SHA --signing-cert="$SIGNING_CERT" --environment ".env" --json --token=$IONIC_TOKEN | jq -r ".buildId")
           echo "IOS_BUILD_ID=$IOS_BUILD_ID" >> $GITHUB_OUTPUT
 
       - name: Deploy to App Store
