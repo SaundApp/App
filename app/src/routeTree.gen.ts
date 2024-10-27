@@ -37,26 +37,31 @@ const AuthPasswordForgotLazyImport = createFileRoute('/auth/password/forgot')()
 // Create/Update Routes
 
 const SearchLazyRoute = SearchLazyImport.update({
+  id: '/search',
   path: '/search',
   getParentRoute: () => rootRoute,
 } as any).lazy(() => import('./routes/search.lazy').then((d) => d.Route))
 
 const NotificationsLazyRoute = NotificationsLazyImport.update({
+  id: '/notifications',
   path: '/notifications',
   getParentRoute: () => rootRoute,
 } as any).lazy(() => import('./routes/notifications.lazy').then((d) => d.Route))
 
 const IndexLazyRoute = IndexLazyImport.update({
+  id: '/',
   path: '/',
   getParentRoute: () => rootRoute,
 } as any).lazy(() => import('./routes/index.lazy').then((d) => d.Route))
 
 const DmIndexLazyRoute = DmIndexLazyImport.update({
+  id: '/dm/',
   path: '/dm/',
   getParentRoute: () => rootRoute,
 } as any).lazy(() => import('./routes/dm/index.lazy').then((d) => d.Route))
 
 const LeaderboardArtistsLazyRoute = LeaderboardArtistsLazyImport.update({
+  id: '/leaderboard/artists',
   path: '/leaderboard/artists',
   getParentRoute: () => rootRoute,
 } as any).lazy(() =>
@@ -64,16 +69,19 @@ const LeaderboardArtistsLazyRoute = LeaderboardArtistsLazyImport.update({
 )
 
 const AuthRegisterLazyRoute = AuthRegisterLazyImport.update({
+  id: '/auth/register',
   path: '/auth/register',
   getParentRoute: () => rootRoute,
 } as any).lazy(() => import('./routes/auth/register.lazy').then((d) => d.Route))
 
 const AuthLoginLazyRoute = AuthLoginLazyImport.update({
+  id: '/auth/login',
   path: '/auth/login',
   getParentRoute: () => rootRoute,
 } as any).lazy(() => import('./routes/auth/login.lazy').then((d) => d.Route))
 
 const AccountSettingsLazyRoute = AccountSettingsLazyImport.update({
+  id: '/account/settings',
   path: '/account/settings',
   getParentRoute: () => rootRoute,
 } as any).lazy(() =>
@@ -82,6 +90,7 @@ const AccountSettingsLazyRoute = AccountSettingsLazyImport.update({
 
 const AccountEditSubscriptionLazyRoute =
   AccountEditSubscriptionLazyImport.update({
+    id: '/account/edit-subscription',
     path: '/account/edit-subscription',
     getParentRoute: () => rootRoute,
   } as any).lazy(() =>
@@ -89,11 +98,13 @@ const AccountEditSubscriptionLazyRoute =
   )
 
 const AccountEditLazyRoute = AccountEditLazyImport.update({
+  id: '/account/edit',
   path: '/account/edit',
   getParentRoute: () => rootRoute,
 } as any).lazy(() => import('./routes/account/edit.lazy').then((d) => d.Route))
 
 const AccountUsernameLazyRoute = AccountUsernameLazyImport.update({
+  id: '/account/$username',
   path: '/account/$username',
   getParentRoute: () => rootRoute,
 } as any).lazy(() =>
@@ -101,11 +112,13 @@ const AccountUsernameLazyRoute = AccountUsernameLazyImport.update({
 )
 
 const DmIdIndexLazyRoute = DmIdIndexLazyImport.update({
+  id: '/dm/$id/',
   path: '/dm/$id/',
   getParentRoute: () => rootRoute,
 } as any).lazy(() => import('./routes/dm/$id/index.lazy').then((d) => d.Route))
 
 const DmIdSettingsLazyRoute = DmIdSettingsLazyImport.update({
+  id: '/dm/$id/settings',
   path: '/dm/$id/settings',
   getParentRoute: () => rootRoute,
 } as any).lazy(() =>
@@ -113,6 +126,7 @@ const DmIdSettingsLazyRoute = DmIdSettingsLazyImport.update({
 )
 
 const AuthPasswordResetLazyRoute = AuthPasswordResetLazyImport.update({
+  id: '/auth/password/reset',
   path: '/auth/password/reset',
   getParentRoute: () => rootRoute,
 } as any).lazy(() =>
@@ -120,6 +134,7 @@ const AuthPasswordResetLazyRoute = AuthPasswordResetLazyImport.update({
 )
 
 const AuthPasswordForgotLazyRoute = AuthPasswordForgotLazyImport.update({
+  id: '/auth/password/forgot',
   path: '/auth/password/forgot',
   getParentRoute: () => rootRoute,
 } as any).lazy(() =>
