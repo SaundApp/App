@@ -12,6 +12,8 @@ PODS:
     - Capacitor
   - CapacitorSplashScreen (6.0.1):
     - Capacitor
+  - CapacitorWidgetsbridgePlugin (0.1.2):
+    - Capacitor
   - Firebase/CoreOnly (10.29.0):
     - FirebaseCore (= 10.29.0)
   - Firebase/Messaging (10.29.0):
@@ -87,6 +89,7 @@ DEPENDENCIES:
   - "CapacitorCordova (from `../../../node_modules/@capacitor/ios`)"
   - "CapacitorPushNotifications (from `../../../node_modules/@capacitor/push-notifications`)"
   - "CapacitorSplashScreen (from `../../../node_modules/@capacitor/splash-screen`)"
+  - CapacitorWidgetsbridgePlugin (from `../../../node_modules/capacitor-widgetsbridge-plugin`)
   - Firebase/Messaging
   - "SaundappKeyboard (from `../../../node_modules/@saundapp/keyboard`)"
   - "SentryCapacitor (from `../../../node_modules/@sentry/capacitor`)"
@@ -119,6 +122,8 @@ EXTERNAL SOURCES:
     :path: "../../../node_modules/@capacitor/push-notifications"
   CapacitorSplashScreen:
     :path: "../../../node_modules/@capacitor/splash-screen"
+  CapacitorWidgetsbridgePlugin:
+    :path: "../../../node_modules/capacitor-widgetsbridge-plugin"
   SaundappKeyboard:
     :path: "../../../node_modules/@saundapp/keyboard"
   SentryCapacitor:
@@ -132,6 +137,7 @@ SPEC CHECKSUMS:
   CapacitorCordova: be703980ca797f847c3356f78fa175d21c8330c2
   CapacitorPushNotifications: 293fabe42c7229756078e81f2d3a60394ba4e5d8
   CapacitorSplashScreen: 61645214e8f955ff2b80f16a6a3648960fe4c89f
+  CapacitorWidgetsbridgePlugin: 384cf6a56ba2a3ee6d199579f5403723e766b958
   Firebase: cec914dab6fd7b1bd8ab56ea07ce4e03dd251c2d
   FirebaseCore: 30e9c1cbe3d38f5f5e75f48bfcea87d7c358ec16
   FirebaseCoreInternal: df84dd300b561c27d5571684f389bf60b0a5c934
@@ -145,6 +151,6 @@ SPEC CHECKSUMS:
   Sentry: f8374b5415bc38dfb5645941b3ae31230fbeae57
   SentryCapacitor: 2137257959f06553337c81be4ed0c10acefef58b
 
-PODFILE CHECKSUM: 81218f5d15d966d9923a586c66b3ab071a7e1b0d
+PODFILE CHECKSUM: a96558b809004e382b843a11eaecf8fafb196687
 
 COCOAPODS: 1.16.2

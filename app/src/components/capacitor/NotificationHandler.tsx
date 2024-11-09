@@ -22,9 +22,7 @@ export const registerNotifications = async () => {
     permStatus = await PushNotifications.requestPermissions();
   }
 
-  if (permStatus.receive !== "granted") {
-    throw new Error("User denied permissions!");
-  }
+  if (permStatus.receive !== "granted") return;
 
   await PushNotifications.register();
 };

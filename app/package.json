@@ -39,6 +39,7 @@
     "@tanstack/react-router": "^1.79.0",
     "axios": "^1.7.7",
     "capacitor-admob-ads": "^5.0.0",
+    "capacitor-widgetsbridge-plugin": "^0.1.2",
     "class-variance-authority": "^0.7.0",
     "clsx": "^2.1.1",
     "date-fns": "^4.1.0",

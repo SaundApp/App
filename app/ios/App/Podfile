@@ -18,6 +18,7 @@ def capacitor_pods
   pod 'SaundappKeyboard', :path => '../../../node_modules/@saundapp/keyboard'
   pod 'SentryCapacitor', :path => '../../../node_modules/@sentry/capacitor'
   pod 'CapacitorAdmobAds', :path => '../../../node_modules/capacitor-admob-ads'
+  pod 'CapacitorWidgetsbridgePlugin', :path => '../../../node_modules/capacitor-widgetsbridge-plugin'
 end
 
 target 'App' do

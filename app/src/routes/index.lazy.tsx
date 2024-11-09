@@ -2,6 +2,7 @@ import {
   addListeners,
   registerNotifications,
 } from "@/components/capacitor/NotificationHandler";
+import { syncLeaderboard } from "@/components/capacitor/WidgetBridge";
 import Post from "@/components/Post";
 import PostAd from "@/components/PostAd";
 import { useSession } from "@/components/SessionContext";
@@ -65,6 +66,7 @@ function Index() {
     if (!session || Capacitor.getPlatform() === "web") return;
 
     registerNotifications().then(() => addListeners());
+    syncLeaderboard();
   }, [session]);
 
   if (!session) return null;
