@@ -4637,7 +4637,7 @@ __metadata:
     "@spotify/web-api-ts-sdk": "npm:^1.2.0"
     "@tanstack/eslint-plugin-query": "npm:^5.60.1"
     "@tanstack/react-query": "npm:^5.59.20"
-    "@tanstack/react-router": "npm:^1.79.0"
+    "@tanstack/react-router": "npm:^1.81.1"
     "@tanstack/router-vite-plugin": "npm:^1.79.0"
     "@types/hammerjs": "npm:^2.0.46"
     "@types/node": "npm:^22.9.0"
@@ -5589,9 +5589,9 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@tanstack/react-router@npm:^1.79.0":
-  version: 1.79.0
-  resolution: "@tanstack/react-router@npm:1.79.0"
+"@tanstack/react-router@npm:^1.81.1":
+  version: 1.81.1
+  resolution: "@tanstack/react-router@npm:1.81.1"
   dependencies:
     "@tanstack/history": "npm:1.61.1"
     "@tanstack/react-store": "npm:^0.5.6"
@@ -5604,7 +5604,7 @@ __metadata:
   peerDependenciesMeta:
     "@tanstack/router-generator":
       optional: true
-  checksum: 10c0/908689fd4a5addfb39f666574faefc71aae047aca5392d2ecdb1d6320193bfab57f38547c9bd4f169c699ca18648227f9c10f7278876b894c1c6555231cfd7f2
+  checksum: 10c0/cf57e6eae70601513efadbf9f20761d55c92045d6cc095cfbf2c6f7c52a98bfdb2bf729b5c4e086b086ce2f66d124accd3408992a7b27cf53f6328383d5134df
   languageName: node
   linkType: hard
 

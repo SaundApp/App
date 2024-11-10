@@ -30,10 +30,8 @@ export const Route = createLazyFileRoute("/dm/$id/")({
 
 function Chat() {
   const { t } = useTranslation();
-  const { text, submit } = Route.useSearch<{
-    text: string | undefined;
-    submit: boolean;
-  }>();
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  const { text, submit } = Route.useSearch<any>();
   const session = useSession();
   const navigate = Route.useNavigate();
   const [message, setMessage] = useState(

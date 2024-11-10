@@ -38,8 +38,8 @@ hono.post("/artists/create", admin, async (ctx) => {
 
   const everyone = await prisma.user.findMany({
     where: {
-      notificationToken: {
-        not: null,
+      notificationTokens: {
+        isEmpty: false,
       },
     },
     select: {

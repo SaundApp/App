@@ -16,23 +16,21 @@ export const Route = createLazyFileRoute("/auth/password/reset")({
 
 function ResetPassword() {
   const { t } = useTranslation();
-  const { email, token } = Route.useSearch<{
-    email: string | undefined;
-    token: string | undefined;
-  }>();
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  const search = Route.useSearch<any>();
   const { toast } = useToast();
   const navigate = Route.useNavigate();
   const form = useForm<z.infer<typeof resetPasswordSchema>>({
     resolver: zodResolver(resetPasswordSchema),
     defaultValues: {
-      email: email || "",
-      token: token || "",
+      email: search.email || "",
+      token: search.token || "",
       password: "",
       confirmPassword: "",
     },
   });
 
-  if (!email || !token) return null;
+  if (!search.email || !search.token) return null;
 
   return (
     <div className="m-auto flex flex-col justify-center gap-3">

@@ -14,4 +14,3 @@ model Subscription {
   subscribedTo   User   @relation("subscribedTo", fields: [subscribedToId], references: [id], onDelete: Cascade)
   subscribedToId String @db.ObjectId
 }
-

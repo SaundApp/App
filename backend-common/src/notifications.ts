@@ -42,7 +42,7 @@ export async function sendNotification(
       id: userId,
     },
     select: {
-      notificationToken: true,
+      notificationTokens: true,
       notificationSettings: true,
       language: true,
       email: true,
@@ -116,18 +116,19 @@ export async function sendNotification(
     sendMail(user.email, newNotification, html).catch();
   }
 
-  if (!user?.notificationToken || !settings.includes("PUSH")) return;
+  if (!user?.notificationTokens || !settings.includes("PUSH")) return;
 
-  firebase
-    ?.messaging()
-    .send({
-      token: user.notificationToken,
-      notification: {
-        title: data.user ? data.user : message,
-        body: data.user ? message : undefined,
-      },
-    })
-    .catch();
+  for (const token of user.notificationTokens)
+    firebase
+      ?.messaging()
+      .send({
+        token: token,
+        notification: {
+          title: data.user ? data.user : message,
+          body: data.user ? message : undefined,
+        },
+      })
+      .catch();
 }
 
 export async function sendForgotPassword(

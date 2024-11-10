@@ -16,9 +16,21 @@ hono.post(
     const payload = ctx.get("jwtPayload");
     const { token } = await ctx.req.json();
 
-    await prisma.user.update({
+    const user = await prisma.user.findUnique({
       where: { id: payload.user },
-      data: { notificationToken: token },
+      select: {
+        notificationTokens: true,
+      },
+    });
+
+    if (user?.notificationTokens.includes(token))
+      return ctx.json({ success: true });
+
+    await prisma.user.update({
+      where: {
+        id: payload.user,
+      },
+      data: { notificationTokens: { push: token } },
     });
 
     return ctx.json({ success: true });

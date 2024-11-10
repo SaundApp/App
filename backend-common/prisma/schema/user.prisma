@@ -14,7 +14,7 @@ model User {
   spotifyId            String?
   stripeId             String?
   stripeCustomerId     String?
-  notificationToken    String?
+  notificationTokens   String[]              @default([])
   verified             Boolean               @default(false)
   resetToken           String?
   subscriptionSettings SubscriptionSettings?

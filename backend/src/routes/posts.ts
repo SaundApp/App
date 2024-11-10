@@ -25,8 +25,8 @@ hono.post("/create", admin, async (ctx) => {
         },
         where: {
           follower: {
-            notificationToken: {
-              not: null,
+            notificationTokens: {
+              isEmpty: false,
             },
           },
         },

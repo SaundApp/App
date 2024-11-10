@@ -1,27 +1,27 @@
 generator client {
-    provider        = "prisma-client-js"
-    binaryTargets   = ["native", "linux-arm64-openssl-1.1.x"]
-    previewFeatures = ["prismaSchemaFolder"]
+  provider        = "prisma-client-js"
+  binaryTargets   = ["native", "linux-arm64-openssl-1.1.x"]
+  previewFeatures = ["prismaSchemaFolder"]
 }
 
 datasource db {
-    provider = "mongodb"
-    url      = env("DATABASE_URL")
+  provider = "mongodb"
+  url      = env("DATABASE_URL")
 }
 
 model Attachment {
-    id        String         @id @default(auto()) @map("_id") @db.ObjectId
-    data      Bytes
-    name      String
-    userId    String         @db.ObjectId
-    createdAt DateTime       @default(now())
-    type      AttachmentType
+  id        String         @id @default(auto()) @map("_id") @db.ObjectId
+  data      Bytes
+  name      String
+  userId    String         @db.ObjectId
+  createdAt DateTime       @default(now())
+  type      AttachmentType
 
-    user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
 }
 
 enum AttachmentType {
-    IMAGE
-    AUDIO
-    VIDEO
+  IMAGE
+  AUDIO
+  VIDEO
 }

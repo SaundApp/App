@@ -20,9 +20,7 @@ function Login() {
   const { t } = useTranslation();
   const { toast } = useToast();
   const navigate = Route.useNavigate();
-  const { token } = Route.useSearch<{
-    token: string | undefined;
-  }>();
+  const search = Route.useSearch();
   const form = useForm<z.infer<typeof loginSchema>>({
     resolver: zodResolver(loginSchema),
     defaultValues: {
@@ -32,18 +30,18 @@ function Login() {
   });
 
   useEffect(() => {
-    if (token) {
+    if ("token" in search) {
       const tokens = JSON.parse(localStorage.getItem("tokens") || "[]");
-      tokens.push(token);
+      tokens.push(search.token);
 
-      localStorage.setItem("token", token);
+      localStorage.setItem("token", search.token as string);
       localStorage.setItem("tokens", JSON.stringify(tokens));
 
       navigate({
         to: "/",
       }).then(() => window.location.reload());
     }
-  }, [token, navigate]);
+  }, [search, navigate]);
 
   return (
     <div className="m-auto flex w-full flex-col justify-center gap-3">
