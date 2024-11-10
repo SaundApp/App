@@ -132,7 +132,7 @@ struct LeaderboardWidgetEntryView: View {
     var body: some View {
         let artistsToDisplay = entry.artists?.prefix(3) ?? []
         
-        if entry.artists == nil {
+        if artistsToDisplay.isEmpty {
             Text("Open the app to load data.")
         } else {
             if widgetFamily == .systemSmall,

@@ -14,6 +14,7 @@ dependencies {
     implementation project(':capacitor-push-notifications')
     implementation project(':capacitor-splash-screen')
     implementation project(':saundapp-keyboard')
+    implementation project(':saundapp-widgetsbridge')
     implementation project(':sentry-capacitor')
     implementation project(':capacitor-admob-ads')
 
