@@ -103,7 +103,7 @@ struct LeaderboardArtistView: View {
                         .frame(width: 50, height: 50)
                         .clipShape(Circle())
                 } else {
-                    Color.red
+                    Color.accentColor
                         .frame(width: 50, height: 50)
                         .clipShape(Circle())
                 }
@@ -133,7 +133,7 @@ struct LeaderboardWidgetEntryView: View {
         let artistsToDisplay = entry.artists?.prefix(3) ?? []
         
         if artistsToDisplay.isEmpty {
-            Text("Open the app to load data.")
+            Text("No leaderboards yet 👀")
         } else {
             if widgetFamily == .systemSmall,
                let firstArtist = artistsToDisplay.first {
@@ -188,6 +188,10 @@ struct LeaderboardWidget_Previews: PreviewProvider {
         let entry = LeaderboardEntry(date: Date(), artists: sampleData)
         
         return Group {
+            LeaderboardWidgetEntryView(entry: LeaderboardEntry(date: Date(), artists: []))
+                .previewContext(WidgetPreviewContext(family: .systemMedium))
+                .containerBackground(.fill.tertiary, for: .widget)
+            
             LeaderboardWidgetEntryView(entry: entry)
                 .previewContext(WidgetPreviewContext(family: .systemSmall))
                 .containerBackground(.fill.tertiary, for: .widget)
