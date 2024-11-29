@@ -117,7 +117,14 @@
     },
     "price": "Prezzo",
     "add_perk": "Aggiungi vantaggio",
-    "perk": "Vantaggio"
+    "perk": "Vantaggio",
+    "unlink": {
+      "spotify": {
+        "title": "Scollega Spotify",
+        "description": "Sei sicuro di voler scollegare il tuo account Spotify? Questo comporterà l'eliminazione di tutte le tue playlist e canzoni su Saund.",
+        "success": "Il tuo account Spotify è stato scollegato con successo"
+      }
+    }
   },
   "auth": {
     "register": "Registrati",

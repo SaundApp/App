@@ -24,7 +24,9 @@ export default function PostAd({ ad }: { ad: AdResult }) {
           />
 
           <div>
-            <h5 className="max-w-56 truncate"><span className="font-bold">AD</span> • {ad.headline}</h5>
+            <h5 className="max-w-56 truncate">
+              <span className="font-bold">AD</span> • {ad.headline}
+            </h5>
             <p className="muted max-w-56 truncate">{ad.body}</p>
           </div>
         </div>

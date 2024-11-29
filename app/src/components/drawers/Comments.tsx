@@ -9,7 +9,13 @@ import { FaComment } from "react-icons/fa";
 import { useSession } from "../SessionContext";
 import Avatar from "../account/Avatar";
 import Mentions from "../dropdown/Mentions";
-import { Drawer, DrawerContent, DrawerDescription, DrawerTitle, DrawerTrigger } from "../ui/drawer";
+import {
+  Drawer,
+  DrawerContent,
+  DrawerDescription,
+  DrawerTitle,
+  DrawerTrigger,
+} from "../ui/drawer";
 import { Input } from "../ui/input";
 import { useDate } from "@/lib/dates";
 import { Capacitor } from "@capacitor/core";
@@ -71,8 +77,10 @@ export default function Comments({ post }: { post: Post }) {
         <FaComment fontSize={25} />
       </DrawerTrigger>
       <DrawerContent className="flex flex-col gap-3 p-3">
-        <DrawerTitle className="text-center">{t("index.comments.title")}</DrawerTitle>
-        
+        <DrawerTitle className="text-center">
+          {t("index.comments.title")}
+        </DrawerTitle>
+
         <VisuallyHidden>
           <DrawerDescription>{t("index.comments.title")}</DrawerDescription>
         </VisuallyHidden>

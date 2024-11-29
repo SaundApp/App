@@ -188,7 +188,7 @@ hono.get(
       subscribed: user.subscribers.length > 0,
       requestSent: user.requestsReceived.length > 0,
     });
-  }
+  },
 );
 
 hono.get(
@@ -212,7 +212,7 @@ hono.get(
         {
           error: "User not found",
         },
-        404
+        404,
       );
     }
 
@@ -241,7 +241,7 @@ hono.get(
     }
 
     return ctx.json(followers);
-  }
+  },
 );
 
 hono.post(
@@ -264,7 +264,7 @@ hono.post(
         {
           error: "User not found",
         },
-        404
+        404,
       );
     }
 
@@ -275,7 +275,7 @@ hono.post(
         {
           error: "Cannot follow yourself",
         },
-        400
+        400,
       );
     }
 
@@ -300,7 +300,7 @@ hono.post(
         {
           error: "User already followed",
         },
-        400
+        400,
       );
 
     if (user.private) {
@@ -326,7 +326,7 @@ hono.post(
           {
             error: "Request already sent",
           },
-          400
+          400,
         );
       }
     }
@@ -351,10 +351,10 @@ hono.post(
         {
           error: "User already followed",
         },
-        400
+        400,
       );
     }
-  }
+  },
 );
 
 hono.post(
@@ -370,7 +370,7 @@ hono.post(
         {
           error: "Invalid request",
         },
-        400
+        400,
       );
     }
 
@@ -392,7 +392,7 @@ hono.post(
         {
           error: "Request not found",
         },
-        404
+        404,
       );
     }
 
@@ -418,7 +418,7 @@ hono.post(
     return ctx.json({
       message: "Request accepted",
     });
-  }
+  },
 );
 
 hono.delete(
@@ -440,7 +440,7 @@ hono.delete(
         {
           error: "Request not found",
         },
-        404
+        404,
       );
     }
 
@@ -460,7 +460,7 @@ hono.delete(
     return ctx.json({
       message: "Request removed",
     });
-  }
+  },
 );
 
 hono.get(
@@ -489,7 +489,7 @@ hono.get(
         {
           error: "User not found",
         },
-        404
+        404,
       );
     }
 
@@ -518,7 +518,7 @@ hono.get(
     });
 
     return ctx.json(following);
-  }
+  },
 );
 
 hono.delete(
@@ -533,7 +533,7 @@ hono.delete(
         {
           error: "Cannot unfollow yourself",
         },
-        400
+        400,
       );
     }
 
@@ -547,7 +547,7 @@ hono.delete(
     return ctx.json({
       message: "User unfollowed",
     });
-  }
+  },
 );
 
 hono.delete(
@@ -567,7 +567,7 @@ hono.delete(
     return ctx.json({
       message: "Follower removed",
     });
-  }
+  },
 );
 
 hono.get(
@@ -611,7 +611,7 @@ hono.get(
     });
 
     return ctx.json(posts);
-  }
+  },
 );
 
 hono.get(
@@ -655,7 +655,7 @@ hono.get(
     });
 
     return ctx.json(chats);
-  }
+  },
 );
 
 hono.get(
@@ -705,7 +705,7 @@ hono.get(
         {
           error: "User not found",
         },
-        404
+        404,
       );
     }
 
@@ -718,7 +718,7 @@ hono.get(
     }
 
     return ctx.json(user.listeners.map((l) => l.listener));
-  }
+  },
 );
 
 hono.post(
@@ -733,7 +733,7 @@ hono.post(
         {
           error: "Cannot subscribe to yourself",
         },
-        400
+        400,
       );
     }
 
@@ -766,7 +766,7 @@ hono.post(
         {
           error: "Cannot subscribe to this user",
         },
-        404
+        404,
       );
     }
 
@@ -775,7 +775,7 @@ hono.post(
         {
           error: "Already subscribed",
         },
-        400
+        400,
       );
     }
 
@@ -788,7 +788,7 @@ hono.post(
         {
           error: "User not found",
         },
-        404
+        404,
       );
     }
 
@@ -850,7 +850,7 @@ hono.post(
     });
 
     return ctx.json({ url: checkout.url });
-  }
+  },
 );
 
 hono.get(
@@ -865,7 +865,7 @@ hono.get(
         {
           error: "Unauthorized",
         },
-        401
+        401,
       );
     }
 
@@ -890,7 +890,7 @@ hono.get(
     });
 
     return ctx.json(user?.subscribers.map((s) => s.user) || []);
-  }
+  },
 );
 
 export default hono;

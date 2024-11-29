@@ -35,7 +35,7 @@ export async function sendMail(email: string, subject: string, html: string) {
 export async function sendNotification(
   userId: string,
   type: NotificationType,
-  data: Record<string, string>
+  data: Record<string, string>,
 ) {
   const user = await prisma.user.findUnique({
     where: {
@@ -110,7 +110,7 @@ export async function sendNotification(
         preview: newNotification,
         heading: newNotification,
         text: message,
-      })
+      }),
     );
 
     sendMail(user.email, newNotification, html).catch();
@@ -134,7 +134,7 @@ export async function sendNotification(
 export async function sendForgotPassword(
   email: string,
   token: string,
-  language?: string
+  language?: string,
 ) {
   const heading = getMessage("forgot-password.heading", language);
   const button = getMessage("forgot-password.button", language);
@@ -145,7 +145,7 @@ export async function sendForgotPassword(
       heading: heading,
       button,
       href: `${process.env.FRONTEND_URL}/password/reset?token=${token}&email=${email}`,
-    })
+    }),
   );
 
   return await sendMail(email, heading, html);

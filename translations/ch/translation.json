@@ -117,7 +117,14 @@
     },
     "price": "价格",
     "add_perk": "添加特权",
-    "perk": "特权"
+    "perk": "特权",
+    "unlink": {
+      "spotify": {
+        "title": "取消链接 Spotify",
+        "description": "您确定要取消链接您的 Spotify 帐户吗？这将导致 Saund 上所有您的播放列表和歌曲被删除。",
+        "success": "您的 Spotify 帐户已成功取消链接"
+      }
+    }
   },
   "auth": {
     "register": "注册",

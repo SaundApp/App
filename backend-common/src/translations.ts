@@ -12,14 +12,14 @@ if (locales.size === 0) {
             .get(`${process.env.TRANSLATIONS_URL}/api/download/${locale}`)
             .then((res) => res.data)
             .then((translation) => locales.set(locale, translation));
-        })
-      )
+        }),
+      ),
     )
     .then(() =>
       console.log(
         `[i18n] Loaded locales (${Array.from(locales.keys()).length}):`,
-        Array.from(locales.keys()).join(", ")
-      )
+        Array.from(locales.keys()).join(", "),
+      ),
     );
 }
 

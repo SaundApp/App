@@ -117,7 +117,14 @@
     },
     "price": "Preis",
     "add_perk": "Vorteil hinzufügen",
-    "perk": "Vorteil"
+    "perk": "Vorteil",
+    "unlink": {
+      "spotify": {
+        "title": "Spotify trennen",
+        "description": "Möchten Sie Ihr Spotify-Konto wirklich trennen? Dies führt zur Löschung aller Ihrer Wiedergabelisten und Songs auf Saund.",
+        "success": "Ihr Spotify-Konto wurde erfolgreich getrennt"
+      }
+    }
   },
   "auth": {
     "register": "Registrieren",

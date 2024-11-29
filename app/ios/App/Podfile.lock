@@ -5,7 +5,7 @@ PODS:
     - Capacitor
   - CapacitorApp (6.0.0):
     - Capacitor
-  - CapacitorBrowser (6.0.3):
+  - CapacitorBrowser (6.0.4):
     - Capacitor
   - CapacitorCordova (6.1.0)
   - CapacitorPushNotifications (6.0.1):
@@ -77,7 +77,7 @@ PODS:
   - SaundappWidgetsbridge (0.0.1):
     - Capacitor
   - Sentry/HybridSDK (8.36.0)
-  - SentryCapacitor (1.0.1):
+  - SentryCapacitor (1.0.2):
     - Capacitor
     - Sentry/HybridSDK (= 8.36.0)
 
@@ -133,7 +133,7 @@ SPEC CHECKSUMS:
   Capacitor: 187bd7847b6f71467015a20200a1a071be3e5f14
   CapacitorAdmobAds: 28832a94a5c7465fc2ce3e31be13442b87425944
   CapacitorApp: 9d53aec7101f7b030a950c5bdc4df8612576b279
-  CapacitorBrowser: aab1ed943b01c0365c4810538a8b3477e2d9f72e
+  CapacitorBrowser: ef0529d16cd8839281050c350e7bbee4f5c6d65f
   CapacitorCordova: be703980ca797f847c3356f78fa175d21c8330c2
   CapacitorPushNotifications: 293fabe42c7229756078e81f2d3a60394ba4e5d8
   CapacitorSplashScreen: 61645214e8f955ff2b80f16a6a3648960fe4c89f
@@ -149,7 +149,7 @@ SPEC CHECKSUMS:
   SaundappKeyboard: 0351acd25343d281351eeff3d2ebea398470aef5
   SaundappWidgetsbridge: 4c8cbcd104ac3597fdeb8079af998afaafe369db
   Sentry: f8374b5415bc38dfb5645941b3ae31230fbeae57
-  SentryCapacitor: 2137257959f06553337c81be4ed0c10acefef58b
+  SentryCapacitor: 808a63a267d5053af12c25e6125c13f79b32debc
 
 PODFILE CHECKSUM: 5bbe3628302b8471b973d705296824d9fadaf519
 

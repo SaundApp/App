@@ -145,7 +145,7 @@ hono.post("/cleanup", admin, async (ctx) => {
           where: {
             id: attachment.id,
           },
-        })
+        }),
       );
     }
   }
@@ -153,7 +153,7 @@ hono.post("/cleanup", admin, async (ctx) => {
   await prisma.$transaction(toDelete);
 
   console.log(
-    `[Attachments] Cleaned up ${toDelete.length} attachments out of ${attachments.length}`
+    `[Attachments] Cleaned up ${toDelete.length} attachments out of ${attachments.length}`,
   );
   return ctx.json(toDelete.length);
 });

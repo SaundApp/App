@@ -117,7 +117,14 @@
     },
     "price": "Price",
     "add_perk": "Add perk",
-    "perk": "Perk"
+    "perk": "Perk",
+    "unlink": {
+      "spotify": {
+        "title": "Unlink Spotify",
+        "description": "Are you sure you want to unlink your Spotify account? This will lead to the deletion of all your playlists and songs on Saund.",
+        "success": "Your Spotify account has been unlinked successfully"
+      }
+    }
   },
   "auth": {
     "register": "Register",

@@ -117,7 +117,14 @@
     },
     "price": "Prix",
     "add_perk": "Ajouter un avantage",
-    "perk": "Avantage"
+    "perk": "Avantage",
+    "unlink": {
+      "spotify": {
+        "title": "Dissocier Spotify",
+        "description": "Êtes-vous sûr de vouloir dissocier votre compte Spotify ? Cela entraînera la suppression de toutes vos listes de lecture et chansons sur Saund.",
+        "success": "Votre compte Spotify a été dissocié avec succès"
+      }
+    }
   },
   "auth": {
     "register": "S'inscrire",

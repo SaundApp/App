@@ -46,13 +46,13 @@ hono.post("/create", admin, async (ctx) => {
         user.spotifyId!,
         undefined,
         undefined,
-        50
+        50,
       );
 
       const recent = albums.items
         .filter(
           (album) =>
-            album.album_group === "album" || album.album_group === "single"
+            album.album_group === "album" || album.album_group === "single",
         )
         .sort((a, b) => {
           return (
@@ -202,16 +202,16 @@ hono.get(
     if (contOld < 10)
       posts.sort((a, b) => {
         const aIsFollowed = user.following.some(
-          (u) => u.followingId === a.userId
+          (u) => u.followingId === a.userId,
         );
         const bIsFollowed = user.following.some(
-          (u) => u.followingId === b.userId
+          (u) => u.followingId === b.userId,
         );
         const aIsLiked = a.likes.some((u) =>
-          user.following.some((f) => f.followingId === u)
+          user.following.some((f) => f.followingId === u),
         );
         const bIsLiked = b.likes.some((u) =>
-          user.following.some((f) => f.followingId === u)
+          user.following.some((f) => f.followingId === u),
         );
         const aIsUnseen = !a.seen.includes(user.id);
         const bIsUnseen = !b.seen.includes(user.id);
@@ -231,9 +231,9 @@ hono.get(
       posts.map((post) => ({
         ...post,
         seen: undefined,
-      }))
+      })),
     );
-  }
+  },
 );
 
 hono.post(
@@ -254,7 +254,7 @@ hono.post(
         {
           error: "Post not found",
         },
-        404
+        404,
       );
     }
 
@@ -305,7 +305,7 @@ hono.post(
     return ctx.json({
       message: "Post liked",
     });
-  }
+  },
 );
 
 hono.get("/:id/likes", async (ctx) => {
@@ -321,7 +321,7 @@ hono.get("/:id/likes", async (ctx) => {
       {
         error: "Post not found",
       },
-      404
+      404,
     );
   }
 
@@ -360,7 +360,7 @@ hono.post(
         {
           error: "Text is required",
         },
-        400
+        400,
       );
     }
 
@@ -375,7 +375,7 @@ hono.post(
         {
           error: "Post not found",
         },
-        404
+        404,
       );
     }
 
@@ -436,7 +436,7 @@ hono.post(
     });
 
     return ctx.json(comment);
-  }
+  },
 );
 
 hono.get("/:id/comments", async (ctx) => {
@@ -452,7 +452,7 @@ hono.get("/:id/comments", async (ctx) => {
       {
         error: "Post not found",
       },
-      404
+      404,
     );
   }
 
@@ -500,7 +500,7 @@ hono.get("/:id", async (ctx) => {
       {
         error: "Post not found",
       },
-      404
+      404,
     );
   }
 
@@ -524,7 +524,7 @@ hono.post("/:id/see", jwt({ secret: process.env.JWT_SECRET! }), async (ctx) => {
       {
         error: "Post not found",
       },
-      404
+      404,
     );
   }
 

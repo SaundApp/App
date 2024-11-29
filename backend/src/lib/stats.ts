@@ -13,10 +13,10 @@ const axiosClient = axios.create({
 
 export async function fetchStreams(
   type: "artist",
-  song: string
+  song: string,
 ): Promise<number> {
   const { data } = await axiosClient.get(
-    `/${encodeURIComponent(type)}/${encodeURIComponent(song)}`
+    `/${encodeURIComponent(type)}/${encodeURIComponent(song)}`,
   );
 
   return Number(data) || 0;

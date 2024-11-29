@@ -8,7 +8,7 @@ const googleCredentials = existsSync("google-credentials.json")
 
 if (!googleCredentials) {
   console.warn(
-    "[Firebase] Google credentials file not found. Returning empty firebase implementation."
+    "[Firebase] Google credentials file not found. Returning empty firebase implementation.",
   );
 }
 

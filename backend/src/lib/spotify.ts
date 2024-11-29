@@ -5,7 +5,7 @@ import SpotifyWebApi from "spotify-web-api-node";
 
 export const spotify = SpotifyApi.withClientCredentials(
   process.env.SPOTIFY_CLIENT_ID!,
-  process.env.SPOTIFY_CLIENT_SECRET!
+  process.env.SPOTIFY_CLIENT_SECRET!,
 );
 
 export const spotifyCredentials = {

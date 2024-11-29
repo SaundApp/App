@@ -1,6 +1,7 @@
 import BackIcon from "@/components/BackIcon";
 import { useSession } from "@/components/SessionContext";
 import Avatar from "@/components/account/Avatar";
+import UnlinkAccount from "@/components/drawers/UnlinkAccount";
 import { Button } from "@/components/ui/button";
 import { Form, FormControl, FormField, FormItem } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
@@ -12,7 +13,7 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { updateSchema } from "@repo/form-types";
 import { useQueryClient } from "@tanstack/react-query";
 import { createLazyFileRoute } from "@tanstack/react-router";
-import { useEffect, useRef } from "react";
+import { useEffect, useRef, useState } from "react";
 import { useForm } from "react-hook-form";
 import { useTranslation } from "react-i18next";
 import { FaSpotify, FaStripeS } from "react-icons/fa";
@@ -27,6 +28,7 @@ function EditProfile() {
   const { toast } = useToast();
   const queryClient = useQueryClient();
   const session = useSession();
+  const [unlinkOpen, setUnlinkOpen] = useState(false);
   const input = useRef<HTMLInputElement>(null);
   const form = useForm<z.infer<typeof updateSchema>>({
     resolver: zodResolver(updateSchema),
@@ -269,10 +271,7 @@ function EditProfile() {
             onClick={async () => {
               try {
                 if (session.spotifyId) {
-                  await axiosClient.post("/auth/sync/spotify");
-                  toast({
-                    description: t("toast.success.edit"),
-                  });
+                  setUnlinkOpen(true);
                   return;
                 }
               } catch {
@@ -291,6 +290,8 @@ function EditProfile() {
           </Button>
         </div>
       </div>
+
+      <UnlinkAccount open={unlinkOpen} onOpenChange={setUnlinkOpen} />
     </div>
   );
 }

@@ -46,7 +46,7 @@ hono.post(
     });
 
     return ctx.json({ url: accountLink.url });
-  }
+  },
 );
 
 hono.post("/webhook", async (ctx) => {
@@ -61,7 +61,7 @@ hono.post("/webhook", async (ctx) => {
     const event = await stripe.webhooks.constructEventAsync(
       body,
       signature,
-      process.env.STRIPE_WEBHOOK_SECRET!
+      process.env.STRIPE_WEBHOOK_SECRET!,
     );
 
     if (
@@ -137,7 +137,7 @@ hono.post(
     });
 
     return ctx.json({ url: portal.url });
-  }
+  },
 );
 
 export default hono;
