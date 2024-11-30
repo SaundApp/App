@@ -1,5 +1,4 @@
 import { axiosClient } from "@/lib/axios";
-import { getDominantColor } from "@/lib/utils";
 import type { ExtendedPost } from "@/types/prisma";
 import type { Chat, User } from "@repo/backend-common/types";
 import type {
@@ -45,7 +44,6 @@ export default function Post({ post }: { post: ExtendedPost }) {
   const navigate = useNavigate();
   const [saw, setSaw] = useState(false);
   const [open, setOpen] = useState(false);
-  const [color, setColor] = useState<"black" | "white">("black");
   const [isPlaying, setPlaying] = useState(false);
   const [currentTrack, setCurrentTrack] = useState(0);
   const bind = useLongPress(() => setOpen(true));
@@ -91,19 +89,6 @@ export default function Post({ post }: { post: ExtendedPost }) {
       }),
   });
 
-  useEffect(() => {
-    if (imageRef.current)
-      getDominantColor(imageRef.current).then((color) => {
-        const luminance =
-          (0.299 * color[0] + 0.587 * color[1] + 0.114 * color[2]) / 255;
-
-        if (luminance > 0.6) {
-          setColor("black");
-        } else {
-          setColor("white");
-        }
-      });
-  }, [imageRef, post.image, song]);
   useEffect(() => {
     if (isPlaying && player.current?.paused) {
       document
@@ -156,153 +141,138 @@ export default function Post({ post }: { post: ExtendedPost }) {
         </Link>
       </div>
 
-      <div className="relative flex flex-col gap-3">
+      <div className="flex items-center justify-center gap-4">
+        {post.type !== "SONG" && (
+          <button
+            onClick={() => {
+              if (currentTrack > 0) {
+                setPlaying(false);
+                setCurrentTrack((track) => track - 1);
+                player.current?.load();
+              }
+            }}
+          >
+            <FaCircleArrowLeft fontSize={25} />
+          </button>
+        )}
+
         <img
           src={post.image}
           alt={post.name}
           draggable={false}
-          className="aspect-square size-full rounded-2xl object-cover"
+          className="aspect-square rounded-2xl object-cover"
           ref={imageRef}
           crossOrigin="anonymous"
-          height={390}
-          width={390}
+          height={post.type !== "SONG" ? 290 : 380}
+          width={post.type !== "SONG" ? 290 : 380}
         />
 
-        <div className="absolute top-1/2 flex h-1/2 w-full flex-col justify-between p-3">
-          {post.type !== "SONG" && (
-            <div className="flex justify-between" style={{ color }}>
-              {currentTrack > 0 && (
-                <button
-                  onClick={() => {
-                    if (currentTrack > 0) {
-                      setPlaying(false);
-                      setCurrentTrack((track) => track - 1);
-                      player.current?.load();
-                    }
-                  }}
-                >
-                  <FaCircleArrowLeft fontSize={25} />
-                </button>
-              )}
-              {currentTrack < (song?.tracks.items.length || 0) - 1 && (
-                <button
-                  onClick={() => {
-                    if (currentTrack < (song?.tracks.items.length || 0) - 1) {
-                      setPlaying(false);
-                      setCurrentTrack((track) => track + 1);
-                      player.current?.load();
-                    }
-                  }}
-                  className="ml-auto"
-                >
-                  <FaCircleArrowRight fontSize={25} />
-                </button>
-              )}
-            </div>
-          )}
+        {post.type !== "SONG" && (
+          <button
+            onClick={() => {
+              if (currentTrack < (song?.tracks.items.length || 0) - 1) {
+                setPlaying(false);
+                setCurrentTrack((track) => track + 1);
+                player.current?.load();
+              }
+            }}
+          >
+            <FaCircleArrowRight fontSize={25} />
+          </button>
+        )}
+      </div>
 
-          <div
-            className={
-              "flex items-center justify-between " +
-              (post.type === "SONG" ? "mt-auto" : "")
+      <div className="flex items-center justify-between">
+        <div className="flex items-center gap-3 text-white">
+          <button
+            {...bind()}
+            onClick={() =>
+              like.mutate(!data?.find((user) => user.id === session?.id))
             }
           >
-            <div className="flex items-center gap-3" style={{ color }}>
-              <button
-                {...bind()}
-                onClick={() =>
-                  like.mutate(!data?.find((user) => user.id === session?.id))
-                }
-              >
-                {(
-                  like.isPending
-                    ? like.variables
-                    : data?.find((user) => user.id === session?.id)
-                ) ? (
-                  <FaHeart fontSize={25} />
-                ) : (
-                  <FaRegHeart fontSize={25} />
-                )}
-              </button>
-              <Comments post={post} />
-              <Share
-                onClick={async (user) => {
-                  const { data } = await axiosClient.post<Chat>(
-                    "/dm/create?upsert=true",
-                    {
-                      name: user.username,
-                      userIds: [user.id],
-                      imageId: user.avatarId
-                    },
-                  );
+            {(
+              like.isPending
+                ? like.variables
+                : data?.find((user) => user.id === session?.id)
+            ) ? (
+              <FaHeart fontSize={25} />
+            ) : (
+              <FaRegHeart fontSize={25} />
+            )}
+          </button>
+          <Comments post={post} />
+          <Share
+            onClick={async (user) => {
+              const { data } = await axiosClient.post<Chat>(
+                "/dm/create?upsert=true",
+                {
+                  name: user.username,
+                  userIds: [user.id],
+                  imageId: user.avatarId,
+                },
+              );
 
-                  if (data)
-                    navigate({
-                      to: "/dm/" + data.id,
-                      search: {
-                        text: `${import.meta.env.VITE_APP_URL}/?post=${post.id}`,
-                        submit: true,
-                      },
-                    });
+              if (data)
+                navigate({
+                  to: "/dm/" + data.id,
+                  search: {
+                    text: `${import.meta.env.VITE_APP_URL}/?post=${post.id}`,
+                    submit: true,
+                  },
+                });
 
-                  return true;
-                }}
-              >
-                <button>
-                  <FaPaperPlane fontSize={25} />
-                </button>
-              </Share>
-            </div>
-
-            <div
-              ref={ref}
-              className="flex w-fit items-center gap-3 rounded-3xl px-6 py-3"
-              style={{
-                backgroundColor: color,
-                color: color === "black" ? "white" : "black",
-              }}
-            >
-              <button
-                onClick={() => {
-                  setPlaying((playing) => !playing);
-                }}
-                className="z-10"
-              >
-                {!isPlaying ? (
-                  <FaCirclePlay fontSize={25} />
-                ) : (
-                  <FaCirclePause fontSize={25} />
-                )}
-              </button>
-              <h5 className="z-10 max-w-20 truncate">
-                {getTrack(song?.tracks.items[currentTrack])?.name || "..."}
-              </h5>
-            </div>
-          </div>
+              return true;
+            }}
+          >
+            <button>
+              <FaPaperPlane fontSize={25} />
+            </button>
+          </Share>
         </div>
 
-        <Users
-          title={t("index.likes.title")}
-          users={data || []}
-          open={open}
-          onOpenChange={setOpen}
-        />
-        <audio
-          ref={player}
-          onPause={() => {
-            setPlaying(false);
-          }}
+        <div
+          ref={ref}
+          className="flex w-fit items-center gap-3 rounded-3xl bg-white px-6 py-3 text-black"
         >
-          {getTrack(song?.tracks.items[currentTrack])?.preview_url && (
-            <source
-              src={
-                getTrack(song?.tracks.items[currentTrack])?.preview_url ||
-                undefined
-              }
-            />
-          )}
-        </audio>
+          <button
+            onClick={() => {
+              setPlaying((playing) => !playing);
+            }}
+            className="z-10"
+          >
+            {!isPlaying ? (
+              <FaCirclePlay fontSize={25} />
+            ) : (
+              <FaCirclePause fontSize={25} />
+            )}
+          </button>
+          <h5 className="z-10 max-w-20 truncate">
+            {getTrack(song?.tracks.items[currentTrack])?.name || "..."}
+          </h5>
+        </div>
       </div>
+
+      <Users
+        title={t("index.likes.title")}
+        users={data || []}
+        open={open}
+        onOpenChange={setOpen}
+      />
+      <audio
+        ref={player}
+        onPause={() => {
+          setPlaying(false);
+        }}
+      >
+        {getTrack(song?.tracks.items[currentTrack])?.preview_url && (
+          <source
+            src={
+              getTrack(song?.tracks.items[currentTrack])?.preview_url ||
+              undefined
+            }
+          />
+        )}
+      </audio>
     </div>
   );
 }

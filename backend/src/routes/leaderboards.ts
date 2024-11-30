@@ -48,7 +48,7 @@ hono.post("/artists/create", admin, async (ctx) => {
   });
 
   everyone.forEach((user) =>
-    sendNotification(user.id, NotificationType.LEADERBOARD, {})
+    sendNotification(user.id, NotificationType.LEADERBOARD, {}),
   );
 
   return ctx.json(cont);
@@ -90,7 +90,7 @@ hono.get(
     });
 
     return ctx.json(users);
-  }
+  },
 );
 
 export default hono;

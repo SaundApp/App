@@ -64,7 +64,7 @@ hono.get("/list", jwt({ secret: process.env.JWT_SECRET! }), async (ctx) => {
           !chat.messages[0] ||
           chat.messages[0]?.senderId === payload.user ||
           chat.messages[0]?.read.includes(payload.user),
-      }))
+      })),
   );
 });
 
@@ -88,7 +88,7 @@ hono.get(
     if (!chat) return ctx.json({ error: "Chat not found" }, 404);
 
     return ctx.json(chat);
-  }
+  },
 );
 
 hono.get(
@@ -127,7 +127,7 @@ hono.get(
     await markRead(id, payload.user);
 
     return ctx.json(messages);
-  }
+  },
 );
 
 hono.post(
@@ -140,7 +140,7 @@ hono.post(
     await markRead(id, payload.user);
 
     return ctx.json({ success: true });
-  }
+  },
 );
 
 hono.post(
@@ -215,7 +215,7 @@ hono.post(
       console.log(e);
       return ctx.json({ error: "Invalid image id" }, 400);
     }
-  }
+  },
 );
 
 hono.delete("/:id", jwt({ secret: process.env.JWT_SECRET! }), async (ctx) => {
@@ -311,7 +311,7 @@ hono.patch(
     }
 
     return ctx.json({ success: true });
-  }
+  },
 );
 
 hono.post(
@@ -343,7 +343,7 @@ hono.post(
       });
 
     return ctx.json(chat);
-  }
+  },
 );
 
 hono.get(
@@ -378,7 +378,7 @@ hono.get(
     });
 
     return ctx.json(users);
-  }
+  },
 );
 
 hono.put(
@@ -429,7 +429,7 @@ hono.put(
       });
 
     return ctx.json({ success: true });
-  }
+  },
 );
 
 hono.delete(
@@ -481,7 +481,7 @@ hono.delete(
     }
 
     return ctx.json(result);
-  }
+  },
 );
 
 export default hono;

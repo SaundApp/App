@@ -117,7 +117,14 @@
     },
     "price": "Precio",
     "add_perk": "Agregar beneficio",
-    "perk": "Beneficio"
+    "perk": "Beneficio",
+    "unlink": {
+      "spotify": {
+        "title": "Desvincular Spotify",
+        "description": "¿Estás seguro de que deseas desvincular tu cuenta de Spotify? Esto llevará a la eliminación de todas tus listas de reproducción y canciones en Saund.",
+        "success": "Tu cuenta de Spotify se ha desvinculado correctamente"
+      }
+    }
   },
   "auth": {
     "register": "Registrarse",

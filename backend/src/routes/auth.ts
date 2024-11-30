@@ -70,7 +70,7 @@ hono.post("/register", zValidator("json", registerSchema), async (ctx) => {
       {
         error: "User already exists",
       },
-      400
+      400,
     );
   }
 
@@ -109,7 +109,7 @@ hono.post("/login", zValidator("json", loginSchema), async (ctx) => {
       {
         error: "User not found",
       },
-      404
+      404,
     );
   }
 
@@ -120,7 +120,7 @@ hono.post("/login", zValidator("json", loginSchema), async (ctx) => {
       {
         error: "Password is incorrect",
       },
-      400
+      400,
     );
   }
 
@@ -216,7 +216,7 @@ hono.patch(
             error: "Username already exists",
             t: "account.username_exists",
           },
-          400
+          400,
         );
       }
     }
@@ -248,7 +248,7 @@ hono.patch(
             error: "Email already exists",
             t: "account.email_exists",
           },
-          400
+          400,
         );
       }
     }
@@ -267,7 +267,7 @@ hono.patch(
     return ctx.json({
       success: true,
     });
-  }
+  },
 );
 
 hono.patch(
@@ -289,7 +289,7 @@ hono.patch(
           error: "User not verified",
           t: "account.not_verified",
         },
-        400
+        400,
       );
     }
 
@@ -310,7 +310,7 @@ hono.patch(
     return ctx.json({
       success: true,
     });
-  }
+  },
 );
 
 hono.get("/login/spotify", async (ctx) => {
@@ -336,7 +336,7 @@ hono.get("/login/spotify", async (ctx) => {
           "user-read-private",
         ].join(" "),
         state,
-      }).toString()
+      }).toString(),
   );
 });
 
@@ -364,7 +364,7 @@ hono.get("/callback/spotify", async (ctx) => {
       {
         error: "No code provided",
       },
-      400
+      400,
     );
   }
 
@@ -428,7 +428,7 @@ hono.get("/callback/spotify", async (ctx) => {
     const token = await signToken(user.id);
 
     return ctx.redirect(
-      process.env.FRONTEND_URL + "/auth/login?token=" + token
+      process.env.FRONTEND_URL + "/auth/login?token=" + token,
     );
   } catch (error) {
     console.log(error);
@@ -436,7 +436,7 @@ hono.get("/callback/spotify", async (ctx) => {
       {
         error: "Invalid code",
       },
-      400
+      400,
     );
   }
 });
@@ -457,7 +457,7 @@ hono.post(
         {
           error: "User not found",
         },
-        404
+        404,
       );
     }
 
@@ -466,10 +466,10 @@ hono.post(
     return ctx.json({
       success: true,
     });
-  }
+  },
 );
 
-hono.get(
+hono.post(
   "/spotify/unlink",
   jwt({ secret: process.env.JWT_SECRET! }),
   async (ctx) => {
@@ -484,8 +484,16 @@ hono.get(
       },
     });
 
-    return ctx.redirect(process.env.FRONTEND_URL + "/account/settings");
-  }
+    await prisma.post.deleteMany({
+      where: {
+        userId: payload.user,
+      },
+    });
+
+    return ctx.json({
+      success: true,
+    });
+  },
 );
 
 hono.get("/accounts", async (ctx) => {
@@ -547,7 +555,7 @@ hono.patch(
     return ctx.json({
       success: true,
     });
-  }
+  },
 );
 
 hono.post(
@@ -579,7 +587,7 @@ hono.post(
     sendForgotPassword(user.email, token, user.language);
 
     return ctx.json({ success: true });
-  }
+  },
 );
 
 hono.post(
@@ -607,7 +615,7 @@ hono.post(
     });
 
     return ctx.json({ success: true });
-  }
+  },
 );
 
 export default hono;

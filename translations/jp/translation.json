@@ -117,7 +117,14 @@
     },
     "price": "価格",
     "add_perk": "特典追加",
-    "perk": "特典"
+    "perk": "特典",
+    "unlink": {
+      "spotify": {
+        "title": "Spotifyのリンクを解除",
+        "description": "Spotifyアカウントのリンクを解除してもよろしいですか？これにより、Saund上のすべてのプレイリストと曲が削除されます。",
+        "success": "Spotifyアカウントが正常にリンク解除されました"
+      }
+    }
   },
   "auth": {
     "register": "登録",

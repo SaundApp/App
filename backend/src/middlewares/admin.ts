@@ -5,13 +5,13 @@ export default createMiddleware(async (ctx, next) => {
 
   if (!token || token.split(" ")[1] !== process.env.ADMIN_KEY) {
     console.log(
-      `[${ctx.req.path}] An unauthorized request was made for an admin route.`
+      `[${ctx.req.path}] An unauthorized request was made for an admin route.`,
     );
     return ctx.json(
       {
         error: "Unauthorized",
       },
-      401
+      401,
     );
   }
 

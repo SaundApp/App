@@ -12,7 +12,7 @@ app.use(
   sentry({
     dsn: process.env.SENTRY_DSN!,
     enabled: process.env.NODE_ENV === "production",
-  })
+  }),
 );
 app.use(
   cors({
@@ -27,7 +27,7 @@ app.use(
     allowMethods: ["POST", "GET", "OPTIONS", "PUT", "DELETE", "PATCH"],
     exposeHeaders: ["Content-Length", "Content-Type", "Content-Disposition"],
     maxAge: 600,
-  })
+  }),
 );
 
 app.get("/app", (ctx) => {

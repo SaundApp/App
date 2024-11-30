@@ -7,7 +7,7 @@ import {
 export async function handleDelete(
   message: string,
   user: string,
-  chat: string
+  chat: string,
 ) {
   const result = await prisma.message.findFirst({
     where: {
@@ -32,7 +32,7 @@ export async function handleEdit(
   messageId: string,
   user: string,
   chat: string,
-  text: string
+  text: string,
 ) {
   try {
     const result = await prisma.message.update({
@@ -56,7 +56,7 @@ export async function handleReply(
   message: string,
   senderId: string,
   chatId: string,
-  originId: string
+  originId: string,
 ) {
   const origin = await prisma.message.findUnique({
     where: {
@@ -74,7 +74,7 @@ export async function handleSend(
   message: string,
   senderId: string,
   chatId: string,
-  replyId?: string
+  replyId?: string,
 ) {
   const result = await prisma.message.create({
     data: {

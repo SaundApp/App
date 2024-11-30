@@ -34,7 +34,7 @@ hono.post(
     });
 
     return ctx.json({ success: true });
-  }
+  },
 );
 
 hono.get("/", jwt({ secret: process.env.JWT_SECRET! }), async (ctx) => {
@@ -73,7 +73,7 @@ hono.get("/", jwt({ secret: process.env.JWT_SECRET! }), async (ctx) => {
       }
 
       return { ...notification, involvedUserData: null };
-    })
+    }),
   );
 
   return ctx.json(updated);
@@ -101,7 +101,7 @@ hono.patch(
     });
 
     return ctx.json({ success: true });
-  }
+  },
 );
 
 hono.post(
@@ -135,7 +135,7 @@ hono.post(
       });
 
     return ctx.json({ success: true });
-  }
+  },
 );
 
 hono.delete(
@@ -162,7 +162,7 @@ hono.delete(
             update: {
               mutedChats: {
                 set: user.notificationSettings.mutedChats.filter(
-                  (chat) => chat !== id
+                  (chat) => chat !== id,
                 ),
               },
             },
@@ -171,7 +171,7 @@ hono.delete(
       });
 
     return ctx.json({ success: true });
-  }
+  },
 );
 
 hono.get("/mute", jwt({ secret: process.env.JWT_SECRET! }), async (ctx) => {
