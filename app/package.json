@@ -17,6 +17,7 @@
     "@capacitor/ios": "latest",
     "@capacitor/push-notifications": "latest",
     "@capacitor/splash-screen": "latest",
+    "@capacitor/status-bar": "^6.0.2",
     "@hookform/resolvers": "^3.9.1",
     "@radix-ui/react-context-menu": "^2.2.2",
     "@radix-ui/react-dropdown-menu": "^2.1.2",

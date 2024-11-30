@@ -6,7 +6,6 @@ import { ThemeProvider } from "@/components/ThemeProvider";
 import { Toaster } from "@/components/ui/toaster";
 import { axiosClient } from "@/lib/axios";
 import type { MeUser } from "@/types/prisma";
-import { Capacitor } from "@capacitor/core";
 import { SplashScreen } from "@capacitor/splash-screen";
 import { useQuery, useQueryClient } from "@tanstack/react-query";
 import {
@@ -93,11 +92,9 @@ function App() {
         <main
           className={
             "flex h-screen min-h-screen flex-col bg-background px-3 py-6 font-geist text-foreground" +
-            (Capacitor.getPlatform() === "ios"
-              ? routerState.location.pathname.startsWith("/dm")
-                ? " !pt-16"
-                : " !py-16"
-              : "")
+            (routerState.location.pathname.startsWith("/dm")
+              ? " !pt-16"
+              : " !py-16")
           }
         >
           <Outlet />

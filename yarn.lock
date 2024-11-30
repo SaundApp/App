@@ -713,6 +713,15 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@capacitor/status-bar@npm:^6.0.2":
+  version: 6.0.2
+  resolution: "@capacitor/status-bar@npm:6.0.2"
+  peerDependencies:
+    "@capacitor/core": ^6.0.0
+  checksum: 10c0/c84d4ba6db1ac9a3e00bdad5a3eaf42f83a5c4bc9e52709c65782b670871cdf8129c3a65d374404dade8f061c784b80f42bc6bbccc82f27a8caeb7415523c720
+  languageName: node
+  linkType: hard
+
 "@cspotcode/source-map-support@npm:^0.8.0":
   version: 0.8.1
   resolution: "@cspotcode/source-map-support@npm:0.8.1"
@@ -4491,6 +4500,7 @@ __metadata:
     "@capacitor/ios": "npm:latest"
     "@capacitor/push-notifications": "npm:latest"
     "@capacitor/splash-screen": "npm:latest"
+    "@capacitor/status-bar": "npm:^6.0.2"
     "@hookform/resolvers": "npm:^3.9.1"
     "@radix-ui/react-context-menu": "npm:^2.2.2"
     "@radix-ui/react-dropdown-menu": "npm:^2.1.2"

@@ -4,7 +4,6 @@ import { X } from "lucide-react";
 import * as React from "react";
 
 import { cn } from "@/lib/utils";
-import { Capacitor } from "@capacitor/core";
 
 const ToastProvider = ToastPrimitives.Provider;
 
@@ -17,7 +16,7 @@ const ToastViewport = React.forwardRef<
     className={cn(
       "fixed left-[50%] top-0 z-[100] flex max-h-screen w-full translate-x-[-50%] flex-col-reverse p-3 sm:right-0 sm:flex-col md:max-w-[420px]",
       className,
-      Capacitor.getPlatform() === "ios" && "py-16",
+      "py-16",
     )}
     {...props}
   />

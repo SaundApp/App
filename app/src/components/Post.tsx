@@ -183,7 +183,7 @@ export default function Post({ post }: { post: ExtendedPost }) {
       </div>
 
       <div className="flex items-center justify-between">
-        <div className="flex items-center gap-3 text-white">
+        <div className="flex items-center gap-3">
           <button
             {...bind()}
             onClick={() =>
@@ -232,7 +232,7 @@ export default function Post({ post }: { post: ExtendedPost }) {
 
         <div
           ref={ref}
-          className="flex w-fit items-center gap-3 rounded-3xl bg-white px-6 py-3 text-black"
+          className="flex w-fit items-center gap-3 rounded-3xl bg-foreground px-6 py-3 text-background"
         >
           <button
             onClick={() => {

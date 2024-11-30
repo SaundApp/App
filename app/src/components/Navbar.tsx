@@ -1,11 +1,10 @@
+import { Keyboard } from "@saundapp/keyboard";
 import { Link } from "@tanstack/react-router";
+import { useEffect, useState } from "react";
 import { FaHeart, FaHome, FaSearch } from "react-icons/fa";
 import { SiGoogleanalytics } from "react-icons/si";
 import { useSession } from "./SessionContext";
 import Avatar from "./account/Avatar";
-import { Capacitor } from "@capacitor/core";
-import { useEffect, useState } from "react";
-import { Keyboard } from "@saundapp/keyboard";
 
 export default function Navbar() {
   const session = useSession();
@@ -20,10 +19,7 @@ export default function Navbar() {
 
   return (
     <nav
-      className={
-        "fixed bottom-0 mt-auto flex items-center justify-between bg-background p-3" +
-        (Capacitor.getPlatform() === "ios" ? " pb-8" : "")
-      }
+      className="fixed bottom-0 mt-auto flex items-center justify-between bg-background p-3 pb-8"
       style={{
         width: "calc(100vw - 1.5rem)",
       }}

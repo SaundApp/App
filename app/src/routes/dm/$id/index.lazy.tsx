@@ -11,7 +11,6 @@ import { useToast } from "@/components/ui/use-toast";
 import { axiosClient } from "@/lib/axios";
 import { getImageUrl } from "@/lib/utils";
 import type { PublicUser } from "@/types/prisma";
-import { Capacitor } from "@capacitor/core";
 import type { Chat, Message as MessageType } from "@repo/backend-common/types";
 import { useAudioRecorder } from "@repo/react-audio-voice-recorder";
 import { Keyboard } from "@saundapp/keyboard";
@@ -199,10 +198,7 @@ function Chat() {
     <div
       className="flex flex-col justify-start gap-3"
       style={{
-        height:
-          Capacitor.getPlatform() === "ios"
-            ? "calc(100vh - 8rem)"
-            : "calc(100vh - 5rem)",
+        height: "calc(100vh - 8rem)",
       }}
     >
       <ChatNavbar chat={chat} />
@@ -212,18 +208,13 @@ function Chat() {
         id="chat"
         ref={chatContainer}
         style={{
-          maxHeight:
-            Capacitor.getPlatform() === "ios"
-              ? keyboard
-                ? !replying
-                  ? "65vh"
-                  : "60vh"
-                : !replying
-                  ? "100vh"
-                  : "75vh"
-              : !replying
-                ? "83vh"
-                : "76vh",
+          maxHeight: keyboard
+            ? !replying
+              ? "65vh"
+              : "60vh"
+            : !replying
+              ? "100vh"
+              : "75vh",
         }}
       >
         {uploadAttachment.isPending && (
@@ -270,10 +261,7 @@ function Chat() {
         }}
       >
         <div
-          className={
-            "absolute bottom-6 left-2 flex items-end justify-center gap-3" +
-            (Capacitor.getPlatform() === "ios" ? " bottom-10" : "")
-          }
+          className="absolute bottom-10 left-2 flex items-end justify-center gap-3"
           style={{
             width: "calc(100% - 1rem)",
           }}
