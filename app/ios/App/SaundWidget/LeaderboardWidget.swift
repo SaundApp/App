@@ -178,7 +178,7 @@ struct LeaderboardWidget: Widget {
             }
         }
         .configurationDisplayName("Leaderboard")
-        .description("Display the montly leaderboard")
+        .description("Display the monthly leaderboard")
         .supportedFamilies([.systemSmall, .systemMedium])
     }
 }

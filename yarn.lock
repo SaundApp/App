@@ -4507,7 +4507,7 @@ __metadata:
     "@repo/form-types": "npm:0.0.0"
     "@repo/react-audio-voice-recorder": "npm:0.0.0"
     "@saundapp/keyboard": "npm:6.0.5"
-    "@saundapp/widgetsbridge": "npm:^0.0.2"
+    "@saundapp/widgetsbridge": "npm:^0.0.6"
     "@sentry/capacitor": "npm:^1.0.1"
     "@sentry/react": "npm:8.37.1"
     "@sentry/vite-plugin": "npm:^2.22.6"
@@ -4900,12 +4900,12 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@saundapp/widgetsbridge@npm:^0.0.2":
-  version: 0.0.2
-  resolution: "@saundapp/widgetsbridge@npm:0.0.2"
+"@saundapp/widgetsbridge@npm:^0.0.6":
+  version: 0.0.6
+  resolution: "@saundapp/widgetsbridge@npm:0.0.6"
   peerDependencies:
     "@capacitor/core": ^6.0.0
-  checksum: 10c0/3ccd15be35d5e93db0441ce993d706cda3c815449b225847e2b9355faa748d95735c5562477b551c63f3c281c4ec4bca51b03bfd27efdd0fa96b3eecb53f85ea
+  checksum: 10c0/1651e2127888a40260bdc997253b6fc43a97283b04f97c8b4a242eb734ff5481081d489e045bb49597d9211e33062c1f7d7c52b8e594fd3d1c3ead4dc47b9433
   languageName: node
   linkType: hard
 

@@ -13,5 +13,5 @@ export async function syncLeaderboard() {
     group: "group.app.saund",
   });
 
-  await WidgetsBridge.reloadTimeline({ kind: "LeaderboardWidget" });
+  await WidgetsBridge.reloadTimeline({ kind: "LeaderboardWidget", javaClass: "app.saund.widget.LeaderboardWidget" });
 }
