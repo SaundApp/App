@@ -1,4 +1,5 @@
 import { axiosClient } from "@/lib/axios";
+import { useDate } from "@/lib/dates";
 import type { ExtendedComment } from "@/types/prisma";
 import type { Post } from "@repo/backend-common/types";
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
@@ -17,8 +18,6 @@ import {
   DrawerTrigger,
 } from "../ui/drawer";
 import { Input } from "../ui/input";
-import { useDate } from "@/lib/dates";
-import { Capacitor } from "@capacitor/core";
 import VisuallyHidden from "../ui/visually-hidden";
 
 export default function Comments({ post }: { post: Post }) {
@@ -132,12 +131,7 @@ export default function Comments({ post }: { post: Post }) {
           ))}
         </div>
 
-        <div
-          className={
-            "mt-auto flex gap-3" +
-            (Capacitor.getPlatform() === "ios" ? " pb-4" : "")
-          }
-        >
+        <div className="mt-auto flex gap-3 pb-4">
           {session && (
             <Link
               to={`/account/${session?.username}`}

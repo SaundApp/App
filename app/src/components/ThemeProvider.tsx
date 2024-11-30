@@ -1,4 +1,5 @@
 import { createContext, useContext, useEffect, useState } from "react";
+import { StatusBar, Style } from "@capacitor/status-bar";
 
 type Theme = "dark" | "light" | "system";
 
@@ -31,6 +32,8 @@ export function ThemeProvider({
   );
 
   useEffect(() => {
+    StatusBar.setOverlaysWebView({ overlay: true }).catch(() => {});
+
     const root = window.document.documentElement;
 
     root.classList.remove("light", "dark");
@@ -42,8 +45,21 @@ export function ThemeProvider({
         : "light";
 
       root.classList.add(systemTheme);
+      StatusBar.setStyle({
+        style: Style.Default,
+      }).catch(() => {});
+      StatusBar.setBackgroundColor({
+        color: systemTheme === "dark" ? "#000000" : "#ffffff",
+      }).catch(() => {});
       return;
     }
+
+    StatusBar.setStyle({
+      style: theme === "dark" ? Style.Dark : Style.Light,
+    }).catch(() => {});
+    StatusBar.setBackgroundColor({
+      color: theme === "dark" ? "#000000" : "#ffffff",
+    }).catch(() => {});
 
     root.classList.add(theme);
   }, [theme]);

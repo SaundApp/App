@@ -5,4 +5,10 @@
     <string name="package_name">app.saund</string>
     <string name="custom_url_scheme">app.saund</string>
     <string name="default_notification_channel_id">default</string>
+    <string name="add_widget">Add widget</string>
+    <string name="leaderboard_widget_description">Display the monthly leaderboard</string>
+    <string name="leaderboard_widget_top">Top Artists</string>
+    <string name="artist_image">Artist Image</string>
+    <string name="artist_name">Artist Name</string>
+    <string name="artist_streams">Artist Streams</string>
 </resources>

@@ -7,8 +7,8 @@ import {
 } from "@/components/ui/drawer";
 import { axiosClient } from "@/lib/axios";
 import type { PublicUser } from "@/types/prisma";
-import { Capacitor } from "@capacitor/core";
 import { useQuery, useQueryClient } from "@tanstack/react-query";
+import { useNavigate } from "@tanstack/react-router";
 import { useEffect } from "react";
 import { useTranslation } from "react-i18next";
 import { FaCheckCircle, FaChevronDown } from "react-icons/fa";
@@ -16,7 +16,6 @@ import { useSession } from "../SessionContext";
 import Avatar from "../account/Avatar";
 import { Button } from "../ui/button";
 import VisuallyHidden from "../ui/visually-hidden";
-import { useNavigate } from "@tanstack/react-router";
 
 export default function Accounts() {
   const { t } = useTranslation();
@@ -103,12 +102,7 @@ export default function Accounts() {
             ))}
           </div>
 
-          <div
-            className={
-              "absolute bottom-0 w-full bg-background pt-3" +
-              (Capacitor.getPlatform() === "ios" ? " pb-8" : "")
-            }
-          >
+          <div className="absolute bottom-0 w-full bg-background pb-8 pt-3">
             <Button
               variant="secondary"
               className="mt-auto w-full"

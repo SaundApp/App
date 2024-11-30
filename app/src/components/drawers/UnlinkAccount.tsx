@@ -5,7 +5,6 @@ import {
   DrawerTitle,
 } from "@/components/ui/drawer";
 import { axiosClient } from "@/lib/axios";
-import { Capacitor } from "@capacitor/core";
 import { useTranslation } from "react-i18next";
 import { Button } from "../ui/button";
 import { useToast } from "../ui/use-toast";
@@ -32,7 +31,7 @@ export default function UnlinkAccount({
 
         <Button
           variant="destructive"
-          className={Capacitor.getPlatform() === "ios" ? "pb-8" : ""}
+          className="pb-8"
           onClick={() => {
             axiosClient.post(`/auth/spotify/unlink`).then(() => {
               toast({

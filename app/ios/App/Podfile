@@ -15,6 +15,7 @@ def capacitor_pods
   pod 'CapacitorBrowser', :path => '../../../node_modules/@capacitor/browser'
   pod 'CapacitorPushNotifications', :path => '../../../node_modules/@capacitor/push-notifications'
   pod 'CapacitorSplashScreen', :path => '../../../node_modules/@capacitor/splash-screen'
+  pod 'CapacitorStatusBar', :path => '../../../node_modules/@capacitor/status-bar'
   pod 'SaundappKeyboard', :path => '../../../node_modules/@saundapp/keyboard'
   pod 'SaundappWidgetsbridge', :path => '../../../node_modules/@saundapp/widgetsbridge'
   pod 'SentryCapacitor', :path => '../../../node_modules/@sentry/capacitor'

@@ -1,0 +1,150 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:tools="http://schemas.android.com/tools"
+        style="@style/Widget.Android.AppWidget.Container"
+        android:theme="@style/AppTheme.AppWidgetContainer"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:backgroundTint="#39383f">
+
+    <LinearLayout
+            android:orientation="vertical"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:gravity="center">
+
+        <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text=
+                        "@string/leaderboard_widget_top"
+                android:textSize="20sp"
+                android:textStyle="bold"
+                android:layout_margin="8dp"
+                android:layout_gravity="center_horizontal"
+                android:textColor="@color/gnt_white"
+                android:contentDescription="@string/leaderboard_widget_top" />
+
+        <LinearLayout
+                android:baselineAligned="false"
+                android:orientation="horizontal"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:weightSum="3"
+                android:layout_gravity="center">
+
+            <!-- Column 1 -->
+            <LinearLayout
+                    android:orientation="vertical"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:gravity="center">
+
+                <ImageView
+                        android:layout_width="80dp"
+                        android:layout_height="80dp"
+                        android:contentDescription="@string/artist_image"
+                        tools:srcCompat="@tools:sample/avatars"
+                        android:id="@+id/artist_1_image"
+                        android:scaleType="centerCrop"
+                        android:clipToOutline="true"
+                        android:background="@drawable/circular_background" />
+
+                <TextView
+                        android:id="@+id/artist_1_name"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/artist_name"
+                        android:textSize="14sp"
+                        android:layout_marginTop="4dp"
+                        android:gravity="center"
+                        android:textColor="@color/gnt_white" />
+
+                <TextView
+                        android:id="@+id/artist_1_streams"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/artist_streams"
+                        android:textSize="14sp"
+                        android:gravity="center"
+                        android:textColor="@color/gnt_white" />
+            </LinearLayout>
+
+            <LinearLayout
+                    android:orientation="vertical"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:gravity="center">
+
+                <ImageView
+                        android:layout_width="80dp"
+                        android:layout_height="80dp"
+                        android:contentDescription="@string/artist_image"
+                        tools:srcCompat="@tools:sample/avatars"
+                        android:id="@+id/artist_2_image"
+                        android:scaleType="centerCrop"
+                        android:clipToOutline="true"
+                        android:background="@drawable/circular_background" />
+
+                <TextView
+                        android:id="@+id/artist_2_name"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/artist_name"
+                        android:textSize="14sp"
+                        android:layout_marginTop="4dp"
+                        android:gravity="center"
+                        android:textColor="@color/gnt_white" />
+
+                <TextView
+                        android:id="@+id/artist_2_streams"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/artist_streams"
+                        android:textSize="14sp"
+                        android:gravity="center"
+                        android:textColor="@color/gnt_white" />
+            </LinearLayout>
+
+            <LinearLayout
+                    android:orientation="vertical"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:gravity="center">
+
+                <ImageView
+                        android:layout_width="80dp"
+                        android:layout_height="80dp"
+                        android:contentDescription="@string/artist_image"
+                        tools:srcCompat="@tools:sample/avatars"
+                        android:id="@+id/artist_3_image"
+                        android:scaleType="centerCrop"
+                        android:clipToOutline="true"
+                        android:background="@drawable/circular_background" />
+
+                <TextView
+                        android:id="@+id/artist_3_name"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/artist_name"
+                        android:textSize="14sp"
+                        android:layout_marginTop="4dp"
+                        android:gravity="center"
+                        android:textColor="@color/gnt_white" />
+
+                <TextView
+                        android:id="@+id/artist_3_streams"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/artist_streams"
+                        android:textSize="14sp"
+                        android:gravity="center"
+                        android:textColor="@color/gnt_white" />
+            </LinearLayout>
+
+        </LinearLayout>
+    </LinearLayout>
+
+</RelativeLayout>

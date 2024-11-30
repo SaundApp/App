@@ -6,12 +6,11 @@ import {
 } from "@/components/ui/drawer";
 import { axiosClient } from "@/lib/axios";
 import type { PublicUser } from "@/types/prisma";
-import { Capacitor } from "@capacitor/core";
+import { Browser } from "@capacitor/browser";
 import type { SubscriptionSettings } from "@repo/backend-common/types";
 import { useTranslation } from "react-i18next";
 import { MdVerified } from "react-icons/md";
 import { Button } from "../ui/button";
-import { Browser } from "@capacitor/browser";
 
 export default function Subscribe({
   user,
@@ -50,7 +49,7 @@ export default function Subscribe({
         </ul>
 
         <Button
-          className={Capacitor.getPlatform() === "ios" ? "pb-8" : ""}
+          className="pb-8"
           onClick={() => {
             axiosClient
               .post(`/users/${user.id}/subscribe`)

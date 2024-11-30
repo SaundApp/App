@@ -713,6 +713,15 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@capacitor/status-bar@npm:^6.0.2":
+  version: 6.0.2
+  resolution: "@capacitor/status-bar@npm:6.0.2"
+  peerDependencies:
+    "@capacitor/core": ^6.0.0
+  checksum: 10c0/c84d4ba6db1ac9a3e00bdad5a3eaf42f83a5c4bc9e52709c65782b670871cdf8129c3a65d374404dade8f061c784b80f42bc6bbccc82f27a8caeb7415523c720
+  languageName: node
+  linkType: hard
+
 "@cspotcode/source-map-support@npm:^0.8.0":
   version: 0.8.1
   resolution: "@cspotcode/source-map-support@npm:0.8.1"
@@ -4491,6 +4500,7 @@ __metadata:
     "@capacitor/ios": "npm:latest"
     "@capacitor/push-notifications": "npm:latest"
     "@capacitor/splash-screen": "npm:latest"
+    "@capacitor/status-bar": "npm:^6.0.2"
     "@hookform/resolvers": "npm:^3.9.1"
     "@radix-ui/react-context-menu": "npm:^2.2.2"
     "@radix-ui/react-dropdown-menu": "npm:^2.1.2"
@@ -4507,7 +4517,7 @@ __metadata:
     "@repo/form-types": "npm:0.0.0"
     "@repo/react-audio-voice-recorder": "npm:0.0.0"
     "@saundapp/keyboard": "npm:6.0.5"
-    "@saundapp/widgetsbridge": "npm:^0.0.1"
+    "@saundapp/widgetsbridge": "npm:^0.0.6"
     "@sentry/capacitor": "npm:^1.0.1"
     "@sentry/react": "npm:8.37.1"
     "@sentry/vite-plugin": "npm:^2.22.6"
@@ -4900,12 +4910,12 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@saundapp/widgetsbridge@npm:^0.0.1":
-  version: 0.0.1
-  resolution: "@saundapp/widgetsbridge@npm:0.0.1"
+"@saundapp/widgetsbridge@npm:^0.0.6":
+  version: 0.0.6
+  resolution: "@saundapp/widgetsbridge@npm:0.0.6"
   peerDependencies:
     "@capacitor/core": ^6.0.0
-  checksum: 10c0/0ec702c31fefc92d77932c2030eef2a2883756a3395c8336d5272853c77c1b4976b1c239612725d4f63b73a13b5bdf5002486e500dd5fedf13cdfbdd8e349831
+  checksum: 10c0/1651e2127888a40260bdc997253b6fc43a97283b04f97c8b4a242eb734ff5481081d489e045bb49597d9211e33062c1f7d7c52b8e594fd3d1c3ead4dc47b9433
   languageName: node
   linkType: hard
 
