@@ -163,8 +163,8 @@ export default function Post({ post }: { post: ExtendedPost }) {
           className="aspect-square rounded-2xl object-cover"
           ref={imageRef}
           crossOrigin="anonymous"
-          height={post.type !== "SONG" ? 290 : 380}
-          width={post.type !== "SONG" ? 290 : 380}
+          height={post.type !== "SONG" ? window.innerWidth - 110 : 380}
+          width={post.type !== "SONG" ? window.innerWidth - 110 : 380}
         />
 
         {post.type !== "SONG" && (
