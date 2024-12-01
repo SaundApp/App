@@ -3,7 +3,7 @@
 	archiveVersion = 1;
 	classes = {
 	};
-	objectVersion = 60;
+	objectVersion = 48;
 	objects = {
 
 /* Begin PBXBuildFile section */
@@ -17,6 +17,9 @@
 		504EC3121FED79650016851F /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 504EC3101FED79650016851F /* LaunchScreen.storyboard */; };
 		50B271D11FEDC1A000F3C39B /* public in Resources */ = {isa = PBXBuildFile; fileRef = 50B271D01FEDC1A000F3C39B /* public */; };
 		A084ECDBA7D38E1E42DFC39D /* Pods_App.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = AF277DCFFFF123FFC6DF26C7 /* Pods_App.framework */; };
+		ED663B9B2CFCB0AF005E4195 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = ED663B962CFCB0AF005E4195 /* Assets.xcassets */; };
+		ED663B9D2CFCB0AF005E4195 /* LeaderboardWidget.swift in Sources */ = {isa = PBXBuildFile; fileRef = ED663B982CFCB0AF005E4195 /* LeaderboardWidget.swift */; };
+		ED663B9E2CFCB0AF005E4195 /* SaundWidgetBundle.swift in Sources */ = {isa = PBXBuildFile; fileRef = ED663B992CFCB0AF005E4195 /* SaundWidgetBundle.swift */; };
 		ED7F60112CDFA73300B0A5A1 /* WidgetKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = ED7F5FC72CDF9BCA00B0A5A1 /* WidgetKit.framework */; };
 		ED7F60122CDFA73300B0A5A1 /* SwiftUI.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = ED7F5FC92CDF9BCA00B0A5A1 /* SwiftUI.framework */; };
 		ED7F601D2CDFA73500B0A5A1 /* SaundWidgetExtension.appex in Embed Foundation Extensions */ = {isa = PBXBuildFile; fileRef = ED7F60102CDFA73300B0A5A1 /* SaundWidgetExtension.appex */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
@@ -61,26 +64,16 @@
 		50B271D01FEDC1A000F3C39B /* public */ = {isa = PBXFileReference; lastKnownFileType = folder; path = public; sourceTree = "<group>"; };
 		AF277DCFFFF123FFC6DF26C7 /* Pods_App.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_App.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		AF51FD2D460BCFE21FA515B2 /* Pods-App.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-App.release.xcconfig"; path = "Pods/Target Support Files/Pods-App/Pods-App.release.xcconfig"; sourceTree = "<group>"; };
+		ED663B962CFCB0AF005E4195 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
+		ED663B972CFCB0AF005E4195 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		ED663B982CFCB0AF005E4195 /* LeaderboardWidget.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LeaderboardWidget.swift; sourceTree = "<group>"; };
+		ED663B992CFCB0AF005E4195 /* SaundWidgetBundle.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SaundWidgetBundle.swift; sourceTree = "<group>"; };
 		ED7F5FC72CDF9BCA00B0A5A1 /* WidgetKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = WidgetKit.framework; path = System/Library/Frameworks/WidgetKit.framework; sourceTree = SDKROOT; };
 		ED7F5FC92CDF9BCA00B0A5A1 /* SwiftUI.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SwiftUI.framework; path = System/Library/Frameworks/SwiftUI.framework; sourceTree = SDKROOT; };
 		ED7F60102CDFA73300B0A5A1 /* SaundWidgetExtension.appex */ = {isa = PBXFileReference; explicitFileType = "wrapper.app-extension"; includeInIndex = 0; path = SaundWidgetExtension.appex; sourceTree = BUILT_PRODUCTS_DIR; };
 		ED7F60222CDFA74900B0A5A1 /* SaundWidgetExtension.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = SaundWidgetExtension.entitlements; sourceTree = "<group>"; };
 		FC68EB0AF532CFC21C3344DD /* Pods-App.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-App.debug.xcconfig"; path = "Pods/Target Support Files/Pods-App/Pods-App.debug.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
-
-/* Begin PBXFileSystemSynchronizedBuildFileExceptionSet section */
-		ED7F601E2CDFA73500B0A5A1 /* PBXFileSystemSynchronizedBuildFileExceptionSet */ = {
-			isa = PBXFileSystemSynchronizedBuildFileExceptionSet;
-			membershipExceptions = (
-				Info.plist,
-			);
-			target = ED7F600F2CDFA73300B0A5A1 /* SaundWidgetExtension */;
-		};
-/* End PBXFileSystemSynchronizedBuildFileExceptionSet section */
-
-/* Begin PBXFileSystemSynchronizedRootGroup section */
-		ED7F60132CDFA73300B0A5A1 /* SaundWidget */ = {isa = PBXFileSystemSynchronizedRootGroup; exceptions = (ED7F601E2CDFA73500B0A5A1 /* PBXFileSystemSynchronizedBuildFileExceptionSet */, ); explicitFileTypes = {}; explicitFolders = (); path = SaundWidget; sourceTree = "<group>"; };
-/* End PBXFileSystemSynchronizedRootGroup section */
 
 /* Begin PBXFrameworksBuildPhase section */
 		504EC3011FED79650016851F /* Frameworks */ = {
@@ -118,7 +111,7 @@
 			children = (
 				ED7F60222CDFA74900B0A5A1 /* SaundWidgetExtension.entitlements */,
 				504EC3061FED79650016851F /* App */,
-				ED7F60132CDFA73300B0A5A1 /* SaundWidget */,
+				ED663B9A2CFCB0AF005E4195 /* SaundWidget */,
 				504EC3051FED79650016851F /* Products */,
 				7F8756D8B27F46E3366F6CEA /* Pods */,
 				27E2DDA53C4D2A4D1A88CE4A /* Frameworks */,
@@ -161,6 +154,17 @@
 			name = Pods;
 			sourceTree = "<group>";
 		};
+		ED663B9A2CFCB0AF005E4195 /* SaundWidget */ = {
+			isa = PBXGroup;
+			children = (
+				ED663B962CFCB0AF005E4195 /* Assets.xcassets */,
+				ED663B972CFCB0AF005E4195 /* Info.plist */,
+				ED663B982CFCB0AF005E4195 /* LeaderboardWidget.swift */,
+				ED663B992CFCB0AF005E4195 /* SaundWidgetBundle.swift */,
+			);
+			path = SaundWidget;
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -197,9 +201,6 @@
 			);
 			dependencies = (
 			);
-			fileSystemSynchronizedGroups = (
-				ED7F60132CDFA73300B0A5A1 /* SaundWidget */,
-			);
 			name = SaundWidgetExtension;
 			packageProductDependencies = (
 			);
@@ -223,6 +224,7 @@
 					};
 					ED7F600F2CDFA73300B0A5A1 = {
 						CreatedOnToolsVersion = 16.1;
+						ProvisioningStyle = Automatic;
 					};
 				};
 			};
@@ -264,6 +266,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				ED663B9B2CFCB0AF005E4195 /* Assets.xcassets in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -319,6 +322,8 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				ED663B9D2CFCB0AF005E4195 /* LeaderboardWidget.swift in Sources */,
+				ED663B9E2CFCB0AF005E4195 /* SaundWidgetBundle.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -454,8 +459,7 @@
 				IPHONEOS_DEPLOYMENT_TARGET = 13.0;
 				MTL_ENABLE_DEBUG_INFO = NO;
 				SDKROOT = iphoneos;
-				SWIFT_COMPILATION_MODE = wholemodule;
-				SWIFT_OPTIMIZATION_LEVEL = "-O";
+				SWIFT_OPTIMIZATION_LEVEL = "-Owholemodule";
 				VALIDATE_PRODUCT = YES;
 			};
 			name = Release;
@@ -475,10 +479,7 @@
 				INFOPLIST_KEY_CFBundleDisplayName = Saund;
 				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.social-networking";
 				IPHONEOS_DEPLOYMENT_TARGET = 13.0;
-				LD_RUNPATH_SEARCH_PATHS = (
-					"$(inherited)",
-					"@executable_path/Frameworks",
-				);
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				MARKETING_VERSION = 1.0;
 				OTHER_SWIFT_FLAGS = "$(inherited) \"-D\" \"COCOAPODS\" \"-DDEBUG\"";
 				PRODUCT_BUNDLE_IDENTIFIER = app.saund;
@@ -508,10 +509,7 @@
 				INFOPLIST_KEY_CFBundleDisplayName = Saund;
 				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.social-networking";
 				IPHONEOS_DEPLOYMENT_TARGET = 13.0;
-				LD_RUNPATH_SEARCH_PATHS = (
-					"$(inherited)",
-					"@executable_path/Frameworks",
-				);
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				MARKETING_VERSION = 1.0;
 				PRODUCT_BUNDLE_IDENTIFIER = app.saund;
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -548,11 +546,7 @@
 				INFOPLIST_KEY_CFBundleDisplayName = SaundWidget;
 				INFOPLIST_KEY_NSHumanReadableCopyright = "";
 				IPHONEOS_DEPLOYMENT_TARGET = 18.1;
-				LD_RUNPATH_SEARCH_PATHS = (
-					"$(inherited)",
-					"@executable_path/Frameworks",
-					"@executable_path/../../Frameworks",
-				);
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @executable_path/../../Frameworks";
 				LOCALIZATION_PREFERS_STRING_CATALOGS = YES;
 				MARKETING_VERSION = 1.0;
 				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
@@ -590,11 +584,7 @@
 				INFOPLIST_KEY_CFBundleDisplayName = SaundWidget;
 				INFOPLIST_KEY_NSHumanReadableCopyright = "";
 				IPHONEOS_DEPLOYMENT_TARGET = 18.1;
-				LD_RUNPATH_SEARCH_PATHS = (
-					"$(inherited)",
-					"@executable_path/Frameworks",
-					"@executable_path/../../Frameworks",
-				);
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @executable_path/../../Frameworks";
 				LOCALIZATION_PREFERS_STRING_CATALOGS = YES;
 				MARKETING_VERSION = 1.0;
 				MTL_FAST_MATH = YES;

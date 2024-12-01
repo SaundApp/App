@@ -12,6 +12,8 @@ PODS:
     - Capacitor
   - CapacitorSplashScreen (6.0.1):
     - Capacitor
+  - CapacitorStatusBar (6.0.2):
+    - Capacitor
   - Firebase/CoreOnly (10.29.0):
     - FirebaseCore (= 10.29.0)
   - Firebase/Messaging (10.29.0):
@@ -74,7 +76,7 @@ PODS:
   - PromisesObjC (2.4.0)
   - SaundappKeyboard (6.0.5):
     - Capacitor
-  - SaundappWidgetsbridge (0.0.1):
+  - SaundappWidgetsbridge (0.0.6):
     - Capacitor
   - Sentry/HybridSDK (8.36.0)
   - SentryCapacitor (1.0.2):
@@ -89,6 +91,7 @@ DEPENDENCIES:
   - "CapacitorCordova (from `../../../node_modules/@capacitor/ios`)"
   - "CapacitorPushNotifications (from `../../../node_modules/@capacitor/push-notifications`)"
   - "CapacitorSplashScreen (from `../../../node_modules/@capacitor/splash-screen`)"
+  - "CapacitorStatusBar (from `../../../node_modules/@capacitor/status-bar`)"
   - Firebase/Messaging
   - "SaundappKeyboard (from `../../../node_modules/@saundapp/keyboard`)"
   - "SaundappWidgetsbridge (from `../../../node_modules/@saundapp/widgetsbridge`)"
@@ -122,6 +125,8 @@ EXTERNAL SOURCES:
     :path: "../../../node_modules/@capacitor/push-notifications"
   CapacitorSplashScreen:
     :path: "../../../node_modules/@capacitor/splash-screen"
+  CapacitorStatusBar:
+    :path: "../../../node_modules/@capacitor/status-bar"
   SaundappKeyboard:
     :path: "../../../node_modules/@saundapp/keyboard"
   SaundappWidgetsbridge:
@@ -137,6 +142,7 @@ SPEC CHECKSUMS:
   CapacitorCordova: be703980ca797f847c3356f78fa175d21c8330c2
   CapacitorPushNotifications: 293fabe42c7229756078e81f2d3a60394ba4e5d8
   CapacitorSplashScreen: 61645214e8f955ff2b80f16a6a3648960fe4c89f
+  CapacitorStatusBar: 3b9ac7d0684770522c532d1158a1434512ab1477
   Firebase: cec914dab6fd7b1bd8ab56ea07ce4e03dd251c2d
   FirebaseCore: 30e9c1cbe3d38f5f5e75f48bfcea87d7c358ec16
   FirebaseCoreInternal: df84dd300b561c27d5571684f389bf60b0a5c934
@@ -147,10 +153,10 @@ SPEC CHECKSUMS:
   nanopb: 438bc412db1928dac798aa6fd75726007be04262
   PromisesObjC: f5707f49cb48b9636751c5b2e7d227e43fba9f47
   SaundappKeyboard: 0351acd25343d281351eeff3d2ebea398470aef5
-  SaundappWidgetsbridge: 4c8cbcd104ac3597fdeb8079af998afaafe369db
+  SaundappWidgetsbridge: b025217acf3d5c2b841c989545dc100fdce8dc92
   Sentry: f8374b5415bc38dfb5645941b3ae31230fbeae57
   SentryCapacitor: 808a63a267d5053af12c25e6125c13f79b32debc
 
-PODFILE CHECKSUM: 5bbe3628302b8471b973d705296824d9fadaf519
+PODFILE CHECKSUM: f64d7f43af0be80d77fa69cd1fa84fab8aa71c4f
 
 COCOAPODS: 1.16.2
