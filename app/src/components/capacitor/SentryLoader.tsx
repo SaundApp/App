@@ -6,8 +6,8 @@ Sentry.init(
     dsn: "https://a5efb0d219a4a18ef3294c855dda3b6c@o4507493410340864.ingest.de.sentry.io/4507493412044880",
     enabled: import.meta.env.PROD,
     integrations: [
-      SentryReact.browserTracingIntegration(),
-      SentryReact.replayIntegration(),
+      Sentry.browserTracingIntegration(),
+      Sentry.replayIntegration(),
     ],
     // Performance Monitoring
     tracesSampleRate: 1.0, //  Capture 100% of the transactions
