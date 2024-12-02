@@ -23,6 +23,7 @@
 		ED7F60112CDFA73300B0A5A1 /* WidgetKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = ED7F5FC72CDF9BCA00B0A5A1 /* WidgetKit.framework */; };
 		ED7F60122CDFA73300B0A5A1 /* SwiftUI.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = ED7F5FC92CDF9BCA00B0A5A1 /* SwiftUI.framework */; };
 		ED7F601D2CDFA73500B0A5A1 /* SaundWidgetExtension.appex in Embed Foundation Extensions */ = {isa = PBXBuildFile; fileRef = ED7F60102CDFA73300B0A5A1 /* SaundWidgetExtension.appex */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
+		EDBD7C8B2CFE113D00E72E36 /* Localizable.xcstrings in Resources */ = {isa = PBXBuildFile; fileRef = EDBD7C8A2CFE113D00E72E36 /* Localizable.xcstrings */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -72,6 +73,7 @@
 		ED7F5FC92CDF9BCA00B0A5A1 /* SwiftUI.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SwiftUI.framework; path = System/Library/Frameworks/SwiftUI.framework; sourceTree = SDKROOT; };
 		ED7F60102CDFA73300B0A5A1 /* SaundWidgetExtension.appex */ = {isa = PBXFileReference; explicitFileType = "wrapper.app-extension"; includeInIndex = 0; path = SaundWidgetExtension.appex; sourceTree = BUILT_PRODUCTS_DIR; };
 		ED7F60222CDFA74900B0A5A1 /* SaundWidgetExtension.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = SaundWidgetExtension.entitlements; sourceTree = "<group>"; };
+		EDBD7C8A2CFE113D00E72E36 /* Localizable.xcstrings */ = {isa = PBXFileReference; lastKnownFileType = text.json.xcstrings; path = Localizable.xcstrings; sourceTree = "<group>"; };
 		FC68EB0AF532CFC21C3344DD /* Pods-App.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-App.debug.xcconfig"; path = "Pods/Target Support Files/Pods-App/Pods-App.debug.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -161,6 +163,7 @@
 				ED663B972CFCB0AF005E4195 /* Info.plist */,
 				ED663B982CFCB0AF005E4195 /* LeaderboardWidget.swift */,
 				ED663B992CFCB0AF005E4195 /* SaundWidgetBundle.swift */,
+				EDBD7C8A2CFE113D00E72E36 /* Localizable.xcstrings */,
 			);
 			path = SaundWidget;
 			sourceTree = "<group>";
@@ -235,6 +238,7 @@
 			knownRegions = (
 				en,
 				Base,
+				it,
 			);
 			mainGroup = 504EC2FB1FED79650016851F;
 			productRefGroup = 504EC3051FED79650016851F /* Products */;
@@ -266,6 +270,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				EDBD7C8B2CFE113D00E72E36 /* Localizable.xcstrings in Resources */,
 				ED663B9B2CFCB0AF005E4195 /* Assets.xcassets in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -410,6 +415,7 @@
 				ONLY_ACTIVE_ARCH = YES;
 				SDKROOT = iphoneos;
 				SWIFT_ACTIVE_COMPILATION_CONDITIONS = DEBUG;
+				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 			};
 			name = Debug;
@@ -459,6 +465,7 @@
 				IPHONEOS_DEPLOYMENT_TARGET = 13.0;
 				MTL_ENABLE_DEBUG_INFO = NO;
 				SDKROOT = iphoneos;
+				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_OPTIMIZATION_LEVEL = "-Owholemodule";
 				VALIDATE_PRODUCT = YES;
 			};
@@ -474,7 +481,7 @@
 				CODE_SIGN_IDENTITY = "Apple Development";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution";
 				CODE_SIGN_STYLE = Manual;
-				CURRENT_PROJECT_VERSION = 25;
+				CURRENT_PROJECT_VERSION = 26;
 				DEVELOPMENT_TEAM = "";
 				"DEVELOPMENT_TEAM[sdk=iphoneos*]" = 5QMQ8M84QB;
 				INFOPLIST_FILE = App/Info.plist;
@@ -507,7 +514,7 @@
 				CODE_SIGN_IDENTITY = "Apple Development";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution";
 				CODE_SIGN_STYLE = Manual;
-				CURRENT_PROJECT_VERSION = 25;
+				CURRENT_PROJECT_VERSION = 26;
 				DEVELOPMENT_TEAM = "";
 				"DEVELOPMENT_TEAM[sdk=iphoneos*]" = 5QMQ8M84QB;
 				INFOPLIST_FILE = App/Info.plist;

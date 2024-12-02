@@ -13,6 +13,7 @@ import { ContextMenu, ContextMenuTrigger } from "../ui/context-menu";
 import { Spinner } from "../ui/spinner";
 import AudioPlayer from "./AudioPlayer";
 import Menu from "./Menu";
+import { Haptics, ImpactStyle } from "@capacitor/haptics";
 
 export default function Attachment({
   postId,
@@ -171,7 +172,9 @@ export default function Attachment({
   if (!message) return <div className="ml-auto">{renderItem()}</div>;
 
   return (
-    <ContextMenu>
+    <ContextMenu onOpenChange={(open) => {
+      if (open) Haptics.impact({ style: ImpactStyle.Light });
+    }}>
       <ContextMenuTrigger className={self ? "ml-auto" : ""} disabled={!self}>
         <div data-message={message?.id}>{renderItem()}</div>
       </ContextMenuTrigger>

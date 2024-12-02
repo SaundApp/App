@@ -9,19 +9,45 @@ let sampleData = [
 
 struct Provider: TimelineProvider {
     func placeholder(in context: Context) -> LeaderboardEntry {
-        LeaderboardEntry(date: Date(), artists: sampleData)
+        var data = parseLeaderboard()
+        if (data == nil) {
+            data = sampleData
+        }
+        
+       return LeaderboardEntry(date: Date(), artists: data)
     }
     
     func getSnapshot(in context: Context, completion: @escaping (LeaderboardEntry) -> ()) {
-        let entry = LeaderboardEntry(date: Date(), artists: sampleData)
+        var data = parseLeaderboard()
+        if (data == nil) {
+            data = sampleData
+        }
+        
+        let entry = LeaderboardEntry(date: Date(), artists: data)
         completion(entry)
     }
     
     func getTimeline(in context: Context, completion: @escaping (Timeline<Entry>) -> ()) {
         var entries: [LeaderboardEntry] = []
         
+        var data = parseLeaderboard()
+        if data == nil {
+            data = []
+        }
+        
+        let currentDate = Date()
+        let entryDate = Calendar.current.date(byAdding: .minute, value: 5, to: currentDate)!
+        
+        let entry = LeaderboardEntry(date: entryDate, artists: data)
+        entries.append(entry)
+        
+        let timeline = Timeline(entries: entries, policy: .atEnd)
+        completion(timeline)
+    }
+    
+    private func parseLeaderboard() -> [LeaderboardArtist]? {
         let sharedDefaults = UserDefaults(suiteName: "group.app.saund")
-        var data: [LeaderboardArtist] = []
+        var data: [LeaderboardArtist]? = nil
         
         if let json = sharedDefaults?.string(forKey: "leaderboard.artists") {
             if let decodedData = try? JSONDecoder().decode([LeaderboardArtist].self, from: Data(json.utf8)) {
@@ -36,17 +62,8 @@ struct Provider: TimelineProvider {
             }
         }
         
-        let currentDate = Date()
-        let entryDate = Calendar.current.date(byAdding: .minute, value: 5, to: currentDate)!
-        
-        let entry = LeaderboardEntry(date: entryDate, artists: data)
-        entries.append(entry)
-        
-        let timeline = Timeline(entries: entries, policy: .atEnd)
-        completion(timeline)
+        return data
     }
-    
-    
 }
 
 extension Int {
@@ -64,7 +81,7 @@ extension Int {
     }
 }
 
-struct LeaderboardArtist: Decodable, Hashable {
+struct LeaderboardArtist: Decodable, Identifiable, Hashable {
     let id: String
     let name: String
     let username: String
@@ -118,7 +135,7 @@ struct LeaderboardArtistView: View {
             }
             
             Text(artistName)
-            Text(artistStreams + " streams")
+            Text("\(artistStreams) streams")
                 .font(.system(size: 10))
                 .foregroundStyle(.secondary)
         }

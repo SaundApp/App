@@ -1,3 +1,7 @@
+import "@capacitor/push-notifications";
+import "@capacitor/splash-screen";
+import "@saundapp/keyboard";
+
 import type { CapacitorConfig } from "@capacitor/cli";
 import { KeyboardResize } from "@saundapp/keyboard";
 

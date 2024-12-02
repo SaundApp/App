@@ -211,10 +211,10 @@ function Chat() {
           maxHeight: keyboard
             ? !replying
               ? "65vh"
-              : "60vh"
+              : "57vh"
             : !replying
               ? "100vh"
-              : "75vh",
+              : "74vh",
         }}
       >
         {uploadAttachment.isPending && (
@@ -261,7 +261,7 @@ function Chat() {
         }}
       >
         <div
-          className="absolute bottom-10 left-2 flex items-end justify-center gap-3"
+          className="absolute bottom-[1.6rem] left-2 flex items-end justify-center gap-3"
           style={{
             width: "calc(100% - 1rem)",
           }}

@@ -14,6 +14,7 @@
     "@capacitor/app": "latest",
     "@capacitor/browser": "^6.0.4",
     "@capacitor/core": "latest",
+    "@capacitor/haptics": "^6.0.2",
     "@capacitor/ios": "latest",
     "@capacitor/push-notifications": "latest",
     "@capacitor/splash-screen": "latest",

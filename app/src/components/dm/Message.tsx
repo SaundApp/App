@@ -8,6 +8,7 @@ import { ContextMenu, ContextMenuTrigger } from "../ui/context-menu";
 import Attachment from "./Attachment";
 import Menu from "./Menu";
 import Song from "./Song";
+import { Haptics, ImpactStyle } from "@capacitor/haptics";
 
 export default function MessageComponent({
   message,
@@ -57,7 +58,9 @@ export default function MessageComponent({
     );
 
   return (
-    <ContextMenu>
+    <ContextMenu onOpenChange={(open) => {
+      if (open) Haptics.impact({ style: ImpactStyle.Light });
+    }}>
       <ContextMenuTrigger disabled={!self}>
         {reply && (
           <div className={"flex w-fit gap-1 " + (self ? "ml-auto" : "")}>

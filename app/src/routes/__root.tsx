@@ -83,7 +83,9 @@ function App() {
   }, [token, routerState.location.pathname, queryClient, navigate]);
 
   useEffect(() => {
-    SplashScreen.hide();
+    setTimeout(() => {
+      SplashScreen.hide();
+    }, 300);
   }, []);
 
   return (
