@@ -147,6 +147,20 @@ function Login() {
           Spotify
         </Link>
       </Button>
+
+      <div className="muted flex gap-1">
+        <a href="https://saund.app/tos" className="underline" target="_blank">
+          Terms of Service
+        </a>
+        <span>&</span>
+        <a
+          href="https://saund.app/privacy-policy"
+          className="underline"
+          target="_blank"
+        >
+          Privacy Policy
+        </a>
+      </div>
     </div>
   );
 }

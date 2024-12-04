@@ -58,9 +58,11 @@ export default function MessageComponent({
     );
 
   return (
-    <ContextMenu onOpenChange={(open) => {
-      if (open) Haptics.impact({ style: ImpactStyle.Light });
-    }}>
+    <ContextMenu
+      onOpenChange={(open) => {
+        if (open) Haptics.impact({ style: ImpactStyle.Light });
+      }}
+    >
       <ContextMenuTrigger disabled={!self}>
         {reply && (
           <div className={"flex w-fit gap-1 " + (self ? "ml-auto" : "")}>

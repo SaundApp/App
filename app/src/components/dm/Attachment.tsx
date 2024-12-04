@@ -172,9 +172,11 @@ export default function Attachment({
   if (!message) return <div className="ml-auto">{renderItem()}</div>;
 
   return (
-    <ContextMenu onOpenChange={(open) => {
-      if (open) Haptics.impact({ style: ImpactStyle.Light });
-    }}>
+    <ContextMenu
+      onOpenChange={(open) => {
+        if (open) Haptics.impact({ style: ImpactStyle.Light });
+      }}
+    >
       <ContextMenuTrigger className={self ? "ml-auto" : ""} disabled={!self}>
         <div data-message={message?.id}>{renderItem()}</div>
       </ContextMenuTrigger>

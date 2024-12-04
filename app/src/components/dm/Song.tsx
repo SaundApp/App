@@ -9,7 +9,7 @@ import type { Socket } from "socket.io-client";
 import Avatar from "../account/Avatar";
 import { ContextMenu, ContextMenuTrigger } from "../ui/context-menu";
 import Menu from "./Menu";
-import { Haptics, ImpactStyle } from '@capacitor/haptics';
+import { Haptics, ImpactStyle } from "@capacitor/haptics";
 
 export default function Song({
   postId,
@@ -39,9 +39,11 @@ export default function Song({
   if (!post) return null;
 
   return (
-    <ContextMenu onOpenChange={(open) => {
-      if (open) Haptics.impact({ style: ImpactStyle.Light });
-    }}>
+    <ContextMenu
+      onOpenChange={(open) => {
+        if (open) Haptics.impact({ style: ImpactStyle.Light });
+      }}
+    >
       <ContextMenuTrigger className={self ? "ml-auto" : ""} disabled={!self}>
         <div
           className={

@@ -31,7 +31,7 @@ function Register() {
   });
 
   return (
-    <div className="m-auto flex flex-col justify-center gap-3">
+    <div className="m-auto flex w-full flex-col justify-center gap-3">
       <div>
         <h1>{t("auth.register")}</h1>
         <p className="muted">{t("auth.register_description")}</p>
@@ -183,6 +183,20 @@ function Register() {
           Spotify
         </Link>
       </Button>
+
+      <div className="muted flex gap-1">
+        <a href="https://saund.app/tos" className="underline" target="_blank">
+          Terms of Service
+        </a>
+        <span>&</span>
+        <a
+          href="https://saund.app/privacy-policy"
+          className="underline"
+          target="_blank"
+        >
+          Privacy Policy
+        </a>
+      </div>
     </div>
   );
 }
