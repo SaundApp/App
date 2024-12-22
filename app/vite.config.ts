@@ -1,7 +1,7 @@
 import { sentryVitePlugin } from "@sentry/vite-plugin";
 import { TanStackRouterVite } from "@tanstack/router-vite-plugin";
 import react from "@vitejs/plugin-react";
-import { existsSync, mkdirSync, unlinkSync, writeFileSync } from "fs";
+import { existsSync, mkdirSync, rmSync, writeFileSync } from "fs";
 import path from "path";
 import Unfonts from "unplugin-fonts/vite";
 import { defineConfig, loadEnv } from "vite";
@@ -31,7 +31,8 @@ export default ({ mode }: { mode: string }) => {
       {
         name: "i18n-bundler",
         async closeBundle() {
-          if (existsSync("dist/locales")) unlinkSync("dist/locales");
+          if (existsSync("dist/locales"))
+            rmSync("dist/locales", { recursive: true, force: true });
           mkdirSync("dist/locales", { recursive: true });
 
           const data: string[] = await fetch(

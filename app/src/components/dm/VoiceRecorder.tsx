@@ -48,7 +48,6 @@ export default function VoiceRecorder({
         audioBitsPerSecond: 128000,
       }}
       recorderControls={controls}
-      showVisualizer={true}
       classes={{
         AudioRecorderClass:
           "!shadow-none !bg-primary !rounded-2xl" +

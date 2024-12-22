@@ -22,7 +22,6 @@ import { createLazyFileRoute } from "@tanstack/react-router";
 import { useState } from "react";
 import { useTranslation } from "react-i18next";
 import { FaBell, FaEnvelope, FaMobile } from "react-icons/fa";
-import Twemoji from "react-twemoji";
 
 export const Route = createLazyFileRoute("/account/settings")({
   component: EditProfile,
@@ -145,11 +144,9 @@ function EditProfile() {
             {languages &&
               Object.keys(languages).map((lang) => (
                 <SelectItem key={lang} value={lang} className="!rounded-2xl">
-                  <Twemoji options={{ className: "w-4" }}>
-                    <p className="flex gap-2">
-                      {getFlagEmoji(lang.replace("en", "us"))} {languages[lang]}
-                    </p>
-                  </Twemoji>
+                  <p className="flex gap-2">
+                    {getFlagEmoji(lang.replace("en", "us"))} {languages[lang]}
+                  </p>
                 </SelectItem>
               ))}
           </SelectContent>
