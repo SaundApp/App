@@ -580,6 +580,17 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@capacitor-community/stripe@npm:^6.4.2":
+  version: 6.4.2
+  resolution: "@capacitor-community/stripe@npm:6.4.2"
+  peerDependencies:
+    "@capacitor/core": ^6.0.0
+    react: ^17.0.0 || ^18.0.0
+    stripe-pwa-elements: ^2.1.0
+  checksum: 10c0/3859142311db835c697a08d51062f3f4e5381f73ff47a80f19df86cf92373bb852120bd895a6c9f741eeca4074110f12d30b6d9628eaa6272257fda1bfb2c1ac
+  languageName: node
+  linkType: hard
+
 "@capacitor/android@npm:latest":
   version: 6.1.0
   resolution: "@capacitor/android@npm:6.1.0"
@@ -4709,6 +4720,7 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "@repo/app@workspace:app"
   dependencies:
+    "@capacitor-community/stripe": "npm:^6.4.2"
     "@capacitor/android": "npm:latest"
     "@capacitor/app": "npm:latest"
     "@capacitor/assets": "npm:latest"

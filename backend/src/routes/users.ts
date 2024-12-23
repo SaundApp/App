@@ -6,6 +6,7 @@ import {
 import { Hono } from "hono";
 import { jwt } from "hono/jwt";
 import stripe from "../lib/stripe";
+import type Stripe from "stripe";
 
 const hono = new Hono();
 
@@ -188,7 +189,7 @@ hono.get(
       subscribed: user.subscribers.length > 0,
       requestSent: user.requestsReceived.length > 0,
     });
-  },
+  }
 );
 
 hono.get(
@@ -212,7 +213,7 @@ hono.get(
         {
           error: "User not found",
         },
-        404,
+        404
       );
     }
 
@@ -241,7 +242,7 @@ hono.get(
     }
 
     return ctx.json(followers);
-  },
+  }
 );
 
 hono.post(
@@ -264,7 +265,7 @@ hono.post(
         {
           error: "User not found",
         },
-        404,
+        404
       );
     }
 
@@ -275,7 +276,7 @@ hono.post(
         {
           error: "Cannot follow yourself",
         },
-        400,
+        400
       );
     }
 
@@ -300,7 +301,7 @@ hono.post(
         {
           error: "User already followed",
         },
-        400,
+        400
       );
 
     if (user.private) {
@@ -326,7 +327,7 @@ hono.post(
           {
             error: "Request already sent",
           },
-          400,
+          400
         );
       }
     }
@@ -351,10 +352,10 @@ hono.post(
         {
           error: "User already followed",
         },
-        400,
+        400
       );
     }
-  },
+  }
 );
 
 hono.post(
@@ -370,7 +371,7 @@ hono.post(
         {
           error: "Invalid request",
         },
-        400,
+        400
       );
     }
 
@@ -392,7 +393,7 @@ hono.post(
         {
           error: "Request not found",
         },
-        404,
+        404
       );
     }
 
@@ -418,7 +419,7 @@ hono.post(
     return ctx.json({
       message: "Request accepted",
     });
-  },
+  }
 );
 
 hono.delete(
@@ -440,7 +441,7 @@ hono.delete(
         {
           error: "Request not found",
         },
-        404,
+        404
       );
     }
 
@@ -460,7 +461,7 @@ hono.delete(
     return ctx.json({
       message: "Request removed",
     });
-  },
+  }
 );
 
 hono.get(
@@ -489,7 +490,7 @@ hono.get(
         {
           error: "User not found",
         },
-        404,
+        404
       );
     }
 
@@ -518,7 +519,7 @@ hono.get(
     });
 
     return ctx.json(following);
-  },
+  }
 );
 
 hono.delete(
@@ -533,7 +534,7 @@ hono.delete(
         {
           error: "Cannot unfollow yourself",
         },
-        400,
+        400
       );
     }
 
@@ -547,7 +548,7 @@ hono.delete(
     return ctx.json({
       message: "User unfollowed",
     });
-  },
+  }
 );
 
 hono.delete(
@@ -567,7 +568,7 @@ hono.delete(
     return ctx.json({
       message: "Follower removed",
     });
-  },
+  }
 );
 
 hono.get(
@@ -611,7 +612,7 @@ hono.get(
     });
 
     return ctx.json(posts);
-  },
+  }
 );
 
 hono.get(
@@ -655,7 +656,7 @@ hono.get(
     });
 
     return ctx.json(chats);
-  },
+  }
 );
 
 hono.get(
@@ -705,7 +706,7 @@ hono.get(
         {
           error: "User not found",
         },
-        404,
+        404
       );
     }
 
@@ -718,7 +719,7 @@ hono.get(
     }
 
     return ctx.json(user.listeners.map((l) => l.listener));
-  },
+  }
 );
 
 hono.post(
@@ -733,7 +734,7 @@ hono.post(
         {
           error: "Cannot subscribe to yourself",
         },
-        400,
+        400
       );
     }
 
@@ -742,6 +743,7 @@ hono.post(
         id,
       },
       select: {
+        id: true,
         username: true,
         subscriptionSettings: true,
         stripeId: true,
@@ -766,7 +768,7 @@ hono.post(
         {
           error: "Cannot subscribe to this user",
         },
-        404,
+        404
       );
     }
 
@@ -775,7 +777,7 @@ hono.post(
         {
           error: "Already subscribed",
         },
-        400,
+        400
       );
     }
 
@@ -788,7 +790,7 @@ hono.post(
         {
           error: "User not found",
         },
-        404,
+        404
       );
     }
 
@@ -812,16 +814,29 @@ hono.post(
       });
     }
 
-    const checkout = await stripe.checkout.sessions.create({
-      mode: "subscription",
+    let product = await stripe.products
+      .search({
+        query: `metadata["user"]:"${target.id}"`,
+        limit: 1,
+      })
+      .next()
+      .then((it) => it.value as Stripe.Product);
+
+    if (!product)
+      product = await stripe.products.create({
+        name: `Subscription to ${target.username}`,
+        metadata: {
+          user: target.id,
+        },
+      });
+
+    const subscription = await stripe.subscriptions.create({
       customer: stripeId,
-      line_items: [
+      items: [
         {
           price_data: {
             currency: "eur",
-            product_data: {
-              name: `Subscription to ${target.username}`,
-            },
+            product: product.id,
             recurring: {
               interval: "month",
               interval_count: 1,
@@ -831,26 +846,36 @@ hono.post(
           quantity: 1,
         },
       ],
-      success_url: process.env.APP_URL + "/app",
-      cancel_url: process.env.APP_URL + "/app",
+      payment_behavior: "default_incomplete",
+      payment_settings: { save_default_payment_method: "on_subscription" },
+      expand: ["latest_invoice.payment_intent"],
       metadata: {
         user: payload.user,
         target: id,
       },
-      subscription_data: {
-        metadata: {
-          user: payload.user,
-          target: id,
-        },
-        transfer_data: {
-          amount_percent: 90,
-          destination: target.stripeId,
-        },
+      transfer_data: {
+        amount_percent: 90,
+        destination: target.stripeId,
       },
     });
 
-    return ctx.json({ url: checkout.url });
-  },
+    const ephemeralKey = await stripe.ephemeralKeys.create(
+      {
+        customer: stripeId,
+      },
+      { apiVersion: "2024-09-30.acacia" }
+    );
+
+    return ctx.json({
+      id: subscription.id,
+      customerId: stripeId,
+      clientSecret: (
+        (subscription.latest_invoice as Stripe.Invoice)
+          ?.payment_intent as Stripe.PaymentIntent
+      )?.client_secret,
+      customerSecret: ephemeralKey.secret,
+    });
+  }
 );
 
 hono.get(
@@ -865,7 +890,7 @@ hono.get(
         {
           error: "Unauthorized",
         },
-        401,
+        401
       );
     }
 
@@ -890,7 +915,7 @@ hono.get(
     });
 
     return ctx.json(user?.subscribers.map((s) => s.user) || []);
-  },
+  }
 );
 
 export default hono;

@@ -10,6 +10,7 @@
     "preview": "vite preview"
   },
   "dependencies": {
+    "@capacitor-community/stripe": "^6.4.2",
     "@capacitor/android": "latest",
     "@capacitor/app": "latest",
     "@capacitor/browser": "^6.0.4",

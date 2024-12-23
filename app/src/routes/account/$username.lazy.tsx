@@ -238,7 +238,8 @@ function Account() {
                       );
                   } else setSubscribeOpen(true);
                 }}
-                className={!data.subscribed ? "w-full" : "w-full bg-secondary"}
+                className="w-full"
+                variant={data.subscribed ? "secondary" : "default"}
               >
                 {!data.subscribed
                   ? t("account.subscribe")

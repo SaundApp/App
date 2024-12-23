@@ -6,11 +6,13 @@ import {
 } from "@/components/ui/drawer";
 import { axiosClient } from "@/lib/axios";
 import type { PublicUser } from "@/types/prisma";
-import { Browser } from "@capacitor/browser";
+import { Stripe } from "@capacitor-community/stripe";
 import type { SubscriptionSettings } from "@repo/backend-common/types";
 import { useTranslation } from "react-i18next";
 import { MdVerified } from "react-icons/md";
 import { Button } from "../ui/button";
+import { useQueryClient } from "@tanstack/react-query";
+import { useTheme } from "../ThemeProvider";
 
 export default function Subscribe({
   user,
@@ -24,6 +26,8 @@ export default function Subscribe({
   onOpenChange: (open: boolean) => void;
 }) {
   const { t } = useTranslation();
+  const queryClient = useQueryClient();
+  const { theme } = useTheme();
 
   if (!user.subscriptionSettings) return null;
 
@@ -54,9 +58,39 @@ export default function Subscribe({
             axiosClient
               .post(`/users/${user.id}/subscribe`)
               .then((res) => res.data)
-              .then(async (data: { url: string }) => {
-                await Browser.open({ url: data.url });
-              });
+              .then(
+                async (data: {
+                  id: string;
+                  customerId: string;
+                  clientSecret: string;
+                  customerSecret: string;
+                }) => {
+                  await Stripe.initialize({
+                    publishableKey: import.meta.env.VITE_STRIPE_KEY!,
+                  });
+
+                  await Stripe.createPaymentSheet({
+                    paymentIntentClientSecret: data.clientSecret,
+                    customerId: data.customerId,
+                    merchantDisplayName: "Saund",
+                    customerEphemeralKeySecret: data.customerSecret,
+                    style:
+                      theme === "dark"
+                        ? "alwaysDark"
+                        : theme === "light"
+                          ? "alwaysLight"
+                          : undefined,
+                  });
+
+                  await Stripe.presentPaymentSheet();
+
+                  queryClient.invalidateQueries({
+                    queryKey: ["user", user.username],
+                  });
+
+                  onOpenChange(false);
+                },
+              );
           }}
         >
           <p className="m-auto">{t("account.subscribe")}</p>
