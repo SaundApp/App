@@ -98,13 +98,19 @@ export default function Comments({ post }: { post: Post }) {
 
           {data?.map((comment, index) => (
             <div key={index} className="flex items-start gap-3">
-              <Link to={`/account/${comment.user.username}`}>
+              <Link
+                to="/account/$username"
+                params={{ username: comment.user.username }}
+              >
                 <Avatar user={comment.user} width={40} height={40} />
               </Link>
 
               <div>
                 <div className="flex items-center gap-2">
-                  <Link to={`/account/${comment.user.username}`}>
+                  <Link
+                    to="/account/$username"
+                    params={{ username: comment.user.username }}
+                  >
                     <h5 className="max-w-40 truncate">{comment.user.name}</h5>
                   </Link>
                   <p className="muted">{formatDistance(comment.createdAt)}</p>
@@ -116,7 +122,8 @@ export default function Comments({ post }: { post: Post }) {
                       return (
                         <Link
                           key={index}
-                          to={`/account/${word}`}
+                          to="/account/$username"
+                          params={{ username: word }}
                           className="text-primary"
                         >
                           {word}{" "}
@@ -134,7 +141,8 @@ export default function Comments({ post }: { post: Post }) {
         <div className="mt-auto flex gap-3 pb-4">
           {session && (
             <Link
-              to={`/account/${session?.username}`}
+              to="/account/$username"
+              params={{ username: session.username }}
               className="block h-10 w-14"
             >
               <Avatar user={session} width={40} height={40} />

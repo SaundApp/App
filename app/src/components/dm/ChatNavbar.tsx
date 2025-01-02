@@ -19,9 +19,8 @@ export default function ChatNavbar({
 
       <Link
         className={"flex items-center gap-3 " + (hideLogo ? "m-auto" : "ml-8")}
-        to={
-          chat?.ownerId === session?.id ? `/dm/${chat?.id}/settings` : undefined
-        }
+        to={chat?.ownerId === session?.id ? "/dm/$id/settings" : undefined}
+        params={{ id: chat?.id ?? "" }}
       >
         {chat && !hideLogo && (
           <Avatar imageId={chat.imageId} width={40} height={40} />

@@ -1,7 +1,7 @@
 import { axiosClient } from "@/lib/axios";
 import { PushNotifications } from "@capacitor/push-notifications";
 
-export const addListeners = async () => {
+const addListeners = async () => {
   await PushNotifications.addListener("registration", (token) => {
     axiosClient.post("/notifications/register", { token: token.value });
   });
@@ -25,7 +25,13 @@ export const registerNotifications = async () => {
   if (permStatus.receive !== "granted") return;
 
   await PushNotifications.register();
+  await addListeners();
 };
 
-export const clearNotifications = async () =>
-  await PushNotifications.removeAllDeliveredNotifications();
+export const clearNotifications = async () => {
+  try {
+    await PushNotifications.removeAllDeliveredNotifications();
+  } catch (e) {
+    console.error("Failed to clear notifications", e);
+  }
+};

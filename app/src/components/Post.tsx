@@ -121,12 +121,18 @@ export default function Post({ post }: { post: ExtendedPost }) {
     <div className="flex flex-col gap-3">
       <div className="flex items-center justify-between">
         <div className="flex items-center gap-3">
-          <Link to={`/account/${post.user.username}`}>
+          <Link
+            to="/account/$username"
+            params={{ username: post.user.username }}
+          >
             <Avatar user={post.user} width={40} height={40} />
           </Link>
 
           <div>
-            <Link to={`/account/${post.user.username}`}>
+            <Link
+              to="/account/$username"
+              params={{ username: post.user.username }}
+            >
               <h5 className="max-w-40 truncate text-left">{post.user.name}</h5>
             </Link>
             <p className="muted max-w-40 truncate text-left">

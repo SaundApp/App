@@ -89,7 +89,8 @@ export default function Users({
                 className="flex items-center justify-between"
               >
                 <Link
-                  to={`/account/${user.username}`}
+                  to="/account/$username"
+                  params={{ username: user.username }}
                   className="flex items-center gap-3"
                   onClick={() => onOpenChange(false)}
                 >

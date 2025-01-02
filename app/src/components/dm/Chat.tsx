@@ -87,7 +87,8 @@ export default function Chat({
       actionButtonMinWidth={70}
     >
       <Link
-        to={create || join ? undefined : `/dm/${chat.id}`}
+        to={create || join ? undefined : "/dm/$id"}
+        params={{ id: chat.id }}
         className="flex w-full flex-row items-center gap-3"
         onClick={() => {
           if (create) {

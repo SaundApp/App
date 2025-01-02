@@ -15,7 +15,8 @@ export default function Artist({
 }) {
   return (
     <Link
-      to={`/account/${user.username}`}
+      to="/account/$username"
+      params={{ username: user.username }}
       className="flex w-full flex-row items-center gap-3"
       onClick={onClick}
     >

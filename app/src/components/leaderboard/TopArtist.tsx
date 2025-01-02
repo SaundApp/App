@@ -17,7 +17,8 @@ export default function TopArtist({
 
   return (
     <Link
-      to={`/account/${user.username}`}
+      to="/account/$username"
+      params={{ username: user.username }}
       className={
         "flex flex-col items-center " + (position !== "🥇" ? "mt-20" : "")
       }

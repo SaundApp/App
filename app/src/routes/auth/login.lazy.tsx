@@ -143,9 +143,9 @@ function Login() {
       <Divider />
 
       <Button variant="secondary" asChild>
-        <Link to={`${import.meta.env.VITE_API_URL}/auth/login/spotify`}>
+        <a href={`${import.meta.env.VITE_API_URL}/auth/login/spotify`}>
           Spotify
-        </Link>
+        </a>
       </Button>
 
       <div className="muted flex gap-1">

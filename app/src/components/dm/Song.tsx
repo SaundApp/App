@@ -10,6 +10,7 @@ import Avatar from "../account/Avatar";
 import { ContextMenu, ContextMenuTrigger } from "../ui/context-menu";
 import Menu from "./Menu";
 import { Haptics, ImpactStyle } from "@capacitor/haptics";
+import { cn } from "@/lib/utils";
 
 export default function Song({
   postId,
@@ -64,10 +65,10 @@ export default function Song({
           )}
 
           <div
-            className={
-              "daisy-chat-bubble max-w-72 break-words !p-3 text-white " +
-              (self ? "bg-primary" : "bg-secondary")
-            }
+            className={cn(
+              "!dark:text-white daisy-chat-bubble max-w-72 break-words !p-3",
+              self ? "bg-primary text-white" : "bg-secondary text-foreground",
+            )}
           >
             <img
               className="size-64 rounded-2xl"
@@ -79,7 +80,8 @@ export default function Song({
             <div className="pt-3">
               <h5 className="max-w-40 truncate">{post.name}</h5>
               <Link
-                to={`/account/${post.user.username}`}
+                to="/account/$username"
+                params={{ username: post.user.username }}
                 className="max-w-40 truncate text-sm"
               >
                 {post.user.name}

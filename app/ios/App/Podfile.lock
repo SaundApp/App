@@ -7,7 +7,7 @@ PODS:
     - Capacitor
   - CapacitorBrowser (6.0.4):
     - Capacitor
-  - CapacitorCommunityStripe (6.4.2):
+  - CapacitorCommunityStripe (6.4.3):
     - Capacitor
     - StripeApplePay (~> 24.1.0)
     - StripePaymentSheet (~> 24.1.0)
@@ -20,65 +20,58 @@ PODS:
     - Capacitor
   - CapacitorStatusBar (6.0.2):
     - Capacitor
-  - Firebase/CoreOnly (10.29.0):
-    - FirebaseCore (= 10.29.0)
-  - Firebase/Messaging (10.29.0):
-    - Firebase/CoreOnly
-    - FirebaseMessaging (~> 10.29.0)
-  - FirebaseCore (10.29.0):
-    - FirebaseCoreInternal (~> 10.0)
-    - GoogleUtilities/Environment (~> 7.12)
-    - GoogleUtilities/Logger (~> 7.12)
-  - FirebaseCoreInternal (10.29.0):
-    - "GoogleUtilities/NSData+zlib (~> 7.8)"
-  - FirebaseInstallations (10.29.0):
-    - FirebaseCore (~> 10.0)
-    - GoogleUtilities/Environment (~> 7.8)
-    - GoogleUtilities/UserDefaults (~> 7.8)
-    - PromisesObjC (~> 2.1)
-  - FirebaseMessaging (10.29.0):
-    - FirebaseCore (~> 10.0)
-    - FirebaseInstallations (~> 10.0)
-    - GoogleDataTransport (~> 9.3)
-    - GoogleUtilities/AppDelegateSwizzler (~> 7.8)
-    - GoogleUtilities/Environment (~> 7.8)
-    - GoogleUtilities/Reachability (~> 7.8)
-    - GoogleUtilities/UserDefaults (~> 7.8)
-    - nanopb (< 2.30911.0, >= 2.30908.0)
-  - GoogleDataTransport (9.4.1):
-    - GoogleUtilities/Environment (~> 7.7)
-    - nanopb (< 2.30911.0, >= 2.30908.0)
-    - PromisesObjC (< 3.0, >= 1.2)
-  - GoogleUtilities/AppDelegateSwizzler (7.13.3):
+  - FirebaseCore (11.2.0):
+    - FirebaseCoreInternal (~> 11.0)
+    - GoogleUtilities/Environment (~> 8.0)
+    - GoogleUtilities/Logger (~> 8.0)
+  - FirebaseCoreInternal (11.2.0):
+    - "GoogleUtilities/NSData+zlib (~> 8.0)"
+  - FirebaseInstallations (11.2.0):
+    - FirebaseCore (~> 11.0)
+    - GoogleUtilities/Environment (~> 8.0)
+    - GoogleUtilities/UserDefaults (~> 8.0)
+    - PromisesObjC (~> 2.4)
+  - FirebaseMessaging (11.2.0):
+    - FirebaseCore (~> 11.0)
+    - FirebaseInstallations (~> 11.0)
+    - GoogleDataTransport (~> 10.0)
+    - GoogleUtilities/AppDelegateSwizzler (~> 8.0)
+    - GoogleUtilities/Environment (~> 8.0)
+    - GoogleUtilities/Reachability (~> 8.0)
+    - GoogleUtilities/UserDefaults (~> 8.0)
+    - nanopb (~> 3.30910.0)
+  - GoogleDataTransport (10.1.0):
+    - nanopb (~> 3.30910.0)
+    - PromisesObjC (~> 2.4)
+  - GoogleUtilities/AppDelegateSwizzler (8.0.2):
     - GoogleUtilities/Environment
     - GoogleUtilities/Logger
     - GoogleUtilities/Network
     - GoogleUtilities/Privacy
-  - GoogleUtilities/Environment (7.13.3):
+  - GoogleUtilities/Environment (8.0.2):
     - GoogleUtilities/Privacy
-    - PromisesObjC (< 3.0, >= 1.2)
-  - GoogleUtilities/Logger (7.13.3):
+  - GoogleUtilities/Logger (8.0.2):
     - GoogleUtilities/Environment
     - GoogleUtilities/Privacy
-  - GoogleUtilities/Network (7.13.3):
+  - GoogleUtilities/Network (8.0.2):
     - GoogleUtilities/Logger
     - "GoogleUtilities/NSData+zlib"
     - GoogleUtilities/Privacy
     - GoogleUtilities/Reachability
-  - "GoogleUtilities/NSData+zlib (7.13.3)":
+  - "GoogleUtilities/NSData+zlib (8.0.2)":
     - GoogleUtilities/Privacy
-  - GoogleUtilities/Privacy (7.13.3)
-  - GoogleUtilities/Reachability (7.13.3):
+  - GoogleUtilities/Privacy (8.0.2)
+  - GoogleUtilities/Reachability (8.0.2):
     - GoogleUtilities/Logger
     - GoogleUtilities/Privacy
-  - GoogleUtilities/UserDefaults (7.13.3):
+  - GoogleUtilities/UserDefaults (8.0.2):
     - GoogleUtilities/Logger
     - GoogleUtilities/Privacy
-  - nanopb (2.30910.0):
-    - nanopb/decode (= 2.30910.0)
-    - nanopb/encode (= 2.30910.0)
-  - nanopb/decode (2.30910.0)
-  - nanopb/encode (2.30910.0)
+  - nanopb (3.30910.0):
+    - nanopb/decode (= 3.30910.0)
+    - nanopb/encode (= 3.30910.0)
+  - nanopb/decode (3.30910.0)
+  - nanopb/encode (3.30910.0)
   - PromisesObjC (2.4.0)
   - SaundappKeyboard (6.0.5):
     - Capacitor
@@ -119,14 +112,13 @@ DEPENDENCIES:
   - "CapacitorPushNotifications (from `../../../node_modules/@capacitor/push-notifications`)"
   - "CapacitorSplashScreen (from `../../../node_modules/@capacitor/splash-screen`)"
   - "CapacitorStatusBar (from `../../../node_modules/@capacitor/status-bar`)"
-  - Firebase/Messaging
+  - FirebaseMessaging
   - "SaundappKeyboard (from `../../../node_modules/@saundapp/keyboard`)"
   - "SaundappWidgetsbridge (from `../../../node_modules/@saundapp/widgetsbridge`)"
   - "SentryCapacitor (from `../../../node_modules/@sentry/capacitor`)"
 
 SPEC REPOS:
   trunk:
-    - Firebase
     - FirebaseCore
     - FirebaseCoreInternal
     - FirebaseInstallations
@@ -172,29 +164,28 @@ EXTERNAL SOURCES:
     :path: "../../../node_modules/@sentry/capacitor"
 
 SPEC CHECKSUMS:
-  Capacitor: 187bd7847b6f71467015a20200a1a071be3e5f14
-  CapacitorAdmobAds: 28832a94a5c7465fc2ce3e31be13442b87425944
-  CapacitorApp: 9d53aec7101f7b030a950c5bdc4df8612576b279
-  CapacitorBrowser: ef0529d16cd8839281050c350e7bbee4f5c6d65f
-  CapacitorCommunityStripe: 5b865f529fe36de33b097d520d69b092d1f4134e
+  Capacitor: 3aff4dee0552f6badcd04f47ab3174387d71f47d
+  CapacitorAdmobAds: 1d41fe9c6ddd02046a7f29d89c4b1cbcf0006c6b
+  CapacitorApp: 30145f2ea2311e4f3744472119ec87d2ddf4c0a7
+  CapacitorBrowser: 3413e46a583b6edc3f20448732a531078d6924c6
+  CapacitorCommunityStripe: 3cbc443a4b401f74f32f44bf036be9ff668e4e9e
   CapacitorCordova: be703980ca797f847c3356f78fa175d21c8330c2
-  CapacitorHaptics: b53409aaca1203f79c6d0eb3ed5de40556339518
-  CapacitorPushNotifications: 293fabe42c7229756078e81f2d3a60394ba4e5d8
-  CapacitorSplashScreen: 61645214e8f955ff2b80f16a6a3648960fe4c89f
-  CapacitorStatusBar: 3b9ac7d0684770522c532d1158a1434512ab1477
-  Firebase: cec914dab6fd7b1bd8ab56ea07ce4e03dd251c2d
-  FirebaseCore: 30e9c1cbe3d38f5f5e75f48bfcea87d7c358ec16
-  FirebaseCoreInternal: df84dd300b561c27d5571684f389bf60b0a5c934
-  FirebaseInstallations: 913cf60d0400ebd5d6b63a28b290372ab44590dd
-  FirebaseMessaging: 7b5d8033e183ab59eb5b852a53201559e976d366
-  GoogleDataTransport: 6c09b596d841063d76d4288cc2d2f42cc36e1e2a
-  GoogleUtilities: ea963c370a38a8069cc5f7ba4ca849a60b6d7d15
-  nanopb: 438bc412db1928dac798aa6fd75726007be04262
+  CapacitorHaptics: 4fc15afe22b123d093e6ace24d95e8e3b1f261b9
+  CapacitorPushNotifications: 36c5b49e33c5ab2b22e0dca04e37d69e359c0e63
+  CapacitorSplashScreen: d2d8fe9541d7bebdf735839b89edf6e762cea969
+  CapacitorStatusBar: b16799a26320ffa52f6c8b01737d5a95bbb8f3eb
+  FirebaseCore: a282032ae9295c795714ded2ec9c522fc237f8da
+  FirebaseCoreInternal: 0c569513412da9f3b31bd0b340013bbee8f295c5
+  FirebaseInstallations: 771177d89d6c451dc6e50085ec82e2fc77ed0a4a
+  FirebaseMessaging: c9ec7b90c399c7a6100297e9d16f8a27fc7f7152
+  GoogleDataTransport: aae35b7ea0c09004c3797d53c8c41f66f219d6a7
+  GoogleUtilities: 26a3abef001b6533cf678d3eb38fd3f614b7872d
+  nanopb: fad817b59e0457d11a5dfbde799381cd727c1275
   PromisesObjC: f5707f49cb48b9636751c5b2e7d227e43fba9f47
-  SaundappKeyboard: 0351acd25343d281351eeff3d2ebea398470aef5
-  SaundappWidgetsbridge: b025217acf3d5c2b841c989545dc100fdce8dc92
+  SaundappKeyboard: 598f8b06030113cc0749ec86bdb27f533e5bd459
+  SaundappWidgetsbridge: 9c31eb4773ec5ce1a12ed2d1030c4e05950515ed
   Sentry: f8374b5415bc38dfb5645941b3ae31230fbeae57
-  SentryCapacitor: 808a63a267d5053af12c25e6125c13f79b32debc
+  SentryCapacitor: fc78f615e7c165f716825fc8bb956f1a4176a1bf
   StripeApplePay: 78464d0dd9a61e3577eb9530a3710dc99137cb57
   StripeCore: d69d4c1d020ec0a2fe0061734cb216639ecbad71
   StripePayments: d247dbf00ad9f5a3bbd567778550b02299e3773e
@@ -202,6 +193,6 @@ SPEC CHECKSUMS:
   StripePaymentsUI: 5dcbc863e9e971ed230d8dd14951ccb63397cd78
   StripeUICore: d4528b5b5f24a9f444a60e6ee7149b82699a0dad
 
-PODFILE CHECKSUM: 03d1500c10c78e59fff3aa8b5e379c0754fbed9b
+PODFILE CHECKSUM: 379c19362e0d5a3fd5e4691b9a45a6bbc429b589
 
 COCOAPODS: 1.16.2

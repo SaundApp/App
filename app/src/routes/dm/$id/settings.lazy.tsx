@@ -203,7 +203,11 @@ function ChatSettings() {
                 key={member.id}
                 actionButtonMinWidth={70}
               >
-                <Link to={`/account/${member.username}`} className="w-full">
+                <Link
+                  to="/account/$username"
+                  params={{ username: member.username }}
+                  className="w-full"
+                >
                   <div className="flex items-center gap-3">
                     <Avatar user={member} width={40} height={40} />
                     <div className="flex flex-col">
