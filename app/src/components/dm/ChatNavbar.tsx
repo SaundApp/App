@@ -19,7 +19,7 @@ export default function ChatNavbar({
 
       <Link
         className={"flex items-center gap-3 " + (hideLogo ? "m-auto" : "ml-8")}
-        to={chat?.ownerId === session?.id ? "/dm/$id/settings" : undefined}
+        to={chat?.ownerId === session?.id ? "/dm/$id/settings" : "."}
         params={{ id: chat?.id ?? "" }}
       >
         {chat && !hideLogo && (

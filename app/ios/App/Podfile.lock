@@ -78,7 +78,7 @@ PODS:
   - SaundappWidgetsbridge (0.0.6):
     - Capacitor
   - Sentry/HybridSDK (8.36.0)
-  - SentryCapacitor (1.0.2):
+  - SentryCapacitor (1.1.0):
     - Capacitor
     - Sentry/HybridSDK (= 8.36.0)
   - StripeApplePay (24.1.3):
@@ -185,7 +185,7 @@ SPEC CHECKSUMS:
   SaundappKeyboard: 598f8b06030113cc0749ec86bdb27f533e5bd459
   SaundappWidgetsbridge: 9c31eb4773ec5ce1a12ed2d1030c4e05950515ed
   Sentry: f8374b5415bc38dfb5645941b3ae31230fbeae57
-  SentryCapacitor: fc78f615e7c165f716825fc8bb956f1a4176a1bf
+  SentryCapacitor: eb8d0a602daca0ede2f361f122d17f645b0f83ae
   StripeApplePay: 78464d0dd9a61e3577eb9530a3710dc99137cb57
   StripeCore: d69d4c1d020ec0a2fe0061734cb216639ecbad71
   StripePayments: d247dbf00ad9f5a3bbd567778550b02299e3773e
