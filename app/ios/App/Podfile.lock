@@ -1,24 +1,24 @@
 PODS:
-  - Capacitor (6.1.0):
+  - Capacitor (7.0.1):
     - CapacitorCordova
   - CapacitorAdmobAds (5.0.0):
     - Capacitor
-  - CapacitorApp (6.0.0):
+  - CapacitorApp (7.0.0):
     - Capacitor
-  - CapacitorBrowser (6.0.5):
+  - CapacitorBrowser (7.0.0):
     - Capacitor
-  - CapacitorCommunityStripe (6.4.3):
+  - CapacitorCommunityStripe (6.4.4):
     - Capacitor
     - StripeApplePay (~> 24.1.0)
     - StripePaymentSheet (~> 24.1.0)
-  - CapacitorCordova (6.1.0)
-  - CapacitorHaptics (6.0.2):
+  - CapacitorCordova (7.0.1)
+  - CapacitorHaptics (7.0.0):
     - Capacitor
-  - CapacitorPushNotifications (6.0.1):
+  - CapacitorPushNotifications (7.0.0):
     - Capacitor
-  - CapacitorSplashScreen (6.0.1):
+  - CapacitorSplashScreen (7.0.0):
     - Capacitor
-  - CapacitorStatusBar (6.0.2):
+  - CapacitorStatusBar (7.0.0):
     - Capacitor
   - FirebaseCore (11.6.0):
     - FirebaseCoreInternal (~> 11.6.0)
@@ -164,16 +164,16 @@ EXTERNAL SOURCES:
     :path: "../../../node_modules/@sentry/capacitor"
 
 SPEC CHECKSUMS:
-  Capacitor: 3aff4dee0552f6badcd04f47ab3174387d71f47d
+  Capacitor: de199cba6c8b20995428ad0b7cb0bc6ca625ffd4
   CapacitorAdmobAds: 1d41fe9c6ddd02046a7f29d89c4b1cbcf0006c6b
-  CapacitorApp: 30145f2ea2311e4f3744472119ec87d2ddf4c0a7
-  CapacitorBrowser: b468ac2db928e594b4d319727f3874743f9bcf96
-  CapacitorCommunityStripe: 3cbc443a4b401f74f32f44bf036be9ff668e4e9e
-  CapacitorCordova: be703980ca797f847c3356f78fa175d21c8330c2
-  CapacitorHaptics: 4fc15afe22b123d093e6ace24d95e8e3b1f261b9
-  CapacitorPushNotifications: 36c5b49e33c5ab2b22e0dca04e37d69e359c0e63
-  CapacitorSplashScreen: d2d8fe9541d7bebdf735839b89edf6e762cea969
-  CapacitorStatusBar: b16799a26320ffa52f6c8b01737d5a95bbb8f3eb
+  CapacitorApp: 9cb31064a6c6bb2b1438583733a7bf45557fc1da
+  CapacitorBrowser: 55c21db47416dcc8fc3b623e18fd7d09acb26081
+  CapacitorCommunityStripe: e619deb54ee72bdd2401a22c1f9a2a2bfc51789f
+  CapacitorCordova: 63d476958d5022d76f197031e8b7ea3519988c64
+  CapacitorHaptics: 7be406a91e4eb87287f321c6c68e1709d6837b3a
+  CapacitorPushNotifications: 2e0132cd2f1a5d696bcbfc3725c2b6ffcb9275d4
+  CapacitorSplashScreen: 7e7a0a1113833032f196b3af6fa437baccacf5bc
+  CapacitorStatusBar: a8c4c83ed2e973bdafb979e80e4b00d027832cb7
   FirebaseCore: 48b0dd707581cf9c1a1220da68223fb0a562afaa
   FirebaseCoreInternal: d98ab91e2d80a56d7b246856a8885443b302c0c2
   FirebaseInstallations: efc0946fc756e4d22d8113f7c761948120322e8c
@@ -193,6 +193,6 @@ SPEC CHECKSUMS:
   StripePaymentsUI: 5dcbc863e9e971ed230d8dd14951ccb63397cd78
   StripeUICore: d4528b5b5f24a9f444a60e6ee7149b82699a0dad
 
-PODFILE CHECKSUM: 379c19362e0d5a3fd5e4691b9a45a6bbc429b589
+PODFILE CHECKSUM: 2733971439371a935386534b3da6f6d9eba42455
 
 COCOAPODS: 1.16.2
