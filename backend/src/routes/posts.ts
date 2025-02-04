@@ -84,14 +84,14 @@ hono.post("/create", admin, async (ctx) => {
           artistCont++;
           cont++;
         } catch (err) {}
+      }
 
-        if (artistCont > 0) {
-          for (const follower of user.followers) {
-            sendNotification(follower.followerId, NotificationType.POST, {
-              user: user.username,
-              count: artistCont.toString(),
-            });
-          }
+      if (artistCont > 0) {
+        for (const follower of user.followers) {
+          sendNotification(follower.followerId, NotificationType.POST, {
+            user: user.username,
+            count: artistCont.toString(),
+          });
         }
       }
     } catch (err) {}
