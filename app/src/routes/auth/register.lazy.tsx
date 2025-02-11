@@ -56,7 +56,7 @@ function Register() {
 
                     navigate({
                       to: "/",
-                    });
+                    }).then(() => window.location.reload());
                   }
                 })
                 .catch(() =>

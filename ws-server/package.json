@@ -8,7 +8,7 @@
   "dependencies": {
     "@repo/backend-common": "0.0.0",
     "@socket.io/redis-streams-adapter": "^0.2.2",
-    "ioredis": "^5.4.2",
+    "ioredis": "^5.5.0",
     "jsonwebtoken": "^9.0.2",
     "socket.io": "^4.8.1"
   },
